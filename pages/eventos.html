@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos - Rede NAVE</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#667eea">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <!-- CSS Customizado -->
+    <link rel="stylesheet" href="../css/style.css">
+    
+    <style>
+        .calendar-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+        }
+        
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .calendar-day:hover {
+            background: #f8f9fa;
+            transform: scale(1.05);
+        }
+        
+        .calendar-day.has-event {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: bold;
+        }
+        
+        .calendar-day.today {
+            border: 2px solid #ffc107;
+        }
+        
+        .event-detail-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .event-detail-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .event-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+        }
+        
+        .countdown-timer {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .time-unit {
+            display: inline-block;
+            text-align: center;
+            margin: 0 0.5rem;
+        }
+        
+        .time-value {
+            display: block;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        
+        .time-label {
+            display: block;
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="../index.html">
+                <i class="bi bi-rocket-takeoff-fill"></i> Rede NAVE
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="trilhas.html">Trilhas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="eventos.html">Eventos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="sobre.html">Sobre</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="suporte.html">Suporte</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html">
+                            <i class="bi bi-box-arrow-in-right"></i> Entrar
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-warning btn-sm ms-2" href="cadastro.html">
+                            Cadastre-se
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-primary text-white text-center py-5">
+        <div class="container">
+            <h1 class="display-4 fw-bold mb-3">Agenda de Eventos</h1>
+            <p class="lead">Participe de workshops, feiras, lives e muito mais!</p>
+        </div>
+    </section>
+
+    <!-- Tabs de Filtro -->
+    <section class="py-4 bg-light">
+        <div class="container">
+            <ul class="nav nav-pills justify-content-center" id="eventosTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" onclick="filtrarEventos('todos')">
+                        <i class="bi bi-calendar-event"></i> Todos
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" onclick="filtrarEventos('Workshop')">
+                        <i class="bi bi-laptop"></i> Workshops
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" onclick="filtrarEventos('Live')">
+                        <i class="bi bi-camera-video"></i> Lives
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" onclick="filtrarEventos('Feira')">
+                        <i class="bi bi-shop"></i> Feiras
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Próximo Evento em Destaque -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="fw-bold mb-4 text-center">Próximo Evento 🔥</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="event-header">
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <span class="badge bg-warning text-dark mb-2">WORKSHOP ONLINE</span>
+                                <h3 class="fw-bold mb-3">Precificação Inteligente para Empreendedoras</h3>
+                                <p class="mb-3">
+                                    <i class="bi bi-calendar"></i> 15 de Novembro, 2025<br>
+                                    <i class="bi bi-clock"></i> 19:00 - 21:00 (Horário de Brasília)<br>
+                                    <i class="bi bi-laptop"></i> Online via Google Meet
+                                </p>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <div class="countdown-timer">
+                                    <h6 class="mb-3">Começa em:</h6>
+                                    <div id="countdown">
+                                        <div class="time-unit">
+                                            <span class="time-value" id="days">15</span>
+                                            <span class="time-label">Dias</span>
+                                        </div>
+                                        <div class="time-unit">
+                                            <span class="time-value" id="hours">23</span>
+                                            <span class="time-label">Horas</span>
+                                        </div>
+                                        <div class="time-unit">
+                                            <span class="time-value" id="minutes">45</span>
+                                            <span class="time-label">Min</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-warning btn-lg mt-3" onclick="inscreverEvento('Precificação Inteligente')">
+                            <i class="bi bi-calendar-plus"></i> Inscrever-se Agora
+                        </button>
+                    </div>
+                    <div class="bg-white p-4" style="border-radius: 0 0 15px 15px;">
+                        <h5 class="fw-bold mb-3">Sobre o Evento</h5>
+                        <p class="text-muted">
+                            Aprenda a calcular o preço ideal para seus produtos ou serviços! 
+                            Neste workshop, você descobrirá como precificar de forma estratégica, 
+                            considerando custos, margem de lucro e valor percebido pelo cliente.
+                        </p>
+                        <h6 class="fw-bold mt-4 mb-3">O que você vai aprender:</h6>
+                        <ul class="text-muted">
+                            <li>Como calcular todos os custos do seu produto/serviço</li>
+                            <li>Definir margem de lucro adequada</li>
+                            <li>Estratégias de precificação competitiva</li>
+                            <li>Quando e como fazer promoções sem prejuízo</li>
+                        </ul>
+                        <div class="d-flex align-items-center mt-4">
+                            <div class="me-3">
+                                <div style="width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.5rem;">
+                                    CA
+                                </div>
+                            </div>
+                            <div>
+                                <h6 class="fw-bold mb-0">Carla Almeida</h6>
+                                <small class="text-muted">Especialista em Gestão Financeira</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calendário e Lista de Eventos -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h3 class="fw-bold mb-4 text-center">Calendário de Eventos</h3>
+            
+            <div class="row g-4">
+                <!-- Calendário -->
+                <div class="col-lg-5">
+                    <div class="calendar-container">
+                        <div class="calendar-header">
+                            <button class="btn btn-sm btn-outline-primary" onclick="changeMonth(-1)">
+                                <i class="bi bi-chevron-left"></i>
+                            </button>
+                            <h5 class="fw-bold mb-0" id="currentMonth">Novembro 2025</h5>
+                            <button class="btn btn-sm btn-outline-primary" onclick="changeMonth(1)">
+                                <i class="bi bi-chevron-right"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="calendar-grid mb-3">
+                            <div class="text-center fw-bold small">Dom</div>
+                            <div class="text-center fw-bold small">Seg</div>
+                            <div class="text-center fw-bold small">Ter</div>
+                            <div class="text-center fw-bold small">Qua</div>
+                            <div class="text-center fw-bold small">Qui</div>
+                            <div class="text-center fw-bold small">Sex</div>
+                            <div class="text-center fw-bold small">Sáb</div>
+                        </div>
+                        
+                        <div class="calendar-grid" id="calendarDays">
+                            <!-- Dias serão gerados via JS -->
+                        </div>
+                        
+                        <div class="mt-3">
+                            <small class="text-muted">
+                                <span class="badge bg-primary">●</span> Dia com evento
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Lista de Eventos -->
+                <div class="col-lg-7">
+                    <div id="listaEventos">
+                        <!-- Eventos serão carregados via JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <h5 class="fw-bold mb-3 text-white">
+                        <i class="bi bi-rocket-takeoff"></i> Rede NAVE
+                    </h5>
+                    <p style="color: #adb5bd;">Empoderando mulheres empreendedoras através da educação e capacitação profissional.</p>
+                    <div class="social-links mt-3">
+                        <a href="#" class="text-white me-3" title="Facebook"><i class="bi bi-facebook fs-4"></i></a>
+                        <a href="#" class="text-white me-3" title="Instagram"><i class="bi bi-instagram fs-4"></i></a>
+                        <a href="#" class="text-white me-3" title="LinkedIn"><i class="bi bi-linkedin fs-4"></i></a>
+                        <a href="#" class="text-white" title="YouTube"><i class="bi bi-youtube fs-4"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <h6 class="fw-bold mb-3 text-white">Menu</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="../index.html" class="text-decoration-none" style="color: #adb5bd;">Início</a></li>
+                        <li class="mb-2"><a href="trilhas.html" class="text-decoration-none" style="color: #adb5bd;">Trilhas</a></li>
+                        <li class="mb-2"><a href="eventos.html" class="text-decoration-none" style="color: #adb5bd;">Eventos</a></li>
+                        <li class="mb-2"><a href="sobre.html" class="text-decoration-none" style="color: #adb5bd;">Sobre</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h6 class="fw-bold mb-3 text-white">Suporte</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="suporte.html" class="text-decoration-none" style="color: #adb5bd;">Perguntas Frequentes</a></li>
+                        <li class="mb-2"><a href="suporte.html#contato" class="text-decoration-none" style="color: #adb5bd;">Contato</a></li>
+                        <li class="mb-2"><a href="suporte.html" class="text-decoration-none" style="color: #adb5bd;">Central de Ajuda</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h6 class="fw-bold mb-3 text-white">Contato</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2" style="color: #adb5bd;">
+                            <i class="bi bi-envelope"></i> contato@redenave.org
+                        </li>
+                        <li class="mb-2" style="color: #adb5bd;">
+                            <i class="bi bi-telephone"></i> (11) 98765-4321
+                        </li>
+                        <li class="mb-2">
+                            <a href="https://wa.me/5511987654321" class="text-decoration-none" style="color: #25d366;" target="_blank">
+                                <i class="bi bi-whatsapp"></i> WhatsApp Suporte
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4" style="border-color: #495057;">
+            <div class="text-center" style="color: #adb5bd;">
+                <p class="mb-0">&copy; 2025 Rede NAVE. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Dados dos eventos
+        const eventos = [
+            {
+                id: 1,
+                titulo: "Workshop: Precificação Inteligente",
+                tipo: "Workshop",
+                data: "15/11/2025",
+                hora: "19:00",
+                duracao: "2h",
+                vagas: 30,
+                inscricoes: 23,
+                modalidade: "Online",
+                instrutor: "Carla Almeida"
+            },
+            {
+                id: 2,
+                titulo: "Feira de Empreendedoras NAVE",
+                tipo: "Feira",
+                data: "20/11/2025",
+                hora: "09:00",
+                duracao: "8h",
+                vagas: 50,
+                inscricoes: 45,
+                modalidade: "Presencial",
+                local: "Centro Cultural, São Paulo"
+            },
+            {
+                id: 3,
+                titulo: "Live: Instagram para Vendas",
+                tipo: "Live",
+                data: "25/11/2025",
+                hora: "20:00",
+                duracao: "1h30",
+                vagas: 100,
+                inscricoes: 78,
+                modalidade: "YouTube",
+                instrutor: "Ana Paula Souza"
+            },
+            {
+                id: 4,
+                titulo: "Workshop: Gestão de Tempo",
+                tipo: "Workshop",
+                data: "28/11/2025",
+                hora: "18:00",
+                duracao: "2h",
+                vagas: 25,
+                inscricoes: 12,
+                modalidade: "Online"
+            },
+            {
+                id: 5,
+                titulo: "Mentoria: Planejamento 2026",
+                tipo: "Mentoria",
+                data: "05/12/2025",
+                hora: "14:00",
+                duracao: "3h",
+                vagas: 15,
+                inscricoes: 8,
+                modalidade: "Híbrido"
+            }
+        ];
+        
+        // Gerar calendário
+        function generateCalendar() {
+            const calendarDays = document.getElementById('calendarDays');
+            const diasComEvento = [15, 20, 25, 28];
+            const hoje = 30;
+            
+            // Dias vazios do início
+            for (let i = 0; i < 5; i++) {
+                calendarDays.innerHTML += '<div></div>';
+            }
+            
+            // Dias do mês
+            for (let dia = 1; dia <= 30; dia++) {
+                const hasEvent = diasComEvento.includes(dia);
+                const isToday = dia === hoje;
+                const classes = `calendar-day ${hasEvent ? 'has-event' : ''} ${isToday ? 'today' : ''}`;
+                
+                calendarDays.innerHTML += `<div class="${classes}">${dia}</div>`;
+            }
+        }
+        
+        // Variável global para filtro ativo
+        let filtroAtivo = 'todos';
+        
+        // Renderizar eventos
+        function renderizarEventos(filtro = 'todos') {
+            const container = document.getElementById('listaEventos');
+            container.innerHTML = '';
+            
+            // Filtrar eventos
+            const eventosFiltrados = filtro === 'todos' 
+                ? eventos 
+                : eventos.filter(evento => evento.tipo === filtro);
+            
+            if (eventosFiltrados.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-5">
+                        <i class="bi bi-calendar-x display-1 text-muted"></i>
+                        <p class="text-muted mt-3">Nenhum evento encontrado nesta categoria.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            eventosFiltrados.forEach(evento => {
+                const vagasRestantes = evento.vagas - evento.inscricoes;
+                const percentual = (evento.inscricoes / evento.vagas) * 100;
+                
+                const card = `
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-2 text-center">
+                                    <div class="bg-primary text-white p-3 rounded">
+                                        <div style="font-size: 2rem; font-weight: bold;">${evento.data.split('/')[0]}</div>
+                                        <div>NOV</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <span class="badge bg-info mb-2">${evento.tipo}</span>
+                                    <h5 class="fw-bold mb-2">${evento.titulo}</h5>
+                                    <p class="text-muted mb-2 small">
+                                        <i class="bi bi-clock"></i> ${evento.hora} - ${evento.duracao} |
+                                        <i class="bi bi-laptop"></i> ${evento.modalidade}
+                                    </p>
+                                    <div class="progress" style="height: 5px;">
+                                        <div class="progress-bar bg-success" style="width: ${percentual}%"></div>
+                                    </div>
+                                    <small class="text-muted">${evento.inscricoes}/${evento.vagas} inscritos</small>
+                                </div>
+                                <div class="col-md-3 text-end">
+                                    <button class="btn btn-primary btn-sm w-100" onclick="inscreverEvento('${evento.titulo}')">
+                                        <i class="bi bi-calendar-plus"></i> Inscrever
+                                    </button>
+                                    ${vagasRestantes <= 5 ? '<small class="text-danger d-block mt-2">Últimas vagas!</small>' : ''}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                container.innerHTML += card;
+            });
+        }
+        
+        // Função para filtrar eventos
+        function filtrarEventos(tipo) {
+            // Atualizar tabs ativas
+            const tabs = document.querySelectorAll('#eventosTabs .nav-link');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Renderizar com filtro
+            filtroAtivo = tipo;
+            renderizarEventos(tipo);
+        }
+        
+        function inscreverEvento(titulo) {
+            alert(`Inscrição realizada com sucesso no evento:\n"${titulo}"\n\nVocê receberá um e-mail de confirmação em breve.`);
+        }
+        
+        function changeMonth(direction) {
+            alert('Navegação entre meses (funcionalidade de exemplo)');
+        }
+        
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', () => {
+            generateCalendar();
+            renderizarEventos();
+        });
+    </script>
+</body>
+</html>

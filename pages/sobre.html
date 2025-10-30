@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre - Rede NAVE</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#667eea">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <!-- CSS Customizado -->
+    <link rel="stylesheet" href="../css/style.css">
+    
+    <style>
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .timeline-item {
+            display: flex;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            flex-direction: row;
+        }
+        
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        
+        .timeline-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 45%;
+            transition: transform 0.3s ease;
+        }
+        
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .timeline-icon {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            z-index: 1;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.5);
+        }
+        
+        .team-member {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 15px;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .team-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            font-weight: bold;
+        }
+        
+        .value-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+        
+        .value-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .value-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .partner-logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 15px;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 1rem;
+            transition: all 0.3s ease;
+            border: 2px solid #dee2e6;
+        }
+        
+        .partner-logo:hover {
+            transform: scale(1.1);
+            border-color: #667eea;
+        }
+        
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                flex-direction: row !important;
+            }
+            
+            .timeline-content {
+                width: calc(100% - 80px);
+                margin-left: 80px;
+            }
+            
+            .timeline-icon {
+                left: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="../index.html">
+                <i class="bi bi-rocket-takeoff-fill"></i> Rede NAVE
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="trilhas.html">Trilhas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="eventos.html">Eventos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="sobre.html">Sobre</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="suporte.html">Suporte</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html">
+                            <i class="bi bi-box-arrow-in-right"></i> Entrar
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-warning btn-sm ms-2" href="cadastro.html">
+                            Cadastre-se
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section text-white text-center py-5">
+        <div class="container py-5">
+            <h1 class="display-3 fw-bold mb-4">Sobre a Rede NAVE</h1>
+            <p class="lead mb-4">Transformando vidas através da educação empreendedora</p>
+            <p class="fs-5">Somos uma rede dedicada ao empoderamento de mulheres empreendedoras,<br> oferecendo formação, capacitação e apoio para o desenvolvimento de negócios sustentáveis.</p>
+        </div>
+    </section>
+
+    <!-- Missão, Visão e Valores -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="value-card text-center">
+                        <div class="value-icon">
+                            <i class="bi bi-bullseye"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Nossa Missão</h4>
+                        <p class="text-muted">
+                            Capacitar mulheres empreendedoras através de formação profissional de qualidade, 
+                            fornecendo ferramentas e conhecimentos para o desenvolvimento de negócios sustentáveis 
+                            e transformadores.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="value-card text-center">
+                        <div class="value-icon">
+                            <i class="bi bi-eye"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Nossa Visão</h4>
+                        <p class="text-muted">
+                            Ser referência em educação empreendedora feminina, criando uma rede de mulheres 
+                            capacitadas e conectadas, capazes de gerar impacto positivo em suas comunidades 
+                            e na economia.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="value-card text-center">
+                        <div class="value-icon">
+                            <i class="bi bi-heart"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Nossos Valores</h4>
+                        <p class="text-muted">
+                            Empoderamento, solidariedade, inovação, inclusão e sustentabilidade. 
+                            Acreditamos no potencial de cada mulher e no poder da educação para 
+                            transformar realidades.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nossa História - Timeline -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="fw-bold text-center mb-5">Nossa Trajetória</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="badge bg-primary mb-2">2020</span>
+                        <h5 class="fw-bold">Fundação da Rede NAVE</h5>
+                        <p class="text-muted mb-0">
+                            Início do projeto com o objetivo de capacitar mulheres empreendedoras 
+                            em comunidades vulneráveis, oferecendo cursos presenciais de gestão básica.
+                        </p>
+                    </div>
+                    <div class="timeline-icon">
+                        <i class="bi bi-flag"></i>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="badge bg-primary mb-2">2021</span>
+                        <h5 class="fw-bold">Expansão Digital</h5>
+                        <p class="text-muted mb-0">
+                            Adaptação para o formato híbrido devido à pandemia. Início das 
+                            formações online via Google Meet e WhatsApp. Alcançamos 200 alunas.
+                        </p>
+                    </div>
+                    <div class="timeline-icon">
+                        <i class="bi bi-laptop"></i>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="badge bg-primary mb-2">2022</span>
+                        <h5 class="fw-bold">Parcerias Estratégicas</h5>
+                        <p class="text-muted mb-0">
+                            Firmamos parcerias com empresas e organizações sociais, expandindo 
+                            nosso alcance e oferecendo mais recursos às empreendedoras.
+                        </p>
+                    </div>
+                    <div class="timeline-icon">
+                        <i class="bi bi-people"></i>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="badge bg-primary mb-2">2023</span>
+                        <h5 class="fw-bold">Certificação Reconhecida</h5>
+                        <p class="text-muted mb-0">
+                            Nossos certificados passaram a ser reconhecidos por instituições 
+                            parceiras. Mais de 400 mulheres capacitadas até o momento.
+                        </p>
+                    </div>
+                    <div class="timeline-icon">
+                        <i class="bi bi-award"></i>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <span class="badge bg-success mb-2">2025</span>
+                        <h5 class="fw-bold">Plataforma Digital</h5>
+                        <p class="text-muted mb-0">
+                            Lançamento da plataforma online integrada, reunindo todos os 
+                            materiais e recursos em um único lugar. Nova fase da Rede NAVE!
+                        </p>
+                    </div>
+                    <div class="timeline-icon">
+                        <i class="bi bi-rocket-takeoff"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Números e Impacto -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="fw-bold text-center mb-5">Nosso Impacto em Números</h2>
+            
+            <div class="row g-4 text-center">
+                <div class="col-md-3 col-6">
+                    <div class="stat-box p-4">
+                        <h2 class="display-3 fw-bold text-primary mb-0" data-count="500">0</h2>
+                        <p class="text-muted mb-0">Mulheres<br>Capacitadas</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-box p-4">
+                        <h2 class="display-3 fw-bold text-success mb-0" data-count="85">0</h2>
+                        <p class="text-muted mb-0">% Taxa de<br>Conclusão</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-box p-4">
+                        <h2 class="display-3 fw-bold text-warning mb-0" data-count="250">0</h2>
+                        <p class="text-muted mb-0">Negócios<br>Criados</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-box p-4">
+                        <h2 class="display-3 fw-bold text-danger mb-0" data-count="95">0</h2>
+                        <p class="text-muted mb-0">% Satisfação<br>das Alunas</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Equipe -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="fw-bold text-center mb-5">Nossa Equipe</h2>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="team-member">
+                        <div class="team-photo">RC</div>
+                        <h5 class="fw-bold mb-1">Rosa Costa</h5>
+                        <p class="text-muted mb-3">Fundadora e Diretora Geral</p>
+                        <p class="small text-muted">
+                            Empresária com 20 anos de experiência em desenvolvimento social 
+                            e empoderamento feminino.
+                        </p>
+                        <div class="social-links">
+                            <a href="#" class="text-primary me-2"><i class="bi bi-linkedin fs-5"></i></a>
+                            <a href="#" class="text-primary"><i class="bi bi-envelope fs-5"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="team-member">
+                        <div class="team-photo" style="background: linear-gradient(135deg, #198754 0%, #20c997 100%);">CA</div>
+                        <h5 class="fw-bold mb-1">Carla Almeida</h5>
+                        <p class="text-muted mb-3">Coordenadora Pedagógica</p>
+                        <p class="small text-muted">
+                            Especialista em gestão financeira e educação empreendedora, 
+                            com mestrado em Administração.
+                        </p>
+                        <div class="social-links">
+                            <a href="#" class="text-success me-2"><i class="bi bi-linkedin fs-5"></i></a>
+                            <a href="#" class="text-success"><i class="bi bi-envelope fs-5"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="team-member">
+                        <div class="team-photo" style="background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);">AP</div>
+                        <h5 class="fw-bold mb-1">Ana Paula Souza</h5>
+                        <p class="text-muted mb-3">Mentora de Marketing</p>
+                        <p class="small text-muted">
+                            Especialista em marketing digital com foco em pequenos negócios 
+                            e empreendedorismo feminino.
+                        </p>
+                        <div class="social-links">
+                            <a href="#" class="text-warning me-2"><i class="bi bi-linkedin fs-5"></i></a>
+                            <a href="#" class="text-warning"><i class="bi bi-envelope fs-5"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Parceiros -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="fw-bold text-center mb-5">Nossos Parceiros</h2>
+            
+            <div class="d-flex flex-wrap justify-content-center align-items-center">
+                <div class="partner-logo">
+                    <h6 class="mb-0 text-muted">SEBRAE</h6>
+                </div>
+                <div class="partner-logo">
+                    <h6 class="mb-0 text-muted">ONU Mulheres</h6>
+                </div>
+                <div class="partner-logo">
+                    <h6 class="mb-0 text-muted">Banco Social</h6>
+                </div>
+                <div class="partner-logo">
+                    <h6 class="mb-0 text-muted">Instituto Empreender</h6>
+                </div>
+                <div class="partner-logo">
+                    <h6 class="mb-0 text-muted">Tech4Good</h6>
+                </div>
+            </div>
+            
+            <div class="text-center mt-5">
+                <h5 class="fw-bold mb-3">Quer ser nosso parceiro?</h5>
+                <p class="text-muted mb-4">Junte-se a nós nessa missão de transformar vidas!</p>
+                <button class="btn btn-primary btn-lg" onclick="alert('Entre em contato: parcerias@redenave.org')">
+                    <i class="bi bi-handshake"></i> Seja um Parceiro
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section py-5 text-white text-center">
+        <div class="container">
+            <h2 class="fw-bold mb-3">Faça Parte Dessa Transformação</h2>
+            <p class="lead mb-4">Juntas, podemos criar um futuro melhor para todas as mulheres empreendedoras</p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="cadastro.html" class="btn btn-warning btn-lg px-5">
+                    Cadastre-se Agora
+                </a>
+                <button class="btn btn-outline-light btn-lg px-5" onclick="alert('contato@redenave.org')">
+                    Entre em Contato
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <h5 class="fw-bold mb-3 text-white">
+                        <i class="bi bi-rocket-takeoff"></i> Rede NAVE
+                    </h5>
+                    <p style="color: #adb5bd;">Empoderando mulheres empreendedoras através da educação e capacitação profissional.</p>
+                    <div class="social-links mt-3">
+                        <a href="#" class="text-white me-3" title="Facebook"><i class="bi bi-facebook fs-4"></i></a>
+                        <a href="#" class="text-white me-3" title="Instagram"><i class="bi bi-instagram fs-4"></i></a>
+                        <a href="#" class="text-white me-3" title="LinkedIn"><i class="bi bi-linkedin fs-4"></i></a>
+                        <a href="#" class="text-white" title="YouTube"><i class="bi bi-youtube fs-4"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <h6 class="fw-bold mb-3 text-white">Menu</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="../index.html" class="text-decoration-none" style="color: #adb5bd;">Início</a></li>
+                        <li class="mb-2"><a href="trilhas.html" class="text-decoration-none" style="color: #adb5bd;">Trilhas</a></li>
+                        <li class="mb-2"><a href="eventos.html" class="text-decoration-none" style="color: #adb5bd;">Eventos</a></li>
+                        <li class="mb-2"><a href="sobre.html" class="text-decoration-none" style="color: #adb5bd;">Sobre</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h6 class="fw-bold mb-3 text-white">Suporte</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="suporte.html" class="text-decoration-none" style="color: #adb5bd;">Perguntas Frequentes</a></li>
+                        <li class="mb-2"><a href="suporte.html#contato" class="text-decoration-none" style="color: #adb5bd;">Contato</a></li>
+                        <li class="mb-2"><a href="suporte.html" class="text-decoration-none" style="color: #adb5bd;">Central de Ajuda</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h6 class="fw-bold mb-3 text-white">Contato</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2" style="color: #adb5bd;">
+                            <i class="bi bi-envelope"></i> contato@redenave.org
+                        </li>
+                        <li class="mb-2" style="color: #adb5bd;">
+                            <i class="bi bi-telephone"></i> (11) 98765-4321
+                        </li>
+                        <li class="mb-2">
+                            <a href="https://wa.me/5511987654321" class="text-decoration-none" style="color: #25d366;" target="_blank">
+                                <i class="bi bi-whatsapp"></i> WhatsApp Suporte
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4" style="border-color: #495057;">
+            <div class="text-center" style="color: #adb5bd;">
+                <p class="mb-0">&copy; 2025 Rede NAVE. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Animação de contadores
+        function animateCounters() {
+            const counters = document.querySelectorAll('[data-count]');
+            
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-count'));
+                const duration = 2000;
+                const increment = target / (duration / 16);
+                let current = 0;
+                
+                const updateCounter = () => {
+                    current += increment;
+                    if (current < target) {
+                        counter.textContent = Math.floor(current);
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.textContent = target;
+                    }
+                };
+                
+                // Observar quando o elemento entra na viewport
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            updateCounter();
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                });
+                
+                observer.observe(counter);
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', animateCounters);
+    </script>
+</body>
+</html>

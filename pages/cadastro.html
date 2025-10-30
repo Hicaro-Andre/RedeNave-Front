@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Rede NAVE</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#667eea">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    
+    <!-- CSS Customizado -->
+    <link rel="stylesheet" href="../css/style.css">
+    
+    <style>
+        .cadastro-container {
+            min-height: 100vh;
+            padding: 3rem 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .cadastro-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 3rem;
+        }
+        
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+        
+        .step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+        
+        .step::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #dee2e6;
+            z-index: -1;
+        }
+        
+        .step:first-child::before {
+            left: 50%;
+        }
+        
+        .step:last-child::before {
+            right: 50%;
+        }
+        
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #dee2e6;
+            color: #6c757d;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 0.5rem;
+        }
+        
+        .step.active .step-circle {
+            background: #667eea;
+            color: white;
+        }
+        
+        .step.completed .step-circle {
+            background: #198754;
+            color: white;
+        }
+        
+        .step small {
+            display: block;
+            position: relative;
+            z-index: 2;
+            background: white;
+            padding: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="cadastro-container">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="cadastro-card">
+                        <div class="text-center mb-4">
+                            <i class="bi bi-rocket-takeoff text-primary" style="font-size: 3rem;"></i>
+                            <h2 class="fw-bold mt-3">Cadastre-se na Rede NAVE</h2>
+                            <p class="text-muted">Preencha seus dados para começar sua jornada empreendedora</p>
+                        </div>
+                        
+                        <!-- Indicador de Passos -->
+                        <div class="step-indicator">
+                            <div class="step active">
+                                <div class="step-circle">1</div>
+                                <small>Dados Pessoais</small>
+                            </div>
+                            <div class="step">
+                                <div class="step-circle">2</div>
+                                <small>Seu Negócio</small>
+                            </div>
+                            <div class="step">
+                                <div class="step-circle">3</div>
+                                <small>Confirmação</small>
+                            </div>
+                        </div>
+                        
+                        <!-- Formulário de Cadastro -->
+                        <form id="cadastroForm" class="needs-validation" novalidate>
+                            <!-- Passo 1: Dados Pessoais -->
+                            <div class="step-content" id="step1">
+                                <h5 class="mb-4"><i class="bi bi-person-circle"></i> Dados Pessoais</h5>
+                                
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="nome" class="form-label">Nome Completo *</label>
+                                        <input type="text" class="form-control" id="nome" placeholder="Seu nome completo" required>
+                                        <div class="invalid-feedback">Por favor, insira seu nome.</div>
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <label for="cpf" class="form-label">CPF *</label>
+                                        <input type="text" class="form-control" id="cpf" placeholder="000.000.000-00" required>
+                                        <div class="invalid-feedback">Por favor, insira um CPF válido.</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="email" class="form-label">E-mail *</label>
+                                        <input type="email" class="form-control" id="email" placeholder="seu@email.com" required>
+                                        <div class="invalid-feedback">Por favor, insira um e-mail válido.</div>
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <label for="telefone" class="form-label">Telefone/WhatsApp *</label>
+                                        <input type="tel" class="form-control" id="telefone" placeholder="(00) 00000-0000" required>
+                                        <div class="invalid-feedback">Por favor, insira um telefone válido.</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="dataNascimento" class="form-label">Data de Nascimento *</label>
+                                        <input type="date" class="form-control" id="dataNascimento" required>
+                                        <div class="invalid-feedback">Por favor, insira sua data de nascimento.</div>
+                                    </div>
+                                    
+                                    <div class="col-md-6 mb-3">
+                                        <label for="cidade" class="form-label">Cidade/Estado *</label>
+                                        <input type="text" class="form-control" id="cidade" placeholder="São Paulo/SP" required>
+                                        <div class="invalid-feedback">Por favor, insira sua cidade.</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="senha" class="form-label">Senha *</label>
+                                    <input type="password" class="form-control" id="senha" placeholder="Mínimo 6 caracteres" minlength="6" required>
+                                    <div class="invalid-feedback">A senha deve ter no mínimo 6 caracteres.</div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label for="confirmarSenha" class="form-label">Confirmar Senha *</label>
+                                    <input type="password" class="form-control" id="confirmarSenha" placeholder="Digite a senha novamente" required>
+                                    <div class="invalid-feedback">As senhas não coincidem.</div>
+                                </div>
+                                
+                                <button type="button" class="btn btn-primary w-100" onclick="nextStep(2)">
+                                    Próximo <i class="bi bi-arrow-right"></i>
+                                </button>
+                            </div>
+                            
+                            <!-- Passo 2: Seu Negócio -->
+                            <div class="step-content d-none" id="step2">
+                                <h5 class="mb-4"><i class="bi bi-briefcase"></i> Conte-nos sobre seu Negócio</h5>
+                                
+                                <div class="mb-3">
+                                    <label for="tipoNegocio" class="form-label">Qual seu tipo de negócio? *</label>
+                                    <select class="form-select" id="tipoNegocio" required>
+                                        <option value="">Selecione...</option>
+                                        <option value="artesanato">Artesanato</option>
+                                        <option value="alimentacao">Alimentação/Gastronomia</option>
+                                        <option value="moda">Moda/Confecção</option>
+                                        <option value="beleza">Beleza/Estética</option>
+                                        <option value="servicos">Prestação de Serviços</option>
+                                        <option value="comercio">Comércio</option>
+                                        <option value="ainda-nao">Ainda não tenho um negócio</option>
+                                        <option value="outro">Outro</option>
+                                    </select>
+                                    <div class="invalid-feedback">Por favor, selecione uma opção.</div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="tempoNegocio" class="form-label">Há quanto tempo empreende?</label>
+                                    <select class="form-select" id="tempoNegocio">
+                                        <option value="">Selecione...</option>
+                                        <option value="nao-empreende">Ainda não empreendo</option>
+                                        <option value="menos-1">Menos de 1 ano</option>
+                                        <option value="1-3">1 a 3 anos</option>
+                                        <option value="3-5">3 a 5 anos</option>
+                                        <option value="mais-5">Mais de 5 anos</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label">Que tipo de formação você busca? *</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="interesse1" value="gestao">
+                                        <label class="form-check-label" for="interesse1">Gestão Financeira</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="interesse2" value="marketing">
+                                        <label class="form-check-label" for="interesse2">Marketing Digital</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="interesse3" value="vendas">
+                                        <label class="form-check-label" for="interesse3">Vendas</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="interesse4" value="lideranca">
+                                        <label class="form-check-label" for="interesse4">Liderança</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label for="comoChehou" class="form-label">Como conheceu a Rede NAVE?</label>
+                                    <select class="form-select" id="comoChegou">
+                                        <option value="">Selecione...</option>
+                                        <option value="redes-sociais">Redes Sociais</option>
+                                        <option value="indicacao">Indicação de amiga</option>
+                                        <option value="google">Pesquisa no Google</option>
+                                        <option value="evento">Evento presencial</option>
+                                        <option value="whatsapp">WhatsApp</option>
+                                        <option value="outro">Outro</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="d-flex gap-2">
+                                    <button type="button" class="btn btn-outline-secondary w-50" onclick="previousStep(1)">
+                                        <i class="bi bi-arrow-left"></i> Voltar
+                                    </button>
+                                    <button type="button" class="btn btn-primary w-50" onclick="nextStep(3)">
+                                        Próximo <i class="bi bi-arrow-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Passo 3: Confirmação -->
+                            <div class="step-content d-none" id="step3">
+                                <h5 class="mb-4"><i class="bi bi-check-circle"></i> Confirme seus Dados</h5>
+                                
+                                <div class="alert alert-info">
+                                    <i class="bi bi-info-circle"></i> 
+                                    Revise suas informações antes de finalizar o cadastro.
+                                </div>
+                                
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h6 class="card-title fw-bold">Dados Pessoais</h6>
+                                        <p class="mb-1"><strong>Nome:</strong> <span id="resumoNome"></span></p>
+                                        <p class="mb-1"><strong>E-mail:</strong> <span id="resumoEmail"></span></p>
+                                        <p class="mb-0"><strong>Telefone:</strong> <span id="resumoTelefone"></span></p>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-check mb-4">
+                                    <input class="form-check-input" type="checkbox" id="aceitoTermos" required>
+                                    <label class="form-check-label" for="aceitoTermos">
+                                        Concordo com os <a href="#" target="_blank">Termos de Uso</a> e 
+                                        <a href="#" target="_blank">Política de Privacidade</a> *
+                                    </label>
+                                    <div class="invalid-feedback">Você precisa aceitar os termos.</div>
+                                </div>
+                                
+                                <div class="d-flex gap-2">
+                                    <button type="button" class="btn btn-outline-secondary w-50" onclick="previousStep(2)">
+                                        <i class="bi bi-arrow-left"></i> Voltar
+                                    </button>
+                                    <button type="submit" class="btn btn-success w-50">
+                                        <i class="bi bi-check-lg"></i> Finalizar Cadastro
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        
+                        <div class="text-center mt-4">
+                            <span class="text-muted">Já tem uma conta? </span>
+                            <a href="login.html" class="text-decoration-none fw-bold">Faça login</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Botão Voltar -->
+                    <div class="text-center mt-4">
+                        <a href="../index.html" class="btn btn-outline-light">
+                            <i class="bi bi-arrow-left"></i> Voltar para Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        let currentStep = 1;
+        
+        function nextStep(step) {
+            // Validar passo atual antes de avançar
+            const currentStepElement = document.getElementById(`step${currentStep}`);
+            const inputs = currentStepElement.querySelectorAll('input[required], select[required]');
+            let valid = true;
+            
+            inputs.forEach(input => {
+                if (!input.checkValidity()) {
+                    valid = false;
+                    input.classList.add('is-invalid');
+                } else {
+                    input.classList.remove('is-invalid');
+                }
+            });
+            
+            // Validação especial para senha
+            if (currentStep === 1) {
+                const senha = document.getElementById('senha').value;
+                const confirmarSenha = document.getElementById('confirmarSenha').value;
+                
+                if (senha !== confirmarSenha) {
+                    document.getElementById('confirmarSenha').classList.add('is-invalid');
+                    valid = false;
+                }
+            }
+            
+            if (!valid) return;
+            
+            // Atualizar resumo no passo 3
+            if (step === 3) {
+                document.getElementById('resumoNome').textContent = document.getElementById('nome').value;
+                document.getElementById('resumoEmail').textContent = document.getElementById('email').value;
+                document.getElementById('resumoTelefone').textContent = document.getElementById('telefone').value;
+            }
+            
+            // Esconder passo atual
+            document.getElementById(`step${currentStep}`).classList.add('d-none');
+            document.querySelectorAll('.step')[currentStep - 1].classList.remove('active');
+            document.querySelectorAll('.step')[currentStep - 1].classList.add('completed');
+            
+            // Mostrar próximo passo
+            currentStep = step;
+            document.getElementById(`step${currentStep}`).classList.remove('d-none');
+            document.querySelectorAll('.step')[currentStep - 1].classList.add('active');
+        }
+        
+        function previousStep(step) {
+            // Esconder passo atual
+            document.getElementById(`step${currentStep}`).classList.add('d-none');
+            document.querySelectorAll('.step')[currentStep - 1].classList.remove('active');
+            
+            // Mostrar passo anterior
+            currentStep = step;
+            document.getElementById(`step${currentStep}`).classList.remove('d-none');
+            document.querySelectorAll('.step')[currentStep - 1].classList.add('active');
+            document.querySelectorAll('.step')[currentStep - 1].classList.remove('completed');
+        }
+        
+        // Submissão do formulário
+        document.getElementById('cadastroForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (this.checkValidity() && document.getElementById('aceitoTermos').checked) {
+                // Coletar dados do formulário
+                const dados = {
+                    nome: document.getElementById('nome').value,
+                    cpf: document.getElementById('cpf').value,
+                    email: document.getElementById('email').value,
+                    telefone: document.getElementById('telefone').value,
+                    dataNascimento: document.getElementById('dataNascimento').value,
+                    cidade: document.getElementById('cidade').value,
+                    tipoNegocio: document.getElementById('tipoNegocio').value,
+                    tempoNegocio: document.getElementById('tempoNegocio').value,
+                    comoChegou: document.getElementById('comoChegou').value
+                };
+                
+                // Mostrar mensagem de sucesso
+                alert('Cadastro realizado com sucesso! Bem-vinda à Rede NAVE! 🎉\n\nVerifique seu e-mail para confirmar o cadastro.');
+                
+                // Redirecionar para login
+                window.location.href = 'login.html';
+            }
+            
+            this.classList.add('was-validated');
+        });
+        
+        // Máscaras simples
+        document.getElementById('cpf').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length <= 11) {
+                value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+                e.target.value = value;
+            }
+        });
+        
+        document.getElementById('telefone').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length <= 11) {
+                value = value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
+                e.target.value = value;
+            }
+        });
+    </script>
+</body>
+</html>

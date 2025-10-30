@@ -1,0 +1,26 @@
+<svg width="400" height="250" viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffc107;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#fd7e14;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="400" height="250" fill="url(#grad3)"/>
+  
+  <!-- Trophy -->
+  <text x="150" y="150" font-size="100" opacity="0.3">🏆</text>
+  
+  <!-- Stars -->
+  <text x="80" y="80" font-size="40" opacity="0.5">⭐</text>
+  <text x="280" y="100" font-size="40" opacity="0.5">⭐</text>
+  <text x="100" y="200" font-size="40" opacity="0.5">⭐</text>
+  <text x="300" y="180" font-size="40" opacity="0.5">⭐</text>
+  
+  <!-- Crown -->
+  <text x="50" y="150" font-size="50" opacity="0.6">👑</text>
+  
+  <!-- Title -->
+  <text x="200" y="40" font-size="24" fill="white" font-weight="bold" text-anchor="middle">Liderança</text>
+</svg>
