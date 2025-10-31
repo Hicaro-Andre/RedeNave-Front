@@ -7,11 +7,12 @@ um projeto **HTML estático** e um projeto **React** dentro da pasta `a.front-re
 
 ## Branch
 
-Todas as novas funcionalidades e ajustes devem ser realizados na branch develop.
- 
- 1. No terminal rode o comando abaixo para mudar pra branch develop 
+Todas as novas funcionalidades e ajustes devem ser realizadas na branch `develop`.
+
+1. No terminal, rode o comando abaixo para mudar pra branch `develop`:
    ```bash
    git checkout develop
+
 
 ---
 
