@@ -12,8 +12,6 @@ Todas as novas funcionalidades e ajustes devem ser realizadas na branch `develop
 1. No terminal, rode o comando abaixo para mudar pra branch `develop`:
    ```bash
    git checkout develop
-
-
 ---
 
 ## 🚀 Executando o Projeto HTML
@@ -33,10 +31,11 @@ Todas as novas funcionalidades e ajustes devem ser realizadas na branch `develop
 
 2. Instale as dependências:
 
+  ```bash
    npm install
 
 3. Rode no terminal
-
+   ```bash
    npm run dev
 
 ---
