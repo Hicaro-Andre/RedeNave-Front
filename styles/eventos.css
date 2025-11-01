@@ -12,6 +12,31 @@
   margin-bottom: 2rem;
 }
 
+.calendar-header button {
+  transition: all 0.3s ease;
+}
+
+.calendar-header button:hover {
+  background-color: #667eea !important;
+  color: white !important;
+  border-color: #667eea !important;
+}
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+
+.weekday {
+  text-align: center;
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: #666;
+  padding: 0.5rem 0;
+}
+
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -25,23 +50,52 @@
   justify-content: center;
   border-radius: 10px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
+  font-weight: 500;
+  font-size: 0.95rem;
+  border: 2px solid transparent;
+  color: #333;
+  background: #f8f9fa;
 }
 
 .calendar-day:hover {
-  background: #f8f9fa;
-  transform: scale(1.05);
+  background: #e9ecef;
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+}
+
+.calendar-day.disabled {
+  color: #ccc;
+  cursor: not-allowed;
+  background: #fafafa;
+}
+
+.calendar-day.disabled:hover {
+  background: #fafafa;
+  transform: none;
 }
 
 .calendar-day.has-event {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   font-weight: bold;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.calendar-day.has-event:hover {
+  transform: scale(1.12);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.calendar-day.active {
+  border: 2px solid #667eea;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
 }
 
 .calendar-day.today {
   border: 2px solid #ffc107;
+  box-shadow: inset 0 0 0 1px #ffc107;
 }
 
 .event-detail-card {
@@ -51,11 +105,13 @@
   overflow: hidden;
   transition: all 0.3s ease;
   cursor: pointer;
+  border: 1px solid transparent;
 }
 
 .event-detail-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  border-color: #667eea;
 }
 
 .event-header {
