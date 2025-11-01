@@ -13,9 +13,7 @@
     --light-color: #f8f9fa;
     --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-
     --whatsapp-color: #25D366;
-    --texto_color_1: var(--texto_color_1);
 }
 
 /* ----- Reset e Configurações Gerais ----- */
