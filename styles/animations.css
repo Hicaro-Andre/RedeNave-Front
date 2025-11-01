@@ -318,7 +318,7 @@
 
 /* ----- Classes Utilitárias de Animação ----- */
 .animate-fade-in {
-    animation: fadeIn 1s ease-out;
+    animation: fadeIn 1s ease-out;   
 }
 
 .animate-fade-in-up {
