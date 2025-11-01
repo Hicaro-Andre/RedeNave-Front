@@ -273,6 +273,13 @@
             <div id="listaEventos">
               <!-- Eventos serão carregados via JS -->
             </div>
+            
+            <!-- Paginação -->
+            <nav aria-label="Navegação de eventos" class="mt-4">
+              <ul class="pagination justify-content-center" id="paginacao">
+                <!-- Paginação será gerada via JS -->
+              </ul>
+            </nav>
           </div>
         </div>
       </div>
@@ -376,7 +383,8 @@
               <li class="mb-2">
                 <a
                   href="https://wa.me/5511987654321"
-                  class="text-decoration-none text-success"
+                  class="text-decoration-none"
+                  style="color: var(--whatsapp-color)"
                   target="_blank"
                 >
                   <i class="bi bi-whatsapp"></i> WhatsApp Suporte
@@ -464,12 +472,71 @@
           inscricoes: 8,
           modalidade: "Híbrido",
         },
+        {
+          id: 6,
+          titulo: "Workshop: Redes Sociais",
+          tipo: "Workshop",
+          data: new Date(2025, 11, 10),
+          hora: "19:00",
+          duracao: "2h",
+          vagas: 40,
+          inscricoes: 35,
+          modalidade: "Online",
+        },
+        {
+          id: 7,
+          titulo: "Live: Atendimento ao Cliente",
+          tipo: "Live",
+          data: new Date(2025, 11, 15),
+          hora: "20:00",
+          duracao: "1h30",
+          vagas: 100,
+          inscricoes: 67,
+          modalidade: "YouTube",
+        },
+        {
+          id: 8,
+          titulo: "Workshop: Fotografia de Produtos",
+          tipo: "Workshop",
+          data: new Date(2025, 11, 18),
+          hora: "15:00",
+          duracao: "3h",
+          vagas: 20,
+          inscricoes: 18,
+          modalidade: "Presencial",
+        },
+        {
+          id: 9,
+          titulo: "Feira de Natal NAVE",
+          tipo: "Feira",
+          data: new Date(2025, 11, 20),
+          hora: "10:00",
+          duracao: "8h",
+          vagas: 60,
+          inscricoes: 55,
+          modalidade: "Presencial",
+        },
+        {
+          id: 10,
+          titulo: "Workshop: Storytelling para Vendas",
+          tipo: "Workshop",
+          data: new Date(2025, 11, 22),
+          hora: "18:00",
+          duracao: "2h",
+          vagas: 30,
+          inscricoes: 15,
+          modalidade: "Online",
+        },
       ];
 
       // ==================== ESTADO GLOBAL ====================
       let currentDate = new Date(2025, 10, 1); // Novembro 2025
       let selectedDate = null;
       let filtroAtivo = "todos";
+      
+      // Paginação
+      const EVENTOS_POR_PAGINA = 3;
+      let paginaAtual = 1;
 
       // ==================== FUNÇÕES UTILITÁRIAS ====================
       /**
@@ -609,6 +676,7 @@
         const eventosDaData = getEventosDaData(date);
 
         container.innerHTML = "";
+        document.getElementById("paginacao").innerHTML = ""; // Limpar paginação
 
         if (eventosDaData.length === 0) {
           container.innerHTML = `
@@ -627,7 +695,7 @@
       }
 
       /**
-       * Renderiza eventos conforme filtro ativo
+       * Renderiza eventos conforme filtro ativo com paginação
        */
       function renderizarEventos() {
         const container = document.getElementById("listaEventos");
@@ -636,6 +704,7 @@
         container.innerHTML = "";
 
         if (eventosFiltrados.length === 0) {
+          document.getElementById("paginacao").innerHTML = "";
           container.innerHTML = `
             <div class="text-center py-5">
               <i class="bi bi-calendar-x display-1 text-muted"></i>
@@ -645,7 +714,92 @@
           return;
         }
 
-        eventosFiltrados.forEach(evento => criarCartaoEvento(container, evento));
+        // Calcular paginação
+        const totalPaginas = Math.ceil(eventosFiltrados.length / EVENTOS_POR_PAGINA);
+        const inicio = (paginaAtual - 1) * EVENTOS_POR_PAGINA;
+        const fim = inicio + EVENTOS_POR_PAGINA;
+        const eventosPagina = eventosFiltrados.slice(inicio, fim);
+
+        // Renderizar eventos da página atual
+        eventosPagina.forEach(evento => criarCartaoEvento(container, evento));
+        
+        // Renderizar controles de paginação
+        renderizarPaginacao(totalPaginas, eventosFiltrados.length);
+      }
+      
+      /**
+       * Renderiza os controles de paginação do Bootstrap
+       */
+      function renderizarPaginacao(totalPaginas, totalEventos) {
+        const paginacaoContainer = document.getElementById("paginacao");
+        
+        if (totalPaginas <= 1) {
+          paginacaoContainer.innerHTML = "";
+          return;
+        }
+        
+        let html = "";
+        
+        // Botão Anterior
+        html += `
+          <li class="page-item ${paginaAtual === 1 ? 'disabled' : ''}">
+            <a class="page-link" href="#" onclick="mudarPagina(${paginaAtual - 1}); return false;" aria-label="Anterior">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+        `;
+        
+        // Números das páginas
+        for (let i = 1; i <= totalPaginas; i++) {
+          // Mostrar apenas algumas páginas ao redor da atual
+          if (
+            i === 1 || 
+            i === totalPaginas || 
+            (i >= paginaAtual - 1 && i <= paginaAtual + 1)
+          ) {
+            html += `
+              <li class="page-item ${i === paginaAtual ? 'active' : ''}">
+                <a class="page-link" href="#" onclick="mudarPagina(${i}); return false;">
+                  ${i}
+                </a>
+              </li>
+            `;
+          } else if (i === paginaAtual - 2 || i === paginaAtual + 2) {
+            html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+          }
+        }
+        
+        // Botão Próximo
+        html += `
+          <li class="page-item ${paginaAtual === totalPaginas ? 'disabled' : ''}">
+            <a class="page-link" href="#" onclick="mudarPagina(${paginaAtual + 1}); return false;" aria-label="Próximo">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        `;
+        
+        paginacaoContainer.innerHTML = html;
+        
+        // Mostrar informação de resultados
+        const inicio = (paginaAtual - 1) * EVENTOS_POR_PAGINA + 1;
+        const fim = Math.min(paginaAtual * EVENTOS_POR_PAGINA, totalEventos);
+        console.log(`Mostrando ${inicio}-${fim} de ${totalEventos} eventos`);
+      }
+      
+      /**
+       * Muda para uma página específica
+       */
+      function mudarPagina(novaPagina) {
+        const eventosFiltrados = getEventosFiltrados();
+        const totalPaginas = Math.ceil(eventosFiltrados.length / EVENTOS_POR_PAGINA);
+        
+        if (novaPagina < 1 || novaPagina > totalPaginas) return;
+        
+        paginaAtual = novaPagina;
+        renderizarEventos();
+        
+        // Scroll suave para o topo da lista
+        document.getElementById("listaEventos").scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }
 
       /**
@@ -675,7 +829,7 @@
                     <i class="bi bi-laptop"></i> ${evento.modalidade}
                   </p>
                   <div class="progress" style="height: 5px;">
-                    <div class="progress-bar bg-success" style="width: ${percentual}%"></div>
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: ${percentual}%"></div>
                   </div>
                   <small class="text-muted">${evento.inscricoes}/${evento.vagas} inscritos</small>
                 </div>
@@ -703,6 +857,7 @@
 
         filtroAtivo = tipo;
         selectedDate = null;
+        paginaAtual = 1; // Reset para primeira página
         gerarCalendario();
         renderizarEventos();
       }
@@ -713,6 +868,7 @@
       function limparSelecao() {
         selectedDate = null;
         filtroAtivo = "todos";
+        paginaAtual = 1; // Reset para primeira página
         gerarCalendario();
         renderizarEventos();
       }

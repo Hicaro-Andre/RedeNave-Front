@@ -164,7 +164,7 @@ body {
     top: -15px;
     right: 20px;
     background: var(--bs-warning);
-    color: white;
+    color: var(--bs-dark);
     width: 40px;
     height: 40px;
     border-radius: 50%;

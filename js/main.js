@@ -27,6 +27,7 @@ const trilhas = [
         modulos: 12,
         nivel: "Iniciante",
         alunos: 156,
+        progresso: 65,
         imagem: "images/trilha-financeira.jpg"
     },
     {
@@ -39,6 +40,7 @@ const trilhas = [
         modulos: 10,
         nivel: "Intermediário",
         alunos: 203,
+        progresso: 85,
         imagem: "images/trilha-marketing.jpg"
     },
     {
@@ -51,6 +53,7 @@ const trilhas = [
         modulos: 8,
         nivel: "Avançado",
         alunos: 98,
+        progresso: 45,
         imagem: "images/trilha-lideranca.jpg"
     }
 ];
@@ -118,10 +121,28 @@ function renderizarTrilhas() {
                             <h5 class="card-title mb-0">${trilha.titulo}</h5>
                         </div>
                         <p class="card-text text-muted">${trilha.descricao}</p>
-                        <div class="d-flex justify-content-between text-muted small mb-3">
+                        <div class="d-flex justify-content-between text-muted small mb-2">
                             <span><i class="bi bi-clock"></i> ${trilha.duracao}</span>
                             <span><i class="bi bi-book"></i> ${trilha.modulos} módulos</span>
                         </div>
+                        
+                        <!-- Barra de Progresso Animada -->
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <small class="text-muted">Popularidade</small>
+                                <small class="text-muted fw-bold">${trilha.progresso}%</small>
+                            </div>
+                            <div class="progress" style="height: 8px;">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-${trilha.cor}" 
+                                     role="progressbar" 
+                                     style="width: ${trilha.progresso}%" 
+                                     aria-valuenow="${trilha.progresso}" 
+                                     aria-valuemin="0" 
+                                     aria-valuemax="100">
+                                </div>
+                            </div>
+                        </div>
+                        
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="text-muted small">
                                 <i class="bi bi-people-fill"></i> ${trilha.alunos} alunas
