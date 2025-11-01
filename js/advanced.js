@@ -1,21 +1,15 @@
 // =========================================
 // Rede NAVE - Recursos Avançados
+// Otimizado para Bootstrap 5
 // =========================================
 
 'use strict';
 
 // =========================================
-// UTILITÁRIOS E CONFIGURAÇÕES
+// UTILITÁRIOS
 // =========================================
 
 const NAVE_UTILS = {
-    createStyle: (css) => {
-        const style = document.createElement('style');
-        style.textContent = css;
-        document.head.appendChild(style);
-        return style;
-    },
-    
     escapeHtml: (text) => {
         const div = document.createElement('div');
         div.textContent = text;
@@ -23,36 +17,8 @@ const NAVE_UTILS = {
     }
 };
 
-// Adicionar animações globais (apenas uma vez)
-NAVE_UTILS.createStyle(`
-    @keyframes slideInRight {
-        from { transform: translateX(400px); opacity: 0; }
-        to { transform: translateX(0); opacity: 1; }
-    }
-    
-    @keyframes slideOutRight {
-        from { transform: translateX(0); opacity: 1; }
-        to { transform: translateX(400px); opacity: 0; }
-    }
-    
-    @keyframes scaleIn {
-        from { transform: scale(0.7); opacity: 0; }
-        to { transform: scale(1); opacity: 1; }
-    }
-    
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-    
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-`);
-
 // =========================================
-// 1. SISTEMA DE NOTIFICAÇÕES TOAST
+// 1. SISTEMA DE NOTIFICAÇÕES TOAST (Bootstrap Native)
 // =========================================
 class ToastNotification {
     constructor() {
@@ -64,134 +30,103 @@ class ToastNotification {
         if (!container) {
             container = document.createElement('div');
             container.id = 'toast-container';
-            container.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                z-index: 9999;
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-            `;
+            container.className = 'toast-container position-fixed top-0 end-0 p-3';
+            container.style.zIndex = '9999';
             document.body.appendChild(container);
         }
         return container;
     }
     
     show(message, type = 'info', duration = 3000) {
+        if (typeof bootstrap === 'undefined') {
+            console.error('Bootstrap não carregado');
+            return;
+        }
+        
         const colors = {
-            success: '#198754',
-            error: '#dc3545',
-            warning: '#ffc107',
-            info: '#0dcaf0'
+            success: 'success',
+            error: 'danger',
+            warning: 'warning',
+            info: 'info'
         };
         
         const icons = {
-            success: '✓',
-            error: '✕',
-            warning: '⚠',
-            info: 'ℹ'
+            success: 'bi-check-circle-fill',
+            error: 'bi-x-circle-fill',
+            warning: 'bi-exclamation-triangle-fill',
+            info: 'bi-info-circle-fill'
         };
-        
-        const toast = document.createElement('div');
-        toast.style.cssText = `
-            background: white;
-            color: #333;
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            min-width: 300px;
-            animation: slideInRight 0.3s ease-out;
-            border-left: 4px solid ${colors[type]};
-        `;
         
         const safeMessage = NAVE_UTILS.escapeHtml(message);
         
-        toast.innerHTML = `
-            <span style="
-                width: 30px;
-                height: 30px;
-                border-radius: 50%;
-                background: ${colors[type]};
-                color: white;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-weight: bold;
-            ">${icons[type]}</span>
-            <span style="flex: 1;">${safeMessage}</span>
-            <button onclick="this.parentElement.remove()" style="
-                background: none;
-                border: none;
-                font-size: 1.2rem;
-                cursor: pointer;
-                color: #999;
-            ">×</button>
+        const toastEl = document.createElement('div');
+        toastEl.className = `toast align-items-center text-white bg-${colors[type]} border-0`;
+        toastEl.setAttribute('role', 'alert');
+        toastEl.setAttribute('aria-live', 'assertive');
+        toastEl.setAttribute('aria-atomic', 'true');
+        toastEl.innerHTML = `
+            <div class="d-flex">
+                <div class="toast-body">
+                    <i class="bi ${icons[type]} me-2"></i>
+                    ${safeMessage}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" 
+                        data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
         `;
         
-        this.container.appendChild(toast);
+        this.container.appendChild(toastEl);
         
-        setTimeout(() => {
-            toast.style.animation = 'slideOutRight 0.3s ease-out';
-            setTimeout(() => toast.remove(), 300);
-        }, duration);
+        // Usar Bootstrap Toast API
+        const toast = new bootstrap.Toast(toastEl, {
+            autohide: true,
+            delay: duration,
+            animation: true
+        });
+        
+        toast.show();
+        
+        toastEl.addEventListener('hidden.bs.toast', () => {
+            toastEl.remove();
+        });
     }
 }
 
 const toast = new ToastNotification();
 
 // =========================================
-// 2. MODAL DE VÍDEO
+// 2. MODAL DE VÍDEO (Bootstrap Modal)
 // =========================================
 class VideoModal {
     constructor() {
-        this.modal = null;
         this.createModal();
     }
     
     createModal() {
         const modalHTML = `
-            <div id="videoModal" style="
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0,0,0,0.9);
-                z-index: 10000;
-                justify-content: center;
-                align-items: center;
-            ">
-                <div style="position: relative; width: 90%; max-width: 900px;">
-                    <button onclick="videoModal.close()" style="
-                        position: absolute;
-                        top: -40px;
-                        right: 0;
-                        background: white;
-                        border: none;
-                        width: 40px;
-                        height: 40px;
-                        border-radius: 50%;
-                        font-size: 1.5rem;
-                        cursor: pointer;
-                        color: #333;
-                    ">×</button>
-                    <div id="videoContainer" style="
-                        background: black;
-                        border-radius: 10px;
-                        overflow: hidden;
-                        aspect-ratio: 16/9;
-                    "></div>
+            <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="videoModalLabel">Vídeo</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body p-0">
+                            <div id="videoContainer" style="aspect-ratio: 16/9; background: black;"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         `;
         
         document.body.insertAdjacentHTML('beforeend', modalHTML);
-        this.modal = document.getElementById('videoModal');
+        this.modalElement = document.getElementById('videoModal');
+        this.bsModal = new bootstrap.Modal(this.modalElement);
+        
+        // Limpar vídeo ao fechar
+        this.modalElement.addEventListener('hidden.bs.modal', () => {
+            document.getElementById('videoContainer').innerHTML = '';
+        });
     }
     
     open(videoUrl) {
@@ -221,14 +156,11 @@ class VideoModal {
             `;
         }
         
-        this.modal.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
+        this.bsModal.show();
     }
     
     close() {
-        document.getElementById('videoContainer').innerHTML = '';
-        this.modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
+        this.bsModal.hide();
     }
     
     extractYouTubeId(url) {
@@ -241,145 +173,86 @@ class VideoModal {
 const videoModal = new VideoModal();
 
 // =========================================
-// 3. LOADING OVERLAY
+// 3. LOADING OVERLAY (Bootstrap Spinner)
 // =========================================
 class LoadingOverlay {
     constructor() {
-        this.overlay = null;
         this.createOverlay();
     }
     
     createOverlay() {
         const overlayHTML = `
-            <div id="loadingOverlay" style="
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(255,255,255,0.9);
-                backdrop-filter: blur(5px);
-                z-index: 9998;
-                justify-content: center;
-                align-items: center;
-            ">
-                <div style="text-align: center;">
-                    <div style="
-                        width: 60px;
-                        height: 60px;
-                        border: 5px solid #f3f3f3;
-                        border-top: 5px solid #667eea;
-                        border-radius: 50%;
-                        animation: spin 1s linear infinite;
-                        margin: 0 auto 20px;
-                    "></div>
-                    <p style="color: #667eea; font-weight: bold; font-size: 1.2rem;">
-                        Carregando...
-                    </p>
+            <div id="loadingOverlay" class="modal fade" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content bg-transparent border-0 shadow-none">
+                        <div class="modal-body text-center">
+                            <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+                                <span class="visually-hidden">Carregando...</span>
+                            </div>
+                            <p class="text-primary fw-bold mt-3">Carregando...</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         `;
         
         document.body.insertAdjacentHTML('beforeend', overlayHTML);
-        this.overlay = document.getElementById('loadingOverlay');
+        this.modalElement = document.getElementById('loadingOverlay');
+        this.bsModal = new bootstrap.Modal(this.modalElement);
     }
     
     show() {
-        this.overlay.style.display = 'flex';
+        this.bsModal.show();
     }
     
     hide() {
-        this.overlay.style.display = 'none';
+        this.bsModal.hide();
     }
 }
 
 const loading = new LoadingOverlay();
 
 // =========================================
-// 4. MODAL DE CONFIRMAÇÃO
+// 4. MODAL DE CONFIRMAÇÃO (Bootstrap Modal)
 // =========================================
 class ConfirmModal {
     constructor() {
-        this.modal = null;
         this.createModal();
     }
     
     createModal() {
         const modalHTML = `
-            <div id="confirmModal" style="
-                display: none;
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0,0,0,0.5);
-                z-index: 9999;
-                justify-content: center;
-                align-items: center;
-            ">
-                <div style="
-                    background: white;
-                    padding: 2rem;
-                    border-radius: 15px;
-                    max-width: 400px;
-                    width: 90%;
-                    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-                    animation: scaleIn 0.3s ease-out;
-                ">
-                    <div style="text-align: center; margin-bottom: 1.5rem;">
-                        <div id="confirmIcon" style="
-                            width: 60px;
-                            height: 60px;
-                            border-radius: 50%;
-                            background: #ffc107;
-                            color: white;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            font-size: 2rem;
-                            margin: 0 auto 1rem;
-                        ">⚠</div>
-                        <h5 id="confirmTitle" style="font-weight: bold; margin-bottom: 0.5rem;">Confirmar Ação</h5>
-                        <p id="confirmMessage" style="color: #666; margin: 0;">Tem certeza que deseja continuar?</p>
-                    </div>
-                    <div style="display: flex; gap: 10px;">
-                        <button id="confirmCancel" style="
-                            flex: 1;
-                            padding: 0.75rem;
-                            border: 2px solid #dee2e6;
-                            background: white;
-                            border-radius: 8px;
-                            font-weight: bold;
-                            cursor: pointer;
-                            transition: all 0.3s;
-                        ">Cancelar</button>
-                        <button id="confirmOk" style="
-                            flex: 1;
-                            padding: 0.75rem;
-                            border: none;
-                            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                            color: white;
-                            border-radius: 8px;
-                            font-weight: bold;
-                            cursor: pointer;
-                            transition: all 0.3s;
-                        ">Confirmar</button>
+            <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header border-0">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body text-center pb-4">
+                            <div id="confirmIcon" class="mb-3">
+                                <i class="bi bi-exclamation-triangle-fill text-warning" style="font-size: 4rem;"></i>
+                            </div>
+                            <h5 id="confirmTitle" class="fw-bold mb-2">Confirmar Ação</h5>
+                            <p id="confirmMessage" class="text-muted">Tem certeza que deseja continuar?</p>
+                        </div>
+                        <div class="modal-footer border-0 justify-content-center">
+                            <button type="button" id="confirmCancel" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" id="confirmOk" class="btn btn-primary">Confirmar</button>
+                        </div>
                     </div>
                 </div>
             </div>
         `;
         
         document.body.insertAdjacentHTML('beforeend', modalHTML);
-        this.modal = document.getElementById('confirmModal');
+        this.modalElement = document.getElementById('confirmModal');
+        this.bsModal = new bootstrap.Modal(this.modalElement);
     }
     
     show(options = {}) {
         const {
             title = 'Confirmar Ação',
             message = 'Tem certeza que deseja continuar?',
-            icon = '⚠',
             confirmText = 'Confirmar',
             cancelText = 'Cancelar',
             onConfirm = () => {},
@@ -388,34 +261,33 @@ class ConfirmModal {
         
         document.getElementById('confirmTitle').textContent = title;
         document.getElementById('confirmMessage').textContent = message;
-        document.getElementById('confirmIcon').textContent = icon;
         document.getElementById('confirmOk').textContent = confirmText;
         document.getElementById('confirmCancel').textContent = cancelText;
-        
-        this.modal.style.display = 'flex';
         
         const confirmBtn = document.getElementById('confirmOk');
         const cancelBtn = document.getElementById('confirmCancel');
         
-        confirmBtn.onclick = () => {
+        // Remove event listeners anteriores
+        const newConfirmBtn = confirmBtn.cloneNode(true);
+        const newCancelBtn = cancelBtn.cloneNode(true);
+        confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+        cancelBtn.parentNode.replaceChild(newCancelBtn, cancelBtn);
+        
+        newConfirmBtn.onclick = () => {
             onConfirm();
-            this.hide();
+            this.bsModal.hide();
         };
         
-        cancelBtn.onclick = () => {
+        newCancelBtn.onclick = () => {
             onCancel();
-            this.hide();
+            this.bsModal.hide();
         };
         
-        this.modal.onclick = (e) => {
-            if (e.target === this.modal) {
-                this.hide();
-            }
-        };
+        this.bsModal.show();
     }
     
     hide() {
-        this.modal.style.display = 'none';
+        this.bsModal.hide();
     }
 }
 
@@ -589,10 +461,8 @@ function inicializarRecursosAvancados() {
         initLazyLoading();
         initBackToTop();
         initAdvancedSearch();
-        
-        console.log('✓ Recursos avançados carregados!');
     } catch (error) {
-        console.error('✗ Erro ao carregar recursos avançados:', error);
+        console.error('Erro ao carregar recursos avançados:', error);
     }
 }
 

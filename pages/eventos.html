@@ -28,8 +28,9 @@
     />
 
     <!-- CSS Customizado -->
-    <link rel="stylesheet" href="../styles/eventos.css" />
     <link rel="stylesheet" href="../styles/globals.css" />
+    <link rel="stylesheet" href="../styles/components.css" />
+    <link rel="stylesheet" href="../styles/pages.css" />
   </head>
   <body>
     <!-- Navbar -->
@@ -47,7 +48,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
+          <ul class="navbar-nav ms-auto text-center">
             <li class="nav-item">
               <a class="nav-link" href="../index.html">Início</a>
             </li>
@@ -79,7 +80,7 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="bg-primary text-white text-center py-5">
+    <section class="bg-primary text-white text-center py-5 fade show">
       <div class="container">
         <h1 class="display-4 fw-bold mb-3">Agenda de Eventos</h1>
         <p class="lead">Participe de workshops, feiras, lives e muito mais!</p>
@@ -87,7 +88,7 @@
     </section>
 
     <!-- Tabs de Filtro -->
-    <section class="py-4 bg-light">
+    <section class="py-4 bg-light fade show">
       <div class="container">
         <ul
           class="nav nav-pills justify-content-center"
@@ -119,7 +120,7 @@
     </section>
 
     <!-- Próximo Evento em Destaque -->
-    <section class="py-5">
+    <section class="py-5 fade show">
       <div class="container">
         <h2 class="fw-bold mb-4 text-center">Próximo Evento 🔥</h2>
         <div class="row justify-content-center">
@@ -167,7 +168,7 @@
                 <i class="bi bi-calendar-plus"></i> Inscrever-se Agora
               </button>
             </div>
-            <div class="bg-white p-4" style="border-radius: 0 0 15px 15px">
+            <div class="bg-white p-4 rounded-bottom">
               <h5 class="fw-bold mb-3">Sobre o Evento</h5>
               <p class="text-muted">
                 Aprenda a calcular o preço ideal para seus produtos ou serviços!
@@ -219,7 +220,7 @@
     </section>
 
     <!-- Calendário e Lista de Eventos -->
-    <section class="py-5 bg-light">
+    <section class="py-5 bg-light fade show">
       <div class="container">
         <h3 class="fw-bold mb-4 text-center">Calendário de Eventos</h3>
 
@@ -246,13 +247,13 @@
               </div>
 
               <div class="calendar-weekdays">
-                <div class="weekday text-black">Dom</div>
-                <div class="weekday text-black">Seg</div>
-                <div class="weekday text-black">Ter</div>
-                <div class="weekday text-black">Qua</div>
-                <div class="weekday text-black">Qui</div>
-                <div class="weekday text-black">Sex</div>
-                <div class="weekday text-black">Sáb</div>
+                <div class="weekday text-dark">Dom</div>
+                <div class="weekday text-dark">Seg</div>
+                <div class="weekday text-dark">Ter</div>
+                <div class="weekday text-dark">Qua</div>
+                <div class="weekday text-dark">Qui</div>
+                <div class="weekday text-dark">Sex</div>
+                <div class="weekday text-dark">Sáb</div>
               </div>
 
               <div class="calendar-grid" id="calendarDays">
@@ -285,7 +286,7 @@
             <h5 class="fw-bold mb-3 text-white">
               Rede NAVE
             </h5>
-            <p style="color: var(--texto_color_1)">
+            <p class="text-white-50">
               Empoderando mulheres empreendedoras através da educação e
               capacitação profissional.
             </p>
@@ -310,32 +311,28 @@
               <li class="mb-2">
                 <a
                   href="../index.html"
-                  class="text-decoration-none"
-                  style="color: var(--texto_color_1)"
+                  class="text-decoration-none text-white-50"
                   >Início</a
                 >
               </li>
               <li class="mb-2">
                 <a
                   href="trilhas.html"
-                  class="text-decoration-none"
-                  style="color: var(--texto_color_1)"
+                  class="text-decoration-none text-white-50"
                   >Trilhas</a
                 >
               </li>
               <li class="mb-2">
                 <a
                   href="eventos.html"
-                  class="text-decoration-none"
-                  style="color: var(--texto_color_1)"
+                  class="text-decoration-none text-white-50"
                   >Eventos</a
                 >
               </li>
               <li class="mb-2">
                 <a
                   href="sobre.html"
-                  class="text-decoration-none"
-                  style="color: var(--texto_color_1)"
+                  class="text-decoration-none text-white-50"
                   >Sobre</a
                 >
               </li>
@@ -347,24 +344,21 @@
               <li class="mb-2">
                 <a
                   href="suporte.html"
-                  class="text-decoration-none"
-                  style="color: var(--texto_color_1)"
+                  class="text-decoration-none text-white-50"
                   >Perguntas Frequentes</a
                 >
               </li>
               <li class="mb-2">
                 <a
                   href="suporte.html#contato"
-                  class="text-decoration-none"
-                  style="color: var(--texto_color_1)"
+                  class="text-decoration-none text-white-50"
                   >Contato</a
                 >
               </li>
               <li class="mb-2">
                 <a
                   href="suporte.html"
-                  class="text-decoration-none"
-                  style="color: var(--texto_color_1)"
+                  class="text-decoration-none text-white-50"
                   >Central de Ajuda</a
                 >
               </li>
@@ -373,17 +367,16 @@
           <div class="col-md-3">
             <h6 class="fw-bold mb-3 text-white">Contato</h6>
             <ul class="list-unstyled">
-              <li class="mb-2" style="color: var(--texto_color_1)">
+              <li class="mb-2 text-white-50">
                 <i class="bi bi-envelope"></i> contato@redenave.org
               </li>
-              <li class="mb-2" style="color: var(--texto_color_1)">
+              <li class="mb-2 text-white-50">
                 <i class="bi bi-telephone"></i> (11) 98765-4321
               </li>
               <li class="mb-2">
                 <a
                   href="https://wa.me/5511987654321"
-                  class="text-decoration-none"
-                  style="color: var(--whatsapp-color)"
+                  class="text-decoration-none text-success"
                   target="_blank"
                 >
                   <i class="bi bi-whatsapp"></i> WhatsApp Suporte

@@ -1,5 +1,6 @@
 // =========================================
 // Rede NAVE - JavaScript Principal
+// Otimizado para usar APIs Bootstrap 5
 // =========================================
 
 'use strict';
@@ -92,7 +93,10 @@ const eventos = [
 // Funções de Renderização
 // =========================================
 
-// Renderizar Trilhas na Home
+/**
+ * Renderiza os cards de trilhas na página inicial
+ * Busca os dados do array 'trilhas' e injeta HTML no container
+ */
 function renderizarTrilhas() {
     const container = document.getElementById('trilhasContainer');
     
@@ -102,7 +106,7 @@ function renderizarTrilhas() {
     
     trilhas.forEach(trilha => {
         const card = `
-            <div class="col-md-6 col-lg-4">
+            <div class="col-md-6 col-lg-4 fade show">
                 <div class="card trilha-card">
                     <span class="badge bg-${trilha.cor}">${trilha.nivel}</span>
                     <img src="${trilha.imagem}" class="card-img-top" alt="${trilha.titulo}" 
@@ -133,7 +137,10 @@ function renderizarTrilhas() {
     });
 }
 
-// Renderizar Eventos na Home
+/**
+ * Renderiza os cards de eventos na página inicial
+ * Busca os dados do array 'eventos' e injeta HTML no container
+ */
 function renderizarEventos() {
     const container = document.getElementById('eventosContainer');
     
@@ -143,7 +150,7 @@ function renderizarEventos() {
     
     eventos.forEach(evento => {
         const card = `
-            <div class="col-md-6 col-lg-4">
+            <div class="col-md-6 col-lg-4 fade show">
                 <div class="card event-card">
                     <div class="row g-0">
                         <div class="col-auto">
@@ -179,8 +186,13 @@ function renderizarEventos() {
 }
 
 // =========================================
-// Animações de Scroll
+// Animações de Scroll (usando Intersection Observer + Bootstrap fade)
 // =========================================
+
+/**
+ * Adiciona animações de fade-in aos elementos ao fazer scroll
+ * Usa Intersection Observer API para detectar quando elementos entram no viewport
+ */
 function adicionarAnimacoesScroll() {
     const fadeElements = document.querySelectorAll('.fade-in-section');
     
@@ -192,6 +204,8 @@ function adicionarAnimacoesScroll() {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
+                // Adiciona as classes Bootstrap para fade
+                entry.target.classList.add('fade', 'show');
                 entry.target.classList.add('is-visible');
             }
         });
@@ -205,6 +219,11 @@ function adicionarAnimacoesScroll() {
 // =========================================
 // Navbar Scroll Effect
 // =========================================
+
+/**
+ * Adiciona efeito de mudança visual na navbar ao fazer scroll
+ * Altera padding e sombra baseado na posição do scroll
+ */
 function navbarScrollEffect() {
     const navbar = document.querySelector('.navbar');
     if (!navbar) return;
@@ -275,31 +294,32 @@ function configurarValidacaoFormularios() {
 }
 
 // =========================================
-// Toast de Notificações (usando Bootstrap)
+// Toast de Notificações (Usando advanced.js)
 // =========================================
 function mostrarNotificacao(mensagem, tipo = 'success') {
-    if (typeof bootstrap === 'undefined') {
-        console.warn('Bootstrap não carregado. Notificação não exibida:', mensagem);
-        return;
+    // Verifica se o módulo avançado está carregado
+    if (window.NAVE_ADVANCED && window.NAVE_ADVANCED.toast) {
+        window.NAVE_ADVANCED.toast.show(mensagem, tipo);
+    } else if (typeof bootstrap !== 'undefined') {
+        // Fallback: implementação simples se advanced.js não estiver carregado
+        const container = document.querySelector('.toast-container') || createToastContainer();
+        const toastElement = createToastElement(mensagem, tipo);
+        container.appendChild(toastElement);
+        
+        const bsToast = new bootstrap.Toast(toastElement, {
+            autohide: true,
+            delay: NAVE_CONFIG.toastDuration,
+            animation: true
+        });
+        
+        bsToast.show();
+        toastElement.addEventListener('hidden.bs.toast', () => toastElement.remove());
+    } else {
+        console.error('Bootstrap não carregado.');
     }
-    
-    const toastContainer = document.querySelector('.toast-container') || createToastContainer();
-    
-    const toastElement = createToastElement(mensagem, tipo);
-    toastContainer.appendChild(toastElement);
-    
-    const bsToast = new bootstrap.Toast(toastElement, {
-        autohide: true,
-        delay: NAVE_CONFIG.toastDuration
-    });
-    
-    bsToast.show();
-    
-    toastElement.addEventListener('hidden.bs.toast', () => {
-        toastElement.remove();
-    });
 }
 
+// Funções auxiliares (fallback)
 function createToastContainer() {
     const container = document.createElement('div');
     container.className = 'toast-container position-fixed bottom-0 end-0 p-3';
@@ -309,9 +329,12 @@ function createToastContainer() {
 }
 
 function createToastElement(mensagem, tipo) {
+    const cores = { success: 'success', error: 'danger', warning: 'warning', info: 'info' };
     const toast = document.createElement('div');
-    toast.className = `toast align-items-center text-white bg-${tipo} border-0`;
+    toast.className = `toast align-items-center text-white bg-${cores[tipo] || 'info'} border-0`;
     toast.setAttribute('role', 'alert');
+    toast.setAttribute('aria-live', 'assertive');
+    toast.setAttribute('aria-atomic', 'true');
     toast.innerHTML = `
         <div class="d-flex">
             <div class="toast-body">${mensagem}</div>
@@ -321,9 +344,10 @@ function createToastElement(mensagem, tipo) {
     return toast;
 }
 
-// =========================================
-// Contador Animado para Estatísticas
-// =========================================
+/**
+ * Contador animado para estatísticas
+ * Anima números de 0 até o valor final quando o elemento entra no viewport
+ */
 function animarContadores() {
     const contadores = document.querySelectorAll('.stat-card h3');
     
@@ -365,14 +389,29 @@ function animarNumero(element) {
 }
 
 // =========================================
-// Inicialização e Performance
+// Inicialização com Bootstrap Components
 // =========================================
 function inicializarTooltips() {
     if (typeof bootstrap === 'undefined') return;
     
+    // Inicializa todos os tooltips Bootstrap
     const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
     [...tooltipTriggerList].forEach(tooltipTriggerEl => {
-        new bootstrap.Tooltip(tooltipTriggerEl);
+        new bootstrap.Tooltip(tooltipTriggerEl, {
+            animation: true // Usa fade animation do Bootstrap
+        });
+    });
+}
+
+function inicializarPopovers() {
+    if (typeof bootstrap === 'undefined') return;
+    
+    // Inicializa todos os popovers Bootstrap
+    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+    [...popoverTriggerList].forEach(popoverTriggerEl => {
+        new bootstrap.Popover(popoverTriggerEl, {
+            animation: true // Usa fade animation do Bootstrap
+        });
     });
 }
 
@@ -388,11 +427,12 @@ function inicializarAplicacao() {
         adicionarAnimacoesScroll();
         animarContadores();
         configurarValidacaoFormularios();
-        inicializarTooltips();
         
-        console.log('✓ Rede NAVE - Plataforma carregada com sucesso!');
+        // Inicializar componentes Bootstrap
+        inicializarTooltips();
+        inicializarPopovers();
     } catch (error) {
-        console.error('✗ Erro ao inicializar aplicação:', error);
+        console.error('Erro ao inicializar aplicação:', error);
     }
 }
 

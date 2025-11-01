@@ -1,0 +1,131 @@
+/* =========================================
+   Rede NAVE - Estilos Específicos por Página
+   ========================================= */
+
+/* ----- ADMIN PAGE ----- */
+.admin-sidebar {
+    min-height: 100vh;
+    background: var(--gradient-primary);
+    color: white;
+    padding: 0;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 250px;
+    z-index: var(--bs-zindex-fixed);
+}
+
+.admin-content {
+    margin-left: 250px;
+    padding: 2rem;
+    min-height: 100vh;
+}
+
+.sidebar-header {
+    padding: 2rem 1.5rem;
+    border-bottom: var(--bs-border-width) solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-nav {
+    padding: 1rem 0;
+}
+
+/* ----- DASHBOARD PAGE ----- */
+.dashboard-sidebar {
+    background: white;
+    border-radius: var(--bs-border-radius-lg);
+    box-shadow: var(--bs-box-shadow);
+    padding: 2rem;
+    position: sticky;
+    top: 100px;
+}
+
+/* ----- EVENTOS PAGE ----- */
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.calendar-header button {
+    transition: var(--bs-transition-base);
+}
+
+.calendar-header button:hover {
+    background-color: var(--bs-primary);
+    color: white;
+    border-color: var(--bs-primary);
+}
+
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+
+.weekday {
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: var(--bs-gray-600);
+    padding: 0.5rem 0;
+}
+
+.calendar-day.disabled {
+    color: var(--bs-gray-500);
+    cursor: not-allowed;
+    background: var(--bs-gray-200);
+}
+
+.calendar-day.disabled:hover {
+    background: var(--bs-gray-200);
+    transform: none;
+}
+
+.calendar-day.active {
+    border: 3px solid var(--bs-dark);
+    color: var(--bs-dark);
+}
+
+.event-detail-card {
+    background: white;
+    border-radius: var(--bs-border-radius-lg);
+    box-shadow: var(--bs-box-shadow);
+    overflow: hidden;
+    transition: var(--bs-transition-base);
+    cursor: pointer;
+    border: var(--bs-border-width) solid transparent;
+}
+
+.event-detail-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--bs-box-shadow-lg);
+    border-color: var(--bs-primary);
+}
+
+.event-header {
+    background: var(--gradient-primary);
+    color: white;
+    padding: 2rem;
+}
+
+/* ----- CHART CONTAINER ----- */
+.chart-container {
+    position: relative;
+    height: 300px;
+}
+
+/* ----- RESPONSIVO ADMIN ----- */
+@media (max-width: 768px) {
+    .admin-sidebar {
+        width: 100%;
+        position: relative;
+        min-height: auto;
+    }
+
+    .admin-content {
+        margin-left: 0;
+    }
+}
