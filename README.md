@@ -235,31 +235,3 @@ const eventos = [
     }
 ];
 ```
-
-## 🤝 Contribuindo
-
-Contribuições são bem-vindas! Para contribuir:
-
-1. Fork o projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/MinhaFeature`)
-3. Commit suas mudanças (`git commit -m 'Adiciona MinhaFeature'`)
-4. Push para a branch (`git push origin feature/MinhaFeature`)
-5. Abra um Pull Request
-
-## 📝 Licença
-
-Este projeto é de código aberto e está disponível sob a licença MIT.
-
-## 👥 Autores
-
-- **Hicaro André** - [@Hicaro-Andre](https://github.com/Hicaro-Andre)
-
-## 📞 Contato
-
-- **Email**: contato@redenave.org
-- **WhatsApp**: (11) 98765-4321
-- **Site**: https://redenave.org
-
----
-
-⭐ **Desenvolvido com 💜 para empoderar mulheres empreendedoras**
