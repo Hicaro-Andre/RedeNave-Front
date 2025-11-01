@@ -31,14 +31,14 @@ body {
     transform: scale(1.05);
 }
 
-.nav-link {
+.navbar .nav-link {
     font-weight: 500;
     transition: color var(--bs-transition);
-    padding: 0.5rem 1rem !important;
+    padding: 0.5rem 1rem;
 }
 
-.nav-link:hover {
-    color: var(--bs-warning) !important;
+.navbar .nav-link:hover {
+    color: var(--bs-warning);
 }
 
 /* ----- Hero Section ----- */
@@ -264,7 +264,7 @@ body {
 
 /* ----- Footer ----- */
 footer a:hover {
-    color: var(--bs-warning) !important;
+    color: var(--bs-warning);
     transition: color var(--bs-transition);
 }
 
@@ -317,7 +317,7 @@ footer a:hover {
 @media (max-width: 768px) {
     .hero-section {
         min-height: auto;
-        padding: 3rem 0 !important;
+        padding: 3rem 0;
     }
 
     .hero-section h1 {
