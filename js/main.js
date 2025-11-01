@@ -102,11 +102,12 @@ function renderizarTrilhas() {
     
     if (!container) return;
     
+    // Limpa o skeleton loading
     container.innerHTML = '';
     
     trilhas.forEach(trilha => {
         const card = `
-            <div class="col-md-6 col-lg-4 fade show">
+            <div class="col">
                 <div class="card trilha-card">
                     <span class="badge bg-${trilha.cor}">${trilha.nivel}</span>
                     <img src="${trilha.imagem}" class="card-img-top" alt="${trilha.titulo}" 
@@ -146,11 +147,12 @@ function renderizarEventos() {
     
     if (!container) return;
     
+    // Limpa o skeleton loading
     container.innerHTML = '';
     
     eventos.forEach(evento => {
         const card = `
-            <div class="col-md-6 col-lg-4 fade show">
+            <div class="col">
                 <div class="card event-card">
                     <div class="row g-0">
                         <div class="col-auto">

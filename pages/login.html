@@ -99,10 +99,7 @@
 
                     <!-- Formulário de Login -->
                     <form id="loginForm" class="needs-validation" novalidate>
-                      <div class="mb-3">
-                        <label for="email" class="form-label">
-                          <i class="bi bi-envelope"></i> E-mail
-                        </label>
+                      <div class="form-floating mb-3">
                         <input
                           type="email"
                           class="form-control"
@@ -110,32 +107,39 @@
                           placeholder="seu@email.com"
                           required
                         />
+                        <label for="email">
+                          <i class="bi bi-envelope"></i> E-mail
+                        </label>
                         <div class="invalid-feedback">
                           Por favor, insira um e-mail válido.
                         </div>
                       </div>
 
                       <div class="mb-3">
-                        <label for="senha" class="form-label">
-                          <i class="bi bi-lock"></i> Senha
-                        </label>
                         <div class="input-group">
-                          <input
-                            type="password"
-                            class="form-control"
-                            id="senha"
-                            placeholder="Digite sua senha"
-                            required
-                          />
+                          <div class="form-floating flex-grow-1">
+                            <input
+                              type="password"
+                              class="form-control border-end-0"
+                              id="senha"
+                              placeholder="Digite sua senha"
+                              required
+                              style="border-top-right-radius: 0; border-bottom-right-radius: 0;"
+                            />
+                            <label for="senha">
+                              <i class="bi bi-lock"></i> Senha
+                            </label>
+                          </div>
                           <button
                             class="btn btn-outline-secondary"
                             type="button"
                             onclick="togglePassword()"
+                            style="border-top-left-radius: 0; border-bottom-left-radius: 0;"
                           >
                             <i class="bi bi-eye" id="toggleIcon"></i>
                           </button>
                         </div>
-                        <div class="invalid-feedback">
+                        <div class="invalid-feedback d-block" id="senhaFeedback" style="display: none !important;">
                           Por favor, insira sua senha.
                         </div>
                       </div>
@@ -143,7 +147,7 @@
                       <div
                         class="d-flex justify-content-between align-items-center mb-4"
                       >
-                        <div class="form-check">
+                        <div class="form-check form-switch">
                           <input
                             class="form-check-input"
                             type="checkbox"
@@ -187,10 +191,41 @@
       </div>
     </div>
 
+    <!-- Toast Container -->
+    <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 11000;">
+      <div id="successToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+          <div class="toast-body">
+            <i class="bi bi-check-circle-fill me-2"></i>
+            <span id="toastMessage">Login realizado com sucesso!</span>
+          </div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+      </div>
+      <div id="errorToast" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+          <div class="toast-body">
+            <i class="bi bi-exclamation-circle-fill me-2"></i>
+            <span id="errorMessage">Erro ao fazer login!</span>
+          </div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+      </div>
+    </div>
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
+      // Função para mostrar toast
+      function showToast(type, message) {
+        const toastEl = document.getElementById(type === 'success' ? 'successToast' : 'errorToast');
+        const messageEl = document.getElementById(type === 'success' ? 'toastMessage' : 'errorMessage');
+        messageEl.textContent = message;
+        const toast = new bootstrap.Toast(toastEl);
+        toast.show();
+      }
+
       // Validação do formulário
       document
         .getElementById("loginForm")
@@ -201,11 +236,15 @@
             const email = document.getElementById("email").value;
             const senha = document.getElementById("senha").value;
 
-            // Mostrar mensagem de sucesso
-            alert("Login realizado com sucesso! Redirecionando...");
+            // Mostrar toast de sucesso
+            showToast('success', 'Login realizado com sucesso! Redirecionando...');
 
-            // Redirecionar (em produção, após validação do backend)
-            // window.location.href = 'dashboard.html';
+            // Redirecionar após 1.5 segundos
+            setTimeout(() => {
+              window.location.href = 'dashboard.html';
+            }, 1500);
+          } else {
+            showToast('error', 'Por favor, preencha todos os campos corretamente.');
           }
 
           this.classList.add("was-validated");
