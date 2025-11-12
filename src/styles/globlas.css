@@ -1,18 +1,14 @@
-/* =========================================
-   Rede NAVE - Estilos
-   ========================================= */
-
 /* ----- Variáveis de Cores ----- */
 :root {
-    --primary-color: #0d6efd;
-    --secondary-color: #6c757d;
-    --success-color: #198754;
-    --warning-color: #ffc107;
-    --danger-color: #dc3545;
-    --dark-color: #212529;
-    --light-color: #f8f9fa;
-    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --primary-color: #0d6efd; /* Cor principal (botões, links e destaques gerais do site) */
+    --secondary-color: #7d6c6c; /* Cor secundária (tons neutros ou complementares) */
+    --success-color: #198754; /* Verde para mensagens de sucesso ou status positivos */
+    --warning-color: #ffc107; /* Amarelo para alertas, avisos e destaques sutis */
+    --danger-color: #dc3545; /* Vermelho para erros, alertas críticos ou exclusões */
+    --dark-color: #212529; /* Cor de texto e fundo escuro (elementos em contraste) */
+    --light-color: #f8f9fa; /* Fundo claro e áreas neutras (background geral, cards, etc.) */
+    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Gradiente principal do site (usado em seções e botões) */
+    --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Gradiente do topo do site (seção hero/banner principal) */
 }
 
 /* ----- Reset e Configurações Gerais ----- */
