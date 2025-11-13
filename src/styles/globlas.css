@@ -8,7 +8,7 @@
     --dark-color: #212529; /* Cor de texto e fundo escuro (elementos em contraste) */
     --light-color: #f8f9fa; /* Fundo claro e áreas neutras (background geral, cards, etc.) */
     --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Gradiente principal do site (usado em seções e botões) */
-    --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Gradiente do topo do site (seção hero/banner principal) */
+    --gradient-hero: red; /* Gradiente do topo do site (seção hero/banner principal) */
 }
 
 /* ----- Reset e Configurações Gerais ----- */
@@ -30,9 +30,12 @@ body {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     padding: 1rem 0;
     transition: all 0.3s ease;
-    background-color: #fff5e1;
+    background-color: #fdfdfd;
 }
 
+/* .bi{
+background-color: #212529;
+} */
 .navbar-brand {
     font-size: 1.5rem;
     transition: transform 0.3s ease;
@@ -46,10 +49,11 @@ body {
     font-weight: 500;
     transition: color 0.3s ease;
     padding: 0.5rem 1rem !important;
+    color: #6A0DAD;
 }
 
 .nav-link:hover {
-    color: var(--warning-color) !important;
+    color: #c77dff;
 }
 
 /* ----- Hero Section ----- */
@@ -298,7 +302,13 @@ footer a:hover {
     font-weight: 500;
     transition: all 0.3s ease;
     border: none;
+    background-color: #c77dff;
+    color: #dee2e6;
 }
+.btn:hover {
+    background-color: #6A0DAD;
+}
+
 
 .btn-primary {
     background: var(--primary-color);
