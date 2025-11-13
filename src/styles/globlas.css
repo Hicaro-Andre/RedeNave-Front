@@ -1,6 +1,6 @@
 /* ----- Variáveis de Cores ----- */
 :root {
-    --primary-color: #0d6efd; /* Cor principal (botões, links e destaques gerais do site) */
+    --primary-color: #c77dff; /* Cor principal (botões, links e destaques gerais do site) */
     --secondary-color: #7d6c6c; /* Cor secundária (tons neutros ou complementares) */
     --success-color: #198754; /* Verde para mensagens de sucesso ou status positivos */
     --warning-color: #ffc107; /* Amarelo para alertas, avisos e destaques sutis */
@@ -30,6 +30,7 @@ body {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     padding: 1rem 0;
     transition: all 0.3s ease;
+    background-color: #fff5e1;
 }
 
 .navbar-brand {
@@ -273,6 +274,9 @@ body {
 }
 
 /* ----- Footer ----- */
+footer{
+    background-color: #6a0dad;
+}
 footer a:hover {
     color: var(--warning-color) !important;
     transition: color 0.3s ease;
