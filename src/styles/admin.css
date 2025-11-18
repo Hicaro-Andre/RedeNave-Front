@@ -2,6 +2,7 @@ body {
   background: #f8f9fa;
 }
 
+/* ----- Sidebar ----- */
 .admin-sidebar {
   min-height: 100vh;
   background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
@@ -52,6 +53,9 @@ body {
   border-left-color: #ffc107;
 }
 
+
+
+/* ----- Dashboard Section ----- */
 .stat-card {
   background: white;
   border-radius: 15px;
@@ -124,6 +128,7 @@ body {
   height: 300px;
 }
 
+/* ----- Responsividade ----- */
 @media (max-width: 768px) {
   .admin-sidebar {
     width: 100%;

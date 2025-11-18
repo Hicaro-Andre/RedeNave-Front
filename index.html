@@ -6,11 +6,7 @@
     <title>Rede NAVE - Plataforma de Formação Empreendedora</title>
 
     <!-- Favicon -->
-    <link
-      rel="icon"
-      type="image/svg+xml"
-      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>"
-    />
+    <link rel="icon" type="image/x-ico" href="/src/assets/favicon.ico" />
 
     <!-- Meta Tags SEO -->
     <meta
@@ -69,16 +65,22 @@
 
     <!-- CSS Customizado -->
     <link rel="stylesheet" href="/src/styles/globlas.css" />
+    <link rel="stylesheet" href="src/styles/index.css" />
     <link rel="stylesheet" href="/src/styles/animations.css" />
   </head>
 
   <body>
-    <!-- Navbar (Bootstrap offcanvas ready component) -->
+    <!-- Navbar - MENU -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
       <div class="container">
         <a class="navbar-brand fw-bold" href="./index.html">
-          <i class="bi bi-rocket-takeoff-fill"></i> Rede NAVE
+          <img
+            src="./src/assets/logo-redenave.png"
+            alt="Rede Nave"
+            style="width: 120px; height: 50"
+          />
         </a>
+
         <button
           class="navbar-toggler"
           type="button"
@@ -98,7 +100,13 @@
         >
           <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasNavbarLabel">
-              <i class="bi bi-rocket-takeoff-fill"></i> Rede NAVE
+              <a class="navbar-brand fw-bold" href="./index.html">
+                <img
+                  src="/src/assets/logo-redenave.png"
+                  alt="Rede Nave"
+                  style="width: 120px; height: 50"
+                />
+              </a>
             </h5>
             <button
               type="button"
@@ -131,9 +139,7 @@
               </li>
             </ul>
             <div class="d-flex mt-3 mt-lg-0">
-              <a
-                class="btn btn-warning btn-sm ms-2"
-                href="src/pages/cadastro.html"
+              <a class="btn btn-sm ms-2" href="src/pages/cadastro.html"
                 >Cadastre-se</a
               >
             </div>
@@ -156,10 +162,7 @@
               acompanhamento completo do seu progresso.
             </p>
             <div class="d-grid d-sm-flex gap-2">
-              <a
-                href="src/pages/cadastro.html"
-                class="btn btn-warning btn-lg px-4"
-              >
+              <a href="src/pages/cadastro.html" class="btn btn-lg px-4">
                 <i class="bi bi-person-plus"></i> Começar Agora
               </a>
               <a href="#sobre" class="btn btn-outline-light btn-lg px-4">
@@ -185,25 +188,25 @@
           <div class="col-md-3 col-6 mb-3 mb-md-0">
             <div class="stat-card">
               <h3 class="fw-bold text-primary mb-0">500+</h3>
-              <p class="text-muted mb-0">Mulheres Capacitadas</p>
+              <p class="mb-0">Mulheres Capacitadas</p>
             </div>
           </div>
           <div class="col-md-3 col-6 mb-3 mb-md-0">
             <div class="stat-card">
               <h3 class="fw-bold text-primary mb-0">20+</h3>
-              <p class="text-muted mb-0">Cursos Disponíveis</p>
+              <p class="mb-0">Cursos Disponíveis</p>
             </div>
           </div>
           <div class="col-md-3 col-6">
             <div class="stat-card">
               <h3 class="fw-bold text-primary mb-0">95%</h3>
-              <p class="text-muted mb-0">Taxa de Satisfação</p>
+              <p class="mb-0">Taxa de Satisfação</p>
             </div>
           </div>
           <div class="col-md-3 col-6">
             <div class="stat-card">
               <h3 class="fw-bold text-primary mb-0">100%</h3>
-              <p class="text-muted mb-0">Online e Gratuito</p>
+              <p class="mb-0">Online e Gratuito</p>
             </div>
           </div>
         </div>
@@ -222,8 +225,10 @@
             />
           </div>
           <div class="col-lg-6">
-            <h2 class="fw-bold mb-4">Sobre a Rede NAVE</h2>
-            <p class="text-muted mb-3">
+            <h2 class="fw-bold mb-4 text-center text-md-start">
+              Sobre a Rede NAVE
+            </h2>
+            <p class="mb-3 text-center text-md-start">
               A Rede NAVE é uma iniciativa dedicada à formação e capacitação de
               mulheres empreendedoras, oferecendo um ambiente virtual integrado
               de aprendizagem.
@@ -235,7 +240,7 @@
                 </div>
                 <div>
                   <h5 class="mb-1">Trilhas Personalizadas</h5>
-                  <p class="text-muted mb-0">
+                  <p class="mb-0">
                     Conteúdos adaptados às necessidades de cada turma
                   </p>
                 </div>
@@ -246,7 +251,7 @@
                 </div>
                 <div>
                   <h5 class="mb-1">Acompanhamento em Tempo Real</h5>
-                  <p class="text-muted mb-0">
+                  <p class="mb-0">
                     Monitore seu progresso e conquiste certificados
                   </p>
                 </div>
@@ -257,9 +262,7 @@
                 </div>
                 <div>
                   <h5 class="mb-1">Acesso Flexível</h5>
-                  <p class="text-muted mb-0">
-                    Estude de qualquer lugar, a qualquer hora
-                  </p>
+                  <p class="mb-0">Estude de qualquer lugar, a qualquer hora</p>
                 </div>
               </div>
             </div>
@@ -273,7 +276,7 @@
       <div class="container">
         <div class="text-center mb-5">
           <h2 class="fw-bold mb-3">Nossas Trilhas de Aprendizagem</h2>
-          <p class="text-muted">
+          <p class="">
             Escolha a trilha ideal para desenvolver suas habilidades
             empreendedoras
           </p>
@@ -282,7 +285,7 @@
           <!-- As trilhas serão carregadas dinamicamente via JavaScript -->
         </div>
         <div class="text-center mt-4">
-          <a href="src/pages/trilhas.html" class="btn btn-primary btn-lg">
+          <a href="src/pages/trilhas.html" class="btn btn-lg">
             Ver Todas as Trilhas <i class="bi bi-arrow-right"></i>
           </a>
         </div>
@@ -294,27 +297,23 @@
       <div class="container">
         <div class="text-center mb-5">
           <h2 class="fw-bold mb-3">Como Funciona?</h2>
-          <p class="text-muted">
-            Comece sua jornada empreendedora em 4 passos simples
-          </p>
+          <p class="">Comece sua jornada empreendedora em 4 passos simples</p>
         </div>
         <div class="row g-4">
           <div class="col-md-6 col-lg-3">
             <div class="step-card text-center p-4 h-100">
               <div class="step-number">1</div>
-              <i class="bi bi-person-plus-fill text-primary display-4 mb-3"></i>
+              <i class="bi bi-person-plus-fill display-4 mb-3"></i>
               <h5 class="fw-bold mb-3">Cadastre-se</h5>
-              <p class="text-muted">
-                Crie sua conta gratuitamente em poucos minutos
-              </p>
+              <p class="">Crie sua conta gratuitamente em poucos minutos</p>
             </div>
           </div>
           <div class="col-md-6 col-lg-3">
             <div class="step-card text-center p-4 h-100">
               <div class="step-number">2</div>
-              <i class="bi bi-map-fill text-primary display-4 mb-3"></i>
+              <i class="bi bi-map-fill display-4 mb-3"></i>
               <h5 class="fw-bold mb-3">Escolha sua Trilha</h5>
-              <p class="text-muted">
+              <p class="">
                 Selecione a trilha que melhor se adapta aos seus objetivos
               </p>
             </div>
@@ -322,21 +321,17 @@
           <div class="col-md-6 col-lg-3">
             <div class="step-card text-center p-4 h-100">
               <div class="step-number">3</div>
-              <i class="bi bi-book-fill text-primary display-4 mb-3"></i>
+              <i class="bi bi-book-fill display-4 mb-3"></i>
               <h5 class="fw-bold mb-3">Estude no seu Ritmo</h5>
-              <p class="text-muted">
-                Acesse vídeos, apostilas e materiais de apoio
-              </p>
+              <p class="">Acesse vídeos, apostilas e materiais de apoio</p>
             </div>
           </div>
           <div class="col-md-6 col-lg-3">
             <div class="step-card text-center p-4 h-100">
               <div class="step-number">4</div>
-              <i class="bi bi-trophy-fill text-primary display-4 mb-3"></i>
+              <i class="bi bi-trophy-fill display-4 mb-3"></i>
               <h5 class="fw-bold mb-3">Conquiste seu Certificado</h5>
-              <p class="text-muted">
-                Complete as atividades e receba seu certificado
-              </p>
+              <p class="">Complete as atividades e receba seu certificado</p>
             </div>
           </div>
         </div>
@@ -348,13 +343,13 @@
       <div class="container">
         <div class="text-center mb-5">
           <h2 class="fw-bold mb-3">Próximos Eventos</h2>
-          <p class="text-muted">Participe de nossas oficinas, feiras e lives</p>
+          <p class="">Participe de nossas oficinas, feiras e lives</p>
         </div>
         <div class="row g-4" id="eventosContainer">
           <!-- Os eventos serão carregados dinamicamente via JavaScript -->
         </div>
         <div class="text-center mt-4">
-          <a href="src/pages/eventos.html" class="btn btn-primary btn-lg">
+          <a href="src/pages/eventos.html" class="btn btn-lg">
             Ver Agenda Completa <i class="bi bi-calendar-event"></i>
           </a>
         </div>
@@ -366,7 +361,7 @@
       <div class="container">
         <div class="text-center mb-5">
           <h2 class="fw-bold mb-3">O que Nossas Alunas Dizem</h2>
-          <p class="text-muted">Histórias reais de transformação</p>
+          <p class="">Histórias reais de transformação</p>
         </div>
         <div class="row g-4">
           <div class="col-md-4">
@@ -388,7 +383,7 @@
                 </div>
                 <div>
                   <h6 class="mb-0 fw-bold">Maria José</h6>
-                  <small class="text-muted">Artesã</small>
+                  <small class="">Artesã</small>
                 </div>
               </div>
             </div>
@@ -412,7 +407,7 @@
                 </div>
                 <div>
                   <h6 class="mb-0 fw-bold">Ana Silva</h6>
-                  <small class="text-muted">Costureira</small>
+                  <small class="">Costureira</small>
                 </div>
               </div>
             </div>
@@ -436,7 +431,7 @@
                 </div>
                 <div>
                   <h6 class="mb-0 fw-bold">Carla Lima</h6>
-                  <small class="text-muted">Confeiteira</small>
+                  <small class="">Confeiteira</small>
                 </div>
               </div>
             </div>
@@ -453,25 +448,29 @@
           Junte-se a centenas de mulheres que já transformaram seus
           empreendimentos
         </p>
-        <a href="src/pages/cadastro.html" class="btn btn-warning btn-lg px-5">
+        <a href="src/pages/cadastro.html" class="btn btn-lg px-5">
           Cadastre-se Gratuitamente <i class="bi bi-arrow-right"></i>
         </a>
       </div>
     </section>
 
-    <!-- Footer -->
+    <!-- Footer - Rodapé -->
     <footer class="text-white py-5">
       <div class="container">
         <div class="row g-4">
           <div class="col-md-4">
-            <h5 class="fw-bold mb-3">
-              <i class="bi bi-rocket-takeoff"></i> Rede NAVE
+            <h5 class="fw-bold mb-3 text-center text-md-start">
+              <img
+                src="./src/assets/logo-redenave.png"
+                alt="Rede Nave"
+                style="width: 120px; height: 50"
+              />
             </h5>
-            <p style="color: #adb5bd">
+            <p style="color: #adb5bd" class="text-center text-md-start">
               Empoderando mulheres empreendedoras através da educação e
               capacitação profissional.
             </p>
-            <div class="social-links mt-3">
+            <div class="social-links mt-3 text-center text-md-start">
               <a href="#" class="text-white me-3" title="Facebook"
                 ><i class="bi bi-facebook fs-4"></i
               ></a>
@@ -486,7 +485,7 @@
               ></a>
             </div>
           </div>
-          <div class="col-md-2">
+          <div class="col-md-2 text-center text-md-start">
             <h6 class="fw-bold mb-3 text-white">Menu</h6>
             <ul class="list-unstyled">
               <li class="mb-2">
@@ -523,7 +522,7 @@
               </li>
             </ul>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-3 text-center text-md-start">
             <h6 class="fw-bold mb-3 text-white">Suporte</h6>
             <ul class="list-unstyled">
               <li class="mb-2">
@@ -552,7 +551,7 @@
               </li>
             </ul>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-3 text-center text-md-start">
             <h6 class="fw-bold mb-3 text-white">Contato</h6>
             <ul class="list-unstyled">
               <li class="mb-2" style="color: #adb5bd">

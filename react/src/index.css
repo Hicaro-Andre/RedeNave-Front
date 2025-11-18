@@ -174,7 +174,7 @@ body {
     top: -15px;
     right: 20px;
     background: var(--warning-color);
-    color: white;
+    color: rgb(210, 8, 8);
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -382,7 +382,7 @@ img {
 }
 
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: #e80404;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -396,7 +396,7 @@ img {
 
 /* ----- Utilitários ----- */
 .text-gradient {
-    background: var(--gradient-primary);
+    background: green;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

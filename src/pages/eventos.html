@@ -6,11 +6,7 @@
     <title>Eventos - Rede NAVE</title>
 
     <!-- Favicon -->
-    <link
-      rel="icon"
-      type="image/svg+xml"
-      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>"
-    />
+    <link rel="icon" type="image/x-ico" href="/src/assets/favicon.ico" />
 
     <!-- Theme Color -->
     <meta name="theme-color" content="#667eea" />
@@ -32,48 +28,79 @@
     <link rel="stylesheet" href="/src/styles/globlas.css" />
   </head>
   <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+    <!-- Navbar - MENU -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
       <div class="container">
-        <a class="navbar-brand fw-bold" href="/index.html">
-          <i class="bi bi-rocket-takeoff-fill"></i> Rede NAVE
+        <a class="navbar-brand fw-bold" href="./index.html">
+          <img
+            src="/src/assets/logo-redenave.png"
+            alt="Rede Nave"
+            style="width: 120px; height: 50"
+          />
         </a>
         <button
           class="navbar-toggler"
           type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasNavbar"
+          aria-controls="offcanvasNavbar"
+          aria-label="Toggle navigation"
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="/index.html">Início</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="trilhas.html">Trilhas</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="eventos.html">Eventos</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="sobre.html">Sobre</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="suporte.html">Suporte</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="login.html">
-                <i class="bi bi-box-arrow-in-right"></i> Entrar
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="btn btn-warning btn-sm ms-2" href="cadastro.html">
-                Cadastre-se
-              </a>
-            </li>
-          </ul>
+
+        <div
+          class="offcanvas offcanvas-end text-bg-primary"
+          tabindex="-1"
+          id="offcanvasNavbar"
+          aria-labelledby="offcanvasNavbarLabel"
+        >
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">
+              <img
+                src="/src/assets/logo-redenave.png"
+                alt="Rede Nave"
+                style="width: 120px; height: 50"
+              />
+            </h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="offcanvas-body">
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+              <li class="nav-item">
+                <a class="nav-link" href="/index.html">Início</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/src/pages/trilhas.html">Trilhas</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="/src/pages/eventos.html"
+                  >Eventos</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/src/pages/sobre.html">Sobre</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/src/pages/suporte.html">Suporte</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/src/pages/login.html"
+                  ><i class="bi bi-box-arrow-in-right"></i> Entrar</a
+                >
+              </li>
+            </ul>
+            <div class="d-flex mt-3 mt-lg-0">
+              <a class="btn btn-sm ms-2" href="/src/pages/cadastro.html"
+                >Cadastre-se</a
+              >
+            </div>
+          </div>
         </div>
       </div>
     </nav>
@@ -160,23 +187,29 @@
                   </div>
                 </div>
               </div>
-              <button
-                class="btn btn-warning btn-lg mt-3"
-                onclick="inscreverEvento('Precificação Inteligente')"
-              >
-                <i class="bi bi-calendar-plus"></i> Inscrever-se Agora
-              </button>
+              <div class="text-center text-md-start">
+                <button
+                  class="btn btn-outline-light btn-lg mt-3"
+                  onclick="inscreverEvento('Precificação Inteligente')"
+                >
+                  <i class="bi bi-calendar-plus"></i> Inscrever-se Agora
+                </button>
+              </div>
             </div>
             <div class="bg-white p-4" style="border-radius: 0 0 15px 15px">
-              <h5 class="fw-bold mb-3">Sobre o Evento</h5>
-              <p class="text-muted">
+              <h5 class="fw-bold mb-3 text-center text-md-start">
+                Sobre o Evento
+              </h5>
+              <p class="text-center text-md-start">
                 Aprenda a calcular o preço ideal para seus produtos ou serviços!
                 Neste workshop, você descobrirá como precificar de forma
                 estratégica, considerando custos, margem de lucro e valor
                 percebido pelo cliente.
               </p>
-              <h6 class="fw-bold mt-4 mb-3">O que você vai aprender:</h6>
-              <ul class="text-muted">
+              <h6 class="fw-bold mt-4 mb-3 text-center text-md-start">
+                O que você vai aprender:
+              </h6>
+              <ul class="">
                 <li>Como calcular todos os custos do seu produto/serviço</li>
                 <li>Definir margem de lucro adequada</li>
                 <li>Estratégias de precificação competitiva</li>
@@ -207,9 +240,7 @@
                 </div>
                 <div>
                   <h6 class="fw-bold mb-0">Carla Almeida</h6>
-                  <small class="text-muted"
-                    >Especialista em Gestão Financeira</small
-                  >
+                  <small class="">Especialista em Gestão Financeira</small>
                 </div>
               </div>
             </div>
@@ -221,7 +252,7 @@
     <!-- Calendário e Lista de Eventos -->
     <section class="py-5 bg-light">
       <div class="container">
-        <h3 class="fw-bold mb-4 text-center">Calendário de Eventos</h3>
+        <h2 class="fw-bold mb-4 text-center">Calendário de Eventos</h2>
 
         <div class="row g-4">
           <!-- Calendário -->
@@ -275,19 +306,23 @@
       </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-white py-5">
+    <!-- Footer - Rodapé -->
+    <footer class="text-white py-5">
       <div class="container">
         <div class="row g-4">
           <div class="col-md-4">
-            <h5 class="fw-bold mb-3 text-white">
-              <i class="bi bi-rocket-takeoff"></i> Rede NAVE
+            <h5 class="fw-bold mb-3 text-center text-md-start">
+              <img
+                src="/src/assets/logo-redenave.png"
+                alt="Rede Nave"
+                style="width: 120px; height: 50"
+              />
             </h5>
-            <p style="color: #adb5bd">
+            <p style="color: #adb5bd" class="text-center text-md-start">
               Empoderando mulheres empreendedoras através da educação e
               capacitação profissional.
             </p>
-            <div class="social-links mt-3">
+            <div class="social-links mt-3 text-center text-md-start">
               <a href="#" class="text-white me-3" title="Facebook"
                 ><i class="bi bi-facebook fs-4"></i
               ></a>
@@ -302,12 +337,12 @@
               ></a>
             </div>
           </div>
-          <div class="col-md-2">
+          <div class="col-md-2 text-center text-md-start">
             <h6 class="fw-bold mb-3 text-white">Menu</h6>
             <ul class="list-unstyled">
               <li class="mb-2">
                 <a
-                  href="../index.html"
+                  href="./index.html"
                   class="text-decoration-none"
                   style="color: #adb5bd"
                   >Início</a
@@ -315,7 +350,7 @@
               </li>
               <li class="mb-2">
                 <a
-                  href="trilhas.html"
+                  href="src/pages/trilhas.html"
                   class="text-decoration-none"
                   style="color: #adb5bd"
                   >Trilhas</a
@@ -323,7 +358,7 @@
               </li>
               <li class="mb-2">
                 <a
-                  href="eventos.html"
+                  href="src/pages/eventos.html"
                   class="text-decoration-none"
                   style="color: #adb5bd"
                   >Eventos</a
@@ -331,7 +366,7 @@
               </li>
               <li class="mb-2">
                 <a
-                  href="sobre.html"
+                  href="src/pages/sobre.html"
                   class="text-decoration-none"
                   style="color: #adb5bd"
                   >Sobre</a
@@ -339,12 +374,12 @@
               </li>
             </ul>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-3 text-center text-md-start">
             <h6 class="fw-bold mb-3 text-white">Suporte</h6>
             <ul class="list-unstyled">
               <li class="mb-2">
                 <a
-                  href="suporte.html"
+                  href="src/pages/suporte.html"
                   class="text-decoration-none"
                   style="color: #adb5bd"
                   >Perguntas Frequentes</a
@@ -352,7 +387,7 @@
               </li>
               <li class="mb-2">
                 <a
-                  href="suporte.html#contato"
+                  href="src/pages/suporte.html#contato"
                   class="text-decoration-none"
                   style="color: #adb5bd"
                   >Contato</a
@@ -360,7 +395,7 @@
               </li>
               <li class="mb-2">
                 <a
-                  href="suporte.html"
+                  href="src/pages/suporte.html"
                   class="text-decoration-none"
                   style="color: #adb5bd"
                   >Central de Ajuda</a
@@ -368,7 +403,7 @@
               </li>
             </ul>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-3 text-center text-md-start">
             <h6 class="fw-bold mb-3 text-white">Contato</h6>
             <ul class="list-unstyled">
               <li class="mb-2" style="color: #adb5bd">
