@@ -10,40 +10,41 @@
 :root {
     
     /* ----- Cores Menu ----- */
-    --bg-color-navbar:#ff0000;/* cor de fundo do menu */
-    --text-color-links:#6A0DAD; /* cor do texto dos links do menu */
-    --text-color-links-hover: #c77dff; /* cor do hover dos links, ex: quando passa o mouse por cima */
-    --text-color-links-active:#ffc107; /* cor do link ativo, ex: quando eu seleciono uma pagina nos links */
+    --bg-color-navbar:#6a0dad;/* cor de fundo do menu */
+    --text-color-links: #DEC9E7; /* cor do texto dos links do menu */
+    --text-color-links-hover: #C77DFF; /* cor do hover dos links, ex: quando passa o mouse por cima */
+    --text-color-links-active:#6FBF73; /* cor do link ativo, ex: quando eu seleciono uma pagina nos links */
 
 
     /* ----- Cores de botões  ----- */
 
     /* ----- Primário  ----- */
-    --bg-color-button: #c77dff; /* cor de fundo de todos os botões  */
-    --text-color: #00ff59; /* cor do texto de todos os botões  */
-    --bg-color-button-hover: #461869;/* cor do hover dos botões */
+    --bg-color-button: #C77DFF; /* cor de fundo de todos os botões  */
+    --text-color: white; /* cor do texto de todos os botões  */
+    --bg-color-button-hover: #8f3ecf;/* cor do hover dos botões */
     
     /* ----- Secundário  ----- */
-    --bg-color-button-secondary:#ffff;/* cor de fundo dos botões secundários */
-    --text-color-secondary:#514d4d;/* cor do texto dos botões secundários  */
-    --bg-color-button-hover-secondary: #b5a8a8;
+    --bg-color-button-secondary:#DEC9E7;/* cor de fundo dos botões secundários */
+    --text-color-secondary:#6A0DAD;/* cor do texto dos botões secundários  */
+    --bg-color-button-hover-secondary: #C7B2DA;
    
     /* ----- Fontes  ----- */
-    --bg-color-title: red;/* cor dos títulos */
-    --bg-color-title-section: rgb(250, 220, 25);/* cor dos títulos das sections */
-    --bg-color-title-cards:aqua;/* cor dos títulos de cards */
-    --bg-color-text:rgb(196, 9, 248);/* cor dos textos */
+    --bg-color-title: #6A0DAD;/* cor dos títulos */
+    --bg-color-title-section: #C77DFF;/* cor dos títulos das sections */
+    --bg-color-title-cards:#6FBF73;/* cor dos títulos de cards */
+    --bg-color-text:#4A3F55;/* cor dos textos */
 
 
     /* ----- Scroll lateral  ----- */
-    --bg-color-scroll-left: rgb(24, 24, 227);/* cor do scroll lateral */
-    --bg-color-scroll-hover: rgb(12, 12, 60);/* cor do hover do scroll lateral */
-    --bg-color-scroll: rgb(26, 4, 4); /* cor do fundo da lateral do scroll */
+    --bg-color-scroll-left: #6A0DAD;/* cor do scroll lateral */
+    --bg-color-scroll-hover: #C77DFF;/* cor do hover do scroll lateral */
+    --bg-color-scroll: #DEC9E7; /* cor do fundo da lateral do scroll */
 
    
     /* ----- Cores Footer - Rodapé ----- */
-    --bg-color-footer: #6a0dad;/* cor do fundo do rodapé  */
-    --text-color-hover: #290742; /* cor do hover dos links do menu no rodapé */
+    --bg-color-footer: #6A0DAD;/* cor do fundo do rodapé  */
+    --text-color-hover: #C77DFF; /* cor do hover dos links do menu no rodapé */
+    --text-color-copy:#adb5bd;
 }
 
 
@@ -102,6 +103,10 @@ p{
 .nav-link.active{
     color: var(--text-color-links-active) !important;
 }
+.menu-mobile {
+  background-color: var(--bg-color-navbar)
+}
+
 
 /* ----- Footer - Rodapé----- */
 footer{
@@ -120,7 +125,9 @@ footer a:hover {
 .social-links a:hover {
     transform: translateY(-3px);
 }
-
+.copy{
+    color: var(--text-color-copy);
+}
 
 /* ----- btn ----- */
 /* ----- Botões - Primários ----- */
@@ -143,8 +150,8 @@ footer a:hover {
     color: var(--text-color-secondary);
 }
 .btn-outline-light:hover {
-    background: var(--bg-color-button-hover-secondary)
-
+    background: var(--bg-color-button-hover-secondary);
+    color: var(--text-color-secondary);
 }
 
 /* ----- Animações de Scroll ----- */
