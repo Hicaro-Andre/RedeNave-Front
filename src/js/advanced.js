@@ -331,7 +331,7 @@ function initScrollProgress() {
         top: 0;
         left: 0;
         height: 3px;
-        background: linear-gradient(90deg, #DEC9E7 0%, #6FBF73 100%);
+        background: linear-gradient(180deg, #5b119a, #7c19d1);
 
         width: 0%;
         z-index: 9999;

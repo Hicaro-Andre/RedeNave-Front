@@ -10,9 +10,9 @@
 :root {
     
     /* ----- Cores Menu ----- */
-    --bg-color-navbar:#6a0dad;/* cor de fundo do menu */
+    --bg-color-navbar: linear-gradient(90deg, #4a077c, #6a0dad); /* cor de fundo do menu */
     --text-color-links: #DEC9E7; /* cor do texto dos links do menu */
-    --text-color-links-hover: #C77DFF; /* cor do hover dos links, ex: quando passa o mouse por cima */
+    --text-color-links-hover: #09cdd7; /* cor do hover dos links, ex: quando passa o mouse por cima */
     --text-color-links-active:#09cdd7; /* cor do link ativo, ex: quando eu seleciono uma pagina nos links */
 
 
@@ -22,6 +22,7 @@
     --bg-color-button: #C77DFF; /* cor de fundo de todos os botões  */
     --text-color: white; /* cor do texto de todos os botões  */
     --bg-color-button-hover: #8f3ecf;/* cor do hover dos botões */
+
     
     /* ----- Secundário  ----- */
     --bg-color-button-secondary:#DEC9E7;/* cor de fundo dos botões secundários */
@@ -42,8 +43,8 @@
 
    
     /* ----- Cores Footer - Rodapé ----- */
-    --bg-color-footer: #6A0DAD;/* cor do fundo do rodapé  */
-    --text-color-hover: #C77DFF; /* cor do hover dos links do menu no rodapé */
+    --bg-color-footer: linear-gradient(90deg, #4a077c, #6a0dad);/* cor do fundo do rodapé  */
+    --text-color-hover: #09cdd7; /* cor do hover dos links do menu no rodapé */
     --text-color-copy:#adb5bd;
 }
 
@@ -82,7 +83,7 @@ p{
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     padding: 1rem 0;
     transition: all 0.3s ease;
-    background-color: var(--bg-color-navbar);
+    background: var(--bg-color-navbar);
 }
 .navbar-brand {
     font-size: 1.5rem;
@@ -104,13 +105,13 @@ p{
     color: var(--text-color-links-active) !important;
 }
 .menu-mobile {
-  background-color: var(--bg-color-navbar)
+  background: var(--bg-color-navbar)
 }
 
 
 /* ----- Footer - Rodapé----- */
 footer{
-    background-color: var(--bg-color-footer);
+    background: var(--bg-color-footer);
 }
 footer a:hover {
     color: var(--text-color-hover) !important;
@@ -142,6 +143,7 @@ footer a:hover {
 }
 .btn:hover {
     background-color: var(--bg-color-button-hover);
+    color: var(--text-color);
 }
 
 /* ----- Botões - Secundários ----- */
