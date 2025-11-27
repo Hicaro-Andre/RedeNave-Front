@@ -1,7 +1,7 @@
 .cadastro-container {
   min-height: 100vh;
   padding: 3rem 0;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+ background: var(--bg-color-scroll);
 }
 
 .cadastro-card {
@@ -58,7 +58,7 @@
 }
 
 .step.active .step-circle {
-  background: #667eea;
+  background: #6a0dad;
   color: white;
 }
 

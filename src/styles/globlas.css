@@ -13,7 +13,7 @@
     --bg-color-navbar:#6a0dad;/* cor de fundo do menu */
     --text-color-links: #DEC9E7; /* cor do texto dos links do menu */
     --text-color-links-hover: #C77DFF; /* cor do hover dos links, ex: quando passa o mouse por cima */
-    --text-color-links-active:#6FBF73; /* cor do link ativo, ex: quando eu seleciono uma pagina nos links */
+    --text-color-links-active:#09cdd7; /* cor do link ativo, ex: quando eu seleciono uma pagina nos links */
 
 
     /* ----- Cores de botões  ----- */
@@ -31,7 +31,7 @@
     /* ----- Fontes  ----- */
     --bg-color-title: #6A0DAD;/* cor dos títulos */
     --bg-color-title-section: #C77DFF;/* cor dos títulos das sections */
-    --bg-color-title-cards:#6FBF73;/* cor dos títulos de cards */
+    --bg-color-title-cards:#09cdd7;/* cor dos títulos de cards */
     --bg-color-text:#4A3F55;/* cor dos textos */
 
 

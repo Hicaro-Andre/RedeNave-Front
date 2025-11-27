@@ -118,7 +118,7 @@ function renderizarTrilhas() {
                     <div class="card-body">
                         <div class="d-flex align-items-center mb-3">
                             <i class="bi ${trilha.icone} text-${trilha.cor} fs-3 me-2"></i>
-                            <h5 class="card-title mb-0">${trilha.titulo}</h5>
+                            <h5 class="card-title mb-0 ">${trilha.titulo}</h5>
                         </div>
                         <p class="card-text text-muted">${trilha.descricao}</p>
                         <div class="d-flex justify-content-between text-muted small mb-2">
@@ -177,15 +177,15 @@ function renderizarEventos() {
                 <div class="card event-card">
                     <div class="row g-0">
                         <div class="col-auto">
-                            <div class="event-date">
+                            <div class="event-date avacolor">
                                 <span class="day">${evento.data}</span>
                                 <span class="month">${evento.mes}</span>
                             </div>
                         </div>
                         <div class="col">
-                            <div class="card-body">
-                                <span class="badge bg-info mb-2">${evento.tipo}</span>
-                                <h6 class="card-title fw-bold">${evento.titulo}</h6>
+                            <div class="card-body ">
+                                <span class="badge  mb-2 bg-badge">${evento.tipo}</span>
+                                <h6 class="card-title fw-bold title-color">${evento.titulo}</h6>
                                 <p class="card-text text-muted small mb-2">${evento.descricao}</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <span class="text-muted small">
