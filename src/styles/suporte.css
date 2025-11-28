@@ -9,6 +9,10 @@ background: linear-gradient(
 
 }
 
+/* cor de fundo dos cards */
+/* .bg-card{
+  background: rgba(222, 201, 231, 0.12);
+} */
 
 /* Seção de Busca Rápida */
 .custom-focus {
@@ -44,8 +48,11 @@ background: linear-gradient(
   color: #fff !important;
   box-shadow: none !important;
 }
+.bg-accordion{
+  background: rgba(179, 0, 255, 0.12);
+}
 .accordion-button-secondary {
-  background-color: #fff !important;
+  background-color: rgba(179, 0, 255, 0.12) !important;
   color: #55443f !important;
   box-shadow: none !important;
 }
@@ -56,9 +63,6 @@ background: linear-gradient(
   color: #fff !important;
   box-shadow: none !important;
 }
-
-
-
 
 
 
