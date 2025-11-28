@@ -2,8 +2,22 @@
   min-height: 100vh;
   display: flex;
   align-items: center;
- background: var(--bg-color-scroll);
+ /* background: var(--bg-color-scroll); */
+ 
+
+background: linear-gradient(
+  to bottom,
+  #ffffff 0%,
+  #f7ecff 50%,
+  #e7d6ff 100%
+);
+
+
+
+
 }
+
+
 
 .login-card {
   background: white;
