@@ -11,7 +11,7 @@ background: linear-gradient(
 
 /* cor de fundo dos cards */
 /* .bg-card{
-  background: rgba(222, 201, 231, 0.12);
+  background-color: rgba(0, 0, 0, 0.0);
 } */
 
 /* Seção de Busca Rápida */
@@ -49,10 +49,10 @@ background: linear-gradient(
   box-shadow: none !important;
 }
 .bg-accordion{
-  background: rgba(179, 0, 255, 0.12);
+  background: (179, 0, 255, 0.12);
 }
 .accordion-button-secondary {
-  background-color: rgba(179, 0, 255, 0.12) !important;
+  background-color: #fff !important;
   color: #55443f !important;
   box-shadow: none !important;
 }
@@ -88,6 +88,9 @@ background: linear-gradient(
 #contato .form-check-input:checked {
   background-color: #6a0dad !important; 
   border-color: #6a0dad !important;
+}
+textarea {
+  resize: none !important;
 }
 
 
