@@ -48,12 +48,21 @@
 }
 
 .menu-item:hover {
-  background: #f8f9fa;
+   background: linear-gradient(
+    90deg,
+    #4a077c,
+    #6a0dad
+  );
+   color: white;
   transform: translateX(5px);
 }
 
 .menu-item.active {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(
+    90deg,
+    #4a077c,
+    #6a0dad
+  );
   color: white;
 }
 

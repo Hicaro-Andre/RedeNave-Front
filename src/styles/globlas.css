@@ -4,7 +4,14 @@
   padding: 0;
   box-sizing: border-box;
 }
+body {
+background: linear-gradient(
+  180deg,
+  rgba(222, 201, 231, 0.25),
+  rgba(222, 201, 231, 0.55)
+);
 
+}
 /* ----- Variáveis de Cores ----- */
 :root {
   /* ----- Cores Menu ----- */
@@ -33,7 +40,7 @@
   --bg-color-title: #6a0dad; /* cor dos títulos */
   --color-title-secondary: #c77dff; /* cor dos títulos H4*/
   --bg-color-title-section: #c77dff; /* cor dos títulos das sections */
-  --bg-color-title-cards: #c77dff; /* cor dos títulos de cards */
+  --bg-color-title-cards: #6a0dad; /* cor dos títulos de cards */
   --bg-color-text: #4a3f55; /* cor dos textos */
 
   /* ----- Scroll lateral  ----- */
