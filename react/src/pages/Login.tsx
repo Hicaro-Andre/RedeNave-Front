@@ -1,9 +1,13 @@
 import { useState } from "react";
 
+import "../styles/login.css"
+import "../index.css"
+import LoginUser from "../components/Login/LoginUser";
+
 function Login() {
   return (
     <>
-      <h1>Login</h1>
+      <LoginUser />
     </>
   );
 }

@@ -1,11 +1,21 @@
 import { useState } from 'react'
 
+import "../styles/index.css"
+import "../styles/animations.css"
+import "../index.css"
+
+
 import Navbar from '../components/NavBar'
 import Footer from '../components/Footer'
-import HomeHero from '../components/index/HomeHero'
-import StatsSection from '../components/index/StatsSection'
-import AboutSection from '../components/index/AboutSection'
-import TrilhasSection from '../components/index/TrilhasSection'
+import HomeHero from '../components/HomePage/HomeHero'
+import StatsSection from '../components/HomePage/StatsSection'
+import AboutSection from '../components/HomePage/AboutSection'
+import TrilhasSection from '../components/HomePage/TrilhasSection'
+import CallSection from '../components/HomePage/CallSection'
+import TestimonialsSection from '../components/HomePage/TestimonialsSection'
+import HowItWorks from '../components/HomePage/HowItWorks'
+import NextEvents from '../components/HomePage/NextEvents'
+import TrilhasAprendizagem from '../components/HomePage/TrilhasAprendizagem'
 
 
 function Home() {
@@ -18,6 +28,11 @@ function Home() {
       <StatsSection />
       <AboutSection />
       <TrilhasSection />
+      <TrilhasAprendizagem />
+      <HowItWorks />
+      <NextEvents />
+      <TestimonialsSection />
+      <CallSection />
       <Footer />
     </>
   )

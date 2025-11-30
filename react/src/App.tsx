@@ -10,6 +10,7 @@ import Sobre from './pages/Sobre'
 import Suporte from './pages/Suporte'
 import Login from './pages/Login'
 import Cadastro from './pages/Cadastro'
+import Privacy from './pages/PrivacyPolicy'
 
 // import NotFound from './pages/NotFound' // opcional 404
 
@@ -26,6 +27,7 @@ function App() {
           <Route path="/suporte" element={<Suporte />} />
           <Route path="/login" element={<Login />} />
           <Route path="/cadastro" element={<Cadastro />} />
+          <Route path="/privacypolicy" element={<Privacy />} />
 
           {/* <Route path="*" element={<NotFound />} /> */}
         </Routes>

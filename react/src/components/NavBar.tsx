@@ -1,38 +1,37 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import logo from "../assets/logoRedeNave.png";
 
-const Navbar: React.FC = () => {
+export default function Navbar() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+    <nav className="navbar navbar-expand-lg navbar-dark sticky-top">
       <div className="container">
-        {/* ===== Brand ===== */}
-        <a className="navbar-brand fw-bold" href="./index.html">
-          <i className="bi bi-rocket-takeoff-fill"></i> Rede NAVE
-        </a>
 
-        {/* ===== Botão Toggle (mobile) ===== */}
+        <Link className="navbar-brand fw-bold" to="/">
+          <img src={logo} alt="Rede Nave" style={{ width: "70px", height: "auto" }} />
+        </Link>
+
         <button
           className="navbar-toggler"
           type="button"
           data-bs-toggle="offcanvas"
           data-bs-target="#offcanvasNavbar"
           aria-controls="offcanvasNavbar"
-          aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        {/* ===== Menu Offcanvas ===== */}
         <div
-          className="offcanvas offcanvas-end text-bg-primary"
+          className="offcanvas offcanvas-end menu-mobile"
           tabIndex={-1}
           id="offcanvasNavbar"
-          aria-labelledby="offcanvasNavbarLabel"
         >
           <div className="offcanvas-header">
-            <h5 className="offcanvas-title" id="offcanvasNavbarLabel">
-              <i className="bi bi-rocket-takeoff-fill"></i> Rede NAVE
+            <h5 className="offcanvas-title">
+              <Link className="navbar-brand fw-bold" to="/">
+                <img src={logo} alt="Rede Nave" style={{ width: "70px", height: "auto" }} />
+              </Link>
             </h5>
+
             <button
               type="button"
               className="btn-close btn-close-white"
@@ -44,47 +43,35 @@ const Navbar: React.FC = () => {
           <div className="offcanvas-body">
             <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
               <li className="nav-item">
-                <NavLink className="nav-link" to="/" end data-bs-dismiss="offcanvas">
-                  Início
-                </NavLink>
+                <Link className="nav-link" to="/">Início</Link>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/trilhas" data-bs-dismiss="offcanvas">
-                  Trilhas
-                </NavLink>
+                <Link className="nav-link" to="/trilhas">Trilhas</Link>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/eventos" data-bs-dismiss="offcanvas">
-                  Eventos
-                </NavLink>
+                <Link className="nav-link" to="/eventos">Eventos</Link>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/sobre" data-bs-dismiss="offcanvas">
-                  Sobre
-                </NavLink>
+                <Link className="nav-link" to="/sobre">Sobre</Link>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/suporte" data-bs-dismiss="offcanvas">
-                  Suporte
-                </NavLink>
+                <Link className="nav-link" to="/suporte">Suporte</Link>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/login" data-bs-dismiss="offcanvas">
+                <Link className="nav-link" to="/login">
                   <i className="bi bi-box-arrow-in-right"></i> Entrar
-                </NavLink>
+                </Link>
               </li>
             </ul>
 
             <div className="d-flex mt-3 mt-lg-0">
-              <NavLink className="btn btn-warning btn-sm ms-2" to="/cadastro" data-bs-dismiss="offcanvas">
+              <Link className="btn btn-sm ms-2" to="/cadastro">
                 Cadastre-se
-              </NavLink>
+              </Link>
             </div>
           </div>
         </div>
       </div>
     </nav>
   );
-};
-
-export default Navbar;
+}

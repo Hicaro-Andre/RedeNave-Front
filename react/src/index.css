@@ -1,411 +1,269 @@
-/* ----- Variáveis de Cores ----- */
-:root {
-    --primary-color: #0d6efd; /* Cor principal (botões, links e destaques gerais do site) */
-    --secondary-color: #7d6c6c; /* Cor secundária (tons neutros ou complementares) */
-    --success-color: #198754; /* Verde para mensagens de sucesso ou status positivos */
-    --warning-color: #ffc107; /* Amarelo para alertas, avisos e destaques sutis */
-    --danger-color: #dc3545; /* Vermelho para erros, alertas críticos ou exclusões */
-    --dark-color: #212529; /* Cor de texto e fundo escuro (elementos em contraste) */
-    --light-color: #f8f9fa; /* Fundo claro e áreas neutras (background geral, cards, etc.) */
-    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Gradiente principal do site (usado em seções e botões) */
-    --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* Gradiente do topo do site (seção hero/banner principal) */
-}
-
 /* ----- Reset e Configurações Gerais ----- */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+background: linear-gradient(
+  180deg,
+  rgba(222, 201, 231, 0.25),
+  rgba(222, 201, 231, 0.55)
+);
+
+}
+/* ----- Variáveis de Cores ----- */
+:root {
+  /* ----- Cores Menu ----- */
+  --bg-color-navbar: linear-gradient(
+    90deg,
+    #4a077c,
+    #6a0dad
+  ); /* cor de fundo do menu */
+  --text-color-links: #dec9e7; /* cor do texto dos links do menu */
+  --text-color-links-hover: #09cdd7; /* cor do hover dos links, ex: quando passa o mouse por cima */
+  --text-color-links-active: #09cdd7; /* cor do link ativo, ex: quando eu seleciono uma pagina nos links */
+
+  /* ----- Cores de botões  ----- */
+
+  /* ----- Primário  ----- */
+  --bg-color-button: #c77dff; /* cor de fundo de todos os botões  */
+  --text-color: white; /* cor do texto de todos os botões  */
+  --bg-color-button-hover: #8f3ecf; /* cor do hover dos botões */
+
+  /* ----- Secundário  ----- */
+  --bg-color-button-secondary: #dec9e7; /* cor de fundo dos botões secundários */
+  --text-color-secondary: #6a0dad; /* cor do texto dos botões secundários  */
+  --bg-color-button-hover-secondary: #c7b2da;
+
+  /* ----- Fontes  ----- */
+  --bg-color-title: #6a0dad; /* cor dos títulos */
+  --color-title-secondary: #c77dff; /* cor dos títulos H4*/
+  --bg-color-title-section: #c77dff; /* cor dos títulos das sections */
+  --bg-color-title-cards: #6a0dad; /* cor dos títulos de cards */
+  --bg-color-text: #4a3f55; /* cor dos textos */
+
+  /* ----- Scroll lateral  ----- */
+  --bg-color-scroll-left: #6a0dad; /* cor do scroll lateral */
+  --bg-color-scroll-hover: #c77dff; /* cor do hover do scroll lateral */
+  --bg-color-scroll: #dec9e7; /* cor do fundo da lateral do scroll */
+
+  /* ----- Cores Footer - Rodapé ----- */
+  --bg-color-footer: linear-gradient(
+    90deg,
+    #4a077c,
+    #6a0dad
+  ); /* cor do fundo do rodapé  */
+  --text-color-hover: #09cdd7; /* cor do hover dos links do menu no rodapé */
+  --text-color-copy: #adb5bd;
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
-    color: #333;
-    overflow-x: hidden;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  overflow-x: hidden;
 }
 
-/* ----- Navbar Customizada ----- */
+/* ----- Fontes ----- */
+h1 {
+  color: var(--bg-color-title);
+}
+h2 {
+  color: var(--bg-color-title-section);
+}
+h4 {
+  color: var(--color-title-secondary);
+}
+/* h5 {
+  color: var(--bg-color-title-cards);
+} */
+h6 {
+}
+p {
+  color: var(--bg-color-text);
+}
+
+/* ----- Navbar - MENU ----- */
 .navbar {
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    padding: 1rem 0;
-    transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 1rem 0;
+  transition: all 0.3s ease;
+  background: var(--bg-color-navbar);
 }
-
 .navbar-brand {
-    font-size: 1.5rem;
-    transition: transform 0.3s ease;
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
 }
-
 .navbar-brand:hover {
-    transform: scale(1.05);
+  transform: scale(1.05);
 }
-
 .nav-link {
-    font-weight: 500;
-    transition: color 0.3s ease;
-    padding: 0.5rem 1rem !important;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  padding: 0.5rem 1rem !important;
+  color: var(--text-color-links);
 }
-
 .nav-link:hover {
-    color: var(--warning-color) !important;
+  color: var(--text-color-links-hover);
+}
+.nav-link.active {
+  color: var(--text-color-links-active) !important;
+}
+.menu-mobile {
+  background: var(--bg-color-navbar);
 }
 
-/* ----- Hero Section ----- */
-.hero-section {
-    background: var(--gradient-hero);
-    min-height: 600px;
-    position: relative;
-    overflow: hidden;
+/* ----- Footer - Rodapé----- */
+footer {
+  background: var(--bg-color-footer);
 }
-
-.hero-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/></svg>');
-    background-size: 50px 50px;
-}
-
-.hero-section .container {
-    position: relative;
-    z-index: 1;
-}
-
-.animate-fade-in {
-    animation: fadeInUp 1s ease-out;
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* ----- Estatísticas ----- */
-.stats-section {
-    border-bottom: 1px solid #dee2e6;
-}
-
-.stat-card {
-    padding: 1rem;
-    transition: transform 0.3s ease;
-}
-
-.stat-card:hover {
-    transform: translateY(-5px);
-}
-
-.stat-card h3 {
-    font-size: 2.5rem;
-}
-
-/* ----- Icon Box ----- */
-.icon-box {
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    flex-shrink: 0;
-}
-
-/* ----- Cards de Trilhas ----- */
-.trilha-card {
-    border: none;
-    border-radius: 15px;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    height: 100%;
-}
-
-.trilha-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-}
-
-.trilha-card .card-img-top {
-    height: 200px;
-    object-fit: cover;
-}
-
-.trilha-card .badge {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    z-index: 1;
-}
-
-.trilha-card .card-body {
-    padding: 1.5rem;
-}
-
-.trilha-card .progress {
-    height: 8px;
-    border-radius: 10px;
-}
-
-/* ----- Steps Cards ----- */
-.step-card {
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.step-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-}
-
-.step-number {
-    position: absolute;
-    top: -15px;
-    right: 20px;
-    background: var(--warning-color);
-    color: rgb(210, 8, 8);
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 1.2rem;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-}
-
-/* ----- Event Cards ----- */
-.event-card {
-    border: none;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    height: 100%;
-}
-
-.event-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-}
-
-.event-date {
-    background: var(--primary-color);
-    color: white;
-    padding: 1rem;
-    text-align: center;
-    min-width: 80px;
-}
-
-.event-date .day {
-    font-size: 2rem;
-    font-weight: bold;
-    display: block;
-    line-height: 1;
-}
-
-.event-date .month {
-    font-size: 0.9rem;
-    text-transform: uppercase;
-}
-
-/* ----- Testimonials ----- */
-.testimonial-card {
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
-}
-
-.testimonial-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-}
-
-.avatar {
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 1.1rem;
-    flex-shrink: 0;
-}
-
-.rating i {
-    font-size: 1.1rem;
-}
-
-/* ----- CTA Section ----- */
-.cta-section {
-    background: var(--gradient-primary);
-    position: relative;
-    overflow: hidden;
-}
-
-.cta-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/></svg>');
-    background-size: 50px 50px;
-}
-
-.cta-section .container {
-    position: relative;
-    z-index: 1;
-}
-
-/* ----- Footer ----- */
 footer a:hover {
-    color: var(--warning-color) !important;
-    transition: color 0.3s ease;
+  color: var(--text-color-hover) !important;
+  transition: color 0.3s ease;
 }
 
 .social-links a {
-    transition: transform 0.3s ease;
-    display: inline-block;
+  transition: transform 0.3s ease;
+  display: inline-block;
 }
 
 .social-links a:hover {
-    transform: translateY(-3px);
+  transform: translateY(-3px);
+}
+.copy {
+  color: var(--text-color-copy);
 }
 
-/* ----- Botões Customizados ----- */
+/* ----- btn ----- */
+/* ----- Botões - Primários ----- */
 .btn {
-    border-radius: 25px;
-    padding: 0.5rem 1.5rem;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    border: none;
+  border-radius: 25px;
+  padding: 0.5rem 1.5rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: none;
+  background-color: var(--bg-color-button);
+  color: var(--text-color);
+}
+.btn:hover {
+  background-color: var(--bg-color-button-hover);
+  color: var(--text-color);
 }
 
-.btn-primary {
-    background: var(--primary-color);
-    box-shadow: 0 4px 15px rgba(13, 110, 253, 0.3);
+/* ----- Botões - Secundários ----- */
+.btn-outline-light {
+  background: var(--bg-color-button-secondary);
+  color: var(--text-color-secondary);
 }
-
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(13, 110, 253, 0.4);
-}
-
-.btn-warning {
-    background: var(--warning-color);
-    color: #333;
-    box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
-}
-
-.btn-warning:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 193, 7, 0.4);
-    color: #333;
-}
-
 .btn-outline-light:hover {
-    background: white;
-    color: var(--primary-color);
-}
-
-/* ----- Responsividade ----- */
-@media (max-width: 768px) {
-    .hero-section {
-        min-height: auto;
-        padding: 3rem 0 !important;
-    }
-
-    .hero-section h1 {
-        font-size: 2rem;
-    }
-
-    .stat-card h3 {
-        font-size: 2rem;
-    }
-
-    .step-card {
-        margin-bottom: 2rem;
-    }
+  background: var(--bg-color-button-hover-secondary);
+  color: var(--text-color-secondary);
 }
 
 /* ----- Animações de Scroll ----- */
 .fade-in-section {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
 .fade-in-section.is-visible {
-    opacity: 1;
-    transform: translateY(0);
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* ----- Loading Spinner ----- */
 .spinner-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
 }
 
 /* ----- Badges Customizados ----- */
 .badge {
-    padding: 0.5rem 1rem;
-    font-weight: 500;
-    border-radius: 20px;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  border-radius: 20px;
 }
 
 /* ----- Imagens Responsivas ----- */
 img {
-    max-width: 100%;
-    height: auto;
+  max-width: 100%;
+  height: auto;
 }
 
 /* ----- Scrollbar Customizada ----- */
 ::-webkit-scrollbar {
-    width: 10px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #e80404;
+  background: var(--bg-color-scroll);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--primary-color);
-    border-radius: 5px;
+  background: var(--bg-color-scroll-left);
+  border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #0b5ed7;
+  background: var(--bg-color-scroll-hover);
 }
 
-/* ----- Utilitários ----- */
-.text-gradient {
-    background: green;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+/* ----- Trilhas de Aprendizagem ----- */
+.trilha-card {
+  border: none;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  height: 100%;
 }
 
-.shadow-custom {
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+.trilha-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }
 
-.rounded-custom {
-    border-radius: 15px;
+.trilha-card .card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
+
+.trilha-card .badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 1;
+}
+
+.trilha-card .card-body {
+  padding: 1.5rem;
+}
+
+.trilha-card .progress {
+  height: 8px;
+  border-radius: 10px;
+}
+
+/* ----- Responsividade ----- */
+@media (max-width: 768px) {
+  .hero-section {
+    min-height: auto;
+    padding: 3rem 0 !important;
+  }
+
+  .hero-section h1 {
+    font-size: 2rem;
+  }
+
+  .stat-card h3 {
+    font-size: 2rem;
+  }
+
+  .step-card {
+    margin-bottom: 2rem;
+  }
 }
