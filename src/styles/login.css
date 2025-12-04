@@ -1,0 +1,64 @@
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.login-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.login-image {
+  background: linear-gradient(
+    90deg,
+    #4a077c,
+    #6a0dad
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+}
+
+.login-form {
+  padding: 3rem;
+}
+
+.social-login-btn {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.social-login-btn:hover {
+  background: #f8f9fa;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #6a0dad !important;    /* roxo */
+  box-shadow: 0 0 0 0.25rem rgba(106, 13, 173, 0.25) !important;
+}
+
+.form-check-input:focus {
+  border-color: #6a0dad !important;
+  box-shadow: 0 0 0 0.25rem rgba(106, 13, 173, 0.25) !important;
+}
+
+.form-check-input:checked {
+  background-color: #6a0dad !important;
+  border-color: #6a0dad !important;
+}
+
+.bg-text{
+  color: #4a077c;
+}

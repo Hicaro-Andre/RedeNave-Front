@@ -1,0 +1,269 @@
+/* ----- Reset e Configurações Gerais ----- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+background: linear-gradient(
+  180deg,
+  rgba(222, 201, 231, 0.25),
+  rgba(222, 201, 231, 0.55)
+);
+
+}
+/* ----- Variáveis de Cores ----- */
+:root {
+  /* ----- Cores Menu ----- */
+  --bg-color-navbar: linear-gradient(
+    90deg,
+    #4a077c,
+    #6a0dad
+  ); /* cor de fundo do menu */
+  --text-color-links: #dec9e7; /* cor do texto dos links do menu */
+  --text-color-links-hover: #09cdd7; /* cor do hover dos links, ex: quando passa o mouse por cima */
+  --text-color-links-active: #09cdd7; /* cor do link ativo, ex: quando eu seleciono uma pagina nos links */
+
+  /* ----- Cores de botões  ----- */
+
+  /* ----- Primário  ----- */
+  --bg-color-button: #c77dff; /* cor de fundo de todos os botões  */
+  --text-color: white; /* cor do texto de todos os botões  */
+  --bg-color-button-hover: #8f3ecf; /* cor do hover dos botões */
+
+  /* ----- Secundário  ----- */
+  --bg-color-button-secondary: #dec9e7; /* cor de fundo dos botões secundários */
+  --text-color-secondary: #6a0dad; /* cor do texto dos botões secundários  */
+  --bg-color-button-hover-secondary: #c7b2da;
+
+  /* ----- Fontes  ----- */
+  --bg-color-title: #6a0dad; /* cor dos títulos */
+  --color-title-secondary: #c77dff; /* cor dos títulos H4*/
+  --bg-color-title-section: #c77dff; /* cor dos títulos das sections */
+  --bg-color-title-cards: #6a0dad; /* cor dos títulos de cards */
+  --bg-color-text: #4a3f55; /* cor dos textos */
+
+  /* ----- Scroll lateral  ----- */
+  --bg-color-scroll-left: #6a0dad; /* cor do scroll lateral */
+  --bg-color-scroll-hover: #c77dff; /* cor do hover do scroll lateral */
+  --bg-color-scroll: #dec9e7; /* cor do fundo da lateral do scroll */
+
+  /* ----- Cores Footer - Rodapé ----- */
+  --bg-color-footer: linear-gradient(
+    90deg,
+    #4a077c,
+    #6a0dad
+  ); /* cor do fundo do rodapé  */
+  --text-color-hover: #09cdd7; /* cor do hover dos links do menu no rodapé */
+  --text-color-copy: #adb5bd;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  overflow-x: hidden;
+}
+
+/* ----- Fontes ----- */
+h1 {
+  color: var(--bg-color-title);
+}
+h2 {
+  color: var(--bg-color-title-section);
+}
+h4 {
+  color: var(--color-title-secondary);
+}
+/* h5 {
+  color: var(--bg-color-title-cards);
+} */
+h6 {
+}
+p {
+  color: var(--bg-color-text);
+}
+
+/* ----- Navbar - MENU ----- */
+.navbar {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 1rem 0;
+  transition: all 0.3s ease;
+  background: var(--bg-color-navbar);
+}
+.navbar-brand {
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
+}
+.navbar-brand:hover {
+  transform: scale(1.05);
+}
+.nav-link {
+  font-weight: 500;
+  transition: color 0.3s ease;
+  padding: 0.5rem 1rem !important;
+  color: var(--text-color-links);
+}
+.nav-link:hover {
+  color: var(--text-color-links-hover);
+}
+.nav-link.active {
+  color: var(--text-color-links-active) !important;
+}
+.menu-mobile {
+  background: var(--bg-color-navbar);
+}
+
+/* ----- Footer - Rodapé----- */
+footer {
+  background: var(--bg-color-footer);
+}
+footer a:hover {
+  color: var(--text-color-hover) !important;
+  transition: color 0.3s ease;
+}
+
+.social-links a {
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.social-links a:hover {
+  transform: translateY(-3px);
+}
+.copy {
+  color: var(--text-color-copy);
+}
+
+/* ----- btn ----- */
+/* ----- Botões - Primários ----- */
+.btn {
+  border-radius: 25px;
+  padding: 0.5rem 1.5rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: none;
+  background-color: var(--bg-color-button);
+  color: var(--text-color);
+}
+.btn:hover {
+  background-color: var(--bg-color-button-hover);
+  color: var(--text-color);
+}
+
+/* ----- Botões - Secundários ----- */
+.btn-outline-light {
+  background: var(--bg-color-button-secondary);
+  color: var(--text-color-secondary);
+}
+.btn-outline-light:hover {
+  background: var(--bg-color-button-hover-secondary);
+  color: var(--text-color-secondary);
+}
+
+/* ----- Animações de Scroll ----- */
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ----- Loading Spinner ----- */
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+/* ----- Badges Customizados ----- */
+.badge {
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  border-radius: 20px;
+}
+
+/* ----- Imagens Responsivas ----- */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ----- Scrollbar Customizada ----- */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-color-scroll);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-color-scroll-left);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--bg-color-scroll-hover);
+}
+
+/* ----- Trilhas de Aprendizagem ----- */
+.trilha-card {
+  border: none;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  height: 100%;
+}
+
+.trilha-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.trilha-card .card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
+
+.trilha-card .badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 1;
+}
+
+.trilha-card .card-body {
+  padding: 1.5rem;
+}
+
+.trilha-card .progress {
+  height: 8px;
+  border-radius: 10px;
+}
+
+/* ----- Responsividade ----- */
+@media (max-width: 768px) {
+  .hero-section {
+    min-height: auto;
+    padding: 3rem 0 !important;
+  }
+
+  .hero-section h1 {
+    font-size: 2rem;
+  }
+
+  .stat-card h3 {
+    font-size: 2rem;
+  }
+
+  .step-card {
+    margin-bottom: 2rem;
+  }
+}
