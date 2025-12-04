@@ -1,7 +1,7 @@
 import React from "react";
 
 
-import fotoabout from "/src/assets/index/about.svg";
+import fotoabout from "/src/assets/index/REDE NAVE.png";
 
 export default function AboutSection() {
   return (
