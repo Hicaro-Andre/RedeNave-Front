@@ -1,5 +1,7 @@
 import React from "react";
 
+import fotobanner from "/src/assets/index/hero-illustration.jpeg";
+
 export default function HeroSection() {
   return (
     <section className="hero-section text-white text-center py-5">
@@ -32,7 +34,7 @@ export default function HeroSection() {
           {/* Imagem */}
           <div className="col-lg-6 mt-4 mt-lg-0">
             <img
-              src="/src/assets/index/hero-illustration.jpeg"
+              src={fotobanner}
               alt="Mulheres empreendedoras"
               className="img-fluid"
             />

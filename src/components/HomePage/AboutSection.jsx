@@ -1,5 +1,8 @@
 import React from "react";
 
+
+import fotoabout from "/src/assets/index/about.svg";
+
 export default function AboutSection() {
   return (
     <section id="sobre" className="py-5">
@@ -9,7 +12,7 @@ export default function AboutSection() {
           {/* IMAGEM */}
           <div className="col-lg-6 mb-4 mb-lg-0">
             <img
-              src="src/assets/sobre/REDE NAVE.png"
+              src={fotoabout}
               alt="Sobre a Rede NAVE"
               className="img-fluid rounded"
             />
