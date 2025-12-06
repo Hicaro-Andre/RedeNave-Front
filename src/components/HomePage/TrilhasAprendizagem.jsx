@@ -1,6 +1,11 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
+
+import cursogestao from "/src/assets/trilhas/cursogestao.png";
+import cursomarketing from "/src/assets/trilhas/cursomarketing.jpeg";
+import cursolideranca from "/src/assets/trilhas/cursolideranca.jpeg"
+
 // Dados das trilhas (copiados do main.js)
 const trilhas = [
   {
@@ -14,7 +19,7 @@ const trilhas = [
     nivel: "Iniciante",
     alunos: 156,
     progresso: 65,
-    imagem: "images/trilha-financeira.jpg"
+    imagem: cursogestao,
   },
   {
     id: 2,
@@ -27,7 +32,7 @@ const trilhas = [
     nivel: "Intermediário",
     alunos: 203,
     progresso: 85,
-    imagem: "images/trilha-marketing.jpg"
+    imagem: cursomarketing
   },
   {
     id: 3,
@@ -40,7 +45,7 @@ const trilhas = [
     nivel: "Avançado",
     alunos: 98,
     progresso: 45,
-    imagem: "images/trilha-lideranca.jpg"
+    imagem: cursolideranca,
   }
 ];
 

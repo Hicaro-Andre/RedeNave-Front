@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
 
+import cursogestao from "/src/assets/trilhas/cursogestao.png";
+import cursomarketing from "/src/assets/trilhas/cursomarketing.jpeg";
+import cursolideranca from "/src/assets/trilhas/cursolideranca.jpeg"
+
 // Dados completos das trilhas (do script)
 const todasTrilhas = [
   {
@@ -13,7 +17,7 @@ const todasTrilhas = [
     nivel: "Iniciante",
     alunos: 156,
     area: "Gestão",
-    imagem: "../images/trilha-financeira.jpg",
+    imagem: cursogestao,
     conteudo: [
       "Fundamentos de gestão financeira",
       "Fluxo de caixa",
@@ -33,7 +37,7 @@ const todasTrilhas = [
     nivel: "Intermediário",
     alunos: 203,
     area: "Marketing",
-    imagem: "../images/trilha-marketing.jpg",
+    imagem: cursomarketing,
     conteudo: [
       "Introdução ao marketing digital",
       "Instagram para negócios",
@@ -53,7 +57,7 @@ const todasTrilhas = [
     nivel: "Avançado",
     alunos: 98,
     area: "Liderança",
-    imagem: "../images/trilha-lideranca.jpg",
+    imagem: cursolideranca,
     conteudo: [
       "Autoconhecimento",
       "Liderança feminina",
@@ -73,7 +77,7 @@ const todasTrilhas = [
     nivel: "Iniciante",
     alunos: 142,
     area: "Vendas",
-    imagem: "https://via.placeholder.com/400x200/0dcaf0/ffffff?text=Vendas",
+    imagem: cursomarketing,
     conteudo: [
       "Fundamentos de vendas",
       "Perfil do cliente",
@@ -93,7 +97,7 @@ const todasTrilhas = [
     nivel: "Intermediário",
     alunos: 87,
     area: "Gestão",
-    imagem: "https://via.placeholder.com/400x200/dc3545/ffffff?text=Planejamento",
+    imagem: cursogestao,
     conteudo: [
       "Análise de mercado",
       "Definição de objetivos",
@@ -113,7 +117,7 @@ const todasTrilhas = [
     nivel: "Intermediário",
     alunos: 165,
     area: "Marketing",
-    imagem: "https://via.placeholder.com/400x200/6c757d/ffffff?text=E-commerce",
+    imagem: cursogestao,
     conteudo: [
       "Plataformas de venda",
       "Fotografia de produtos",

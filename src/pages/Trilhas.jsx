@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-
+import "../styles/trilhas.css"
 
 import Navbar from '../components/NavBar'
 import Footer from '../components/Footer'

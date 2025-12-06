@@ -1,4 +1,52 @@
+import React, { useEffect, useRef } from "react";
+
 export default function ImpactoNumeros() {
+  const refs = useRef([]);
+
+  useEffect(() => {
+    const elements = refs.current;
+
+    if (!elements.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const el = entry.target;
+
+          if (entry.isIntersecting && !el.dataset.animated) {
+            el.dataset.animated = "true";
+            animateNumber(el);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    elements.forEach((el) => el && observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
+
+  const animateNumber = (element) => {
+    const finalNumber = parseInt(element.getAttribute("data-count"));
+    if (isNaN(finalNumber)) return;
+
+    const duration = 2000; // 2s
+    const increment = finalNumber / (duration / 16);
+    let current = 0;
+
+    const timer = setInterval(() => {
+      current += increment;
+
+      if (current >= finalNumber) {
+        element.textContent = finalNumber;
+        clearInterval(timer);
+      } else {
+        element.textContent = Math.floor(current);
+      }
+    }, 16);
+  };
+
   return (
     <section className="py-5">
       <div className="container">
@@ -7,8 +55,12 @@ export default function ImpactoNumeros() {
         <div className="row g-4 text-center">
 
           <div className="col-md-3 col-6">
-            <div className="stat-box p-4">
-              <h2 className="display-3 fw-bold text-primary mb-0" data-count="500">
+            <div className="p-4">
+              <h2
+                className="display-3 fw-bold text-primary mb-0"
+                data-count="500"
+                ref={(el) => (refs.current[0] = el)}
+              >
                 0
               </h2>
               <p className="mb-0">
@@ -18,8 +70,12 @@ export default function ImpactoNumeros() {
           </div>
 
           <div className="col-md-3 col-6">
-            <div className="stat-box p-4">
-              <h2 className="display-3 fw-bold text-success mb-0" data-count="85">
+            <div className="p-4">
+              <h2
+                className="display-3 fw-bold text-success mb-0"
+                data-count="85"
+                ref={(el) => (refs.current[1] = el)}
+              >
                 0
               </h2>
               <p className="mb-0">
@@ -29,8 +85,12 @@ export default function ImpactoNumeros() {
           </div>
 
           <div className="col-md-3 col-6">
-            <div className="stat-box p-4">
-              <h2 className="display-3 fw-bold text-warning mb-0" data-count="250">
+            <div className="p-4">
+              <h2
+                className="display-3 fw-bold text-warning mb-0"
+                data-count="250"
+                ref={(el) => (refs.current[2] = el)}
+              >
                 0
               </h2>
               <p className="mb-0">
@@ -40,8 +100,12 @@ export default function ImpactoNumeros() {
           </div>
 
           <div className="col-md-3 col-6">
-            <div className="stat-box p-4">
-              <h2 className="display-3 fw-bold text-danger mb-0" data-count="95">
+            <div className=" p-4">
+              <h2
+                className="display-3 fw-bold text-danger mb-0"
+                data-count="95"
+                ref={(el) => (refs.current[3] = el)}
+              >
                 0
               </h2>
               <p className="mb-0">
