@@ -1,13 +1,31 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
-
 import cursogestao from "/src/assets/trilhas/cursogestao.png";
 import cursomarketing from "/src/assets/trilhas/cursomarketing.jpeg";
-import cursolideranca from "/src/assets/trilhas/cursolideranca.jpeg"
+import cursolideranca from "/src/assets/trilhas/cursolideranca.jpeg";
+
+// Tipos
+interface Trilha {
+  id: number;
+  titulo: string;
+  descricao: string;
+  icone: string;
+  cor: "success" | "primary" | "warning" | string;
+  duracao: string;
+  modulos: number;
+  nivel: string;
+  alunos: number;
+  progresso: number;
+  imagem: string;
+}
+
+interface TrilhaCardProps {
+  trilha: Trilha;
+}
 
 // Dados das trilhas (copiados do main.js)
-const trilhas = [
+const trilhas: Trilha[] = [
   {
     id: 1,
     titulo: "Gestão Financeira para Empreendedoras",
@@ -50,12 +68,12 @@ const trilhas = [
 ];
 
 // Função para animar números (do main.js)
-function animarNumero(element, numero, simbolo = '', animationDuration = 2000) {
+function animarNumero(element: HTMLElement, numero: number, simbolo: string = '', animationDuration: number = 2000) {
   if (isNaN(numero)) return;
-  
+
   const incremento = numero / (animationDuration / 16);
   let atual = 0;
-  
+
   const timer = setInterval(() => {
     atual += incremento;
     if (atual >= numero) {
@@ -69,42 +87,48 @@ function animarNumero(element, numero, simbolo = '', animationDuration = 2000) {
 
 // Função para animar contadores (do main.js)
 function animarContadores() {
-  const contadores = document.querySelectorAll('.stat-card h3');
-  
-  const observerOptions = {
+  const contadores = document.querySelectorAll<HTMLElement>('.stat-card h3');
+
+  const observerOptions: IntersectionObserverInit = {
     threshold: 0.5
   };
-  
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
         entry.target.classList.add('animated');
-        const text = entry.target.textContent.trim();
+        const text = entry.target.textContent?.trim() || '';
         const numero = parseInt(text.replace(/\D/g, ''));
         const simbolo = text.replace(/[0-9]/g, '');
-        animarNumero(entry.target, numero, simbolo);
+        animarNumero(entry.target as HTMLElement, numero, simbolo);
       }
     });
   }, observerOptions);
-  
+
   contadores.forEach(contador => observer.observe(contador));
 }
 
 // Componente de Card de Trilha
-function TrilhaCard({ trilha }) {
+function TrilhaCard({ trilha }: TrilhaCardProps) {
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    const target = e.target as HTMLImageElement;
+    target.src = 'https://via.placeholder.com/400x200/667eea/ffffff?text=Rede+NAVE';
+  };
+
   return (
     <div className="col">
       <div className="card trilha-card h-100">
-        <span className={`badge bg-${trilha.cor}`} style={{ position: 'absolute', top: '10px', right: '10px' }}>
+        <span
+          className={`badge bg-${trilha.cor}`}
+          style={{ position: 'absolute', top: '10px', right: '10px' }}
+        >
           {trilha.nivel}
         </span>
-        <img 
-          src={trilha.imagem} 
-          className="card-img-top" 
+        <img
+          src={trilha.imagem}
+          className="card-img-top"
           alt={trilha.titulo}
-          onError={(e) => {
-            e.target.src = 'https://via.placeholder.com/400x200/667eea/ffffff?text=Rede+NAVE';
-          }}
+          onError={handleImageError}
           style={{ height: '200px', objectFit: 'cover' }}
         />
         <div className="card-body d-flex flex-column">
@@ -117,7 +141,7 @@ function TrilhaCard({ trilha }) {
             <span><i className="bi bi-clock"></i> {trilha.duracao}</span>
             <span><i className="bi bi-book"></i> {trilha.modulos} módulos</span>
           </div>
-          
+
           {/* Barra de Progresso Animada */}
           <div className="mb-3">
             <div className="d-flex justify-content-between align-items-center mb-1">
@@ -125,17 +149,17 @@ function TrilhaCard({ trilha }) {
               <small className="text-muted fw-bold">{trilha.progresso}%</small>
             </div>
             <div className="progress" style={{ height: '8px' }}>
-              <div 
+              <div
                 className={`progress-bar progress-bar-striped progress-bar-animated bg-${trilha.cor}`}
                 role="progressbar"
                 style={{ width: `${trilha.progresso}%` }}
                 aria-valuenow={trilha.progresso}
-                aria-valuemin="0"
-                aria-valuemax="100"
+                aria-valuemin={0}
+                aria-valuemax={100}
               ></div>
             </div>
           </div>
-          
+
           <div className="d-flex justify-content-between align-items-center mt-auto">
             <span className="text-muted small">
               <i className="bi bi-people-fill"></i> {trilha.alunos} alunas
@@ -155,16 +179,16 @@ export default function TrilhasAprendizagem() {
   useEffect(() => {
     // Anima os contadores quando o componente montar
     animarContadores();
-    
+
     // Configura animações de fade-in (do main.js)
     const adicionarAnimacoesScroll = () => {
-      const fadeElements = document.querySelectorAll('.fade-in-section');
-      
-      const observerOptions = {
+      const fadeElements = document.querySelectorAll<HTMLElement>('.fade-in-section');
+
+      const observerOptions: IntersectionObserverInit = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
       };
-      
+
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
@@ -172,16 +196,16 @@ export default function TrilhasAprendizagem() {
           }
         });
       }, observerOptions);
-      
+
       fadeElements.forEach(element => observer.observe(element));
-      
+
       return () => {
         fadeElements.forEach(element => observer.unobserve(element));
       };
     };
-    
+
     const cleanup = adicionarAnimacoesScroll();
-    
+
     return () => {
       cleanup?.();
     };

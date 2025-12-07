@@ -1,8 +1,29 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+interface Evento {
+  id: number;
+  titulo: string;
+  descricao: string;
+  data: string;
+  mes: string;
+  horario: string;
+  tipo: "Online" | "Presencial" | "Live";
+  vagas: number;
+}
+
+declare global {
+  interface Window {
+    NAVE_ADVANCED?: {
+      toast?: {
+        show: (message: string, type: 'success' | 'error' | 'warning' | 'info') => void;
+      };
+    };
+  }
+}
+
 export default function NextEvents() {
-  const eventos = [
+  const eventos: Evento[] = [
     {
       id: 1,
       titulo: "Workshop: Precificação Inteligente",
@@ -35,7 +56,7 @@ export default function NextEvents() {
     }
   ];
 
-  const handleInscricao = (titulo) => {
+  const handleInscricao = (titulo: string) => {
     if (window.NAVE_ADVANCED && window.NAVE_ADVANCED.toast) {
       window.NAVE_ADVANCED.toast.show(
         `Inscrição solicitada para: ${titulo}`,
@@ -53,7 +74,7 @@ export default function NextEvents() {
           <h2 className="fw-bold mb-3">Próximos Eventos</h2>
           <p className="">Participe de nossas oficinas, feiras e lives</p>
         </div>
-        
+
         <div className="row g-4" id="eventosContainer">
           {eventos.map((evento) => (
             <div key={evento.id} className="col">
@@ -78,7 +99,7 @@ export default function NextEvents() {
                           <i className="bi bi-people"></i> {evento.vagas} vagas
                         </span>
                       </div>
-                      <button 
+                      <button
                         className="btn btn-sm btn-outline-primary mt-3 w-100"
                         onClick={() => handleInscricao(evento.titulo)}
                       >
@@ -91,7 +112,7 @@ export default function NextEvents() {
             </div>
           ))}
         </div>
-        
+
         <div className="text-center mt-4">
           <Link to="/eventos" className="btn btn-lg">
             Ver Agenda Completa <i className="bi bi-calendar-event"></i>

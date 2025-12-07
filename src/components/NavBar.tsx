@@ -1,14 +1,14 @@
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import logo from "../assets/logoRedeNave.png";
+import logo from "/src/assets/logoRedeNave.png";
 
 export default function Navbar() {
   const location = useLocation();
   const currentPath = location.pathname;
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState<number>(0);
 
   // Verifica se um link está ativo
-  const isActive = (path) => {
+  const isActive = (path: string): boolean => {
     if (path === "/") {
       return currentPath === "/";
     }
@@ -17,9 +17,9 @@ export default function Navbar() {
 
   // Fecha o offcanvas quando um link é clicado
   const closeOffcanvas = () => {
-    const offcanvas = document.getElementById("offcanvasNavbar");
+    const offcanvas = document.getElementById("offcanvasNavbar") as HTMLElement | null;
     if (offcanvas) {
-      const bsOffcanvas = window.bootstrap?.Offcanvas?.getInstance(offcanvas);
+      const bsOffcanvas = (window as any).bootstrap?.Offcanvas?.getInstance(offcanvas);
       if (bsOffcanvas) {
         bsOffcanvas.hide();
       }
@@ -28,12 +28,11 @@ export default function Navbar() {
 
   useEffect(() => {
     // =========================================
-    // 1. BARRA DE PROGRESSO DO SCROLL (initScrollProgress)
+    // 1. BARRA DE PROGRESSO DO SCROLL
     // =========================================
     const initScrollProgress = () => {
-      // Verifica se já existe a barra
-      let progressBar = document.querySelector(".scroll-progress-bar");
-      
+      let progressBar = document.querySelector(".scroll-progress-bar") as HTMLElement | null;
+
       if (!progressBar) {
         progressBar = document.createElement("div");
         progressBar.className = "scroll-progress-bar";
@@ -59,12 +58,12 @@ export default function Navbar() {
             const windowHeight =
               document.documentElement.scrollHeight -
               document.documentElement.clientHeight;
+
             const scrolled = (window.scrollY / windowHeight) * 100;
             const progress = Math.min(scrolled, 100);
-            
-            // Atualiza o estado e o elemento DOM
+
             setScrollProgress(progress);
-            progressBar.style.width = progress + "%";
+            progressBar!.style.width = progress + "%";
             ticking = false;
           });
           ticking = true;
@@ -72,18 +71,17 @@ export default function Navbar() {
       };
 
       window.addEventListener("scroll", updateScrollProgress);
-      
-      // Retorna função de limpeza
+
       return () => {
         window.removeEventListener("scroll", updateScrollProgress);
       };
     };
 
     // =========================================
-    // 2. EFEITO DE SCROLL NA NAVBAR (navbarScrollEffect)
+    // 2. EFEITO DE SCROLL NA NAVBAR
     // =========================================
     const navbarScrollEffect = () => {
-      const navbar = document.querySelector('.navbar');
+      const navbar = document.querySelector(".navbar") as HTMLElement | null;
       if (!navbar) return;
 
       const scrollOffset = 50;
@@ -91,10 +89,10 @@ export default function Navbar() {
 
       const updateNavbar = () => {
         const scrolled = window.scrollY > scrollOffset;
-        navbar.style.padding = scrolled ? '0.5rem 0' : '1rem 0';
-        navbar.style.boxShadow = scrolled 
-          ? '0 4px 15px rgba(0, 0, 0, 0.15)' 
-          : '0 2px 10px rgba(0, 0, 0, 0.1)';
+        navbar.style.padding = scrolled ? "0.5rem 0" : "1rem 0";
+        navbar.style.boxShadow = scrolled
+          ? "0 4px 15px rgba(0, 0, 0, 0.15)"
+          : "0 2px 10px rgba(0, 0, 0, 0.1)";
       };
 
       const handleScroll = () => {
@@ -107,11 +105,11 @@ export default function Navbar() {
         }
       };
 
-      window.addEventListener('scroll', handleScroll);
-      updateNavbar(); // Aplica o efeito inicial
-      
+      window.addEventListener("scroll", handleScroll);
+      updateNavbar();
+
       return () => {
-        window.removeEventListener('scroll', handleScroll);
+        window.removeEventListener("scroll", handleScroll);
       };
     };
 
@@ -120,69 +118,60 @@ export default function Navbar() {
     // =========================================
     const setupSmoothScroll = () => {
       const anchorLinks = document.querySelectorAll('a[href^="#"]');
+
       anchorLinks.forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-          const href = this.getAttribute('href');
-          
-          // Ignora # vazio ou links do Bootstrap
-          if (href === '#' || this.hasAttribute('data-bs-toggle')) {
+        anchor.addEventListener("click", function (e) {
+          const href = (this as HTMLAnchorElement).getAttribute("href");
+
+          if (href === "#" || (this as HTMLElement).hasAttribute("data-bs-toggle")) {
             return;
           }
-          
+
           e.preventDefault();
-          const target = document.querySelector(href);
-          
+          const target = document.querySelector(href!);
+
           if (target) {
             target.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start'
+              behavior: "smooth",
+              block: "start",
             });
           }
         });
       });
-      
+
       return () => {
         anchorLinks.forEach(anchor => {
-          anchor.removeEventListener('click', null);
+          anchor.removeEventListener("click", null as any);
         });
       };
     };
 
     // =========================================
-    // 4. INICIALIZA BOOTSTRAP COMPONENTS
+    // 4. Inicializa Componentes Bootstrap
     // =========================================
     const initBootstrapComponents = () => {
-      if (typeof bootstrap === 'undefined') return;
-      
-      // Tooltips
-      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-      [...tooltipTriggerList].forEach(tooltipTriggerEl => {
-        new bootstrap.Tooltip(tooltipTriggerEl, { animation: true });
-      });
-      
-      // Popovers
-      const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
-      [...popoverTriggerList].forEach(popoverTriggerEl => {
-        new bootstrap.Popover(popoverTriggerEl, { animation: true });
-      });
+      const bs = (window as any).bootstrap;
+      if (!bs) return;
+
+      document
+        .querySelectorAll("[data-bs-toggle='tooltip']")
+        .forEach(el => new bs.Tooltip(el));
+
+      document
+        .querySelectorAll("[data-bs-toggle='popover']")
+        .forEach(el => new bs.Popover(el));
     };
 
-    // =========================================
-    // EXECUTA TODAS AS FUNÇÕES
-    // =========================================
     const cleanupScrollProgress = initScrollProgress();
     const cleanupNavbarEffect = navbarScrollEffect();
     const cleanupSmoothScroll = setupSmoothScroll();
-    
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initBootstrapComponents);
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initBootstrapComponents);
     } else {
       initBootstrapComponents();
     }
 
-    // =========================================
-    // LIMPEZA AO DESMONTAR
-    // =========================================
     return () => {
       cleanupScrollProgress?.();
       cleanupNavbarEffect?.();
@@ -192,23 +181,23 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Barra de Progresso do Scroll (Elemento DOM) */}
-      <div 
+      {/* Barra do progresso */}
+      <div
         className="scroll-progress-bar"
         style={{
-          position: 'fixed',
+          position: "fixed",
           top: 0,
           left: 0,
-          height: '3px',
-          background: 'linear-gradient(180deg, #5b119a, #7c19d1)',
+          height: "3px",
+          background: "linear-gradient(180deg, #5b119a, #7c19d1)",
           width: `${scrollProgress}%`,
           zIndex: 9999,
-          transition: 'width 0.1s ease-out'
+          transition: "width 0.1s ease-out",
         }}
         aria-hidden="true"
       />
 
-      {/* Navbar Principal */}
+      {/* Navbar */}
       <nav className="navbar navbar-expand-lg navbar-dark sticky-top">
         <div className="container">
           <Link className="navbar-brand fw-bold" to="/">
@@ -220,16 +209,11 @@ export default function Navbar() {
             type="button"
             data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasNavbar"
-            aria-controls="offcanvasNavbar"
           >
             <span className="navbar-toggler-icon"></span>
           </button>
 
-          <div
-            className="offcanvas offcanvas-end menu-mobile"
-            tabIndex={-1}
-            id="offcanvasNavbar"
-          >
+          <div className="offcanvas offcanvas-end menu-mobile" id="offcanvasNavbar">
             <div className="offcanvas-header">
               <h5 className="offcanvas-title">
                 <Link className="navbar-brand fw-bold" to="/" onClick={closeOffcanvas}>
@@ -237,74 +221,33 @@ export default function Navbar() {
                 </Link>
               </h5>
 
-              <button
-                type="button"
-                className="btn-close btn-close-white"
-                data-bs-dismiss="offcanvas"
-                aria-label="Close"
-              ></button>
+              <button className="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
             </div>
 
             <div className="offcanvas-body">
               <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
-                <li className="nav-item">
-                  <Link 
-                    className={`nav-link ${isActive("/") ? "active" : ""}`}
-                    to="/"
-                    onClick={closeOffcanvas}
-                  >
-                    Início
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link 
-                    className={`nav-link ${isActive("/trilhas") ? "active" : ""}`}
-                    to="/trilhas"
-                    onClick={closeOffcanvas}
-                  >
-                    Trilhas
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link 
-                    className={`nav-link ${isActive("/eventos") ? "active" : ""}`}
-                    to="/eventos"
-                    onClick={closeOffcanvas}
-                  >
-                    Eventos
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link 
-                    className={`nav-link ${isActive("/sobre") ? "active" : ""}`}
-                    to="/sobre"
-                    onClick={closeOffcanvas}
-                  >
-                    Sobre
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link 
-                    className={`nav-link ${isActive("/suporte") ? "active" : ""}`}
-                    to="/suporte"
-                    onClick={closeOffcanvas}
-                  >
-                    Suporte
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link 
-                    className={`nav-link ${isActive("/login") ? "active" : ""}`}
-                    to="/login"
-                    onClick={closeOffcanvas}
-                  >
-                    <i className="bi bi-box-arrow-in-right"></i> Entrar
-                  </Link>
-                </li>
+                {[
+                  { path: "/", label: "Início" },
+                  { path: "/trilhas", label: "Trilhas" },
+                  { path: "/eventos", label: "Eventos" },
+                  { path: "/sobre", label: "Sobre" },
+                  { path: "/suporte", label: "Suporte" },
+                  { path: "/login", label: "Entrar", icon: "bi bi-box-arrow-in-right" },
+                ].map(item => (
+                  <li key={item.path} className="nav-item">
+                    <Link
+                      className={`nav-link ${isActive(item.path) ? "active" : ""}`}
+                      to={item.path}
+                      onClick={closeOffcanvas}
+                    >
+                      {item.icon && <i className={item.icon}></i>} {item.label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
 
               <div className="d-flex mt-3 mt-lg-0">
-                <Link 
+                <Link
                   className={`btn btn-sm ms-2 ${isActive("/cadastro") ? "active" : ""}`}
                   to="/cadastro"
                   onClick={closeOffcanvas}

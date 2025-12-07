@@ -1,17 +1,17 @@
 import React, { useEffect, useRef } from "react";
 
 export default function StatsSection() {
-  const refs = useRef([]);
+  const refs = useRef<(HTMLHeadingElement | null)[]>([]);
 
   useEffect(() => {
-    const elements = refs.current;
+    const elements = refs.current.filter((el): el is HTMLHeadingElement => el !== null);
 
     if (!elements.length) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          const el = entry.target;
+          const el = entry.target as HTMLHeadingElement;
 
           if (entry.isIntersecting && !el.dataset.animated) {
             el.dataset.animated = "true";
@@ -22,13 +22,13 @@ export default function StatsSection() {
       { threshold: 0.5 }
     );
 
-    elements.forEach((el) => el && observer.observe(el));
+    elements.forEach((el) => observer.observe(el));
 
     return () => observer.disconnect();
   }, []);
 
-  const animateNumber = (element) => {
-    const text = element.textContent.trim();
+  const animateNumber = (element: HTMLHeadingElement) => {
+    const text = element.textContent?.trim() || "";
     const rawNumber = parseInt(text.replace(/\D/g, ""));
     if (isNaN(rawNumber)) return;
 
@@ -57,7 +57,7 @@ export default function StatsSection() {
           <div className="col-md-3 col-6 mb-3 mb-md-0">
             <div className="stat-card-home estatistica">
               <h3
-                ref={(el) => (refs.current[0] = el)}
+                ref={(el) => { refs.current[0] = el; }} // Corrigido: retorna void
                 className="fw-bold mb-0"
               >
                 500+
@@ -69,7 +69,7 @@ export default function StatsSection() {
           <div className="col-md-3 col-6 mb-3 mb-md-0">
             <div className="stat-card-home estatistica">
               <h3
-                ref={(el) => (refs.current[1] = el)}
+                ref={(el) => { refs.current[1] = el; }} // Corrigido: retorna void
                 className="fw-bold mb-0"
               >
                 20+
@@ -81,7 +81,7 @@ export default function StatsSection() {
           <div className="col-md-3 col-6">
             <div className="stat-card-home estatistica">
               <h3
-                ref={(el) => (refs.current[2] = el)}
+                ref={(el) => { refs.current[2] = el; }} // Corrigido: retorna void
                 className="fw-bold mb-0"
               >
                 95%
@@ -93,7 +93,7 @@ export default function StatsSection() {
           <div className="col-md-3 col-6">
             <div className="stat-card-home estatistica">
               <h3
-                ref={(el) => (refs.current[3] = el)}
+                ref={(el) => { refs.current[3] = el; }} // Corrigido: retorna void
                 className="fw-bold mb-0"
               >
                 100%

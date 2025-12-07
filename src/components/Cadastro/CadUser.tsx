@@ -1,11 +1,66 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
+
+interface FormData {
+  nome: string;
+  cpf: string;
+  email: string;
+  telefone: string;
+  dataNascimento: string;
+  cidade: string;
+  senha: string;
+  confirmarSenha: string;
+  tipoNegocio: string;
+  tempoNegocio: string;
+  interesses: {
+    gestao: boolean;
+    marketing: boolean;
+    vendas: boolean;
+    lideranca: boolean;
+  };
+  comoChegou: string;
+  aceitoTermos: boolean;
+}
+
+interface FormErrors {
+  nome?: string;
+  cpf?: string;
+  email?: string;
+  telefone?: string;
+  dataNascimento?: string;
+  cidade?: string;
+  senha?: string;
+  confirmarSenha?: string;
+  tipoNegocio?: string;
+  aceitoTermos?: string;
+  [key: string]: string | undefined;
+}
+
+interface ResumoData {
+  nome: string;
+  email: string;
+  telefone: string;
+}
+
+interface PayloadData {
+  nome: string;
+  cpf: string;
+  email: string;
+  telefone: string;
+  dataNascimento: string;
+  cidade: string;
+  senha: string;
+  tipoNegocio: string;
+  tempoNegocio: string;
+  interesses: string[];
+  comoChegou: string;
+}
 
 export default function CadUser() {
   // step atual (1,2,3)
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState<number>(1);
 
   // Form state
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<FormData>({
     nome: "",
     cpf: "",
     email: "",
@@ -27,17 +82,17 @@ export default function CadUser() {
   });
 
   // Erros de validação por campo
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<FormErrors>({});
 
   // Resumo para passo 3
-  const [resumo, setResumo] = useState({
+  const [resumo, setResumo] = useState<ResumoData>({
     nome: "",
     email: "",
     telefone: "",
   });
 
   // Helpers: máscara simples CPF
-  const maskCPF = (value) => {
+  const maskCPF = (value: string): string => {
     const digits = value.replace(/\D/g, "").slice(0, 11);
     const part1 = digits.slice(0, 3);
     const part2 = digits.slice(3, 6);
@@ -51,7 +106,7 @@ export default function CadUser() {
   };
 
   // Máscara simples para telefone (Brasil)
-  const maskTelefone = (value) => {
+  const maskTelefone = (value: string): string => {
     const digits = value.replace(/\D/g, "").slice(0, 11);
     if (digits.length <= 2) return digits;
     if (digits.length <= 6) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
@@ -61,31 +116,38 @@ export default function CadUser() {
   };
 
   // Atualiza campo (tratamento para checkboxes de interesses)
-  const handleChange = (e) => {
-    const { id, value, type, checked } = e.target;
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { id, value, type } = e.target;
 
-    if (id === "cpf") {
-      setForm((prev) => ({ ...prev, cpf: maskCPF(value) }));
-    } else if (id === "telefone") {
-      setForm((prev) => ({ ...prev, telefone: maskTelefone(value) }));
-    } else if (id === "aceitoTermos") {
-      setForm((prev) => ({ ...prev, aceitoTermos: checked }));
-    } else if (id === "interesse1") {
-      setForm((prev) => ({ ...prev, interesses: { ...prev.interesses, gestao: checked } }));
-    } else if (id === "interesse2") {
-      setForm((prev) => ({ ...prev, interesses: { ...prev.interesses, marketing: checked } }));
-    } else if (id === "interesse3") {
-      setForm((prev) => ({ ...prev, interesses: { ...prev.interesses, vendas: checked } }));
-    } else if (id === "interesse4") {
-      setForm((prev) => ({ ...prev, interesses: { ...prev.interesses, lideranca: checked } }));
-    } else if (id in form) {
-      setForm((prev) => ({ ...prev, [id]: value }));
+    if (type === "checkbox") {
+      const target = e.target as HTMLInputElement;
+      const checked = target.checked;
+
+      if (id === "aceitoTermos") {
+        setForm((prev) => ({ ...prev, aceitoTermos: checked }));
+      } else if (id === "interesse1") {
+        setForm((prev) => ({ ...prev, interesses: { ...prev.interesses, gestao: checked } }));
+      } else if (id === "interesse2") {
+        setForm((prev) => ({ ...prev, interesses: { ...prev.interesses, marketing: checked } }));
+      } else if (id === "interesse3") {
+        setForm((prev) => ({ ...prev, interesses: { ...prev.interesses, vendas: checked } }));
+      } else if (id === "interesse4") {
+        setForm((prev) => ({ ...prev, interesses: { ...prev.interesses, lideranca: checked } }));
+      }
+    } else {
+      if (id === "cpf") {
+        setForm((prev) => ({ ...prev, cpf: maskCPF(value) }));
+      } else if (id === "telefone") {
+        setForm((prev) => ({ ...prev, telefone: maskTelefone(value) }));
+      } else if (id in form) {
+        setForm((prev) => ({ ...prev, [id]: value }));
+      }
     }
   };
 
   // Validações por passo
-  const validateStep = (s) => {
-    const newErrors = {};
+  const validateStep = (s: number): boolean => {
+    const newErrors: FormErrors = {};
 
     if (s === 1) {
       if (!form.nome.trim()) newErrors.nome = "Por favor, insira seu nome.";
@@ -118,7 +180,7 @@ export default function CadUser() {
   };
 
   // Avançar passo (valida antes)
-  const nextStep = (targetStep) => {
+  const nextStep = (targetStep: number) => {
     if (!validateStep(step)) return;
 
     if (targetStep === 3) {
@@ -133,17 +195,17 @@ export default function CadUser() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const previousStep = (targetStep) => {
+  const previousStep = (targetStep: number) => {
     setStep(targetStep);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   // Submissão final
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (!validateStep(3)) return;
 
-    const payload = {
+    const payload: PayloadData = {
       nome: form.nome,
       cpf: form.cpf.replace(/\D/g, ""),
       email: form.email,
@@ -153,7 +215,7 @@ export default function CadUser() {
       senha: form.senha,
       tipoNegocio: form.tipoNegocio,
       tempoNegocio: form.tempoNegocio,
-      interesses: Object.keys(form.interesses).filter((k) => form.interesses[k]),
+      interesses: Object.keys(form.interesses).filter((k) => form.interesses[k as keyof typeof form.interesses]),
       comoChegou: form.comoChegou,
     };
 
@@ -163,7 +225,7 @@ export default function CadUser() {
   };
 
   // helper para adicionar classe 'is-invalid' se erro existir
-  const invalidClass = (field) => (errors[field] ? "is-invalid" : "");
+  const invalidClass = (field: string): string => (errors[field] ? "is-invalid" : "");
 
   // JSX do componente (MANTENDO O ESTILO ORIGINAL DO HTML)
   return (
@@ -363,8 +425,8 @@ export default function CadUser() {
 
                   <div className="mb-3">
                     <label htmlFor="tipoNegocio" className="form-label">Qual seu tipo de negócio? *</label>
-                    <select 
-                      className={`form-select ${invalidClass("tipoNegocio")}`} 
+                    <select
+                      className={`form-select ${invalidClass("tipoNegocio")}`}
                       id="tipoNegocio"
                       value={form.tipoNegocio}
                       onChange={handleChange}
@@ -387,8 +449,8 @@ export default function CadUser() {
 
                   <div className="mb-3">
                     <label htmlFor="tempoNegocio" className="form-label">Há quanto tempo empreende?</label>
-                    <select 
-                      className="form-select" 
+                    <select
+                      className="form-select"
                       id="tempoNegocio"
                       value={form.tempoNegocio}
                       onChange={handleChange}
@@ -452,8 +514,8 @@ export default function CadUser() {
 
                   <div className="mb-4">
                     <label htmlFor="comoChegou" className="form-label">Como conheceu a Rede NAVE?</label>
-                    <select 
-                      className="form-select" 
+                    <select
+                      className="form-select"
                       id="comoChegou"
                       value={form.comoChegou}
                       onChange={handleChange}

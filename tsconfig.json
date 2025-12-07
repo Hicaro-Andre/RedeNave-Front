@@ -10,11 +10,12 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": true,
+    "allowArbitraryExtensions": true,
     "noEmit": true,
     "jsx": "react-jsx",
 
     "ignoreDeprecations": "6.0"
   },
-  "include": ["src"],
+  "include": ["src", "src/**/*.png", "src/**/*.jpg", "src/**/*.jpeg", "src/**/*.svg"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

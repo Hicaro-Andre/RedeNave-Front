@@ -1,9 +1,54 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+
+// Definir tipos
+interface Section {
+  [key: string]: string;
+}
+
+interface Stat {
+  icon: string;
+  value: number;
+  label: string;
+  color: string;
+  bg: string;
+  small: string;
+  smallColor: string;
+}
+
+interface QuickAction {
+  icon: string;
+  color: string;
+  title: string;
+  subtitle: string;
+}
+
+interface Registration {
+  name: string;
+  initials: string;
+  email: string;
+  trail: string;
+  date: string;
+  status: string;
+  statusColor: string;
+}
+
+interface Activity {
+  icon: string;
+  color: string;
+  title: string;
+  subtitle: string;
+  time: string;
+}
+
+interface GenericSectionProps {
+  title: string;
+  buttonText: string;
+}
 
 export default function AdminDash() {
-  const [activeSection, setActiveSection] = useState("dashboard");
+  const [activeSection, setActiveSection] = useState<string>("dashboard");
 
-  const sections = {
+  const sections: Section = {
     dashboard: "Dashboard",
     users: "Usuárias",
     courses: "Trilhas",
@@ -15,9 +60,10 @@ export default function AdminDash() {
 
   // Para animar os números de estatísticas
   const animateNumbers = () => {
-    const statElements = document.querySelectorAll(".stat-value");
+    const statElements = document.querySelectorAll<HTMLElement>(".stat-value");
     statElements.forEach((stat) => {
-      const target = parseInt(stat.dataset.target || "0");
+      const targetStr = stat.getAttribute("data-target");
+      const target = targetStr ? parseInt(targetStr) : 0;
       const duration = 1500;
       const increment = target / (duration / 16);
       let current = 0;
@@ -39,7 +85,7 @@ export default function AdminDash() {
     animateNumbers();
   }, []);
 
-  const getIconForSection = (key) => {
+  const getIconForSection = (key: string): string => {
     switch (key) {
       case "dashboard": return "bi-speedometer2";
       case "users": return "bi-people";
@@ -159,7 +205,7 @@ export default function AdminDash() {
 
 // DashboardSection Component
 function DashboardSection() {
-  const stats = [
+  const stats: Stat[] = [
     {
       icon: "bi-people-fill",
       value: 1247,
@@ -198,14 +244,14 @@ function DashboardSection() {
     },
   ];
 
-  const quickActions = [
+  const quickActions: QuickAction[] = [
     { icon: "bi-person-plus", color: "text-primary", title: "Nova Usuária", subtitle: "Cadastrar nova aluna" },
     { icon: "bi-plus-circle", color: "text-success", title: "Nova Trilha", subtitle: "Criar curso novo" },
     { icon: "bi-calendar-plus", color: "text-warning", title: "Novo Evento", subtitle: "Agendar workshop" },
     { icon: "bi-file-earmark-text", color: "text-danger", title: "Gerar Relatório", subtitle: "Exportar dados" },
   ];
 
-  const latestRegistrations = [
+  const latestRegistrations: Registration[] = [
     {
       name: "Maria Silva",
       initials: "MS",
@@ -235,7 +281,7 @@ function DashboardSection() {
     },
   ];
 
-  const activities = [
+  const activities: Activity[] = [
     { icon: "bi-person-check", color: "text-primary", title: "Nova usuária aprovada", subtitle: "Carla Santos foi aprovada", time: "5 min atrás" },
     { icon: "bi-award", color: "text-success", title: "Certificado emitido", subtitle: "Paula Lima completou trilha", time: "1 hora atrás" },
     { icon: "bi-calendar-plus", color: "text-warning", title: "Novo evento criado", subtitle: "Workshop de Precificação", time: "2 horas atrás" },
@@ -369,7 +415,7 @@ function DashboardSection() {
 }
 
 // Generic Section Component
-function GenericSection({ title, buttonText }) {
+function GenericSection({ title, buttonText }: GenericSectionProps) {
   return (
     <div className="table-card">
       <h3 className="fw-bold mb-4">{title}</h3>

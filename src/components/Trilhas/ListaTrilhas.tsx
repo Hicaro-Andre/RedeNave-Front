@@ -2,10 +2,26 @@ import React, { useState, useEffect } from "react";
 
 import cursogestao from "/src/assets/trilhas/cursogestao.png";
 import cursomarketing from "/src/assets/trilhas/cursomarketing.jpeg";
-import cursolideranca from "/src/assets/trilhas/cursolideranca.jpeg"
+import cursolideranca from "/src/assets/trilhas/cursolideranca.jpeg";
+
+// Tipos
+interface Trilha {
+  id: number;
+  titulo: string;
+  descricao: string;
+  icone: string;
+  cor: string;
+  duracao: string;
+  modulos: number;
+  nivel: string;
+  alunos: number;
+  area: string;
+  imagem: string;
+  conteudo: string[];
+}
 
 // Dados completos das trilhas (do script)
-const todasTrilhas = [
+const todasTrilhas: Trilha[] = [
   {
     id: 1,
     titulo: "Gestão Financeira para Empreendedoras",
@@ -129,18 +145,18 @@ const todasTrilhas = [
 ];
 
 const ListaTrilhas = () => {
-  const [trilhasFiltradas, setTrilhasFiltradas] = useState(todasTrilhas);
+  const [trilhasFiltradas, setTrilhasFiltradas] = useState<Trilha[]>(todasTrilhas);
   const [busca, setBusca] = useState("");
   const [nivel, setNivel] = useState("");
   const [area, setArea] = useState("");
 
   // Aplicar filtros (do script)
   const aplicarFiltros = () => {
-    let trilhasFiltradas = todasTrilhas;
+    let resultado = todasTrilhas;
 
     // Filtro de busca
     if (busca) {
-      trilhasFiltradas = trilhasFiltradas.filter(
+      resultado = resultado.filter(
         (t) =>
           t.titulo.toLowerCase().includes(busca.toLowerCase()) ||
           t.descricao.toLowerCase().includes(busca.toLowerCase())
@@ -149,15 +165,15 @@ const ListaTrilhas = () => {
 
     // Filtro de nível
     if (nivel) {
-      trilhasFiltradas = trilhasFiltradas.filter((t) => t.nivel === nivel);
+      resultado = resultado.filter((t) => t.nivel === nivel);
     }
 
     // Filtro de área
     if (area) {
-      trilhasFiltradas = trilhasFiltradas.filter((t) => t.area === area);
+      resultado = resultado.filter((t) => t.area === area);
     }
 
-    setTrilhasFiltradas(trilhasFiltradas);
+    setTrilhasFiltradas(resultado);
   };
 
   // Aplica filtros quando busca, nivel ou area mudam
@@ -166,8 +182,10 @@ const ListaTrilhas = () => {
   }, [busca, nivel, area]);
 
   // Inscrever em trilha (do script)
-  const inscreverTrilha = (id) => {
+  const inscreverTrilha = (id: number) => {
     const trilha = todasTrilhas.find((t) => t.id === id);
+    if (!trilha) return;
+
     if (window.NAVE_ADVANCED && window.NAVE_ADVANCED.toast) {
       window.NAVE_ADVANCED.toast.show(
         `Inscrição solicitada para: ${trilha.titulo}`,
@@ -187,11 +205,58 @@ const ListaTrilhas = () => {
     setArea("");
   };
 
-
+  // Handler para erro de imagem
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    const target = e.target as HTMLImageElement;
+    target.src = "https://via.placeholder.com/400x200/667eea/ffffff?text=Rede+NAVE";
+  };
 
   return (
     <section className="py-5">
       <div className="container">
+
+        {/* Filtros */}
+        <div className="row mb-4">
+          <div className="col-md-4 mb-3">
+            <div className="input-group">
+              <span className="input-group-text">
+                <i className="bi bi-search"></i>
+              </span>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Buscar trilhas..."
+                value={busca}
+                onChange={(e) => setBusca(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="col-md-4 mb-3">
+            <select
+              className="form-select"
+              value={nivel}
+              onChange={(e) => setNivel(e.target.value)}
+            >
+              <option value="">Todos os níveis</option>
+              <option value="Iniciante">Iniciante</option>
+              <option value="Intermediário">Intermediário</option>
+              <option value="Avançado">Avançado</option>
+            </select>
+          </div>
+          <div className="col-md-4 mb-3">
+            <select
+              className="form-select"
+              value={area}
+              onChange={(e) => setArea(e.target.value)}
+            >
+              <option value="">Todas as áreas</option>
+              <option value="Gestão">Gestão</option>
+              <option value="Marketing">Marketing</option>
+              <option value="Liderança">Liderança</option>
+              <option value="Vendas">Vendas</option>
+            </select>
+          </div>
+        </div>
 
         {/* Lista de Trilhas */}
         <div className="row g-4" id="listaTrilhas">
@@ -218,10 +283,7 @@ const ListaTrilhas = () => {
                     src={trilha.imagem}
                     className="card-img-top"
                     alt={trilha.titulo}
-                    onError={(e) => {
-                      e.target.src =
-                        "https://via.placeholder.com/400x200/667eea/ffffff?text=Rede+NAVE";
-                    }}
+                    onError={handleImageError}
                   />
                   <div className="card-body">
                     <div className="d-flex align-items-center mb-3">

@@ -1,17 +1,17 @@
 import React, { useEffect, useRef } from "react";
 
 export default function ImpactoNumeros() {
-  const refs = useRef([]);
+  const refs = useRef<(HTMLHeadingElement | null)[]>([]);
 
   useEffect(() => {
-    const elements = refs.current;
+    const elements = refs.current.filter((el): el is HTMLHeadingElement => el !== null);
 
     if (!elements.length) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          const el = entry.target;
+          const el = entry.target as HTMLHeadingElement;
 
           if (entry.isIntersecting && !el.dataset.animated) {
             el.dataset.animated = "true";
@@ -22,13 +22,13 @@ export default function ImpactoNumeros() {
       { threshold: 0.5 }
     );
 
-    elements.forEach((el) => el && observer.observe(el));
+    elements.forEach((el) => observer.observe(el));
 
     return () => observer.disconnect();
   }, []);
 
-  const animateNumber = (element) => {
-    const finalNumber = parseInt(element.getAttribute("data-count"));
+  const animateNumber = (element: HTMLHeadingElement) => {
+    const finalNumber = parseInt(element.getAttribute("data-count") || "");
     if (isNaN(finalNumber)) return;
 
     const duration = 2000; // 2s
@@ -39,10 +39,10 @@ export default function ImpactoNumeros() {
       current += increment;
 
       if (current >= finalNumber) {
-        element.textContent = finalNumber;
+        element.textContent = finalNumber.toString();
         clearInterval(timer);
       } else {
-        element.textContent = Math.floor(current);
+        element.textContent = Math.floor(current).toString();
       }
     }, 16);
   };
@@ -59,7 +59,7 @@ export default function ImpactoNumeros() {
               <h2
                 className="display-3 fw-bold text-primary mb-0"
                 data-count="500"
-                ref={(el) => (refs.current[0] = el)}
+                ref={(el) => { refs.current[0] = el; }}
               >
                 0
               </h2>
@@ -74,7 +74,7 @@ export default function ImpactoNumeros() {
               <h2
                 className="display-3 fw-bold text-success mb-0"
                 data-count="85"
-                ref={(el) => (refs.current[1] = el)}
+                ref={(el) => { refs.current[1] = el; }}
               >
                 0
               </h2>
@@ -89,7 +89,7 @@ export default function ImpactoNumeros() {
               <h2
                 className="display-3 fw-bold text-warning mb-0"
                 data-count="250"
-                ref={(el) => (refs.current[2] = el)}
+                ref={(el) => { refs.current[2] = el; }}
               >
                 0
               </h2>
@@ -104,7 +104,7 @@ export default function ImpactoNumeros() {
               <h2
                 className="display-3 fw-bold text-danger mb-0"
                 data-count="95"
-                ref={(el) => (refs.current[3] = el)}
+                ref={(el) => { refs.current[3] = el; }}
               >
                 0
               </h2>
