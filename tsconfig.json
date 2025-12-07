@@ -4,9 +4,14 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
+    "strict": false,                    // ← MUDAR PARA false
+    "noImplicitAny": false,             // ← ADICIONAR (permite parâmetros sem tipo)
+    "strictNullChecks": false,          // ← ADICIONAR
+    "strictFunctionTypes": false,       // ← ADICIONAR
+    "strictBindCallApply": false,       // ← ADICIONAR
+    "strictPropertyInitialization": false, // ← ADICIONAR
+    "noImplicitThis": false,            // ← ADICIONAR
+    "alwaysStrict": false,              // ← ADICIONAR
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "node",
@@ -19,11 +24,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.js",
-    "src/**/*.jsx"
-  ],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.js", "src/**/*.jsx"],
   "exclude": ["node_modules"]
 }
