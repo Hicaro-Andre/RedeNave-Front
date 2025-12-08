@@ -1,5 +1,7 @@
 import React from "react";
 
+import { Link } from "react-router-dom";
+
 import fotobanner from "/src/assets/index/hero-illustration.jpeg";
 
 export default function HeroSection() {
@@ -21,9 +23,9 @@ export default function HeroSection() {
             </p>
 
             <div className="d-grid d-sm-flex gap-2">
-              <a href="/cadastro" className="btn btn-lg px-4">
+              <Link to="/cadastro" className="btn btn-lg px-4">
                 <i className="bi bi-person-plus"></i> Começar Agora
-              </a>
+              </Link>
 
               <a href="#sobre" className="btn btn-outline-light btn-lg px-4">
                 <i className="bi bi-info-circle"></i> Saiba Mais

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function LoginUser() {
   const [email, setEmail] = useState("");
@@ -140,9 +141,9 @@ export default function LoginUser() {
 
                       <div className="text-center">
                         <span className="text-muted">Não tem uma conta? </span>
-                        <a href="/cadastro" className="text-decoration-none fw-bold bg-text">
+                        <Link to="/cadastro" className="text-decoration-none fw-bold bg-text">
                           Cadastre-se
-                        </a>
+                        </Link>
                       </div>
                     </form>
                   </div>
