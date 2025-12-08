@@ -10,7 +10,11 @@
   transform: translateX(-50%);
   width: 2px;
   height: 100%;
-  background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(
+    90deg,
+    #4a077c,
+    #6a0dad
+  );
 }
 
 .timeline-item {
@@ -41,6 +45,10 @@
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }
 
+.bg-color{
+  background-color: #09cdd7;
+}
+
 .timeline-icon {
   position: absolute;
   left: 50%;
@@ -48,7 +56,11 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(
+    90deg,
+    #4a077c,
+    #6a0dad
+  );
   color: white;
   display: flex;
   align-items: center;
@@ -86,6 +98,13 @@
   font-weight: bold;
 }
 
+.icon-bg{
+  color: #c77dff;
+}
+.icon-bg:hover{
+  color: #8f3ecf;
+}
+
 .value-card {
   background: white;
   border-radius: 15px;
@@ -104,7 +123,11 @@
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(
+    90deg,
+    #4a077c,
+    #6a0dad
+  );
   color: white;
   display: flex;
   align-items: center;
@@ -128,7 +151,7 @@
 
 .partner-logo:hover {
   transform: scale(1.1);
-  border-color: #667eea;
+  border-color: #8f3ecf;
 }
 
 @media (max-width: 768px) {

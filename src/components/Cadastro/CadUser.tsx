@@ -258,11 +258,11 @@ export default function CadUser() {
             <div className="cadastro-card-two">
               {/* Step Indicator */}
               <div className="step-indicator">
-                <div className={`step ${step === 1 ? "active" : ""}`}>
+                <div className={`step ${step === 1 ? "active" : ""} ${step > 1 ? "completed" : ""}`}>
                   <div className="step-circle">1</div>
                   <small>Dados Pessoais</small>
                 </div>
-                <div className={`step ${step === 2 ? "active" : ""}`}>
+                <div className={`step ${step === 2 ? "active" : ""} ${step > 2 ? "completed" : ""}`}>
                   <div className="step-circle">2</div>
                   <small>Seu Negócio</small>
                 </div>

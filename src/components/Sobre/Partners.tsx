@@ -1,3 +1,9 @@
+import entrelacos from "/src/assets/sobre/entrelaços.png"
+import redemulheres from "/src/assets/sobre/redemulheres.png"
+import sitinho from "/src/assets/sobre/sitinho.png"
+import tecendo from "/src/assets/sobre/tecendo.png"
+
+
 export default function Partners() {
   const handleClick = () => {
     alert("Entre em contato: parcerias@redenave.org");
@@ -10,20 +16,44 @@ export default function Partners() {
 
         <div className="d-flex flex-wrap justify-content-center align-items-center">
           <div className="partner-logo">
-            <h6 className="mb-0">SEBRAE</h6>
+            <img
+              src={entrelacos}
+              alt="ENTRLAÇOS"
+              className="img-fluid"
+              style={{ maxHeight: '100px' }}
+              title="ENTRELAÇOS"
+            />
           </div>
           <div className="partner-logo">
-            <h6 className="mb-0">ONU Mulheres</h6>
+            <img
+              src={redemulheres}
+              alt="REDE MULHERES"
+              className="img-fluid"
+              style={{ maxHeight: '100px' }}
+              title="REDE MULHERES"
+            />
           </div>
           <div className="partner-logo">
-            <h6 className="mb-0">Banco Social</h6>
+            <img
+              src={sitinho}
+              alt="SITINHO"
+              className="img-fluid"
+              style={{ maxHeight: '100px' }}
+              title="SITINHO"
+            />
           </div>
           <div className="partner-logo">
-            <h6 className="mb-0">Instituto Empreender</h6>
+            <img
+              src={tecendo}
+              alt="TECENDO"
+              className="img-fluid"
+              style={{ maxHeight: '100px' }}
+              title="TECENDO"
+            />
           </div>
-          <div className="partner-logo">
+          {/* <div className="partner-logo">
             <h6 className="mb-0">Tech4Good</h6>
-          </div>
+          </div> */}
         </div>
 
         <div className="text-center mt-5">

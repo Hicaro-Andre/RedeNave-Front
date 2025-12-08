@@ -1,6 +1,6 @@
 export default function NossaEquipe() {
   return (
-    <section className="py-5 bg-light">
+    <section className="py-5">
       <div className="container">
         <h2 className="fw-bold text-center mb-5">Nossa Equipe</h2>
 
@@ -9,7 +9,14 @@ export default function NossaEquipe() {
           {/* membro 1 */}
           <div className="col-md-4">
             <div className="team-member">
-              <div className="team-photo">RC</div>
+              <div className="team-photo">
+                <img
+                  src="https://randomuser.me/api/portraits/women/11.jpg"
+                  alt="Rosa Costa"
+                  className="rounded-circle img-fluid"
+                  style={{ width: '150px', height: '150px', objectFit: 'cover' }}
+                />
+              </div>
 
               <h5 className="fw-bold mb-1">Rosa Costa</h5>
               <p className="mb-3">Fundadora e Diretora Geral</p>
@@ -20,10 +27,10 @@ export default function NossaEquipe() {
               </p>
 
               <div className="social-links">
-                <a href="#" className="text-primary me-2">
+                <a href="#" className="icon-bg me-2">
                   <i className="bi bi-linkedin fs-5"></i>
                 </a>
-                <a href="#" className="text-primary">
+                <a href="#" className="icon-bg">
                   <i className="bi bi-envelope fs-5"></i>
                 </a>
               </div>
@@ -33,13 +40,13 @@ export default function NossaEquipe() {
           {/* membro 2 */}
           <div className="col-md-4">
             <div className="team-member">
-              <div
-                className="team-photo"
-                style={{
-                  background: "linear-gradient(135deg, #198754 0%, #20c997 100%)"
-                }}
-              >
-                CA
+              <div className="team-photo">
+                <img
+                  src="https://randomuser.me/api/portraits/women/22.jpg"
+                  alt="Segundo Membro"
+                  className="rounded-circle img-fluid"
+                  style={{ width: '150px', height: '150px', objectFit: 'cover' }}
+                />
               </div>
 
               <h5 className="fw-bold mb-1">Carla Almeida</h5>
@@ -51,10 +58,10 @@ export default function NossaEquipe() {
               </p>
 
               <div className="social-links">
-                <a href="#" className="text-success me-2">
+                <a href="#" className="icon-bg me-2">
                   <i className="bi bi-linkedin fs-5"></i>
                 </a>
-                <a href="#" className="text-success">
+                <a href="#" className="icon-bg">
                   <i className="bi bi-envelope fs-5"></i>
                 </a>
               </div>
@@ -64,13 +71,13 @@ export default function NossaEquipe() {
           {/* membro 3 */}
           <div className="col-md-4">
             <div className="team-member">
-              <div
-                className="team-photo"
-                style={{
-                  background: "linear-gradient(135deg, #ffc107 0%, #fd7e14 100%)"
-                }}
-              >
-                AP
+              <div className="team-photo">
+                <img
+                  src="https://randomuser.me/api/portraits/women/33.jpg"
+                  alt="Terceiro Membro"
+                  className="rounded-circle img-fluid"
+                  style={{ width: '150px', height: '150px', objectFit: 'cover' }}
+                />
               </div>
 
               <h5 className="fw-bold mb-1">Ana Paula Souza</h5>
@@ -82,10 +89,10 @@ export default function NossaEquipe() {
               </p>
 
               <div className="social-links">
-                <a href="#" className="text-warning me-2">
+                <a href="#" className="icon-bg me-2">
                   <i className="bi bi-linkedin fs-5"></i>
                 </a>
-                <a href="#" className="text-warning">
+                <a href="#" className="icon-bg">
                   <i className="bi bi-envelope fs-5"></i>
                 </a>
               </div>

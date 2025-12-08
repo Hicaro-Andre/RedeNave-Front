@@ -215,48 +215,6 @@ const ListaTrilhas = () => {
     <section className="py-5">
       <div className="container">
 
-        {/* Filtros */}
-        <div className="row mb-4">
-          <div className="col-md-4 mb-3">
-            <div className="input-group">
-              <span className="input-group-text">
-                <i className="bi bi-search"></i>
-              </span>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Buscar trilhas..."
-                value={busca}
-                onChange={(e) => setBusca(e.target.value)}
-              />
-            </div>
-          </div>
-          <div className="col-md-4 mb-3">
-            <select
-              className="form-select"
-              value={nivel}
-              onChange={(e) => setNivel(e.target.value)}
-            >
-              <option value="">Todos os níveis</option>
-              <option value="Iniciante">Iniciante</option>
-              <option value="Intermediário">Intermediário</option>
-              <option value="Avançado">Avançado</option>
-            </select>
-          </div>
-          <div className="col-md-4 mb-3">
-            <select
-              className="form-select"
-              value={area}
-              onChange={(e) => setArea(e.target.value)}
-            >
-              <option value="">Todas as áreas</option>
-              <option value="Gestão">Gestão</option>
-              <option value="Marketing">Marketing</option>
-              <option value="Liderança">Liderança</option>
-              <option value="Vendas">Vendas</option>
-            </select>
-          </div>
-        </div>
 
         {/* Lista de Trilhas */}
         <div className="row g-4" id="listaTrilhas">

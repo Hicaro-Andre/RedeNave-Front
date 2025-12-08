@@ -11,7 +11,7 @@ const TrilhasFilter = () => {
   };
 
   return (
-    <section className="py-4 bg-light">
+    <section className="py-4 ">
       <div className="container">
         <div className="row g-3">
 
