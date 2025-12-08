@@ -6,12 +6,6 @@
     "skipLibCheck": true,
     "strict": false,
     "noImplicitAny": false,
-    "strictNullChecks": false,
-    "strictFunctionTypes": false,
-    "strictBindCallApply": false,
-    "strictPropertyInitialization": false,
-    "noImplicitThis": false,
-    "alwaysStrict": false,
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "node",
@@ -25,6 +19,6 @@
     },
     "ignoreDeprecations": "6.0"
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.js", "src/**/*.jsx"],
+  "include": ["src"],
   "exclude": ["node_modules"]
 }
