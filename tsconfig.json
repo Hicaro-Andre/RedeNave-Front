@@ -5,7 +5,6 @@
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
-    "noImplicitAny": false,
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "node",
@@ -17,7 +16,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "ignoreDeprecations": "6.0"
+   "ignoreDeprecations": "5.0"
   },
   "include": ["src"],
   "exclude": ["node_modules"]
