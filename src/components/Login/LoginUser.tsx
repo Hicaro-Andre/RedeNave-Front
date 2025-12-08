@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
+import logo from "/src/assets/logoRedeNave.png"
+
 export default function LoginUser() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
@@ -33,7 +35,7 @@ export default function LoginUser() {
                 <div className="col-md-5 login-image text-white d-none d-md-flex flex-column">
                   <div className="text-center">
                     <img
-                      src="/src/assets/logoRedeNave.png"
+                      src={logo}
                       alt="Rede Nave"
                       style={{ width: "100px" }}
                     />

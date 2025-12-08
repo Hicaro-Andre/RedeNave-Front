@@ -1,5 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
 
+import logo from "/src/assets/logoRedeNave.png"
+
 interface FormData {
   nome: string;
   cpf: string;
@@ -238,7 +240,7 @@ export default function CadUser() {
               <div className="text-center mb-4">
                 <a className="navbar-brand fw-bold" href="./index.html">
                   <img
-                    src="/src/assets/logoRedeNave.png"
+                    src={logo}
                     alt="Rede Nave"
                     style={{ width: "120px", height: "auto" }}
                   />
