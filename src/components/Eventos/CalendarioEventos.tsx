@@ -148,7 +148,7 @@ export default function CalendarioEventos() {
   // ==============================
 
   return (
-    <section className="py-5 bg-light">
+    <section className="py-5 ">
       <div className="container">
         <h2 className="fw-bold mb-4 text-center">Calendário de Eventos</h2>
 
@@ -198,9 +198,8 @@ export default function CalendarioEventos() {
                 {diasDoMes.map((item, index) => (
                   <div
                     key={index}
-                    className={`calendar-day ${
-                      item.evento ? "has-event" : ""
-                    }`}
+                    className={`calendar-day ${item.evento ? "has-event" : ""
+                      }`}
                   >
                     {item.dia}
                   </div>

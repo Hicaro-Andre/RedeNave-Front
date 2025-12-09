@@ -2,7 +2,7 @@ import React from "react";
 
 import { Link } from "react-router-dom";
 
-import fotobanner from "/src/assets/index/hero-illustration.jpeg";
+import fotobanner from "/src/assets/index/redemulheres.png";
 
 export default function HeroSection() {
   return (
@@ -39,6 +39,7 @@ export default function HeroSection() {
               src={fotobanner}
               alt="Mulheres empreendedoras"
               className="img-fluid"
+              style={{ maxWidth: "70%", height: "auto" }}
             />
           </div>
 

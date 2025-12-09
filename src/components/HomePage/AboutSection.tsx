@@ -1,7 +1,7 @@
 import React from "react";
 
 
-import fotoabout from "/src/assets/index/REDE NAVE.png";
+import abouthome from "/src/assets/index/abouthome.png";
 
 export default function AboutSection() {
   return (
@@ -12,7 +12,7 @@ export default function AboutSection() {
           {/* IMAGEM */}
           <div className="col-lg-6 mb-4 mb-lg-0">
             <img
-              src={fotoabout}
+              src={abouthome}
               alt="Sobre a Rede NAVE"
               className="img-fluid rounded"
             />

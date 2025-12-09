@@ -248,7 +248,7 @@ export default function Navbar() {
 
               <div className="d-flex mt-3 mt-lg-0">
                 <Link
-                  className={`btn btn-sm ms-2 ${isActive("/cadastro") ? "active" : ""}`}
+                  className={`btn  btn-sm ms-2 ${isActive("/cadastro") ? "active" : ""}`}
                   to="/cadastro"
                   onClick={closeOffcanvas}
                 >

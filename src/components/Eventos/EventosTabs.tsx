@@ -10,7 +10,7 @@ const EventosTabs = () => {
   };
 
   return (
-    <section className="py-4 bg-light">
+    <section className="py-4 ">
       <div className="container">
         <ul className="nav nav-pills justify-content-center" id="eventosTabs" role="tablist">
           <li className="nav-item" role="presentation">

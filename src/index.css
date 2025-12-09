@@ -5,13 +5,12 @@
   box-sizing: border-box;
 }
 body {
-background: linear-gradient(
-  180deg,
-  rgba(222, 201, 231, 0.25),
-  rgba(222, 201, 231, 0.55)
-);
-
+  background: linear-gradient(to bottom, #f7f3ff 0%, #e8d9ff 100%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.15) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px);
+  background-size: 100% 100%, /* gradiente */ 40px 40px, /* colunas */ 40px 40px; /* linhas */
 }
+
 /* ----- Variáveis de Cores ----- */
 :root {
   /* ----- Cores Menu ----- */

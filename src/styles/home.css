@@ -1,6 +1,20 @@
 /* ----- Hero Section ----- */
 .hero-section {
-  
+/* background: linear-gradient(
+  to bottom,
+  #f5eaff 0%,
+  #e5caff 40%,
+  #d3a6ff 100%
+); */
+
+background: radial-gradient(
+  circle at center,
+  #ffffff 0%,
+  #f3e6ff 40%,
+  #dcb7ff 100%
+);
+
+
   min-height: 600px;
   position: relative;
   overflow: hidden;
@@ -10,6 +24,16 @@
 .hero-section .container {
   position: relative;
   z-index: 1;
+}
+
+.section-header{
+  background: radial-gradient(
+  circle at center,
+  #ffffff 0%,
+  #f3e6ff 40%,
+  #dcb7ff 100%
+);
+
 }
 
 .animate-fade-in {

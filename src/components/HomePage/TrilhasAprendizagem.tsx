@@ -212,7 +212,7 @@ export default function TrilhasAprendizagem() {
   }, []);
 
   return (
-    <section className="py-5 bg-light fade-in-section">
+    <section className="py-5 fade-in-section">
       <div className="container">
         <div className="text-center mb-5">
           <h2 className="fw-bold mb-3">Nossas Trilhas de Aprendizagem</h2>

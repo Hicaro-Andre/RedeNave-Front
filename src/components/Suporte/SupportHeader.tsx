@@ -2,7 +2,7 @@ import React from "react";
 
 export default function SupportHeader() {
   return (
-    <section className="text-white text-center py-4">
+    <section className="section-header text-white text-center py-4">
       <div className="container">
         <h1 className="display-5 fw-bold mb-2">
           <i className="bi bi-headset"></i> Central de Suporte

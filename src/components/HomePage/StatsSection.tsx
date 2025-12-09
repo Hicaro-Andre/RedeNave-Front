@@ -50,7 +50,7 @@ export default function StatsSection() {
   };
 
   return (
-    <section className="stats-section py-4 bg-light">
+    <section className="stats-section py-4 ">
       <div className="container">
         <div className="row text-center">
 
