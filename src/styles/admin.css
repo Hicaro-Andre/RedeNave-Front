@@ -12,8 +12,8 @@
   position: fixed;
   top: 15px;
   left: 15px;
-  background: #111827;
-  color: white;
+  /* background: #111827; */
+  color: #111827;
   border: none;
   padding: 10px 13px;
   border-radius: 8px;
@@ -21,10 +21,11 @@
   cursor: pointer;
   z-index: 1100;
   transition: 0.3s;
+  display: block;
 }
 
 .menu-toggle.open {
-  background: #b91c1c;
+  /* background: #b91c1c; */
 }
 
 /* -------------------- SIDEBAR -------------------- */
@@ -50,10 +51,14 @@
 }
 
 /* Desktop: sempre aberta */
-@media (min-width: 768px) {
+@media (min-width: 992px) {
   .admin-sidebar {
     left: 0;
     position: fixed;
+  }
+
+  .menu-toggle{
+    display: none;
   }
 }
 
@@ -100,7 +105,10 @@
   border-left-color: #09cdd7;
   font-weight: 600;
 }
-
+.tx-align{
+  margin-left: 30px;
+  text-align: center;
+}
 /* -------------------- SIDEBAR FOOTER -------------------- */
 .sidebar-footer {
   position: absolute;
@@ -108,7 +116,6 @@
   width: 100%;
   padding: 1rem 1.5rem;
   border-top: 1px solid rgba(255, 255, 255, 0.15);
-
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -139,10 +146,15 @@
 }
 
 /* Desktop empurra o conteúdo */
-@media (min-width: 768px) {
+@media (min-width: 992px) {
   .admin-content {
     margin-left: 250px;
   }
+
+  .tx-align{
+  margin-left: 0px;
+  text-align: start;
+}
 }
 
 /* -------------------- HEADER DO CONTEÚDO -------------------- */

@@ -162,7 +162,7 @@ export default function AdminDash() {
 
         {/* HEADER */}
         <header className="content-header">
-          <div>
+          <div className="tx-align">
             <h2 className="fw-bold mb-1">Painel Administrativo</h2>
             <p className="text-muted mb-0">Bem-vinda ao painel de controle da Rede NAVE</p>
           </div>
