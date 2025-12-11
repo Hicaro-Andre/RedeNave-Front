@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function CtaSection() {
   const handleContato = () => {
     alert("contato@redenave.org");
@@ -13,9 +15,9 @@ export default function CtaSection() {
         </p>
 
         <div className="d-flex justify-content-center gap-3">
-          <a href="cadastro.html" className="btn btn-lg px-5">
+          <Link to="/cadastro" className="btn btn-lg px-5">
             Cadastre-se Agora
-          </a>
+          </Link>
 
           <button
             className="btn btn-outline-light btn-lg px-5"

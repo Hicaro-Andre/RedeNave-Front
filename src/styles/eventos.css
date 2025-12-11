@@ -1,3 +1,13 @@
+
+.nav-pills .nav-link.active {
+  background: linear-gradient(
+    90deg,
+    #4a077c,
+    #6a0dad
+  ) !important;
+  color: #fff !important;               
+}
+
 .calendar-container {
   background: white;
   border-radius: 15px;
@@ -35,7 +45,11 @@
 }
 
 .calendar-day.has-event {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(
+    90deg,
+    #4a077c,
+    #6a0dad
+  );
   color: white;
   font-weight: bold;
 }
@@ -59,7 +73,11 @@
 }
 
 .event-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(
+    90deg,
+    #4a077c,
+    #6a0dad
+  );
   color: white;
   padding: 2rem;
 }
@@ -70,7 +88,13 @@
   padding: 1rem;
   margin-top: 1rem;
 }
+.bg-calendar{
+  background-color: #09cdd7;
+}
 
+.day-event{
+  background-color: #c77dff;
+}
 .time-unit {
   display: inline-block;
   text-align: center;
@@ -88,3 +112,6 @@
   font-size: 0.8rem;
   opacity: 0.8;
 }
+
+
+

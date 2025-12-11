@@ -55,50 +55,50 @@ export default function StatsSection() {
         <div className="row text-center">
 
           <div className="col-md-3 col-6 mb-3 mb-md-0">
-            <div className="stat-card-home estatistica">
+            <div className="stat-card-home stats">
               <h3
                 ref={(el) => { refs.current[0] = el; }} // Corrigido: retorna void
                 className="fw-bold mb-0"
               >
                 500+
               </h3>
-              <p className="mb-0">Mulheres Capacitadas</p>
+              <p className="mb-0 stats">Mulheres Capacitadas</p>
             </div>
           </div>
 
           <div className="col-md-3 col-6 mb-3 mb-md-0">
-            <div className="stat-card-home estatistica">
+            <div className="stat-card-home stats-one">
               <h3
                 ref={(el) => { refs.current[1] = el; }} // Corrigido: retorna void
                 className="fw-bold mb-0"
               >
                 20+
               </h3>
-              <p className="mb-0">Cursos Disponíveis</p>
+              <p className="mb-0 stats-one">Cursos Disponíveis</p>
             </div>
           </div>
 
           <div className="col-md-3 col-6">
-            <div className="stat-card-home estatistica">
+            <div className="stat-card-home stats-three">
               <h3
                 ref={(el) => { refs.current[2] = el; }} // Corrigido: retorna void
                 className="fw-bold mb-0"
               >
                 95%
               </h3>
-              <p className="mb-0">Taxa de Satisfação</p>
+              <p className="mb-0 stats-three">Taxa de Satisfação</p>
             </div>
           </div>
 
           <div className="col-md-3 col-6">
-            <div className="stat-card-home estatistica">
+            <div className="stat-card-home stats-for">
               <h3
                 ref={(el) => { refs.current[3] = el; }} // Corrigido: retorna void
                 className="fw-bold mb-0"
               >
                 100%
               </h3>
-              <p className="mb-0">Online e Gratuito</p>
+              <p className="mb-0 stats-for">Online e Gratuito</p>
             </div>
           </div>
 

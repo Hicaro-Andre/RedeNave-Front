@@ -1,3 +1,7 @@
+/* ------------------------------------------------------ */
+/* Seu CSS original — NÃO ALTERADO                       */
+/* ------------------------------------------------------ */
+
 .dashboard-sidebar {
   background: white;
   border-radius: 15px;
@@ -48,21 +52,13 @@
 }
 
 .menu-item:hover {
-   background: linear-gradient(
-    90deg,
-    #4a077c,
-    #6a0dad
-  );
-   color: white;
+  background: linear-gradient(90deg, #4a077c, #6a0dad);
+  color: white;
   transform: translateX(5px);
 }
 
 .menu-item.active {
-  background: linear-gradient(
-    90deg,
-    #4a077c,
-    #6a0dad
-  );
+  background: linear-gradient(90deg, #4a077c, #6a0dad);
   color: white;
 }
 
@@ -101,4 +97,55 @@
   margin-bottom: 1rem;
   background: #f8f9fa;
   border-radius: 10px;
+}
+
+/* CONTAINER DA FOTO */
+.profile-img-container {
+  width: 130px;
+  height: 130px;
+  margin: 0 auto 1rem;
+  position: relative;
+  cursor: pointer;
+  display: block;
+}
+
+/* FOTO */
+.profile-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* INICIAIS */
+.profile-img.initials {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  font-size: 2.4rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* OVERLAY */
+.profile-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: 0.3s ease;
+}
+
+.profile-img-container:hover .profile-overlay {
+  opacity: 1;
 }

@@ -21,7 +21,7 @@ const ProximoEvento = () => {
                   <h3 className="fw-bold mb-3">
                     Precificação Inteligente para Empreendedoras
                   </h3>
-                  <p className="mb-3">
+                  <p className="mb-3 text-white">
                     <i className="bi bi-calendar"></i> 15 de Novembro, 2025
                     <br />
                     <i className="bi bi-clock"></i> 19:00 - 21:00 (Horário de

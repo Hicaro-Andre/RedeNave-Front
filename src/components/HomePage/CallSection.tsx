@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function CallSection() {
   return (
@@ -10,9 +11,9 @@ export default function CallSection() {
           Junte-se a centenas de mulheres que já transformaram seus empreendimentos
         </p>
 
-        <a href="src/pages/cadastro.html" className="btn btn-lg px-5">
+        <Link to="/cadastro" className="btn btn-lg px-5">
           Cadastre-se Gratuitamente <i className="bi bi-arrow-right"></i>
-        </a>
+        </Link>
       </div>
     </section>
   );

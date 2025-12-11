@@ -208,7 +208,7 @@ export default function CalendarioEventos() {
 
               <div className="mt-3">
                 <small className="text-muted">
-                  <span className="badge bg-primary">●</span> Dia com evento
+                  <span className="badge day-event">●</span> Dia com evento
                 </small>
               </div>
             </div>
@@ -236,7 +236,7 @@ export default function CalendarioEventos() {
 
                       {/* Data */}
                       <div className="col-md-2 text-center">
-                        <div className="bg-primary text-white p-3 rounded">
+                        <div className="bg-calendar text-white p-3 rounded">
                           <div style={{ fontSize: "2rem", fontWeight: "bold" }}>
                             {evento.data.split("/")[0]}
                           </div>
@@ -246,7 +246,7 @@ export default function CalendarioEventos() {
 
                       {/* Info */}
                       <div className="col-md-7">
-                        <span className="badge bg-info mb-2">{evento.tipo}</span>
+                        <span className="badge bg-calendar mb-2">{evento.tipo}</span>
                         <h5 className="fw-bold mb-2">{evento.titulo}</h5>
                         <p className="text-muted mb-2 small">
                           <i className="bi bi-clock"></i> {evento.hora} - {evento.duracao} |{" "}

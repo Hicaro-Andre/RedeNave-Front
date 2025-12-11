@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
 
+import logo from "/src/assets/logoRedeNave.png"
+
+
+
+
 // Definir tipos
 interface Section {
   [key: string]: string;
@@ -47,6 +52,7 @@ interface GenericSectionProps {
 
 export default function AdminDash() {
   const [activeSection, setActiveSection] = useState<string>("dashboard");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const sections: Section = {
     dashboard: "Dashboard",
@@ -99,23 +105,34 @@ export default function AdminDash() {
   };
 
   return (
-    <div className="d-flex">
-      {/* Sidebar */}
-      <div className="admin-sidebar">
+    <div className="layout-wrapper">
+
+      {/* BOTÃO DE MENU MOBILE */}
+      <button
+        className={`menu-toggle ${sidebarOpen ? "open" : ""}`}
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+      >
+        <i className={`bi ${sidebarOpen ? "bi-x-lg" : "bi-list"}`}></i>
+      </button>
+
+
+      {/* SIDEBAR */}
+      <aside className={`admin-sidebar ${sidebarOpen ? "open" : ""}`}>
         <div className="sidebar-header text-center">
-          <h4 className="fw-bold mb-0">
-            <i className="bi bi-shield-check"></i> Admin NAVE
-          </h4>
-          <small className="d-block mt-2 opacity-75">Painel Administrativo</small>
+          <img src={logo} alt="Rede Nave" className="sidebar-logo" />
+          <p className="sidebar-sub text-white">Painel Administrativo</p>
         </div>
 
+        {/* NAV */}
         <nav className="sidebar-nav">
           {Object.keys(sections).map((key) => (
             <div
               key={key}
               className={`sidebar-nav-item ${activeSection === key ? "active" : ""}`}
-              onClick={() => setActiveSection(key)}
-              style={{ cursor: "pointer" }}
+              onClick={() => {
+                setActiveSection(key);
+                setSidebarOpen(false); // fecha menu no mobile
+              }}
             >
               <i className={`bi ${getIconForSection(key)}`}></i>
               <span>{sections[key]}</span>
@@ -123,47 +140,31 @@ export default function AdminDash() {
           ))}
         </nav>
 
-        {/* Footer Sidebar */}
-        <div style={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          padding: "1.5rem",
-          borderTop: "1px solid rgba(255,255,255,0.1)"
-        }}>
-          <div className="d-flex align-items-center gap-2">
-            <div style={{
-              width: "40px",
-              height: "40px",
-              borderRadius: "50%",
-              background: "rgba(255,255,255,0.2)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center"
-            }}>
-              <i className="bi bi-person-circle fs-4"></i>
-            </div>
-            <div style={{ flex: 1 }}>
+        {/* FOOTER USER */}
+        <div className="sidebar-footer">
+          <div className="sf-user">
+            <i className="bi bi-person-circle fs-4"></i>
+            <div>
               <div className="fw-bold small">Admin User</div>
               <small className="opacity-75">admin@nave.org</small>
             </div>
-            <a href="/" className="text-white" title="Sair">
-              <i className="bi bi-box-arrow-right fs-5"></i>
-            </a>
           </div>
+          <a href="/" className="logout-btn">
+            <i className="bi bi-box-arrow-right"></i>
+          </a>
         </div>
-      </div>
+      </aside>
 
-      {/* Conteúdo Principal */}
-      <div className="admin-content">
-        {/* Header */}
-        <div className="d-flex justify-content-between align-items-center mb-4">
+
+
+      {/* CONTEÚDO PRINCIPAL */}
+      <main className="admin-content">
+
+        {/* HEADER */}
+        <header className="content-header">
           <div>
             <h2 className="fw-bold mb-1">Painel Administrativo</h2>
-            <p className="text-muted mb-0">
-              Bem-vinda ao painel de controle da Rede NAVE
-            </p>
+            <p className="text-muted mb-0">Bem-vinda ao painel de controle da Rede NAVE</p>
           </div>
           <div>
             <button className="btn btn-outline-primary me-2">
@@ -173,34 +174,21 @@ export default function AdminDash() {
               <i className="bi bi-plus-lg"></i> Novo
             </button>
           </div>
-        </div>
+        </header>
 
-        {/* Sections */}
-        {activeSection === "dashboard" && (
-          <DashboardSection />
-        )}
-
-        {activeSection === "users" && (
-          <GenericSection title="Gerenciar Usuárias" buttonText="Adicionar Usuária" />
-        )}
-        {activeSection === "courses" && (
-          <GenericSection title="Gerenciar Trilhas" buttonText="Criar Trilha" />
-        )}
-        {activeSection === "events" && (
-          <GenericSection title="Gerenciar Eventos" buttonText="Novo Evento" />
-        )}
-        {activeSection === "certificates" && (
-          <GenericSection title="Certificados" buttonText="Emitir Certificado" />
-        )}
-        {activeSection === "reports" && (
-          <GenericSection title="Relatórios e Análises" buttonText="Gerar Relatório" />
-        )}
-        {activeSection === "settings" && (
-          <GenericSection title="Configurações do Sistema" buttonText="Salvar Alterações" />
-        )}
-      </div>
+        {/* SEÇÕES */}
+        {activeSection === "dashboard" && <DashboardSection />}
+        {activeSection === "users" && <GenericSection title="Gerenciar Usuárias" buttonText="Adicionar Usuária" />}
+        {activeSection === "courses" && <GenericSection title="Gerenciar Trilhas" buttonText="Criar Trilha" />}
+        {activeSection === "events" && <GenericSection title="Gerenciar Eventos" buttonText="Novo Evento" />}
+        {activeSection === "certificates" && <GenericSection title="Certificados" buttonText="Emitir Certificado" />}
+        {activeSection === "reports" && <GenericSection title="Relatórios e Análises" buttonText="Gerar Relatório" />}
+        {activeSection === "settings" && <GenericSection title="Configurações do Sistema" buttonText="Salvar Alterações" />}
+      </main>
     </div>
   );
+
+
 }
 
 // DashboardSection Component
