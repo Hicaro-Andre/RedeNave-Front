@@ -133,8 +133,16 @@ footer a:hover {
 .copy {
   color: var(--text-color-copy);
 }
-
+/* ----- Botões - Primários ----- */
+/* ----- Botões - Secundários ----- */
 /* ----- btn ----- */
+
+/* ------------------------------------------------------------
+   BOTÃO PRIMÁRIO (classe .btn padrão)
+   - Define estilo base de TODOS os botões Bootstrap
+   - Ajusta cor, raio, padding e transição
+   ------------------------------------------------------------ */
+
 /* ----- Botões - Primários ----- */
 .btn {
   border-radius: 25px;
@@ -145,19 +153,60 @@ footer a:hover {
   background-color: var(--bg-color-button);
   color: var(--text-color);
 }
-.btn:hover {
-  background-color: var(--bg-color-button-hover);
-  color: var(--text-color);
-}
+
+/* ------------------------------------------------------------
+   BOTÃO SECUNDÁRIO (outline)
+   - Esse é o botão "claro" que fica diferente do primário
+   - NÃO pode herdar a regra que remove clique
+   ------------------------------------------------------------ */
 
 /* ----- Botões - Secundários ----- */
 .btn-outline-light {
   background: var(--bg-color-button-secondary);
   color: var(--text-color-secondary);
 }
+
+/* ============================================================
+   REMOVER COR DO CLIQUE (APENAS DO BOTÃO PRIMÁRIO)
+   ------------------------------------------------------------
+   - Remove cor de active, focus, visited, focus-visible
+   - Remove sombras e outlines
+   - NÃO aplica ao botão .btn-outline-light
+   ============================================================ */
+.btn:not(.btn-outline-light),
+.btn:not(.btn-outline-light):focus,
+.btn:not(.btn-outline-light):focus-visible,
+.btn:not(.btn-outline-light):active,
+.btn:not(.btn-outline-light).active,
+.btn:not(.btn-outline-light):visited,
+.show > .btn:not(.btn-outline-light) {
+  background-color: var(--bg-color-button) !important;
+  color: var(--text-color) !important;
+  border-color: var(--bg-color-button) !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* ============================================================
+   HOVER DO BOTÃO PRIMÁRIO
+   ------------------------------------------------------------
+   - Necessário ficar DEPOIS da regra de remoção de clique
+   - Traz seu hover customizado de volta sem conflitar
+   ============================================================ */
+.btn:not(.btn-outline-light):hover {
+  background-color: var(--bg-color-button-hover) !important;
+  color: var(--text-color) !important;
+}
+
+/* ============================================================
+   HOVER DO BOTÃO SECUNDÁRIO (OUTLINE)
+   ------------------------------------------------------------
+   - Hover separado e independente do primário
+   - Mantém sua própria cor e não recebe o mesmo hover do primário
+   ============================================================ */
 .btn-outline-light:hover {
-  background: var(--bg-color-button-hover-secondary);
-  color: var(--text-color-secondary);
+  background: var(--bg-color-button-hover-secondary) !important;
+  color: var(--text-color-secondary) !important;
 }
 
 /* ----- Animações de Scroll ----- */
