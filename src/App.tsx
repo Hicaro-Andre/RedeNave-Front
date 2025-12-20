@@ -10,13 +10,17 @@ import Login from "./pages/Login";
 import Cadastro from "./pages/Cadastro";
 import Privacy from "./pages/PrivacyPolicy";
 import Admin from "./pages/Admin";
-import Dash from "./components/Dashboard/Dash";
+import DashMain from "./components/Dashboard/DashMain";
+import CursoDetalhe from "./components/Cursos/CursoDetalhe";
+import NotFound from "./components/NotFound";
+
 
 function App() {
   return (
 
     <div className="App">
       <Routes>
+        {/* Routes Páginas */}
         <Route path="/" element={<Home />} />
         <Route path="/trilhas" element={<Trilhas />} />
         <Route path="/eventos" element={<Eventos />} />
@@ -26,7 +30,15 @@ function App() {
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/privacypolicy" element={<Privacy />} />
         <Route path="/admin" element={<Admin />} />
-        <Route path="/dashboard" element={<Dash />} />
+        <Route path="/dashboard" element={<DashMain />} />
+
+        {/* Routes Cursos */}
+        <Route path="/cursos/:id" element={<CursoDetalhe />} />
+
+        {/* Not Found */}
+        <Route path="*" element={<NotFound />} />
+
+
       </Routes>
 
       {/* Botão Voltar ao Topo Global */}

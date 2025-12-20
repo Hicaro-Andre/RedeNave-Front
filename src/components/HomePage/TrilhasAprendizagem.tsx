@@ -5,7 +5,7 @@ import cursogestao from "/src/assets/trilhas/cursogestao.png";
 import cursomarketing from "/src/assets/trilhas/cursomarketing.jpeg";
 import cursolideranca from "/src/assets/trilhas/cursolideranca.jpeg";
 
-// Tipos
+
 interface Trilha {
   id: number;
   titulo: string;
@@ -164,7 +164,7 @@ function TrilhaCard({ trilha }: TrilhaCardProps) {
             <span className="text-muted small">
               <i className="bi bi-people-fill"></i> {trilha.alunos} alunas
             </span>
-            <Link to={`/trilhas/${trilha.id}`} className="btn btn-sm btn-primary">
+            <Link to={`/cursos/${trilha.id}`} className="btn btn-sm btn-primary">
               Ver Detalhes <i className="bi bi-arrow-right"></i>
             </Link>
           </div>

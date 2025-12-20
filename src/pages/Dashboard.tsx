@@ -1,14 +1,15 @@
+import DashMain from "@/components/Dashboard/DashMain";
 import { useState } from "react";
 
 
 
 
-import Dash from "../components/Dashboard/Dash";
+
 
 function Dashboard() {
   return (
     <>
-      <Dash/>
+      <DashMain />
     </>
   );
 }
