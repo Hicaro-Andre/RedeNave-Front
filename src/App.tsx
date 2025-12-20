@@ -9,10 +9,13 @@ import Suporte from "./pages/Suporte";
 import Login from "./pages/Login";
 import Cadastro from "./pages/Cadastro";
 import Privacy from "./pages/PrivacyPolicy";
-import Admin from "./pages/Admin";
+import AdminMain from "./components/Administrador/AdminMain";
 import DashMain from "./components/Dashboard/DashMain";
 import CursoDetalhe from "./components/Cursos/CursoDetalhe";
 import NotFound from "./components/NotFound";
+
+
+
 
 
 function App() {
@@ -29,7 +32,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/privacypolicy" element={<Privacy />} />
-        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin" element={<AdminMain />} />
         <Route path="/dashboard" element={<DashMain />} />
 
         {/* Routes Cursos */}

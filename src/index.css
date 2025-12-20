@@ -296,6 +296,27 @@ img {
   border-radius: 10px;
 }
 
+/* ----- Estilo do Spinner de carregamento ----- */
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.spinner-logo {
+  width: 60px;
+  height: 60px;
+  animation: spin 1.2s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
 /* ----- Responsividade ----- */
 @media (max-width: 768px) {
   .hero-section {
@@ -315,3 +336,8 @@ img {
     margin-bottom: 2rem;
   }
 }
+
+
+
+
+

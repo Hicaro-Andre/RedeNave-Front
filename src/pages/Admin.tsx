@@ -1,8 +1,10 @@
 import { useState } from 'react'
 
-import AdminDash from '../components/Administrador/AdminDash';
-
 import "../styles/admin.css"
+import AdminMain from '@/components/Administrador/AdminMain'
+
+
+
 
 
 
@@ -10,7 +12,7 @@ function Admin() {
 
   return (
     <>
-      <AdminDash />
+      <AdminMain />
     </>
   )
 }

@@ -1,20 +1,32 @@
 import { Link } from "react-router-dom";
 
+import logoNotFound from "../assets/logo-not-found.png"
+
 export default function NotFound() {
   return (
     <section
       className="min-vh-100 d-flex align-items-center justify-content-center text-center"
       style={{
-        background: "linear-gradient(135deg, #667eea, #764ba2)",
+        background: `
+    linear-gradient(to bottom, #f7f3ff 0%, #e8d9ff 100%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.15) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px)
+  `,
+        backgroundSize: "100% 100%, 40px 40px, 40px 40px",
         color: "#fff",
       }}
+
     >
       <div className="container px-4">
-        <h1 className="display-1 fw-bold mb-3">404</h1>
-
-        <h2 className="fw-semibold mb-3">
-          Página não encontrada
-        </h2>
+        <img
+          src={logoNotFound}
+          alt="Página não encontrada"
+          className="img-fluid mb-4"
+          style={{
+            maxWidth: "450px",
+            width: "100%",
+          }}
+        />
 
         <p className="lead mb-4" style={{ maxWidth: "520px", margin: "0 auto" }}>
           O conteúdo que você tentou acessar não existe ou foi movido.

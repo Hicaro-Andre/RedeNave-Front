@@ -115,31 +115,71 @@ export default function CursoDetalhe() {
       <section
         className="py-5 text-white"
         style={{
-          background: `linear-gradient(135deg, rgba(102,126,234,.9), rgba(118,75,162,.9)), url(${trilha.imagem}) center/cover`
+          background: "linear-gradient(135deg, #111827, #1f2937)",
         }}
       >
         <Container>
-          <Row className="align-items-center">
-            <Col md={8}>
-              <span className="badge bg-light text-dark mb-3">
+          <Row className="align-items-center gy-5">
+            {/* TEXTO */}
+            <Col lg={6}>
+              <span className="badge bg-warning text-dark mb-3 px-3 py-2">
                 {trilha.nivel}
               </span>
 
-              <h1 className="fw-bold">{trilha.titulo}</h1>
+              <h1 className="fw-bold display-5 mb-3">
+                {trilha.titulo}
+              </h1>
 
-              <p className="lead mt-3">{trilha.descricao}</p>
+              <p className="lead text-light opacity-75 mb-4">
+                {trilha.descricao}
+              </p>
 
-              <div className="d-flex gap-4 mt-4 flex-wrap">
-                <span><i className="bi bi-clock"></i> {trilha.duracao}</span>
-                <span><i className="bi bi-book"></i> {trilha.modulos} módulos</span>
-                <span><i className="bi bi-people-fill"></i> {trilha.alunos} alunas</span>
+              <div className="d-flex flex-wrap gap-4 small text-light opacity-75 mb-4">
+                <span>
+                  <i className="bi bi-clock me-2"></i>
+                  {trilha.duracao}
+                </span>
+                <span>
+                  <i className="bi bi-book me-2"></i>
+                  {trilha.modulos} módulos
+                </span>
+                <span>
+                  <i className="bi bi-people-fill me-2"></i>
+                  {trilha.alunos} alunas
+                </span>
+              </div>
+
+              <div className="d-flex gap-3 flex-wrap">
+                <button className="btn btn-warning btn-lg fw-bold px-4">
+                  Matricular agora
+                </button>
+
+                <button className="btn btn-outline-light btn-lg px-4">
+                  Ver conteúdo
+                </button>
               </div>
             </Col>
 
-            <Col md={4} className="text-md-end mt-4 mt-md-0">
-              <button className="btn btn-lg btn-warning fw-bold">
-                Matricule-se agora
-              </button>
+            {/* IMAGEM DO CURSO */}
+            <Col lg={6} className="text-center">
+              <div
+                className="p-4 rounded-4"
+                style={{
+                  background: "rgba(255,255,255,0.05)",
+                  backdropFilter: "blur(6px)",
+                }}
+              >
+                <img
+                  src={trilha.imagem}
+                  alt={trilha.titulo}
+                  className="img-fluid"
+                  style={{
+                    maxHeight: "360px",
+                    width: "100%",
+                    objectFit: "contain",
+                  }}
+                />
+              </div>
             </Col>
           </Row>
         </Container>
@@ -148,40 +188,53 @@ export default function CursoDetalhe() {
       {/* CONTEÚDO */}
       <section className="py-5">
         <Container>
-          <Row>
-            <Col md={6}>
-              <h3 className="fw-bold mb-3">O que você vai aprender</h3>
+          <Row className="gy-5">
+            {/* O QUE VAI APRENDER */}
+            <Col lg={6}>
+              <h3 className="fw-bold mb-4">
+                O que você vai aprender
+              </h3>
+
               <ul className="list-unstyled">
                 {trilha.oQueVaiAprender.map((item, index) => (
-                  <li key={index} className="mb-2">
-                    <i className="bi bi-check-circle-fill text-success me-2"></i>
-                    {item}
+                  <li key={index} className="d-flex mb-3">
+                    <i className="bi bi-check-circle-fill text-success fs-5 me-3"></i>
+                    <span>{item}</span>
                   </li>
                 ))}
               </ul>
             </Col>
 
-            <Col md={6}>
-              <h3 className="fw-bold mb-3">Conteúdo do curso</h3>
-              <div className="accordion" id="accordionCurso">
+            {/* CONTEÚDO DO CURSO */}
+            <Col lg={6}>
+              <h3 className="fw-bold mb-4">
+                Conteúdo do curso
+              </h3>
+
+              <div className="accordion accordion-flush">
                 {trilha.conteudo.map((item, index) => (
                   <div className="accordion-item" key={index}>
                     <h2 className="accordion-header">
                       <button
-                        className="accordion-button collapsed"
+                        className="accordion-button collapsed fw-semibold"
                         type="button"
                         data-bs-toggle="collapse"
                         data-bs-target={`#modulo${index}`}
                       >
-                        Módulo {index + 1} – {item}
+                        Módulo {index + 1}
+                        <span className="ms-2 text-muted fw-normal">
+                          — {item}
+                        </span>
                       </button>
                     </h2>
+
                     <div
                       id={`modulo${index}`}
                       className="accordion-collapse collapse"
                     >
-                      <div className="accordion-body">
-                        Conteúdo prático e estratégico para aplicação real.
+                      <div className="accordion-body text-muted">
+                        Conteúdo prático, estratégico e aplicado
+                        a situações reais do mercado.
                       </div>
                     </div>
                   </div>
@@ -198,11 +251,19 @@ export default function CursoDetalhe() {
           <h2 className="fw-bold mb-3">
             Pronta para evoluir sua jornada empreendedora?
           </h2>
-          <button className="btn btn-lg btn-primary">
+
+          <p className="text-muted mb-4">
+            Aprenda com conteúdo prático, focado em aplicação real
+            e crescimento sustentável.
+          </p>
+
+          <button className="btn btn-primary btn-lg fw-bold px-5">
             Quero me matricular
           </button>
         </Container>
       </section>
     </>
   );
+
+
 }
