@@ -7,7 +7,7 @@ e eventos, com design moderno, responsivo e acessível.
 
 A aplicação está disponível e pode ser acessada através do seguinte link:
 
-🔗 **[https://seusite.com](https://https://rede-nave-front.vercel.app/)** 
+🔗 **[https://https://rede-nave-front.vercel.app/](https://https://rede-nave-front.vercel.app/)** 
 
 ---
 
