@@ -40,3 +40,25 @@ npm install
 
 # Rode o projeto
 npm run dev
+
+
+
+❌ Nunca pule isso.  
+❌ Nunca presuma que a pessoa sabe.
+
+---
+
+### 5️⃣ Estrutura de pastas (ouro da documentação)
+
+```md
+## 📁 Estrutura do projeto
+
+src/
+├── assets/          # Imagens, ícones e logos
+├── components/      # Componentes reutilizáveis
+│   └── Navbar.tsx
+├── pages/           # Páginas da aplicação (rotas)
+├── styles/          # CSS global e temas
+├── hooks/           # Hooks customizados
+├── App.tsx          # Composição principal
+└── main.tsx         # Ponto de entrada
