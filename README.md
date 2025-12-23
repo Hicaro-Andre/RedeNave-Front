@@ -1,4 +1,4 @@
-# Rede Nave – Front-End
+# REDE NAVE – FRONT END
 
 Interface web da plataforma Rede Nave, focada em educação, trilhas de aprendizagem
 e eventos, com design moderno, responsivo e acessível.
@@ -9,7 +9,6 @@ A aplicação está disponível e pode ser acessada através do seguinte link:
 
 🔗 **[https://rede-nave-front.vercel.app/](https://rede-nave-front.vercel.app/)** 
 
----
 
 ## 📸 Preview
 
@@ -29,23 +28,22 @@ Abaixo uma captura de tela da interface para uma prévia visual:
 
 ## 🚀 Como rodar localmente
 
+### Clone o repositório
 ```bash
-# Clone o repositório
 git clone https://github.com/seu-usuario/rede-nave-front.git
 ```
+### Entre na pasta
 ```bash
-# Entre na pasta
 cd rede-nave-front
 ```
+### Instale as dependências
 ```bash
-# Instale as dependências
 npm install
 ```
+### Rode o projeto
 ```bash
-# Rode o projeto
 npm run dev
 ```
----
 
 ## 📁 Estrutura do projeto
 
@@ -92,7 +90,6 @@ Com isso:
 - Regras de negócio
 ```
 
----
 ## 🧩 Componentes principais
 
 ### Navbar
@@ -105,7 +102,6 @@ Responsável por:
 Arquivo:
 src/components/Navbar.tsx
 
----
 
 ## 🎨 Design System
 
@@ -118,18 +114,19 @@ As cores e estilos globais ficam centralizados em variáveis CSS:
 }
 ```
 
----
 
 ## 👤 Autores
 
-Hicaro André -  
+```md
+##Hicaro André -  
 Desenvolvedor Front-end / Full Stack  
 
-Luana Reis - 
+##Luana Reis - 
 Desenvolvedor Front-end 
 
-Rosélia Cristina - 
+##Rosélia Cristina - 
 Desenvolvedor Front-end 
+```
 
 ## 📄 Licença
 Este projeto está sob a licença MIT.
