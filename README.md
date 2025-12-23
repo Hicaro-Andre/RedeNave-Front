@@ -118,13 +118,13 @@ As cores e estilos globais ficam centralizados em variáveis CSS:
 ## 👤 Autores
 
 ```md
-##Hicaro André -  
+## Hicaro André -  
 Desenvolvedor Front-end / Full Stack  
 
-##Luana Reis - 
+## Luana Reis - 
 Desenvolvedor Front-end 
 
-##Rosélia Cristina - 
+## Rosélia Cristina - 
 Desenvolvedor Front-end 
 ```
 
