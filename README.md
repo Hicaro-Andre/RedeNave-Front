@@ -127,6 +127,12 @@ Desenvolvedora Front-end
 ## Rosélia Cristina - 
 Desenvolvedora Front-end 
 ```
+
+## 📄 Licença
+Este projeto está sob a licença MIT.
+
+---
+
 ## 🔗 Back-end / API
 
 Este projeto utiliza uma API separada, desenvolvida em **Node.js + Express**.
@@ -134,14 +140,7 @@ Este projeto utiliza uma API separada, desenvolvida em **Node.js + Express**.
 👉 Repositório da API:  
 https://github.com/Hicaro-Andre/RedeNave-API.git
 
-
-## 📄 Licença
-Este projeto está sob a licença MIT.
-
 ---
-
-
-
 
 ## 🎓 Contexto Educacional (Softex)
 
