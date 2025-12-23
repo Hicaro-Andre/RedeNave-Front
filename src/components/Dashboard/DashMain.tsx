@@ -28,7 +28,7 @@ export default function DashMain() {
       reader.readAsDataURL(file);
     }
   };
-  // ===============================================
+
 
   return (
     <div>

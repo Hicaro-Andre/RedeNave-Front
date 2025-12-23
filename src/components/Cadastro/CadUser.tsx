@@ -58,10 +58,9 @@ interface PayloadData {
 }
 
 export default function CadUser() {
-  // step atual (1,2,3)
+
   const [step, setStep] = useState<number>(1);
 
-  // Form state
   const [form, setForm] = useState<FormData>({
     nome: "",
     cpf: "",

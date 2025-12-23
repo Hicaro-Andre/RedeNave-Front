@@ -92,12 +92,12 @@ export default function CursoDetalhe() {
     return () => clearTimeout(timer);
   }, []);
 
-  // 👉 Spinner primeiro
+  // Spinner primeiro
   if (loading) {
     return <LoadingSpinner />;
   }
 
-  // 👉 Not Found depois do loading
+  // Not Found depois do loading
   if (!trilha) {
     return (
       <Container className="py-5 text-center">

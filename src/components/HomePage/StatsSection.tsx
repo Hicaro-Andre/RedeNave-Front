@@ -57,7 +57,7 @@ export default function StatsSection() {
           <div className="col-md-3 col-6 mb-3 mb-md-0">
             <div className="stat-card-home stats">
               <h3
-                ref={(el) => { refs.current[0] = el; }} // Corrigido: retorna void
+                ref={(el) => { refs.current[0] = el; }}
                 className="fw-bold mb-0"
               >
                 500+
@@ -69,7 +69,7 @@ export default function StatsSection() {
           <div className="col-md-3 col-6 mb-3 mb-md-0">
             <div className="stat-card-home stats-one">
               <h3
-                ref={(el) => { refs.current[1] = el; }} // Corrigido: retorna void
+                ref={(el) => { refs.current[1] = el; }}
                 className="fw-bold mb-0"
               >
                 20+
@@ -81,7 +81,7 @@ export default function StatsSection() {
           <div className="col-md-3 col-6">
             <div className="stat-card-home stats-three">
               <h3
-                ref={(el) => { refs.current[2] = el; }} // Corrigido: retorna void
+                ref={(el) => { refs.current[2] = el; }}
                 className="fw-bold mb-0"
               >
                 95%
@@ -93,7 +93,7 @@ export default function StatsSection() {
           <div className="col-md-3 col-6">
             <div className="stat-card-home stats-for">
               <h3
-                ref={(el) => { refs.current[3] = el; }} // Corrigido: retorna void
+                ref={(el) => { refs.current[3] = el; }}
                 className="fw-bold mb-0"
               >
                 100%

@@ -4,10 +4,6 @@ import "../styles/admin.css"
 import AdminMain from '@/components/Administrador/AdminMain'
 
 
-
-
-
-
 function Admin() {
 
   return (

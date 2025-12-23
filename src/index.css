@@ -1,62 +1,76 @@
-/* ----- Reset e Configurações Gerais ----- */
+/* ============================================================
+   RESET GLOBAL & CONFIGURAÇÕES BASE
+   ------------------------------------------------------------
+   - Remove estilos padrões do navegador
+   - Garante consistência de box model
+   ============================================================ */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
+/* ------------------------------------------------------------
+   BACKGROUND GLOBAL DO SITE
+   - Gradiente suave + grid decorativo
+   - Mantém estética moderna e leve
+   ------------------------------------------------------------ */
 body {
-  background: linear-gradient(to bottom, #f7f3ff 0%, #e8d9ff 100%),
+  background:
+    linear-gradient(to bottom, #f7f3ff 0%, #e8d9ff 100%),
     linear-gradient(90deg, rgba(255, 255, 255, 0.15) 1px, transparent 1px),
     linear-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px);
-  background-size: 100% 100%, /* gradiente */ 40px 40px, /* colunas */ 40px 40px; /* linhas */
+  background-size:
+    100% 100%,      /* gradiente principal */
+    40px 40px,      /* colunas do grid */
+    40px 40px;      /* linhas do grid */
 }
 
-/* ----- Variáveis de Cores ----- */
+/* ============================================================
+   VARIÁVEIS CSS (THEME / DESIGN SYSTEM)
+   ------------------------------------------------------------
+   Centraliza todas as cores e estilos reutilizáveis
+   Facilita manutenção, refatoração e temas futuros
+   ============================================================ */
 :root {
-  /* ----- Cores Menu ----- */
-  --bg-color-navbar: linear-gradient(
-    90deg,
-    #4a077c,
-    #6a0dad
-  ); /* cor de fundo do menu */
-  --text-color-links: #dec9e7; /* cor do texto dos links do menu */
-  --text-color-links-hover: #09cdd7; /* cor do hover dos links, ex: quando passa o mouse por cima */
-  --text-color-links-active: #09cdd7; /* cor do link ativo, ex: quando eu seleciono uma pagina nos links */
+  /* ---------- Navbar / Menu ---------- */
+  --bg-color-navbar: linear-gradient(90deg, #4a077c, #6a0dad);
+  --text-color-links: #dec9e7;
+  --text-color-links-hover: #09cdd7;
+  --text-color-links-active: #09cdd7;
 
-  /* ----- Cores de botões  ----- */
+  /* ---------- Botões ---------- */
+  /* Primário */
+  --bg-color-button: #c77dff;
+  --bg-color-button-hover: #8f3ecf;
+  --text-color: #ffffff;
 
-  /* ----- Primário  ----- */
-  --bg-color-button: #c77dff; /* cor de fundo de todos os botões  */
-  --text-color: white; /* cor do texto de todos os botões  */
-  --bg-color-button-hover: #8f3ecf; /* cor do hover dos botões */
-
-  /* ----- Secundário  ----- */
-  --bg-color-button-secondary: #dec9e7; /* cor de fundo dos botões secundários */
-  --text-color-secondary: #6a0dad; /* cor do texto dos botões secundários  */
+  /* Secundário */
+  --bg-color-button-secondary: #dec9e7;
   --bg-color-button-hover-secondary: #c7b2da;
+  --text-color-secondary: #6a0dad;
 
-  /* ----- Fontes  ----- */
-  --bg-color-title: #6a0dad; /* cor dos títulos */
-  --color-title-secondary: #c77dff; /* cor dos títulos H4*/
-  --bg-color-title-section: #6a0dad; /* cor dos títulos das sections */
-  --bg-color-title-cards: #6a0dad; /* cor dos títulos de cards */
-  --bg-color-text: #4a3f55; /* cor dos textos */
+  /* ---------- Tipografia ---------- */
+  --bg-color-title: #6a0dad;
+  --color-title-secondary: #c77dff;
+  --bg-color-title-section: #6a0dad;
+  --bg-color-title-cards: #6a0dad;
+  --bg-color-text: #4a3f55;
 
-  /* ----- Scroll lateral  ----- */
-  --bg-color-scroll-left: #6a0dad; /* cor do scroll lateral */
-  --bg-color-scroll-hover: #c77dff; /* cor do hover do scroll lateral */
-  --bg-color-scroll: #dec9e7; /* cor do fundo da lateral do scroll */
+  /* ---------- Scrollbar ---------- */
+  --bg-color-scroll: #dec9e7;
+  --bg-color-scroll-left: #6a0dad;
+  --bg-color-scroll-hover: #c77dff;
 
-  /* ----- Cores Footer - Rodapé ----- */
-  --bg-color-footer: linear-gradient(
-    90deg,
-    #4a077c,
-    #6a0dad
-  ); /* cor do fundo do rodapé  */
-  --text-color-hover: #09cdd7; /* cor do hover dos links do menu no rodapé */
+  /* ---------- Footer ---------- */
+  --bg-color-footer: linear-gradient(90deg, #4a077c, #6a0dad);
+  --text-color-hover: #09cdd7;
   --text-color-copy: #adb5bd;
 }
 
+/* ============================================================
+   CONFIGURAÇÕES GERAIS DE TEXTO
+   ============================================================ */
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
@@ -64,115 +78,104 @@ body {
   overflow-x: hidden;
 }
 
-/* ----- Fontes ----- */
-h1 {
-  color: var(--bg-color-title);
-}
-h2 {
-  color: var(--bg-color-title-section);
-}
-h4 {
-  color: var(--color-title-secondary);
-}
-h5 {
-  color: var(--bg-color-title-cards);
-}
-h6 {
-}
-p {
-  color: var(--bg-color-text);
+/* ============================================================
+   TIPOGRAFIA (HEADINGS & TEXTOS)
+   ============================================================ */
+h1 { color: var(--bg-color-title); }
+h2 { color: var(--bg-color-title-section); }
+h4 { color: var(--color-title-secondary); }
+h5 { color: var(--bg-color-title-cards); }
+p  { color: var(--bg-color-text); }
+
+/* ============================================================
+   NAVBAR / MENU PRINCIPAL
+   ============================================================ */
+.navbar {
+  background: var(--bg-color-navbar);
+  padding: 1rem 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
 }
 
-/* ----- Navbar - MENU ----- */
-.navbar {
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  padding: 1rem 0;
-  transition: all 0.3s ease;
-  background: var(--bg-color-navbar);
-}
 .navbar-brand {
   font-size: 1.5rem;
   transition: transform 0.3s ease;
 }
+
 .navbar-brand:hover {
   transform: scale(1.05);
 }
+
 .nav-link {
-  font-weight: 500;
-  transition: color 0.3s ease;
   padding: 0.5rem 1rem !important;
+  font-weight: 500;
   color: var(--text-color-links);
+  transition: color 0.3s ease;
 }
+
 .nav-link:hover {
   color: var(--text-color-links-hover);
 }
+
 .nav-link.active {
   color: var(--text-color-links-active) !important;
 }
+
 .menu-mobile {
   background: var(--bg-color-navbar);
 }
 
-/* ----- Footer - Rodapé----- */
+/* ============================================================
+   FOOTER / RODAPÉ
+   ============================================================ */
 footer {
   background: var(--bg-color-footer);
 }
+
 footer a:hover {
   color: var(--text-color-hover) !important;
   transition: color 0.3s ease;
 }
 
 .social-links a {
-  transition: transform 0.3s ease;
   display: inline-block;
+  transition: transform 0.3s ease;
 }
 
 .social-links a:hover {
   transform: translateY(-3px);
 }
+
 .copy {
   color: var(--text-color-copy);
 }
-/* ----- Botões - Primários ----- */
-/* ----- Botões - Secundários ----- */
-/* ----- btn ----- */
 
-/* ------------------------------------------------------------
-   BOTÃO PRIMÁRIO (classe .btn padrão)
-   - Define estilo base de TODOS os botões Bootstrap
-   - Ajusta cor, raio, padding e transição
-   ------------------------------------------------------------ */
+/* ============================================================
+   BOTÕES (BOOTSTRAP CUSTOM)
+   ============================================================ */
 
-/* ----- Botões - Primários ----- */
+/* ---------- Botão Primário ---------- */
 .btn {
+  border: none;
   border-radius: 25px;
   padding: 0.5rem 1.5rem;
   font-weight: 500;
-  transition: all 0.3s ease;
-  border: none;
   background-color: var(--bg-color-button);
   color: var(--text-color);
+  transition: all 0.3s ease;
 }
 
-/* ------------------------------------------------------------
-   BOTÃO SECUNDÁRIO (outline)
-   - Esse é o botão "claro" que fica diferente do primário
-   - NÃO pode herdar a regra que remove clique
-   ------------------------------------------------------------ */
-
-/* ----- Botões - Secundários ----- */
+/* ---------- Botão Secundário ---------- */
 .btn-outline-light {
   background: var(--bg-color-button-secondary);
   color: var(--text-color-secondary);
 }
 
-/* ============================================================
-   REMOVER COR DO CLIQUE (APENAS DO BOTÃO PRIMÁRIO)
-   ------------------------------------------------------------
-   - Remove cor de active, focus, visited, focus-visible
-   - Remove sombras e outlines
-   - NÃO aplica ao botão .btn-outline-light
-   ============================================================ */
+/* ------------------------------------------------------------
+   REMOVE EFEITOS DE CLIQUE DO BOTÃO PRIMÁRIO
+   - Remove foco, active, visited e sombra
+   - NÃO afeta botão secundário
+   ------------------------------------------------------------ */
 .btn:not(.btn-outline-light),
 .btn:not(.btn-outline-light):focus,
 .btn:not(.btn-outline-light):focus-visible,
@@ -182,38 +185,28 @@ footer a:hover {
 .show > .btn:not(.btn-outline-light) {
   background-color: var(--bg-color-button) !important;
   color: var(--text-color) !important;
-  border-color: var(--bg-color-button) !important;
   box-shadow: none !important;
   outline: none !important;
 }
 
-/* ============================================================
-   HOVER DO BOTÃO PRIMÁRIO
-   ------------------------------------------------------------
-   - Necessário ficar DEPOIS da regra de remoção de clique
-   - Traz seu hover customizado de volta sem conflitar
-   ============================================================ */
+/* ---------- Hover do Botão Primário ---------- */
 .btn:not(.btn-outline-light):hover {
   background-color: var(--bg-color-button-hover) !important;
-  color: var(--text-color) !important;
 }
 
-/* ============================================================
-   HOVER DO BOTÃO SECUNDÁRIO (OUTLINE)
-   ------------------------------------------------------------
-   - Hover separado e independente do primário
-   - Mantém sua própria cor e não recebe o mesmo hover do primário
-   ============================================================ */
+/* ---------- Hover do Botão Secundário ---------- */
 .btn-outline-light:hover {
   background: var(--bg-color-button-hover-secondary) !important;
   color: var(--text-color-secondary) !important;
 }
 
-/* ----- Animações de Scroll ----- */
+/* ============================================================
+   ANIMAÇÕES DE SCROLL
+   ============================================================ */
 .fade-in-section {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
 .fade-in-section.is-visible {
@@ -221,28 +214,62 @@ footer a:hover {
   transform: translateY(0);
 }
 
-/* ----- Loading Spinner ----- */
+/* ============================================================
+   COMPONENTES AUXILIARES
+   ============================================================ */
 .spinner-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 200px;
+  min-height: 100vh;
 }
 
-/* ----- Badges Customizados ----- */
-.badge {
-  padding: 0.5rem 1rem;
-  font-weight: 500;
-  border-radius: 20px;
+.spinner-logo {
+  width: 60px;
+  height: 60px;
+  animation: spin 1.2s linear infinite;
 }
 
-/* ----- Imagens Responsivas ----- */
-img {
-  max-width: 100%;
-  height: auto;
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
-/* ----- Scrollbar Customizada ----- */
+/* ============================================================
+   CARDS DE TRILHAS
+   ============================================================ */
+.trilha-card {
+  height: 100%;
+  border-radius: 15px;
+  overflow: hidden;
+  border: none;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.trilha-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+.trilha-card .card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
+
+.trilha-card .badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+.trilha-card .progress {
+  height: 8px;
+  border-radius: 10px;
+}
+
+/* ============================================================
+   SCROLLBAR CUSTOMIZADA
+   ============================================================ */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -260,68 +287,13 @@ img {
   background: var(--bg-color-scroll-hover);
 }
 
-/* ----- Trilhas de Aprendizagem ----- */
-.trilha-card {
-  border: none;
-  border-radius: 15px;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  height: 100%;
-}
-
-.trilha-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-}
-
-.trilha-card .card-img-top {
-  height: 200px;
-  object-fit: cover;
-}
-
-.trilha-card .badge {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  z-index: 1;
-}
-
-.trilha-card .card-body {
-  padding: 1.5rem;
-}
-
-.trilha-card .progress {
-  height: 8px;
-  border-radius: 10px;
-}
-
-/* ----- Estilo do Spinner de carregamento ----- */
-.spinner-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-}
-
-.spinner-logo {
-  width: 60px;
-  height: 60px;
-  animation: spin 1.2s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-
-/* ----- Responsividade ----- */
+/* ============================================================
+   RESPONSIVIDADE
+   ============================================================ */
 @media (max-width: 768px) {
   .hero-section {
-    min-height: auto;
     padding: 3rem 0 !important;
+    min-height: auto;
   }
 
   .hero-section h1 {
@@ -336,8 +308,3 @@ img {
     margin-bottom: 2rem;
   }
 }
-
-
-
-
-

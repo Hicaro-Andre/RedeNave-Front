@@ -5,7 +5,6 @@ import Privacy from "../components/Privacidade/Privacy";
 import Navbar from "../components/NavBar";
 
 
-
 function PrivacyPolicy() {
   return (
     <>

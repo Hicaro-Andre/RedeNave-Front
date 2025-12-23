@@ -4,7 +4,7 @@ import logo from "/src/assets/logoRedeNave.png";
 import DashboardSection from "./DashboardSection";
 import GenericSection from "./GenericSection";
 
-// Tipos
+
 interface Section {
   [key: string]: string;
 }

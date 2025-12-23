@@ -1,8 +1,6 @@
 import React from "react";
 
-/* =======================
-   TIPOS
-======================= */
+
 export type DashboardSection =
   | "overview"
   | "cursos"

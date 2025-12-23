@@ -11,7 +11,6 @@ import ListaTrilhas from '../components/Trilhas/ListaTrilhas'
 
 function Trilhas() {
 
-
   return (
     <>
       <Navbar />

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import logoNotFound from "../assets/logo-not-found.png"
+import logoNotFound from "../assets/logo-not-found.png";
 
 export default function NotFound() {
   return (
@@ -15,7 +15,6 @@ export default function NotFound() {
         backgroundSize: "100% 100%, 40px 40px, 40px 40px",
         color: "#fff",
       }}
-
     >
       <div className="container px-4">
         <img
@@ -28,9 +27,12 @@ export default function NotFound() {
           }}
         />
 
-        <p className="lead mb-4" style={{ maxWidth: "520px", margin: "0 auto" }}>
-          O conteúdo que você tentou acessar não existe ou foi movido.
-          Mas fique tranquila, você pode continuar sua jornada por aqui 💜
+        <p
+          className="lead mb-4"
+          style={{ maxWidth: "520px", margin: "0 auto" }}
+        >
+          O conteúdo que você tentou acessar não existe ou foi movido. Mas fique
+          tranquila, você pode continuar sua jornada por aqui 💜
         </p>
 
         <div className="d-flex gap-3 justify-content-center flex-wrap">
@@ -38,7 +40,10 @@ export default function NotFound() {
             Voltar para o início
           </Link>
 
-          <Link to="/trilhas" className="btn btn-outline-light btn-lg fw-semibold">
+          <Link
+            to="/trilhas"
+            className="btn btn-outline-light btn-lg fw-semibold"
+          >
             Ver Trilhas
           </Link>
         </div>
