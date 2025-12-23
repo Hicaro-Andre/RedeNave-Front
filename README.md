@@ -1,8 +1,19 @@
-# Rede Nave – Front-end
+# Rede Nave – Front-End
 
 Interface web da plataforma Rede Nave, focada em educação, trilhas de aprendizagem
 e eventos, com design moderno, responsivo e acessível.
 
+## 🚀 Aplicação Online
+
+A aplicação está disponível e pode ser acessada através do seguinte link:
+
+🔗 **[https://seusite.com](https://https://rede-nave-front.vercel.app/)** 
+
+---
+
 ## 📸 Preview
 
-![Preview da aplicação](./docs/preview.png)
+Abaixo uma captura de tela da interface para uma prévia visual:
+
+![Preview da aplicação](./src/assets/preview.png)
+
