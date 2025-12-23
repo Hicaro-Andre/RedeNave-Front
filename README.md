@@ -62,3 +62,61 @@ src/
 ├── hooks/           # Hooks customizados
 ├── App.tsx          # Composição principal
 └── main.tsx         # Ponto de entrada
+
+
+## 🧠 Decisões técnicas
+
+- CSS organizado com variáveis globais (`:root`) para facilitar temas
+- Navbar com efeitos de scroll otimizados usando `requestAnimationFrame`
+- Componentes documentados diretamente no código
+- Sem uso de bibliotecas desnecessárias para manter leve
+
+
+## 🧩 Componentes principais
+
+### Navbar
+Responsável por:
+- Navegação principal
+- Destaque de rota ativa
+- Menu mobile (Offcanvas)
+- Barra de progresso de scroll
+
+Arquivo:
+src/components/Navbar.tsx
+
+
+## 🎨 Design System
+
+As cores e estilos globais ficam centralizados em variáveis CSS:
+
+```css
+:root {
+  --bg-color-navbar: linear-gradient(90deg, #4a077c, #6a0dad);
+  --bg-color-button: #c77dff;
+}
+
+
+---
+
+### 9️⃣ Scripts disponíveis
+
+```md
+## 📜 Scripts
+
+- `npm run dev` → ambiente de desenvolvimento
+- `npm run build` → build de produção
+- `npm run preview` → preview do build
+
+## 🛣️ Roadmap
+
+- [ ] Tema claro / escuro
+- [ ] Internacionalização (i18n)
+- [ ] Testes com Vitest
+
+## 👤 Autor
+
+Hicaro André  
+Desenvolvedor Front-end / Full Stack  
+
+## 📄 Licença
+Este projeto está sob a licença MIT.
