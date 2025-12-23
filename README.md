@@ -31,20 +31,24 @@ Abaixo uma captura de tela da interface para uma prévia visual:
 ```bash
 # Clone o repositório
 git clone https://github.com/seu-usuario/rede-nave-front.git
-
+```
+```bash
 # Entre na pasta
 cd rede-nave-front
-
+```
+```bash
 # Instale as dependências
 npm install
-
+```
+```bash
 # Rode o projeto
 npm run dev
 ```
+---
 
-```md
 ## 📁 Estrutura do projeto
 
+```md
 src/
 ├── assets/          # Imagens, ícones e logos
 ├── components/      # Componentes reutilizáveis
