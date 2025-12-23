@@ -25,6 +25,7 @@ Abaixo uma captura de tela da interface para uma prévia visual:
 - Bootstrap 5 (Offcanvas, Grid, Utilities)
 - CSS Custom Properties (Design System)
 - Vite
+- Storyblok (CMS Headless)
 
 ## 🚀 Como rodar localmente
 
@@ -59,3 +60,64 @@ src/
 ├── App.tsx          # Composição principal
 └── main.tsx         # Ponto de entrada
 ```
+
+## 🧠 Decisões técnicas
+
+- CSS organizado com variáveis globais (`:root`) para facilitar temas
+- Navbar com efeitos de scroll otimizados usando `requestAnimationFrame`
+- Componentes documentados diretamente no código
+- Sem uso de bibliotecas desnecessárias para manter leve
+
+
+---
+## 🧩 Componentes principais
+
+### Navbar
+Responsável por:
+- Navegação principal
+- Destaque de rota ativa
+- Menu mobile (Offcanvas)
+- Barra de progresso de scroll
+
+Arquivo:
+src/components/Navbar.tsx
+
+---
+
+## 🎨 Design System
+
+As cores e estilos globais ficam centralizados em variáveis CSS:
+
+```css
+:root {
+  --bg-color-navbar: linear-gradient(90deg, #4a077c, #6a0dad);
+  --bg-color-button: #c77dff;
+}
+```
+
+---
+
+## 👤 Autores
+
+Hicaro André 
+Desenvolvedor Front-end / Full Stack  
+
+Luana Reis
+Desenvolvedor Front-end 
+
+Rosélia Cristina
+Desenvolvedor Front-end 
+
+## 📄 Licença
+Este projeto está sob a licença MIT.
+
+---
+
+
+## 🎓 Contexto Educacional (Softex)
+
+Este projeto foi desenvolvido como parte do programa da Softex,
+com foco em boas práticas de front-end, organização de código,
+responsividade e experiência do usuário.
+
+
