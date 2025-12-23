@@ -67,7 +67,30 @@ src/
 - Navbar com efeitos de scroll otimizados usando `requestAnimationFrame`
 - Componentes documentados diretamente no código
 - Sem uso de bibliotecas desnecessárias para manter leve
+- O uso do Storyblok como CMS headless para separar
+conteúdo de código.
 
+```md
+# Storyblok
+
+## Por que foi usado?
+Permitir edição de conteúdo sem alterar código.
+
+Com isso:
+- textos, imagens e banners podem ser atualizados sem novo deploy
+- o front-end fica mais organizado
+- o projeto simula um cenário real de produto
+
+## O que é gerenciado?
+- Títulos
+- Textos
+- Imagens
+- Cards e seções
+
+## O que NÃO é responsabilidade do Storyblok
+- Lógica de navegação
+- Regras de negócio
+```
 
 ---
 ## 🧩 Componentes principais
@@ -99,13 +122,13 @@ As cores e estilos globais ficam centralizados em variáveis CSS:
 
 ## 👤 Autores
 
-Hicaro André 
+Hicaro André -  
 Desenvolvedor Front-end / Full Stack  
 
-Luana Reis
+Luana Reis - 
 Desenvolvedor Front-end 
 
-Rosélia Cristina
+Rosélia Cristina - 
 Desenvolvedor Front-end 
 
 ## 📄 Licença
