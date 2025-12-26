@@ -30,12 +30,12 @@ Abaixo uma captura de tela da interface para uma prévia visual:
 
 ### Clone o repositório
 ```bash
-git clone https://github.com/seu-usuario/rede-nave-front.git
+git clone https://github.com/Hicaro-Andre/RedeNave-Front.git
 ```
-### Entre na pasta
+<!-- ### Entre na pasta
 ```bash
 cd rede-nave-front
-```
+``` -->
 ### Instale as dependências
 ```bash
 npm install
@@ -49,22 +49,65 @@ npm run dev
 
 ```md
 src/
-├── assets/          # Imagens, ícones e logos
-├── components/      # Componentes reutilizáveis
-│   └── Navbar.tsx
-├── pages/           # Páginas da aplicação (rotas)
-├── styles/          # CSS global e temas
-├── hooks/           # Hooks customizados
-├── App.tsx          # Composição principal
-└── main.tsx         # Ponto de entrada
+├── assets/                 # Imagens, ícones, logos, banners
+│
+├── components/             # Componentes e páginas organizadas por domínio
+│   ├── Administrador/
+│   ├── Cadastro/
+│   ├── Cursos/
+│   ├── Dashboard/
+│   ├── Eventos/
+│   ├── HomePage/
+│   ├── Login/
+│   ├── Privacidade/
+│   ├── Sobre/
+│   ├── Suporte/
+│   ├── Trilhas/
+│   │
+│   ├── BackToTop.tsx      # Componentes reutilizáveis
+│   ├── Footer.tsx
+│   ├── LoadingSpinner.tsx
+│   ├── NavBar.tsx
+│   └── NotFound.tsx
+│
+├── pages/                      # Páginas (rotas da aplicação)
+│   ├── Admin.tsx
+│   ├── Cadastro.tsx
+│   ├── Dashboard.tsx
+│   ├── Eventos.tsx
+│   ├── Home.tsx
+│   ├── Login.tsx
+│   ├── PrivacyPolicy.tsx
+│   ├── Sobre.tsx
+│   ├── Suporte.tsx
+│   └── Trilhas.tsx
+│
+├── styles/                     # Estilos por página
+│   ├── admin.css
+│   ├── animations.css
+│   ├── cadastro.css
+│   ├── dashboard.css
+│   ├── eventos.css
+│   ├── home.css
+│   ├── login.css
+│   ├── privacypolicy.css
+│   ├── sobre.css
+│   ├── suporte.css
+│   └── trilhas.css
+│
+├── App.tsx                 # Composição principal da aplicação
+├── index.css               # CSS global
+├── main.tsx                # Ponto de entrada (Vite)
+└── vite-env.d.ts           # Tipagens do Vite
+
 ```
 
 ## 🧠 Decisões técnicas
 
-- CSS organizado com variáveis globais (`:root`) para facilitar temas
-- Navbar com efeitos de scroll otimizados usando `requestAnimationFrame`
+- CSS organizado com variáveis globais (`:root`) para facilitar manutenção
+<!-- - Navbar com efeitos de scroll otimizados usando `requestAnimationFrame` -->
+- Navbar com efeitos visuais baseados em scroll
 - Componentes documentados diretamente no código
-- Sem uso de bibliotecas desnecessárias para manter leve
 - O uso do Storyblok como CMS headless para separar
 conteúdo de código.
 
@@ -92,7 +135,18 @@ Com isso:
 
 ## 🧩 Componentes principais
 
+### App
+Responsável por:
+
+-Estrutura base da aplicação
+-Configuração das rotas (React Router)
+-Composição do layout global (Navbar, Footer, Pages)
+
+Arquivo:
+src/App.tsx
+
 ### Navbar
+
 Responsável por:
 - Navegação principal
 - Destaque de rota ativa
@@ -102,10 +156,50 @@ Responsável por:
 Arquivo:
 src/components/Navbar.tsx
 
+### Footer
+
+Responsável por:
+-Exibir informações institucionais
+-Links úteis (sobre, suporte, privacidade, etc.)
+-Encerramento visual da aplicação
+
+Arquivo:
+src/components/Footer.tsx
+
+### BackToTop
+
+Responsável por:
+-Detectar scroll da página
+-Exibir botão de retorno ao topo
+-Melhorar a experiência do usuário em páginas longas
+
+Arquivo:
+src/components/BackToTop.tsx
+
+### LoadingSpinner
+
+Responsável por:
+-Exibir feedback visual durante carregamentos
+-Indicar requisições em andamento
+-Melhorar a percepção de performance
+
+Arquivo:
+src/components/LoadingSpinner.tsx
+
+### NotFound
+
+Responsável por:
+-Exibir página de erro 404
+-Tratar rotas inexistentes
+-Redirecionar ou orientar o usuário
+
+Arquivo:
+src/components/NotFound.tsx
+
 
 ## 🎨 Design System
 
-As cores e estilos globais ficam centralizados em variáveis CSS:
+As cores e estilos globais são centralizados em variáveis CSS para garantir consistência visual e facilitar manutenção.
 
 ```css
 :root {
