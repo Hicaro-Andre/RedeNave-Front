@@ -4,6 +4,7 @@ import logo from "/src/assets/logoRedeNave.png";
 import DashboardSection from "./DashboardSection";
 import GenericSection from "./GenericSection";
 
+type AdminAction = "list" | "create";
 
 interface Section {
   [key: string]: string;
@@ -11,6 +12,7 @@ interface Section {
 
 export default function AdminMain() {
   const [activeSection, setActiveSection] = useState<string>("dashboard");
+  const [currentAction, setCurrentAction] = useState<AdminAction>("list");
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const sections: Section = {
@@ -23,74 +25,172 @@ export default function AdminMain() {
     settings: "Configurações",
   };
 
-  // Animação dos números do dashboard
-  const animateNumbers = () => {
-    const statElements =
-      document.querySelectorAll<HTMLElement>(".stat-value");
-
-    statElements.forEach((stat) => {
-      const targetStr = stat.getAttribute("data-target");
-      const target = targetStr ? parseInt(targetStr) : 0;
-      const duration = 1500;
-      const increment = target / (duration / 16);
-      let current = 0;
-
-      const updateValue = () => {
-        current += increment;
-        if (current >= target) {
-          stat.textContent = target.toLocaleString();
-        } else {
-          stat.textContent = Math.floor(current).toLocaleString();
-          requestAnimationFrame(updateValue);
-        }
-      };
-
-      updateValue();
-    });
-  };
-
   useEffect(() => {
-    animateNumbers();
+    if (activeSection === "dashboard") {
+      document.querySelectorAll<HTMLElement>(".stat-value").forEach((stat) => {
+        const target = Number(stat.dataset.target || 0);
+        let current = 0;
+        const increment = target / 60;
+
+        const animate = () => {
+          current += increment;
+          if (current >= target) {
+            stat.textContent = target.toLocaleString();
+          } else {
+            stat.textContent = Math.floor(current).toLocaleString();
+            requestAnimationFrame(animate);
+          }
+        };
+        animate();
+      });
+    }
   }, [activeSection]);
 
-  const getIconForSection = (key: string): string => {
-    switch (key) {
-      case "dashboard":
-        return "bi-speedometer2";
+  const showNewButton =
+    !["dashboard", "settings"].includes(activeSection);
+
+  const getCreateTitle = () => {
+    switch (activeSection) {
       case "users":
-        return "bi-people";
+        return "Adicionar Usuária";
       case "courses":
-        return "bi-book";
+        return "Criar Trilha";
       case "events":
-        return "bi-calendar-event";
+        return "Novo Evento";
       case "certificates":
-        return "bi-award";
+        return "Emitir Certificado";
       case "reports":
-        return "bi-graph-up";
-      case "settings":
-        return "bi-gear";
+        return "Gerar Relatório";
       default:
-        return "bi-gear";
+        return "";
+    }
+  };
+
+  const renderForm = () => {
+    switch (activeSection) {
+      /* ================= USUÁRIAS ================= */
+      case "users":
+        return (
+          <>
+            <Input label="Nome completo" />
+            <Input label="CPF" />
+            <Input label="E-mail" type="email" />
+            <Input label="Telefone" />
+            <Input label="Data de nascimento" type="date" />
+            <Input label="Cidade / Estado" />
+          </>
+        );
+
+      /* ================= TRILHAS ================= */
+      case "courses":
+        return (
+          <>
+            <Input label="Título da trilha" />
+            <Textarea label="Descrição" />
+            <Textarea label="Conteúdo programático" />
+            <Input label="Banner do curso" type="file" />
+          </>
+        );
+
+      /* ================= EVENTOS ================= */
+      case "events":
+        return (
+          <>
+            <Input label="Título do evento" />
+            <Select
+              label="Tipo"
+              options={["Feira", "Workshop", "Live"]}
+            />
+            <Input label="Data" type="date" />
+            <Input label="Horário" type="time" />
+            <Select
+              label="Modo"
+              options={["YouTube", "Online", "Presencial"]}
+            />
+          </>
+        );
+
+      /* ================= CERTIFICADOS ================= */
+      case "certificates":
+        return (
+          <>
+            <Input label="Usuária" />
+            <Input label="Trilha" />
+            <Input label="Data de emissão" type="date" />
+            <Select
+              label="Modelo do certificado"
+              options={["Padrão", "Avançado", "Personalizado"]}
+            />
+          </>
+        );
+
+      /* ================= RELATÓRIOS ================= */
+      case "reports":
+        return (
+          <>
+            <Select
+              label="Tipo de relatório"
+              options={[
+                "Usuárias",
+                "Trilhas",
+                "Eventos",
+                "Certificados",
+              ]}
+            />
+            <Input label="Período inicial" type="date" />
+            <Input label="Período final" type="date" />
+            <Select
+              label="Formato"
+              options={["PDF", "Excel", "CSV"]}
+            />
+          </>
+        );
+
+      /* ================= CONFIGURAÇÕES ================= */
+      case "settings":
+        return (
+          <>
+            <Input label="Nome da plataforma" />
+            <Input label="E-mail institucional" type="email" />
+            <Input label="Telefone de contato" />
+            <Input label="URL do site" />
+            <Select
+              label="Tema"
+              options={["Claro", "Escuro", "Automático"]}
+            />
+          </>
+        );
+
+      default:
+        return null;
     }
   };
 
   return (
     <div className="layout-wrapper">
-      {/* BOTÃO MENU MOBILE */}
       <button
         className={`menu-toggle ${sidebarOpen ? "open" : ""}`}
         onClick={() => setSidebarOpen(!sidebarOpen)}
       >
-        <i className={`bi ${sidebarOpen ? "bi-x-lg" : "bi-list"}`}></i>
+        ☰
       </button>
+      {sidebarOpen && (
+        <div
+          className="sidebar-overlay"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
 
-      {/* SIDEBAR */}
+
       <aside className={`admin-sidebar ${sidebarOpen ? "open" : ""}`}>
-        <div className="sidebar-header text-center">
+        {/* HEADER */}
+        <div className="sidebar-header">
           <img src={logo} alt="Rede Nave" className="sidebar-logo" />
-          <p className="sidebar-sub text-white">Painel Administrativo</p>
+          <span className="sidebar-sub">Painel Administrativo</span>
         </div>
 
+
+        {/* NAV */}
         <nav className="sidebar-nav">
           {Object.keys(sections).map((key) => (
             <div
@@ -99,95 +199,123 @@ export default function AdminMain() {
                 }`}
               onClick={() => {
                 setActiveSection(key);
+                setCurrentAction("list");
                 setSidebarOpen(false);
               }}
             >
-              <i className={`bi ${getIconForSection(key)}`}></i>
-              <span>{sections[key]}</span>
+              <span className="tx-align">{sections[key]}</span>
             </div>
           ))}
         </nav>
 
+        {/* FOOTER */}
         <div className="sidebar-footer">
           <div className="sf-user">
-            <i className="bi bi-person-circle fs-4"></i>
-            <div>
-              <div className="fw-bold small">Admin User</div>
-              <small className="opacity-75">admin@nave.org</small>
+            <div className="sf-avatar">A</div>
+
+            <div className="sf-user-info">
+              <span>Admin</span>
+              <small>admin@nave.org</small>
             </div>
           </div>
+
           <a href="/" className="logout-btn">
             <i className="bi bi-box-arrow-right"></i>
           </a>
         </div>
+
       </aside>
 
-      {/* CONTEÚDO PRINCIPAL */}
-      <main className="admin-content">
-        {/* HEADER */}
-        <header className="content-header">
-          <div className="tx-align">
-            <h2 className="fw-bold mb-1">Painel Administrativo</h2>
-            <p className="text-muted mb-0">
-              Bem-vinda ao painel de controle da Rede NAVE
-            </p>
-          </div>
 
-          <div>
-            <button className="btn btn-outline-primary me-2">
-              <i className="bi bi-download"></i> Exportar
+      <main className="admin-content">
+        <header className="content-header">
+          <h2>{sections[activeSection]}</h2>
+
+          {showNewButton && (
+            <button
+              className="btn btn-primary"
+              onClick={() => setCurrentAction("create")}
+            >
+              Novo
             </button>
-            <button className="btn btn-primary">
-              <i className="bi bi-plus-lg"></i> Novo
-            </button>
-          </div>
+          )}
         </header>
 
-        {/* SEÇÕES */}
         {activeSection === "dashboard" && <DashboardSection />}
 
-        {activeSection === "users" && (
+        {currentAction === "list" && activeSection !== "dashboard" && (
           <GenericSection
-            title="Gerenciar Usuárias"
-            buttonText="Adicionar Usuária"
+            title={sections[activeSection]}
+            buttonText={getCreateTitle()}
+            onAction={() => setCurrentAction("create")}
           />
         )}
 
-        {activeSection === "courses" && (
-          <GenericSection
-            title="Gerenciar Trilhas"
-            buttonText="Criar Trilha"
-          />
-        )}
+        {currentAction === "create" && (
+          <div className="table-card">
+            <h3 className="fw-bold mb-4">{getCreateTitle()}</h3>
 
-        {activeSection === "events" && (
-          <GenericSection
-            title="Gerenciar Eventos"
-            buttonText="Novo Evento"
-          />
-        )}
+            {renderForm()}
 
-        {activeSection === "certificates" && (
-          <GenericSection
-            title="Certificados"
-            buttonText="Emitir Certificado"
-          />
-        )}
-
-        {activeSection === "reports" && (
-          <GenericSection
-            title="Relatórios e Análises"
-            buttonText="Gerar Relatório"
-          />
-        )}
-
-        {activeSection === "settings" && (
-          <GenericSection
-            title="Configurações do Sistema"
-            buttonText="Salvar Alterações"
-          />
+            <div className="d-flex gap-2 mt-4">
+              <button
+                className="btn btn-secondary"
+                onClick={() => setCurrentAction("list")}
+              >
+                Cancelar
+              </button>
+              <button className="btn btn-primary">
+                Salvar
+              </button>
+            </div>
+          </div>
         )}
       </main>
+    </div>
+  );
+}
+
+/* ================= COMPONENTES AUXILIARES ================= */
+
+function Input({
+  label,
+  type = "text",
+}: {
+  label: string;
+  type?: string;
+}) {
+  return (
+    <div className="mb-3">
+      <label className="form-label">{label}</label>
+      <input type={type} className="form-control" />
+    </div>
+  );
+}
+
+function Textarea({ label }: { label: string }) {
+  return (
+    <div className="mb-3">
+      <label className="form-label">{label}</label>
+      <textarea className="form-control" rows={3} />
+    </div>
+  );
+}
+
+function Select({
+  label,
+  options,
+}: {
+  label: string;
+  options: string[];
+}) {
+  return (
+    <div className="mb-3">
+      <label className="form-label">{label}</label>
+      <select className="form-select">
+        {options.map((op) => (
+          <option key={op}>{op}</option>
+        ))}
+      </select>
     </div>
   );
 }

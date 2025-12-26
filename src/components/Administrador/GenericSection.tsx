@@ -1,11 +1,13 @@
 interface GenericSectionProps {
   title: string;
   buttonText: string;
+  onAction: () => void;
 }
 
 export default function GenericSection({
   title,
   buttonText,
+  onAction,
 }: GenericSectionProps) {
   return (
     <div className="table-card">
@@ -13,7 +15,10 @@ export default function GenericSection({
       <p className="text-muted">
         Conteúdo da seção {title.toLowerCase()}...
       </p>
-      <button className="btn btn-primary">{buttonText}</button>
+
+      <button className="btn btn-primary" onClick={onAction}>
+        {buttonText}
+      </button>
     </div>
   );
 }

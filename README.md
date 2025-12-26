@@ -205,6 +205,7 @@ Com isso:
 **Arquivo:**  
 `src/components/NotFound.tsx`
 
+---
 
 ## 🎨 Design System
 
