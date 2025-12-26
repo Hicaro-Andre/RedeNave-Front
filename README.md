@@ -103,9 +103,8 @@ src/
 ```
 
 ## 🧠 Decisões técnicas
-
-- CSS organizado com variáveis globais (`:root`) para facilitar manutenção
 <!-- - Navbar com efeitos de scroll otimizados usando `requestAnimationFrame` -->
+- CSS organizado com variáveis globais (`:root`) para facilitar manutenção
 - Navbar com efeitos visuais baseados em scroll
 - Componentes documentados diretamente no código
 - O uso do Storyblok como CMS headless para separar
@@ -136,65 +135,75 @@ Com isso:
 ## 🧩 Componentes principais
 
 ### App
-Responsável por:
 
--Estrutura base da aplicação
--Configuração das rotas (React Router)
--Composição do layout global (Navbar, Footer, Pages)
+**Responsável por:**
+- Estrutura base da aplicação
+- Configuração das rotas (React Router)
+- Composição do layout global (Navbar, Footer e Pages)
 
-Arquivo:
-src/App.tsx
+**Arquivo:**  
+`src/App.tsx`
+
+---
 
 ### Navbar
 
-Responsável por:
-- Navegação principal
-- Destaque de rota ativa
+**Responsável por:**
+- Navegação principal da aplicação
+- Destaque da rota ativa
 - Menu mobile (Offcanvas)
-- Barra de progresso de scroll
+- Barra de progresso baseada em scroll
 
-Arquivo:
-src/components/Navbar.tsx
+**Arquivo:**  
+`src/components/Navbar.tsx`
+
+---
 
 ### Footer
 
-Responsável por:
--Exibir informações institucionais
--Links úteis (sobre, suporte, privacidade, etc.)
--Encerramento visual da aplicação
+**Responsável por:**
+- Exibir informações institucionais
+- Links úteis (Sobre, Suporte, Privacidade, etc.)
+- Encerramento visual da aplicação
 
-Arquivo:
-src/components/Footer.tsx
+**Arquivo:**  
+`src/components/Footer.tsx`
+
+---
 
 ### BackToTop
 
-Responsável por:
--Detectar scroll da página
--Exibir botão de retorno ao topo
--Melhorar a experiência do usuário em páginas longas
+**Responsável por:**
+- Detectar o scroll da página
+- Exibir botão de retorno ao topo
+- Melhorar a experiência do usuário em páginas longas
 
-Arquivo:
-src/components/BackToTop.tsx
+**Arquivo:**  
+`src/components/BackToTop.tsx`
+
+---
 
 ### LoadingSpinner
 
-Responsável por:
--Exibir feedback visual durante carregamentos
--Indicar requisições em andamento
--Melhorar a percepção de performance
+**Responsável por:**
+- Exibir feedback visual durante carregamentos
+- Indicar requisições em andamento
+- Melhorar a percepção de performance
 
-Arquivo:
-src/components/LoadingSpinner.tsx
+**Arquivo:**  
+`src/components/LoadingSpinner.tsx`
+
+---
 
 ### NotFound
 
-Responsável por:
--Exibir página de erro 404
--Tratar rotas inexistentes
--Redirecionar ou orientar o usuário
+**Responsável por:**
+- Exibir página de erro 404
+- Tratar rotas inexistentes
+- Orientar o usuário em caso de navegação inválida
 
-Arquivo:
-src/components/NotFound.tsx
+**Arquivo:**  
+`src/components/NotFound.tsx`
 
 
 ## 🎨 Design System
