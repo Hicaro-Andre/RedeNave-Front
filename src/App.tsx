@@ -13,9 +13,7 @@ import AdminMain from "./components/Administrador/AdminMain";
 import DashMain from "./components/Dashboard/DashMain";
 import CursoDetalhe from "./components/Cursos/CursoDetalhe";
 import NotFound from "./components/NotFound";
-
-
-
+import StoryblokTest from "./dev/StoryblokTest";
 
 
 function App() {
@@ -41,6 +39,8 @@ function App() {
         {/* Not Found */}
         <Route path="*" element={<NotFound />} />
 
+        {/* Teste de conexão Storyblok */}
+        <Route path="/dev/storyblok" element={<StoryblokTest />} />
 
       </Routes>
 

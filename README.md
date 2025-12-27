@@ -49,9 +49,9 @@ npm run dev
 
 ```md
 src/
-├── assets/                 # Imagens, ícones, logos, banners
+├── assets/                   # Imagens, ícones, logos, banners
 │
-├── components/             # Componentes e páginas organizadas por domínio
+├── components/               # Componentes e páginas organizadas por domínio
 │   ├── Administrador/
 │   ├── Cadastro/
 │   ├── Chatbot/
@@ -65,11 +65,14 @@ src/
 │   ├── Suporte/
 │   ├── Trilhas/
 │   │
-│   ├── BackToTop.tsx      # Componentes reutilizáveis
+│   ├── BackToTop.tsx          # Componentes reutilizáveis
 │   ├── Footer.tsx
 │   ├── LoadingSpinner.tsx
 │   ├── NavBar.tsx
 │   └── NotFound.tsx
+│
+├── dev/                        # Páginas de teste / sandbox
+│   ├── StoryblokTest.tsx/
 │
 ├── pages/                      # Páginas (rotas da aplicação)
 │   ├── Admin.tsx
@@ -82,6 +85,9 @@ src/
 │   ├── Sobre.tsx
 │   ├── Suporte.tsx
 │   └── Trilhas.tsx
+│
+├── services/                   # Conexão do Storyblok no React
+│   ├── storyblok.ts
 │
 ├── styles/                     # Estilos por página
 │   ├── admin.css
@@ -96,10 +102,10 @@ src/
 │   ├── suporte.css
 │   └── trilhas.css
 │
-├── App.tsx                 # Composição principal da aplicação
-├── index.css               # CSS global
-├── main.tsx                # Ponto de entrada (Vite)
-└── vite-env.d.ts           # Tipagens do Vite
+├── App.tsx                    # Composição principal da aplicação
+├── index.css                  # CSS global
+├── main.tsx                   # Ponto de entrada (Vite)
+└── vite-env.d.ts              # Tipagens do Vite
 
 ```
 
