@@ -11,7 +11,7 @@ export default function NossaEquipe() {
             <div className="team-member">
               <div className="team-photo">
                 <img
-                  src="https://randomuser.me/api/portraits/women/11.jpg"
+                  src=""
                   alt="Rosa Costa"
                   className="rounded-circle img-fluid"
                   style={{ width: '150px', height: '150px', objectFit: 'cover' }}
@@ -42,8 +42,8 @@ export default function NossaEquipe() {
             <div className="team-member">
               <div className="team-photo">
                 <img
-                  src="https://randomuser.me/api/portraits/women/22.jpg"
-                  alt="Segundo Membro"
+                  src=""
+                  alt="Carla Almeida"
                   className="rounded-circle img-fluid"
                   style={{ width: '150px', height: '150px', objectFit: 'cover' }}
                 />
@@ -73,8 +73,8 @@ export default function NossaEquipe() {
             <div className="team-member">
               <div className="team-photo">
                 <img
-                  src="https://randomuser.me/api/portraits/women/33.jpg"
-                  alt="Terceiro Membro"
+                  src=""
+                  alt="Ana Paula Souza"
                   className="rounded-circle img-fluid"
                   style={{ width: '150px', height: '150px', objectFit: 'cover' }}
                 />
