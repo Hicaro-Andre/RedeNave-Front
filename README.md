@@ -54,6 +54,7 @@ src/
 ├── components/             # Componentes e páginas organizadas por domínio
 │   ├── Administrador/
 │   ├── Cadastro/
+│   ├── Chatbot/
 │   ├── Cursos/
 │   ├── Dashboard/
 │   ├── Eventos/
@@ -207,6 +208,34 @@ Com isso:
 
 ---
 
+## 🤖 Chatbot de Suporte
+
+A aplicação conta com um **chatbot interativo**, desenvolvido para auxiliar usuários
+com dúvidas frequentes sobre a plataforma, navegação, cursos e eventos.
+
+### Objetivos do Chatbot
+- Melhorar a experiência do usuário
+- Oferecer suporte rápido e contextual
+- Simular um atendimento automatizado comum em plataformas educacionais
+
+### Características técnicas
+- Desenvolvido com React + TypeScript
+- Componentização por domínio (`Chatbot/`)
+- Mensagens e opções desacopladas da lógica
+- Fácil expansão para integração futura com API ou IA
+
+### Estrutura
+
+```md
+components/Chatbot/
+├── Chatbot.tsx
+├── ChatMessage.tsx
+├── ChatOptions.tsx
+├── ChatbotData.ts
+└── Chatbot.css
+```
+---
+
 ## 🎨 Design System
 
 As cores e estilos globais são centralizados em variáveis CSS para garantir consistência visual e facilitar manutenção.
@@ -217,7 +246,6 @@ As cores e estilos globais são centralizados em variáveis CSS para garantir co
   --bg-color-button: #c77dff;
 }
 ```
-
 
 ## 👤 Autores
 
