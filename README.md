@@ -71,9 +71,6 @@ src/
 │   ├── NavBar.tsx
 │   └── NotFound.tsx
 │
-├── dev/                        # Páginas de teste / sandbox
-│   ├── StoryblokTest.tsx/
-│
 ├── pages/                      # Páginas (rotas da aplicação)
 │   ├── Admin.tsx
 │   ├── Cadastro.tsx

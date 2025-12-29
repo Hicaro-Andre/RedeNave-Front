@@ -1,5 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+
 import BackToTop from "./components/BackToTop";
 import Home from "./pages/Home";
 import Trilhas from "./pages/Trilhas";
@@ -13,12 +14,9 @@ import AdminMain from "./components/Administrador/AdminMain";
 import DashMain from "./components/Dashboard/DashMain";
 import CursoDetalhe from "./components/Cursos/CursoDetalhe";
 import NotFound from "./components/NotFound";
-import StoryblokTest from "./dev/StoryblokTest";
-
 
 function App() {
   return (
-
     <div className="App">
       <Routes>
         {/* Routes Páginas */}
@@ -38,10 +36,6 @@ function App() {
 
         {/* Not Found */}
         <Route path="*" element={<NotFound />} />
-
-        {/* Teste de conexão Storyblok */}
-        <Route path="/dev/storyblok" element={<StoryblokTest />} />
-
       </Routes>
 
       {/* Botão Voltar ao Topo Global */}

@@ -1,41 +1,36 @@
-import { useState } from 'react'
+import {
+  useStoryblok,
+  StoryblokComponent,
+  storyblokEditable,
+} from "@storyblok/react";
 
-import "../styles/home.css"
-import "../styles/animations.css"
-import "../index.css"
+import Navbar from "../components/NavBar";
+import Footer from "../components/Footer";
+import LoadingSpinner from "../components/LoadingSpinner";
 
+export default function Home() {
+  const story = useStoryblok("home", {
+    version: "draft",
+  });
 
-import Navbar from '../components/NavBar'
-import Footer from '../components/Footer'
-import HomeHero from '../components/HomePage/HomeHero'
-import StatsSection from '../components/HomePage/StatsSection'
-import AboutSection from '../components/HomePage/AboutSection'
-import CallSection from '../components/HomePage/CallSection'
-import TestimonialsSection from '../components/HomePage/TestimonialsSection'
-import HowItWorks from '../components/HomePage/HowItWorks'
-import NextEvents from '../components/HomePage/NextEvents'
-import TrilhasAprendizagem from '../components/HomePage/TrilhasAprendizagem'
+  if (!story || !story.content) {
+    return <LoadingSpinner />;
+  }
 
-
-function Home() {
-
+  const { body } = story.content;
 
   return (
     <>
       <Navbar />
-      <HomeHero />
-      <StatsSection />
-      <AboutSection />
-      <TrilhasAprendizagem />
-      <HowItWorks />
-      <NextEvents />
-      <TestimonialsSection />
-      <CallSection />
+
+      {/* Conteúdo gerenciado pelo CMS */}
+      {body?.map((blok: any) => (
+        <div key={blok._uid} {...storyblokEditable(blok)}>
+          <StoryblokComponent blok={blok} />
+        </div>
+      ))}
+
       <Footer />
     </>
-
-  )
-
+  );
 }
-
-export default Home
