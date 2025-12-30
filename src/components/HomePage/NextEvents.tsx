@@ -1,6 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+type NextEventsProps = {
+  blok: {
+    title: string;
+    description: string;
+    button_section_events: string
+  };
+};
+
+
 interface Evento {
   id: number;
   titulo: string;
@@ -22,7 +31,7 @@ declare global {
   }
 }
 
-export default function NextEvents() {
+export default function NextEvents({ blok }: NextEventsProps) {
   const eventos: Evento[] = [
     {
       id: 1,
@@ -71,8 +80,8 @@ export default function NextEvents() {
     <section className="py-5">
       <div className="container">
         <div className="text-center mb-5">
-          <h2 className="fw-bold mb-3">Próximos Eventos</h2>
-          <p className="">Participe de nossas oficinas, feiras e lives</p>
+          <h2 className="fw-bold mb-3">{blok.title}</h2>
+          <p className="">{blok.description}</p>
         </div>
 
         <div className="row g-4" id="eventosContainer">
@@ -115,7 +124,7 @@ export default function NextEvents() {
 
         <div className="text-center mt-4">
           <Link to="/eventos" className="btn btn-lg">
-            Ver Agenda Completa <i className="bi bi-calendar-event"></i>
+            {blok.button_section_events} <i className="bi bi-calendar-event"></i>
           </Link>
         </div>
       </div>

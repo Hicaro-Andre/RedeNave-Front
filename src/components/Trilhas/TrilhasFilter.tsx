@@ -1,6 +1,13 @@
 import { useState } from "react";
 
-const TrilhasFilter = () => {
+type TrilhasFilterProps = {
+  blok: {
+    button_section_filter: string
+  };
+};
+
+
+const TrilhasFilter = ({ blok }: TrilhasFilterProps) => {
   const [busca, setBusca] = useState("");
   const [nivel, setNivel] = useState("");
   const [area, setArea] = useState("");
@@ -59,7 +66,7 @@ const TrilhasFilter = () => {
 
           <div className="col-md-2">
             <button className="btn w-100" onClick={aplicarFiltros}>
-              <i className="bi bi-funnel"></i> Filtrar
+              <i className="bi bi-funnel"></i> {blok.button_section_filter}
             </button>
           </div>
 

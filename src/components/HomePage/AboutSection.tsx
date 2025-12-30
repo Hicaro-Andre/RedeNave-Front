@@ -1,9 +1,32 @@
 import React from "react";
 
 
-import abouthome from "/src/assets/index/abouthome.png";
+type StoryblokAsset = {
+  filename: string;
+  alt?: string;
+};
 
-export default function AboutSection() {
+type AboutSectionProps = {
+  blok: {
+    abouthome?: StoryblokAsset | string | null;
+    title: string;
+    description: string;
+    title_featureList01: string;
+    description_feature01: string;
+    title_featureList02: string;
+    description_feature02: string;
+    title_featureList03: string;
+    description_feature03: string;
+  };
+};
+
+export default function AboutSection({ blok }: AboutSectionProps) {
+
+  const image =
+    typeof blok.abouthome === "object" && blok.abouthome?.filename
+      ? blok.abouthome
+      : null;
+
   return (
     <section id="sobre" className="py-5">
       <div className="container">
@@ -11,22 +34,24 @@ export default function AboutSection() {
 
           {/* IMAGEM */}
           <div className="col-lg-6 mb-4 mb-lg-0">
-            <img
-              src={abouthome}
-              alt="Sobre a Rede NAVE"
-              className="img-fluid rounded"
-            />
+            {image && (
+              <img
+                src={`${image.filename}/m/800x0`}
+                alt={image.alt || "Sobre a Rede NAVE"}
+                className="img-fluid rounded"
+                loading="lazy"
+              />
+            )}
           </div>
+
 
           {/* TEXTO */}
           <div className="col-lg-6">
             <h2 className="fw-bold mb-4 text-center text-md-start">
-              Sobre a Rede NAVE
+              {blok.title}
             </h2>
             <p className="mb-3 text-center text-md-start">
-              A Rede NAVE é uma iniciativa dedicada à formação e capacitação de
-              mulheres empreendedoras, oferecendo um ambiente virtual integrado
-              de aprendizagem.
+              {blok.description}
             </p>
 
             {/* LISTA DE FEATURES */}
@@ -37,9 +62,9 @@ export default function AboutSection() {
                   <i className="bi bi-check-lg coloricon"></i>
                 </div>
                 <div>
-                  <h5 className="mb-1">Trilhas Personalizadas</h5>
+                  <h5 className="mb-1">{blok.title_featureList01}</h5>
                   <p className="mb-0">
-                    Conteúdos adaptados às necessidades de cada turma
+                    {blok.description_feature01}
                   </p>
                 </div>
               </div>
@@ -49,9 +74,9 @@ export default function AboutSection() {
                   <i className="bi bi-check-lg coloricon"></i>
                 </div>
                 <div>
-                  <h5 className="mb-1">Acompanhamento em Tempo Real</h5>
+                  <h5 className="mb-1">{blok.title_featureList02}</h5>
                   <p className="mb-0">
-                    Monitore seu progresso e conquiste certificados
+                    {blok.description_feature02}
                   </p>
                 </div>
               </div>
@@ -61,9 +86,9 @@ export default function AboutSection() {
                   <i className="bi bi-check-lg coloricon"></i>
                 </div>
                 <div>
-                  <h5 className="mb-1">Acesso Flexível</h5>
+                  <h5 className="mb-1">{blok.title_featureList03}</h5>
                   <p className="mb-0">
-                    Estude de qualquer lugar, a qualquer hora
+                    {blok.description_feature03}
                   </p>
                 </div>
               </div>

@@ -1,6 +1,21 @@
 import React, { useEffect, useRef } from "react";
 
-export default function StatsSection() {
+
+type StatsProps = {
+  blok: {
+    stats01: string;
+    txt_stats01: string;
+    stats02: string;
+    txt_stats02: string;
+    stats03: string;
+    txt_stats03: string;
+    stats04: string;
+    txt_stats04: string;
+  };
+};
+
+
+export default function StatsSection({ blok }: StatsProps) {
   const refs = useRef<(HTMLHeadingElement | null)[]>([]);
 
   useEffect(() => {
@@ -60,9 +75,9 @@ export default function StatsSection() {
                 ref={(el) => { refs.current[0] = el; }}
                 className="fw-bold mb-0"
               >
-                500+
+                {blok.stats01}
               </h3>
-              <p className="mb-0 stats">Mulheres Capacitadas</p>
+              <p className="mb-0 stats">{blok.txt_stats01}</p>
             </div>
           </div>
 
@@ -72,9 +87,9 @@ export default function StatsSection() {
                 ref={(el) => { refs.current[1] = el; }}
                 className="fw-bold mb-0"
               >
-                20+
+                {blok.stats02}
               </h3>
-              <p className="mb-0 stats-one">Cursos Disponíveis</p>
+              <p className="mb-0 stats-one">{blok.txt_stats02}</p>
             </div>
           </div>
 
@@ -84,9 +99,9 @@ export default function StatsSection() {
                 ref={(el) => { refs.current[2] = el; }}
                 className="fw-bold mb-0"
               >
-                95%
+                {blok.stats03}
               </h3>
-              <p className="mb-0 stats-three">Taxa de Satisfação</p>
+              <p className="mb-0 stats-three">{blok.txt_stats03}</p>
             </div>
           </div>
 
@@ -96,9 +111,9 @@ export default function StatsSection() {
                 ref={(el) => { refs.current[3] = el; }}
                 className="fw-bold mb-0"
               >
-                100%
+                {blok.stats04}
               </h3>
-              <p className="mb-0 stats-for">Online e Gratuito</p>
+              <p className="mb-0 stats-for">{blok.txt_stats04}</p>
             </div>
           </div>
 

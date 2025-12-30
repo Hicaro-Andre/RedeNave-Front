@@ -1,10 +1,18 @@
-const TrilhasHeader = () => {
+
+type TrilhasHeaderProps = {
+  blok: {
+    title: string;
+    description: string;
+  };
+};
+
+const TrilhasHeader = ({ blok }: TrilhasHeaderProps) => {
   return (
     <section className="section-header text-white text-center py-5">
       <div className="container">
-        <h1 className="display-4 fw-bold mb-3">Trilhas de Aprendizagem</h1>
+        <h1 className="display-4 fw-bold mb-3">{blok.title}</h1>
         <p className="lead">
-          Escolha sua trilha e comece a transformar seu negócio hoje mesmo
+          {blok.description}
         </p>
       </div>
     </section>

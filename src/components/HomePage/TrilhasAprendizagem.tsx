@@ -6,6 +6,15 @@ import cursomarketing from "/src/assets/trilhas/cursomarketing.jpeg";
 import cursolideranca from "/src/assets/trilhas/cursolideranca.jpeg";
 
 
+type TrilhasAprendizagemProps = {
+  blok: {
+    title: string;
+    description: string;
+    button_section_trilhas: string;
+  };
+};
+
+
 interface Trilha {
   id: number;
   titulo: string;
@@ -175,7 +184,7 @@ function TrilhaCard({ trilha }: TrilhaCardProps) {
 }
 
 // Componente principal
-export default function TrilhasAprendizagem() {
+export default function TrilhasAprendizagem({ blok }: TrilhasAprendizagemProps) {
   useEffect(() => {
     // Anima os contadores quando o componente montar
     animarContadores();
@@ -215,9 +224,9 @@ export default function TrilhasAprendizagem() {
     <section className="py-5 fade-in-section">
       <div className="container">
         <div className="text-center mb-5">
-          <h2 className="fw-bold mb-3">Nossas Trilhas de Aprendizagem</h2>
+          <h2 className="fw-bold mb-3">{blok.title}</h2>
           <p>
-            Escolha a trilha ideal para desenvolver suas habilidades empreendedoras
+            {blok.description}
           </p>
         </div>
 
@@ -229,7 +238,7 @@ export default function TrilhasAprendizagem() {
 
         <div className="text-center mt-4">
           <Link to="/trilhas" className="btn btn-lg">
-            Ver Todas as Trilhas <i className="bi bi-arrow-right"></i>
+            {blok.button_section_trilhas} <i className="bi bi-arrow-right"></i>
           </Link>
         </div>
       </div>
