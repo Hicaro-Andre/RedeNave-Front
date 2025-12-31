@@ -1,11 +1,11 @@
 import { useState } from "react";
 import DashboardOverview from "./DashboardOverview";
-import DashboardCertificados from "./DashboardCertificados";
-import DashboardAtividades from "./DashboardAtividades";
+import DashboardCertificados from "./DashboardCertificates";
+import DashboardAtividades from "./DashboardActivities";
 import DashboardRanking from "./DashboardRanking";
 import DashboardSidebar, { DashboardSection } from "./DashboardSidebar";
-import DashboardPerfil from "./DashboardPerfil";
-import DashboardConfiguracoes from "./DashboardConfiguracoes";
+import DashboardPerfil from "./DashboardProfile";
+import DashboardConfiguracoes from "./DashboardSettings";
 
 export default function DashMain() {
   const [section, setSection] = useState<DashboardSection>("overview");

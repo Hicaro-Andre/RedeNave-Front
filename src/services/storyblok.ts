@@ -4,15 +4,34 @@ import { storyblokInit, apiPlugin } from "@storyblok/react";
 import HomeHero from "../components/HomePage/HomeHero";
 import StatsSection from "../components/HomePage/StatsSection";
 import AboutSection from "../components/HomePage/AboutSection";
-import TrilhasAprendizagem from "../components/HomePage/TrilhasAprendizagem";
+import TrailsLearning from "../components/HomePage/TrailsLearning";
 import HowItWorks from "../components/HomePage/HowItWorks";
-import NextEvents from "../components/HomePage/NextEvents";
+import NextEventsHome from "../components/HomePage/NextEventsHome";
 import TestimonialsSection from "../components/HomePage/TestimonialsSection";
 import CallSection from "../components/HomePage/CallSection";
 
-// Blocos do Trilhas
-import TrilhasHeader from "../components/Trilhas/TrilhasHeader";
-import TrilhasFilter from "../components/Trilhas/TrilhasFilter";
+// Blocos Trilhas
+import TrailsHeader from "../components/Trails/TrailsHeader";
+import TrailsFilter from "../components/Trails/TrailsFilter";
+
+// Blocos Eventos
+import AgendaHero from "../components/Eventos/AgendaHero";
+import EventsTabs from "../components/Eventos/EventsTabs";
+import NextEvent from "../components/Eventos/NextEvent";
+import CalendarEvents from "../components/Eventos/CalendarEvents";
+
+// Blocos About
+import AboutHero from "../components/About/AboutHero";
+import ValuesSection from "../components/About/ValuesSection";
+import TrajectorySection from "../components/About/TrajectorySection";
+import ImpactNumbers from "../components/About/ImpactNumbers";
+import OurTeam from "../components/About/OurTeam";
+import Partners from "../components/About/Partners";
+import CtaSection from "../components/About/CtaSection";
+
+
+
+
 
 
 
@@ -27,16 +46,30 @@ storyblokInit({
     HomeHero,
     StatsSection,
     AboutSection,
-    TrilhasAprendizagem,
+    TrailsLearning,
     HowItWorks,
-    NextEvents,
+    NextEventsHome,
     TestimonialsSection,
     CallSection,
 
-
     //Trilhas
-    TrilhasHeader,
-    TrilhasFilter
+    TrailsHeader,
+    TrailsFilter,
+
+    //Eventos
+    AgendaHero,
+    EventsTabs,
+    NextEvent,
+    CalendarEvents,
+
+    //About
+    AboutHero,
+    ValuesSection,
+    TrajectorySection,
+    ImpactNumbers,
+    OurTeam,
+    Partners,
+    CtaSection
 
   },
 });

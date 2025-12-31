@@ -2,19 +2,23 @@ import React, { useEffect } from "react";
 import { StoryblokBridgeV2 } from "@storyblok/react";
 import { Routes, Route } from "react-router-dom";
 
+import "/src/styles/admin.css"
+import "/src/styles/dashboard.css"
+
 import BackToTop from "./components/BackToTop";
 import Home from "./pages/Home";
-import Trilhas from "./pages/Trilhas";
-import Eventos from "./pages/Eventos";
-import Sobre from "./pages/Sobre";
-import Suporte from "./pages/Suporte";
+import Trails from "./pages/Trails";
+import Events from "./pages/Events";
+import About from "./pages/About";
+import Support from "./pages/Support";
 import Login from "./pages/Login";
-import Cadastro from "./pages/Cadastro";
-import Privacy from "./pages/PrivacyPolicy";
-import AdminMain from "./components/Administrador/AdminMain";
+import Register from "./pages/Register";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import AdminMain from "./components/Administrator/AdminMain";
 import DashMain from "./components/Dashboard/DashMain";
-import CursoDetalhe from "./components/Cursos/CursoDetalhe";
+import CourseDetail from "./components/Courses/CourseDetail";
 import NotFound from "./components/NotFound";
+
 
 function App() {
 
@@ -39,18 +43,18 @@ function App() {
       <Routes>
         {/* Routes Páginas */}
         <Route path="/" element={<Home />} />
-        <Route path="/trilhas" element={<Trilhas />} />
-        <Route path="/eventos" element={<Eventos />} />
-        <Route path="/sobre" element={<Sobre />} />
-        <Route path="/suporte" element={<Suporte />} />
+        <Route path="/trilhas" element={<Trails />} />
+        <Route path="/eventos" element={<Events />} />
+        <Route path="/sobre" element={<About />} />
+        <Route path="/suporte" element={<Support />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/cadastro" element={<Cadastro />} />
-        <Route path="/privacypolicy" element={<Privacy />} />
+        <Route path="/cadastro" element={<Register />} />
+        <Route path="/privacypolicy" element={<PrivacyPolicy />} />
         <Route path="/admin" element={<AdminMain />} />
         <Route path="/dashboard" element={<DashMain />} />
 
         {/* Routes Cursos */}
-        <Route path="/cursos/:id" element={<CursoDetalhe />} />
+        <Route path="/cursos/:id" element={<CourseDetail />} />
 
         {/* Not Found */}
         <Route path="*" element={<NotFound />} />
