@@ -3,10 +3,47 @@ import { Link } from "react-router-dom";
 
 import logo from "/src/assets/logoRedeNave.png"
 
-export default function LoginUser() {
+type StoryblokAsset = {
+  filename: string;
+  alt?: string;
+};
+
+type LoginUserProps = {
+  blok: {
+    logo?: StoryblokAsset | null
+    title: string;
+    description: string;
+    topics01: string;
+    topics02: string;
+    topics03: string;
+    card_title: string;
+    card_description: string;
+    card_login_google: string;
+    card_login_face: string;
+    or: string;
+    form_email: string,
+    placeholder_email: string,
+    form_senha: string,
+    placeholder_senha: string,
+    remind_me: string,
+    forgot_your_password: string,
+    button_card: string,
+    not_count: string,
+    cad: string,
+    button_section_home: string
+
+  };
+};
+
+
+export default function LoginUser({ blok }: LoginUserProps) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const image =
+    typeof blok.logo === "object" && blok.logo?.filename
+      ? blok.logo
+      : null;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -34,27 +71,29 @@ export default function LoginUser() {
                 {/* Lado esquerdo */}
                 <div className="col-md-5 login-image text-white d-none d-md-flex flex-column">
                   <div className="text-center">
-                    <img
-                      src={logo}
-                      alt="Rede Nave"
-                      style={{ width: "100px" }}
-                    />
-                    <h3 className="mt-4 fw-bold">Bem-vinda de volta!</h3>
+                    {image && (
+                      <img
+                        src={`${image.filename}`}
+                        alt={image.alt || "Rede Nave"}
+                        style={{ width: "100px" }}
+                      />
+                    )}
+                    <h3 className="mt-4 fw-bold">{blok.title}</h3>
                     <p className="mt-3 px-4 text-white">
-                      Continue sua jornada empreendedora e alcance seus objetivos.
+                      {blok.description}
                     </p>
                     <div className="mt-5">
                       <div className="d-flex align-items-center justify-content-center mb-3">
                         <i className="bi bi-check-circle-fill me-2" ></i>
-                        <span>Acesso ilimitado aos cursos</span>
+                        <span>{blok.topics01}</span>
                       </div>
                       <div className="d-flex align-items-center justify-content-center mb-3">
                         <i className="bi bi-check-circle-fill me-2"></i>
-                        <span>Certificados gratuitos</span>
+                        <span>{blok.topics02}</span>
                       </div>
                       <div className="d-flex align-items-center justify-content-center">
                         <i className="bi bi-check-circle-fill me-2"></i>
-                        <span>Suporte personalizado</span>
+                        <span>{blok.topics03}</span>
                       </div>
                     </div>
                   </div>
@@ -64,25 +103,25 @@ export default function LoginUser() {
                 <div className="col-md-7">
                   <div className="login-form">
                     <div className="text-center mb-4">
-                      <h2 className="fw-bold">Entrar na Plataforma</h2>
-                      <p className="text-muted">Acesse sua conta para continuar</p>
+                      <h2 className="fw-bold">{blok.card_title}</h2>
+                      <p className="text-muted">{blok.card_description}</p>
                     </div>
 
                     {/* Botões sociais */}
                     <div className="mb-4">
                       <button className="social-login-btn">
                         <i className="bi bi-google me-2" style={{ color: "#6a0dad" }}></i>
-                        Continuar com Google
+                        {blok.card_login_google}
                       </button>
 
                       <button className="social-login-btn">
                         <i className="bi bi-facebook me-2" style={{ color: "#6a0dad" }}></i>
-                        Continuar com Facebook
+                        {blok.card_login_face}
                       </button>
                     </div>
 
                     <div className="text-center mb-4">
-                      <span className="text-muted">ou entre com seu email</span>
+                      <span className="text-muted">{blok.or}</span>
                     </div>
 
                     <form onSubmit={handleSubmit}>
@@ -90,12 +129,12 @@ export default function LoginUser() {
                       {/* Email */}
                       <div className="mb-3">
                         <label className="form-label">
-                          <i className="bi bi-envelope"></i> E-mail
+                          <i className="bi bi-envelope"></i> {blok.form_email}
                         </label>
                         <input
                           type="email"
                           className="form-control"
-                          placeholder="seu@email.com"
+                          placeholder={blok.placeholder_email}
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           required
@@ -105,14 +144,14 @@ export default function LoginUser() {
                       {/* Senha */}
                       <div className="mb-3">
                         <label className="form-label">
-                          <i className="bi bi-lock"></i> Senha
+                          <i className="bi bi-lock"></i> {blok.form_senha}
                         </label>
 
                         <div className="input-group">
                           <input
                             type={showPassword ? "text" : "password"}
                             className="form-control"
-                            placeholder="Digite sua senha"
+                            placeholder={blok.placeholder_senha}
                             value={senha}
                             onChange={(e) => setSenha(e.target.value)}
                             required
@@ -131,20 +170,20 @@ export default function LoginUser() {
                       <div className="d-flex justify-content-between align-items-center mb-4">
                         <div className="form-check">
                           <input className="form-check-input" type="checkbox" id="lembrar" />
-                          <label className="form-check-label" htmlFor="lembrar">Lembrar-me</label>
+                          <label className="form-check-label" htmlFor="lembrar">{blok.remind_me}</label>
                         </div>
-                        <a href="#" className="text-decoration-none bg-text">Esqueceu a senha?</a>
+                        <a href="#" className="text-decoration-none bg-text">{blok.forgot_your_password}</a>
                       </div>
 
                       {/* Botão Entrar */}
                       <button type="submit" className="btn btn-primary w-100 mb-3">
-                        <i className="bi bi-box-arrow-in-right"></i> Entrar
+                        <i className="bi bi-box-arrow-in-right"></i> {blok.button_card}
                       </button>
 
                       <div className="text-center">
-                        <span className="text-muted">Não tem uma conta? </span>
+                        <span className="text-muted">{blok.not_count} </span>
                         <Link to="/cadastro" className="text-decoration-none fw-bold bg-text">
-                          Cadastre-se
+                          {blok.cad}
                         </Link>
                       </div>
                     </form>
@@ -157,7 +196,7 @@ export default function LoginUser() {
             {/* Voltar */}
             <div className="text-center mt-4">
               <a href="/" className="btn">
-                <i className="bi bi-arrow-left"></i> Voltar para Home
+                <i className="bi bi-arrow-left"></i> {blok.button_section_home}
               </a>
             </div>
 

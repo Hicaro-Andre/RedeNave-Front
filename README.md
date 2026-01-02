@@ -136,6 +136,23 @@ Com isso:
 - Regras de negócio
 ```
 
+```md
+## 📝 Páginas configuradas via Storyblok
+
+As seguintes páginas da aplicação são integradas com o Storyblok, permitindo que o conteúdo seja gerenciado dinamicamente:
+
+- **Home**  
+- **Trilhas**  
+- **Eventos**  
+- **Sobre**  
+- **Suporte**  
+- **Login**  
+- **Cadastro**  
+
+> Observação: O conteúdo dessas páginas é gerenciado pelo Storyblok e renderizado dinamicamente no front-end usando `<StoryblokComponent />`.
+
+```
+
 ## 🧩 Componentes principais
 
 ### App

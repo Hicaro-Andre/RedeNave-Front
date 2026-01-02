@@ -9,6 +9,7 @@ import Footer from "../components/Footer";
 import LoadingSpinner from "../components/LoadingSpinner";
 
 export default function Home() {
+
   const story = useStoryblok("home", {
     version: "draft",
   });

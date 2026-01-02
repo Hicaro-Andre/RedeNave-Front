@@ -37,6 +37,12 @@ import FAQ from "../components/Support/FAQ";
 import ContatoSection from "../components/Support/ContatoSection";
 import AdditionalResources from "../components/Support/AdditionalResources";
 
+// Blocos Login
+import LoginUser from "../components/Login/LoginUser";
+
+// Blocos Register
+import CadUser from "../components/Register/CadUser";
+
 
 
 storyblokInit({
@@ -80,7 +86,14 @@ storyblokInit({
     ServiceChannels,
     FAQ,
     ContatoSection,
-    AdditionalResources
+    AdditionalResources,
+
+    //Login
+    LoginUser,
+
+    //Register
+    CadUser
+
 
 
   },
