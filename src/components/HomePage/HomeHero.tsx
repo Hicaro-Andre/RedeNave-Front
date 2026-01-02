@@ -15,7 +15,7 @@ type HomeHeroProps = {
     description: string;
     primary_button_text: string;
     secondary_button_text: string;
-    image?: StoryblokAsset | string | null;
+    image?: StoryblokAsset | null;
   };
 };
 

@@ -1,6 +1,22 @@
 import React, { useEffect, useRef } from "react";
 
-export default function ImpactNumbers() {
+type ImpactNumbersProps = {
+  blok: {
+    title: string;
+    stats01: string,
+    txt_stats01: string,
+    stats02: string,
+    txt_stats02: string,
+    stats03: string,
+    txt_stats03: string,
+    stats04: string,
+    txt_stats04: string,
+
+  };
+};
+
+
+export default function ImpactNumbers({ blok }: ImpactNumbersProps) {
   const refs = useRef<(HTMLHeadingElement | null)[]>([]);
 
   useEffect(() => {
@@ -50,7 +66,7 @@ export default function ImpactNumbers() {
   return (
     <section className="py-5">
       <div className="container">
-        <h2 className="fw-bold text-center mb-5">Nosso Impacto em Números</h2>
+        <h2 className="fw-bold text-center mb-5">{blok.title}</h2>
 
         <div className="row g-4 text-center">
 
@@ -58,13 +74,13 @@ export default function ImpactNumbers() {
             <div className="p-4">
               <h2
                 className="display-3 fw-bold text-primary mb-0"
-                data-count="500"
+                data-count={blok.stats01}
                 ref={(el) => { refs.current[0] = el; }}
               >
                 0
               </h2>
               <p className="mb-0">
-                Mulheres<br />Capacitadas
+                {blok.txt_stats01}
               </p>
             </div>
           </div>
@@ -73,13 +89,13 @@ export default function ImpactNumbers() {
             <div className="p-4">
               <h2
                 className="display-3 fw-bold text-success mb-0"
-                data-count="85"
+                data-count={blok.stats02}
                 ref={(el) => { refs.current[1] = el; }}
               >
                 0
               </h2>
               <p className="mb-0">
-                % Taxa de<br />Conclusão
+                {blok.txt_stats02}
               </p>
             </div>
           </div>
@@ -88,13 +104,13 @@ export default function ImpactNumbers() {
             <div className="p-4">
               <h2
                 className="display-3 fw-bold text-warning mb-0"
-                data-count="250"
+                data-count={blok.stats03}
                 ref={(el) => { refs.current[2] = el; }}
               >
                 0
               </h2>
               <p className="mb-0">
-                Negócios<br />Criados
+                {blok.txt_stats03}
               </p>
             </div>
           </div>
@@ -103,13 +119,13 @@ export default function ImpactNumbers() {
             <div className=" p-4">
               <h2
                 className="display-3 fw-bold text-danger mb-0"
-                data-count="95"
+                data-count={blok.stats04}
                 ref={(el) => { refs.current[3] = el; }}
               >
                 0
               </h2>
               <p className="mb-0">
-                % Satisfação<br />das Alunas
+                {blok.txt_stats04}
               </p>
             </div>
           </div>

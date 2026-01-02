@@ -1,6 +1,16 @@
 import { Link } from "react-router-dom";
 
-export default function CtaSection() {
+type CtaSectionProps = {
+  blok: {
+    title: string;
+    description: string;
+    button_section_cad: string,
+    button_section_contact: string,
+  };
+};
+
+
+export default function CtaSection({ blok }: CtaSectionProps) {
   const handleContato = () => {
     alert("contato@redenave.org");
   };
@@ -8,22 +18,21 @@ export default function CtaSection() {
   return (
     <section className="cta-section py-5 text-white text-center">
       <div className="container">
-        <h2 className="fw-bold mb-3">Faça Parte Dessa Transformação</h2>
+        <h2 className="fw-bold mb-3">{blok.title}</h2>
         <p className="lead mb-4">
-          Juntas, podemos criar um futuro melhor para todas as mulheres
-          empreendedoras
+          {blok.description}
         </p>
 
         <div className="d-flex justify-content-center gap-3">
           <Link to="/cadastro" className="btn btn-lg px-5">
-            Cadastre-se Agora
+            {blok.button_section_cad}
           </Link>
 
           <button
             className="btn btn-outline-light btn-lg px-5"
             onClick={handleContato}
           >
-            Entre em Contato
+            {blok.button_section_contact}
           </button>
         </div>
       </div>

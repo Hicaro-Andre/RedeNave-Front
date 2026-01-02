@@ -25,6 +25,7 @@ function About() {
   }
 
   const { body } = story.content;
+
   return (
     <>
       <Navbar />

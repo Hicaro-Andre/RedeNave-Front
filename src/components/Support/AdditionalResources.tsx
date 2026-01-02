@@ -1,11 +1,26 @@
 import React from "react";
 
-export default function AdditionalResources() {
+type AdditionalResourcesProps = {
+  blok: {
+    title: string;
+    title_card01: string,
+    description_card01: string,
+    button_card01: string,
+    title_card02: string,
+    description_card02: string,
+    button_card02: string,
+    title_card03: string,
+    description_card03: string,
+    button_card03: string,
+  };
+};
+
+export default function AdditionalResources({ blok }: AdditionalResourcesProps) {
   return (
     <section className="py-5">
       <div className="container">
         <h2 className="text-center mb-5 fw-bold">
-          <i className="bi bi-book"></i> Recursos Adicionais
+          <i className="bi bi-book"></i> {blok.title}
         </h2>
 
         <div className="row g-4">
@@ -18,12 +33,12 @@ export default function AdditionalResources() {
                   className="bi bi-journal-text mb-3 bg-doc"
                   style={{ fontSize: "3rem" }}
                 ></i>
-                <h5 className="card-title fw-bold">Documentação</h5>
+                <h5 className="card-title fw-bold">{blok.title_card01}</h5>
                 <p className="card-text">
-                  Guias completos sobre como usar a plataforma
+                  {blok.description_card01}
                 </p>
                 <a href="#" className="btn">
-                  Acessar Documentação
+                  {blok.button_card01}
                 </a>
               </div>
             </div>
@@ -37,12 +52,12 @@ export default function AdditionalResources() {
                   className="bi bi-play-circle mb-3 bg-video"
                   style={{ fontSize: "3rem" }}
                 ></i>
-                <h5 className="card-title fw-bold">Tutoriais em Vídeo</h5>
+                <h5 className="card-title fw-bold">{blok.title_card02}</h5>
                 <p className="card-text">
-                  Aprenda com vídeos explicativos passo a passo
+                  {blok.description_card02}
                 </p>
                 <a href="#" className="btn">
-                  Ver Tutoriais
+                  {blok.button_card02}
                 </a>
               </div>
             </div>
@@ -56,12 +71,12 @@ export default function AdditionalResources() {
                   className="bi bi-people mb-3 bg-community"
                   style={{ fontSize: "3rem" }}
                 ></i>
-                <h5 className="card-title fw-bold">Comunidade</h5>
+                <h5 className="card-title fw-bold">{blok.title_card03}</h5>
                 <p className="card-text">
-                  Participe do nosso fórum e tire dúvidas
+                  {blok.description_card03}
                 </p>
                 <a href="#" className="btn">
-                  Entrar na Comunidade
+                  {blok.button_card03}
                 </a>
               </div>
             </div>

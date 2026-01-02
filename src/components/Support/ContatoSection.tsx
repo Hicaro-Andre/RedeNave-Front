@@ -1,5 +1,21 @@
 import React, { useState } from "react";
 
+
+type ContatoSectionProps = {
+  blok: {
+    title: string;
+    name: string;
+    email: string,
+    phone: string,
+    subject: string,
+    message: string,
+    placeholder: string,
+    agreement: string,
+    button_card_form: string,
+  }
+};
+
+
 const Toast = ({ data }) => {
   if (!data) return null;
 
@@ -9,9 +25,8 @@ const Toast = ({ data }) => {
       style={{ zIndex: 2000 }}
     >
       <div
-        className={`toast show text-white bg-${
-          data.type === "success" ? "success" : "danger"
-        }`}
+        className={`toast show text-white bg-${data.type === "success" ? "success" : "danger"
+          }`}
       >
         <div className="toast-header bg-transparent border-0 text-white">
           <strong className="me-auto">{data.title}</strong>
@@ -45,7 +60,7 @@ const LoadingOverlay = ({ active, text }) => {
   );
 };
 
-export default function ContatoSection() {
+export default function ContatoSection({ blok }: ContatoSectionProps) {
   const [form, setForm] = useState({
     nome: "",
     email: "",
@@ -103,7 +118,7 @@ export default function ContatoSection() {
       <section className="py-5" id="contato">
         <div className="container">
           <h2 className="text-center mb-5 fw-bold">
-            <i className="bi bi-send"></i> Envie sua Mensagem
+            <i className="bi bi-send"></i> {blok.title}
           </h2>
 
           <div className="row justify-content-center">
@@ -114,7 +129,7 @@ export default function ContatoSection() {
                     <div className="row">
                       <div className="col-md-6 mb-3">
                         <label htmlFor="nome" className="form-label fw-bold">
-                          Nome Completo *
+                          {blok.name}
                         </label>
                         <input
                           type="text"
@@ -128,7 +143,7 @@ export default function ContatoSection() {
 
                       <div className="col-md-6 mb-3">
                         <label htmlFor="email" className="form-label fw-bold">
-                          E-mail *
+                          {blok.email}
                         </label>
                         <input
                           type="email"
@@ -147,7 +162,7 @@ export default function ContatoSection() {
                           htmlFor="telefone"
                           className="form-label fw-bold"
                         >
-                          Telefone
+                          {blok.phone}
                         </label>
                         <input
                           type="tel"
@@ -161,7 +176,7 @@ export default function ContatoSection() {
 
                       <div className="col-md-6 mb-3">
                         <label htmlFor="assunto" className="form-label fw-bold">
-                          Assunto *
+                          {blok.subject}
                         </label>
                         <select
                           className="form-select"
@@ -185,14 +200,14 @@ export default function ContatoSection() {
 
                     <div className="mb-3">
                       <label htmlFor="mensagem" className="form-label fw-bold">
-                        Mensagem *
+                        {blok.message}
                       </label>
                       <textarea
                         className="form-control"
                         id="mensagem"
                         rows={5}
                         required
-                        placeholder="Descreva sua dúvida ou problema..."
+                        placeholder={blok.placeholder}
                         value={form.mensagem}
                         onChange={handleChange}
                       ></textarea>
@@ -208,13 +223,13 @@ export default function ContatoSection() {
                         required
                       />
                       <label className="form-check-label" htmlFor="concordo">
-                        Concordo em receber comunicações da Rede NAVE
+                        {blok.agreement}
                       </label>
                     </div>
 
                     <div className="d-grid">
                       <button type="submit" className="btn btn-primary btn-lg">
-                        <i className="bi bi-send"></i> Enviar Mensagem
+                        <i className="bi bi-send"></i> {blok.button_card_form}
                       </button>
                     </div>
                   </form>

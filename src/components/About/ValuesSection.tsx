@@ -1,4 +1,17 @@
-export default function ValuesSection() {
+
+type ValuesSectionProps = {
+  blok: {
+    title01: string;
+    description01: string;
+    title02: string;
+    description02: string;
+    title03: string;
+    description03: string;
+  };
+};
+
+
+export default function ValuesSection({ blok }: ValuesSectionProps) {
   return (
     <section className="py-5">
       <div className="container">
@@ -9,11 +22,9 @@ export default function ValuesSection() {
               <div className="value-icon">
                 <i className="bi bi-bullseye"></i>
               </div>
-              <h4 className="fw-bold mb-3">Nossa Missão</h4>
+              <h4 className="fw-bold mb-3">{blok.title01}</h4>
               <p>
-                Capacitar mulheres empreendedoras através de formação
-                profissional de qualidade, fornecendo ferramentas e conhecimentos
-                para o desenvolvimento de negócios sustentáveis e transformadores.
+                {blok.description01}
               </p>
             </div>
           </div>
@@ -23,11 +34,9 @@ export default function ValuesSection() {
               <div className="value-icon">
                 <i className="bi bi-eye"></i>
               </div>
-              <h4 className="fw-bold mb-3">Nossa Visão</h4>
+              <h4 className="fw-bold mb-3">{blok.title02}</h4>
               <p>
-                Ser referência em educação empreendedora feminina, criando uma
-                rede de mulheres capacitadas e conectadas, capazes de gerar impacto
-                positivo em suas comunidades e na economia.
+                {blok.description02}
               </p>
             </div>
           </div>
@@ -37,11 +46,9 @@ export default function ValuesSection() {
               <div className="value-icon">
                 <i className="bi bi-heart"></i>
               </div>
-              <h4 className="fw-bold mb-3">Nossos Valores</h4>
+              <h4 className="fw-bold mb-3">{blok.title03}</h4>
               <p>
-                Empoderamento, solidariedade, inovação, inclusão e sustentabilidade.
-                Acreditamos no potencial de cada mulher e no poder da educação para
-                transformar realidades.
+                {blok.description03}
               </p>
             </div>
           </div>

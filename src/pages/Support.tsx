@@ -1,32 +1,44 @@
 import { useState } from 'react'
+import {
+  useStoryblok,
+  StoryblokComponent,
+  storyblokEditable,
+} from "@storyblok/react";
 
 import "../index.css"
 import "../styles/support.css"
 
 import Navbar from '../components/NavBar'
 import Footer from '../components/Footer'
-import SupportHeader from '../components/Support/SupportHeader'
-import SupportSearch from '../components/Support/SupportSearch'
-import ServiceChannels from '../components/Support/ServiceChannels'
-import FAQ from '../components/Support/FAQ'
-import AdditionalResources from '../components/Support/AdditionalResources'
-import ContatoSection from '../components/Support/ContatoSection'
 import Chatbot from '../components/Chatbot/Chatbot'
+import LoadingSpinner from '../components/LoadingSpinner';
 
 
 
 
 function Support() {
 
+  const story = useStoryblok("support", {
+    version: "draft",
+  });
+
+  if (!story || !story.content) {
+    return <LoadingSpinner />;
+  }
+
+  const { body } = story.content;
+
   return (
     <>
       <Navbar />
-      <SupportHeader />
-      <SupportSearch />
-      <ServiceChannels />
-      <FAQ />
-      <ContatoSection />
-      <AdditionalResources />
+
+      {/* Conteúdo gerenciado pelo CMS */}
+      {body?.map((blok: any) => (
+        <div key={blok._uid} {...storyblokEditable(blok)}>
+          <StoryblokComponent blok={blok} />
+        </div>
+      ))}
+
       <Chatbot />
       <Footer />
     </>
