@@ -1,5 +1,3 @@
-import React, { useEffect } from "react";
-import { StoryblokBridgeV2 } from "@storyblok/react";
 import { Routes, Route } from "react-router-dom";
 
 import "/src/styles/admin.css"
@@ -21,22 +19,6 @@ import NotFound from "./components/NotFound";
 
 
 function App() {
-
-  // useEffect(() => {
-  //   if (window.location.search.includes("_storyblok")) {
-  //     const script = document.createElement("script");
-  //     script.src = "https://app.storyblok.com/f/storyblok-v2-latest.js";
-  //     script.async = true;
-  //     document.body.appendChild(script);
-
-  //     script.onload = () => {
-  //       const storyblokInstance = new window.StoryblokBridge();
-  //       storyblokInstance.on(['change', 'published'], () => {
-  //         window.location.reload();
-  //       });
-  //     };
-  //   }
-  // }, []);
 
   return (
     <div className="App">

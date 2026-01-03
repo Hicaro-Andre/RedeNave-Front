@@ -1,4 +1,4 @@
-import { useState } from 'react'
+
 import "../styles/trails.css"
 import { StoryblokComponent, storyblokEditable, useStoryblok } from '@storyblok/react'
 

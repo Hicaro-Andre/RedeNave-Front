@@ -1,7 +1,7 @@
-import { useState } from 'react'
 
-import "../styles/admin.css"
+import "/src/styles/admin.css"
 import AdminMain from '../components/Administrator/AdminMain'
+
 
 
 function Admin() {
