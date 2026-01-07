@@ -25,11 +25,11 @@ export default function AboutHero({ blok }: AboutHeroProps) {
 
           {/* TEXTO */}
           <div className="col-lg-6 text-start">
-            <h1 className="display-3 fw-bold mb-4">{blok.title}</h1>
-            <p className="lead mb-4">{blok.subtitle}</p>
+            <h1 className="display-3 fw-bold text-center text-md-start mb-4">{blok.title}</h1>
+            <p className="lead text-center text-md-start mb-4">{blok.subtitle}</p>
 
             <div
-              className="fs-5"
+              className="text-center text-md-start fs-5"
               dangerouslySetInnerHTML={{
                 __html: renderRichText(blok.description),
               }}

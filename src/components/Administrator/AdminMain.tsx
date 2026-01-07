@@ -1,321 +1,109 @@
-import React, { useEffect, useState } from "react";
-import logo from "/src/assets/logoRedeNave.png";
+import React, { useState } from "react";
 
-import DashboardSection from "./DashboardSection";
-import GenericSection from "./GenericSection";
+import "/src/styles/admin.css";
+import AdminOverview from "./Layout/AdminOverview";
+import AdminUsers from "./Layout/AdminUsers";
+import AdminTracks from "./Layout/AdminTracks";
+import AdminProgress from "./Layout/AdminProgress";
+import AdminCertificates from "./Layout/AdminCertificates";
+import AdminEvents from "./Layout/AdminEvents";
+import AdminRanking from "./Layout/AdminRanking";
+import AdminSettings from "./Layout/AdminSettings";
 
-type AdminAction = "list" | "create";
+type AdminPage =
+  | "overview"
+  | "users"
+  | "tracks"
+  | "progress"
+  | "certificates"
+  | "events"
+  | "ranking"
+  | "settings";
 
-interface Section {
-  [key: string]: string;
-}
-
-export default function AdminMain() {
-  const [activeSection, setActiveSection] = useState<string>("dashboard");
-  const [currentAction, setCurrentAction] = useState<AdminAction>("list");
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  const sections: Section = {
-    dashboard: "Dashboard",
-    users: "Usuárias",
-    courses: "Trilhas",
-    events: "Eventos",
-    certificates: "Certificados",
-    reports: "Relatórios",
-    settings: "Configurações",
-  };
-
-  useEffect(() => {
-    if (activeSection === "dashboard") {
-      document.querySelectorAll<HTMLElement>(".stat-value").forEach((stat) => {
-        const target = Number(stat.dataset.target || 0);
-        let current = 0;
-        const increment = target / 60;
-
-        const animate = () => {
-          current += increment;
-          if (current >= target) {
-            stat.textContent = target.toLocaleString();
-          } else {
-            stat.textContent = Math.floor(current).toLocaleString();
-            requestAnimationFrame(animate);
-          }
-        };
-        animate();
-      });
-    }
-  }, [activeSection]);
-
-  const showNewButton =
-    !["dashboard", "settings"].includes(activeSection);
-
-  const getCreateTitle = () => {
-    switch (activeSection) {
-      case "users":
-        return "Adicionar Usuária";
-      case "courses":
-        return "Criar Trilha";
-      case "events":
-        return "Novo Evento";
-      case "certificates":
-        return "Emitir Certificado";
-      case "reports":
-        return "Gerar Relatório";
-      default:
-        return "";
-    }
-  };
-
-  const renderForm = () => {
-    switch (activeSection) {
-      /* ================= USUÁRIAS ================= */
-      case "users":
-        return (
-          <>
-            <Input label="Nome completo" />
-            <Input label="CPF" />
-            <Input label="E-mail" type="email" />
-            <Input label="Telefone" />
-            <Input label="Data de nascimento" type="date" />
-            <Input label="Cidade / Estado" />
-          </>
-        );
-
-      /* ================= TRILHAS ================= */
-      case "courses":
-        return (
-          <>
-            <Input label="Título da trilha" />
-            <Textarea label="Descrição" />
-            <Textarea label="Conteúdo programático" />
-            <Input label="Banner do curso" type="file" />
-          </>
-        );
-
-      /* ================= EVENTOS ================= */
-      case "events":
-        return (
-          <>
-            <Input label="Título do evento" />
-            <Select
-              label="Tipo"
-              options={["Feira", "Workshop", "Live"]}
-            />
-            <Input label="Data" type="date" />
-            <Input label="Horário" type="time" />
-            <Select
-              label="Modo"
-              options={["YouTube", "Online", "Presencial"]}
-            />
-          </>
-        );
-
-      /* ================= CERTIFICADOS ================= */
-      case "certificates":
-        return (
-          <>
-            <Input label="Usuária" />
-            <Input label="Trilha" />
-            <Input label="Data de emissão" type="date" />
-            <Select
-              label="Modelo do certificado"
-              options={["Padrão", "Avançado", "Personalizado"]}
-            />
-          </>
-        );
-
-      /* ================= RELATÓRIOS ================= */
-      case "reports":
-        return (
-          <>
-            <Select
-              label="Tipo de relatório"
-              options={[
-                "Usuárias",
-                "Trilhas",
-                "Eventos",
-                "Certificados",
-              ]}
-            />
-            <Input label="Período inicial" type="date" />
-            <Input label="Período final" type="date" />
-            <Select
-              label="Formato"
-              options={["PDF", "Excel", "CSV"]}
-            />
-          </>
-        );
-
-      /* ================= CONFIGURAÇÕES ================= */
-      case "settings":
-        return (
-          <>
-            <Input label="Nome da plataforma" />
-            <Input label="E-mail institucional" type="email" />
-            <Input label="Telefone de contato" />
-            <Input label="URL do site" />
-            <Select
-              label="Tema"
-              options={["Claro", "Escuro", "Automático"]}
-            />
-          </>
-        );
-
-      default:
-        return null;
-    }
-  };
+const AdminMain: React.FC = () => {
+  const [activePage, setActivePage] = useState<AdminPage>("overview");
 
   return (
-    <div className="layout-wrapper">
-      <button
-        className={`menu-toggle ${sidebarOpen ? "open" : ""}`}
-        onClick={() => setSidebarOpen(!sidebarOpen)}
-      >
-        ☰
-      </button>
-      {sidebarOpen && (
-        <div
-          className="sidebar-overlay"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
+    <div className="dashboard-container">
+      {/* Sidebar */}
+      <aside className="sidebar">
+        <a className="navbar-brand fw-bold" href="/">
+          <img
+            src="/src/assets/logoRedeNave.png"
+            alt="Rede Nave"
+            style={{ width: "70px", height: "auto" }}
+          />
+        </a>
 
-
-      <aside className={`admin-sidebar ${sidebarOpen ? "open" : ""}`}>
-        {/* HEADER */}
-        <div className="sidebar-header">
-          <img src={logo} alt="Rede Nave" className="sidebar-logo" />
-          <span className="sidebar-sub">Painel Administrativo</span>
-        </div>
-
-
-        {/* NAV */}
-        <nav className="sidebar-nav">
-          {Object.keys(sections).map((key) => (
-            <div
-              key={key}
-              className={`sidebar-nav-item ${activeSection === key ? "active" : ""
-                }`}
-              onClick={() => {
-                setActiveSection(key);
-                setCurrentAction("list");
-                setSidebarOpen(false);
-              }}
+        <nav>
+          <ul>
+            <li
+              className={activePage === "overview" ? "active" : ""}
+              onClick={() => setActivePage("overview")}
             >
-              <span className="tx-align">{sections[key]}</span>
-            </div>
-          ))}
+              <i className="bi bi-speedometer2" /> Visão Geral
+            </li>
+
+            <li
+              className={activePage === "users" ? "active" : ""}
+              onClick={() => setActivePage("users")}
+            >
+              <i className="bi bi-people" /> Usuárias
+            </li>
+
+            <li
+              className={activePage === "tracks" ? "active" : ""}
+              onClick={() => setActivePage("tracks")}
+            >
+              <i className="bi bi-diagram-3" /> Trilhas
+            </li>
+            <li
+              className={activePage === "progress" ? "active" : ""}
+              onClick={() => setActivePage("progress")}
+            >
+              <i className="bi bi-bar-chart" /> Progresso
+            </li>
+            <li
+              className={activePage === "certificates" ? "active" : ""}
+              onClick={() => setActivePage("certificates")}
+            >
+              <i className="bi bi-award" /> Certificados
+            </li>
+            <li
+              className={activePage === "events" ? "active" : ""}
+              onClick={() => setActivePage("events")}
+            >
+              <i className="bi bi-calendar-event" /> Eventos
+            </li>
+            <li
+              className={activePage === "ranking" ? "active" : ""}
+              onClick={() => setActivePage("ranking")}
+            >
+              <i className="bi bi-trophy" /> Ranking
+            </li>
+            <li
+              className={activePage === "settings" ? "active" : ""}
+              onClick={() => setActivePage("settings")}
+            >
+              <i className="bi bi-gear" /> Administração
+            </li>
+          </ul>
         </nav>
-
-        {/* FOOTER */}
-        <div className="sidebar-footer">
-          <div className="sf-user">
-            <div className="sf-avatar">A</div>
-
-            <div className="sf-user-info">
-              <span>Admin</span>
-              <small>admin@nave.org</small>
-            </div>
-          </div>
-
-          <a href="/" className="logout-btn">
-            <i className="bi bi-box-arrow-right"></i>
-          </a>
-        </div>
-
       </aside>
 
-
-      <main className="admin-content">
-        <header className="content-header">
-          <h2>{sections[activeSection]}</h2>
-
-          {showNewButton && (
-            <button
-              className="btn btn-primary"
-              onClick={() => setCurrentAction("create")}
-            >
-              Novo
-            </button>
-          )}
-        </header>
-
-        {activeSection === "dashboard" && <DashboardSection />}
-
-        {currentAction === "list" && activeSection !== "dashboard" && (
-          <GenericSection
-            title={sections[activeSection]}
-            buttonText={getCreateTitle()}
-            onAction={() => setCurrentAction("create")}
-          />
-        )}
-
-        {currentAction === "create" && (
-          <div className="table-card">
-            <h3 className="fw-bold mb-4">{getCreateTitle()}</h3>
-
-            {renderForm()}
-
-            <div className="d-flex gap-2 mt-4">
-              <button
-                className="btn btn-secondary"
-                onClick={() => setCurrentAction("list")}
-              >
-                Cancelar
-              </button>
-              <button className="btn btn-primary">
-                Salvar
-              </button>
-            </div>
-          </div>
-        )}
+      {/* Main Content */}
+      <main className="main-content">
+        {activePage === "overview" && <AdminOverview />}
+        {activePage === "users" && <AdminUsers />}
+        {activePage === "tracks" && <AdminTracks />}
+        {activePage === "progress" && <AdminProgress />}
+        {activePage === "certificates" && <AdminCertificates />}
+        {activePage === "events" && <AdminEvents />}
+        {activePage === "ranking" && <AdminRanking />}
+        {activePage === "settings" && <AdminSettings />}
       </main>
     </div>
   );
-}
+};
 
-/* ================= COMPONENTES AUXILIARES ================= */
-
-function Input({
-  label,
-  type = "text",
-}: {
-  label: string;
-  type?: string;
-}) {
-  return (
-    <div className="mb-3">
-      <label className="form-label">{label}</label>
-      <input type={type} className="form-control" />
-    </div>
-  );
-}
-
-function Textarea({ label }: { label: string }) {
-  return (
-    <div className="mb-3">
-      <label className="form-label">{label}</label>
-      <textarea className="form-control" rows={3} />
-    </div>
-  );
-}
-
-function Select({
-  label,
-  options,
-}: {
-  label: string;
-  options: string[];
-}) {
-  return (
-    <div className="mb-3">
-      <label className="form-label">{label}</label>
-      <select className="form-select">
-        {options.map((op) => (
-          <option key={op}>{op}</option>
-        ))}
-      </select>
-    </div>
-  );
-}
+export default AdminMain;

@@ -14,7 +14,7 @@ const DashboardOverview = () => {
           { icon: "bi-book-fill text-primary", number: 3, label: "Cursos Ativos" },
           { icon: "bi-check-circle-fill text-success", number: 2, label: "Concluídos" },
           { icon: "bi-award-fill text-warning", number: 2, label: "Certificados" },
-          { icon: "bi-lightning-fill text-danger", number: 7, label: "Dias de Streak" },
+          // { icon: "bi-lightning-fill text-danger", number: 7, label: "Dias de Streak" },
         ].map((stat, idx) => (
           <div key={idx} className="col-md-3">
             <div className="stat-box text-center">
@@ -76,43 +76,6 @@ const DashboardOverview = () => {
           </div>
         ))}
       </div>
-
-      {/* Conquistas */}
-      <h4 className="fw-bold mb-3">Conquistas Recentes 🏆</h4>
-      <div className="row g-4 mb-4">
-        {[
-          { emoji: "🎯", title: "Primeira Trilha", desc: "Completou seu primeiro curso", bg: "bg-warning" },
-          { emoji: "🔥", title: "7 Dias Seguidos", desc: "Acessou 7 dias consecutivos", bg: "bg-success" },
-          { emoji: "⭐", title: "Avaliação 5 Estrelas", desc: "Avaliou um curso com 5 estrelas", bg: "bg-info" },
-          { emoji: "👥", title: "Networking", desc: "Conectou-se com 10 alunas", bg: "bg-danger" },
-        ].map((c, idx) => (
-          <div key={idx} className="col-md-3 text-center">
-            <div className={`badge-conquista ${c.bg}`}>{c.emoji}</div>
-            <h6 className="mt-2 fw-bold">{c.title}</h6>
-            <small className="text-muted">{c.desc}</small>
-          </div>
-        ))}
-      </div>
-
-      {/* Atividades */}
-      <h4 className="fw-bold mb-3">Próximas Atividades 📅</h4>
-      {[
-        { title: "Workshop: Precificação Inteligente", date: "15 Nov, 19:00", badge: "bg-warning", status: "Inscrita" },
-        { title: "Entrega: Plano de Marketing", date: "18 Nov, 23:59", badge: "bg-danger", status: "Pendente" },
-        { title: "Live: Instagram para Vendas", date: "25 Nov, 20:00", badge: "bg-info", status: "Lembrete" },
-      ].map((act, idx) => (
-        <div key={idx} className="atividade-item mb-3">
-          <div className="d-flex justify-content-between">
-            <div>
-              <h6 className="fw-bold mb-1">{act.title}</h6>
-              <small className="text-muted">
-                <i className="bi bi-calendar"></i> {act.date}
-              </small>
-            </div>
-            <span className={`badge ${act.badge}`}>{act.status}</span>
-          </div>
-        </div>
-      ))}
     </div>
   );
 };

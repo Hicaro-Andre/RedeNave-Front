@@ -5,8 +5,6 @@ export type DashboardSection =
   | "overview"
   | "cursos"
   | "certificados"
-  | "atividades"
-  | "ranking"
   | "perfil"
   | "configuracoes";
 
@@ -43,8 +41,6 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
       { key: "overview", label: "Visão Geral", icon: "bi-house-door" },
       { key: "cursos", label: "Meus Cursos", icon: "bi-book" },
       { key: "certificados", label: "Certificados", icon: "bi-award" },
-      { key: "atividades", label: "Atividades", icon: "bi-list-check" },
-      { key: "ranking", label: "Ranking", icon: "bi-graph-up" },
     ];
 
   return (

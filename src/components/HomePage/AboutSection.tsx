@@ -62,7 +62,7 @@ export default function AboutSection({ blok }: AboutSectionProps) {
                   <i className="bi bi-check-lg coloricon"></i>
                 </div>
                 <div>
-                  <h5 className="mb-1">{blok.title_featureList01}</h5>
+                  <h5 className="mb-1 ">{blok.title_featureList01}</h5>
                   <p className="mb-0">
                     {blok.description_feature01}
                   </p>

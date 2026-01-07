@@ -1,8 +1,6 @@
 import { useState } from "react";
 import DashboardOverview from "./DashboardOverview";
 import DashboardCertificados from "./DashboardCertificates";
-import DashboardAtividades from "./DashboardActivities";
-import DashboardRanking from "./DashboardRanking";
 import DashboardSidebar, { DashboardSection } from "./DashboardSidebar";
 import DashboardPerfil from "./DashboardProfile";
 import DashboardConfiguracoes from "./DashboardSettings";
@@ -131,11 +129,6 @@ export default function DashMain() {
             {/* CERTIFICADOS */}
             {section === "certificados" && <DashboardCertificados />}
 
-            {/* ATIVIDADES */}
-            {section === "atividades" && <DashboardAtividades />}
-
-            {/* RANKING */}
-            {section === "ranking" && <DashboardRanking />}
 
             {/* PERFIL */}
             {section === "perfil" && <DashboardPerfil />}

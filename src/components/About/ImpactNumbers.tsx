@@ -73,13 +73,13 @@ export default function ImpactNumbers({ blok }: ImpactNumbersProps) {
           <div className="col-md-3 col-6">
             <div className="p-4">
               <h2
-                className="display-3 fw-bold text-primary mb-0"
+                className="display-3 fw-bold stats mb-0"
                 data-count={blok.stats01}
                 ref={(el) => { refs.current[0] = el; }}
               >
                 0
               </h2>
-              <p className="mb-0">
+              <p className="stats mb-0">
                 {blok.txt_stats01}
               </p>
             </div>
@@ -88,13 +88,13 @@ export default function ImpactNumbers({ blok }: ImpactNumbersProps) {
           <div className="col-md-3 col-6">
             <div className="p-4">
               <h2
-                className="display-3 fw-bold text-success mb-0"
+                className="display-3 fw-bold stats-one mb-0"
                 data-count={blok.stats02}
                 ref={(el) => { refs.current[1] = el; }}
               >
                 0
               </h2>
-              <p className="mb-0">
+              <p className="stats-one mb-0">
                 {blok.txt_stats02}
               </p>
             </div>
@@ -103,13 +103,13 @@ export default function ImpactNumbers({ blok }: ImpactNumbersProps) {
           <div className="col-md-3 col-6">
             <div className="p-4">
               <h2
-                className="display-3 fw-bold text-warning mb-0"
+                className="display-3 fw-bold stats-three mb-0"
                 data-count={blok.stats03}
                 ref={(el) => { refs.current[2] = el; }}
               >
                 0
               </h2>
-              <p className="mb-0">
+              <p className="stats-three mb-0">
                 {blok.txt_stats03}
               </p>
             </div>
@@ -118,13 +118,13 @@ export default function ImpactNumbers({ blok }: ImpactNumbersProps) {
           <div className="col-md-3 col-6">
             <div className=" p-4">
               <h2
-                className="display-3 fw-bold text-danger mb-0"
+                className="display-3 fw-bold stats-for mb-0"
                 data-count={blok.stats04}
                 ref={(el) => { refs.current[3] = el; }}
               >
                 0
               </h2>
-              <p className="mb-0">
+              <p className="stats-for mb-0">
                 {blok.txt_stats04}
               </p>
             </div>
