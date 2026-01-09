@@ -49,6 +49,8 @@ const AdminEvents: React.FC = () => {
               <select className="form-select">
                 <option>Online</option>
                 <option>Presencial</option>
+                <option>YouTube</option>
+                <option>Híbrido</option>
               </select>
             </div>
 

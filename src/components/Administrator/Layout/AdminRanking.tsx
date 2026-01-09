@@ -22,12 +22,6 @@ const AdminRanking: React.FC = () => {
             <option>Últimos 30 dias</option>
             <option>Últimos 7 dias</option>
           </select>
-
-          <select className="form-select" style={{ maxWidth: "260px" }}>
-            <option>Todas as trilhas</option>
-            <option>Gestão Financeira</option>
-            <option>Marketing Digital</option>
-          </select>
         </div>
       </div>
 

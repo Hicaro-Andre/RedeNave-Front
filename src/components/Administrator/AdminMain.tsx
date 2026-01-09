@@ -22,76 +22,74 @@ type AdminPage =
 
 const AdminMain: React.FC = () => {
   const [activePage, setActivePage] = useState<AdminPage>("overview");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div className="dashboard-container">
       {/* Sidebar */}
-      <aside className="sidebar">
-        <a className="navbar-brand fw-bold" href="/">
-          <img
-            src="/src/assets/logoRedeNave.png"
-            alt="Rede Nave"
-            style={{ width: "70px", height: "auto" }}
-          />
-        </a>
+      <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
+        <div className="sidebar-header">
+          <div className="sidebar-logo">
+            <a href="/">
+              <img src="/src/assets/logoRedeNave.png" alt="Rede Nave" />
+            </a>
+          </div>
 
-        <nav>
+          {/* Fechar (mobile) */}
+          <button
+            className="sidebar-close"
+            onClick={() => setSidebarOpen(false)}
+          >
+            <i className="bi bi-x-lg" />
+          </button>
+        </div>
+
+        <nav className="sidebar-nav">
           <ul>
-            <li
-              className={activePage === "overview" ? "active" : ""}
-              onClick={() => setActivePage("overview")}
-            >
-              <i className="bi bi-speedometer2" /> Visão Geral
-            </li>
-
-            <li
-              className={activePage === "users" ? "active" : ""}
-              onClick={() => setActivePage("users")}
-            >
-              <i className="bi bi-people" /> Usuárias
-            </li>
-
-            <li
-              className={activePage === "tracks" ? "active" : ""}
-              onClick={() => setActivePage("tracks")}
-            >
-              <i className="bi bi-diagram-3" /> Trilhas
-            </li>
-            <li
-              className={activePage === "progress" ? "active" : ""}
-              onClick={() => setActivePage("progress")}
-            >
-              <i className="bi bi-bar-chart" /> Progresso
-            </li>
-            <li
-              className={activePage === "certificates" ? "active" : ""}
-              onClick={() => setActivePage("certificates")}
-            >
-              <i className="bi bi-award" /> Certificados
-            </li>
-            <li
-              className={activePage === "events" ? "active" : ""}
-              onClick={() => setActivePage("events")}
-            >
-              <i className="bi bi-calendar-event" /> Eventos
-            </li>
-            <li
-              className={activePage === "ranking" ? "active" : ""}
-              onClick={() => setActivePage("ranking")}
-            >
-              <i className="bi bi-trophy" /> Ranking
-            </li>
-            <li
-              className={activePage === "settings" ? "active" : ""}
-              onClick={() => setActivePage("settings")}
-            >
-              <i className="bi bi-gear" /> Administração
-            </li>
+            {[
+              ["overview", "Visão Geral", "speedometer2"],
+              ["users", "Usuárias", "people"],
+              ["tracks", "Trilhas", "diagram-3"],
+              ["progress", "Progresso", "bar-chart"],
+              ["certificates", "Certificados", "award"],
+              ["events", "Eventos", "calendar-event"],
+              ["ranking", "Ranking", "trophy"],
+              ["settings", "Administração", "gear"],
+            ].map(([key, label, icon]) => (
+              <li
+                key={key}
+                className={activePage === key ? "active" : ""}
+                onClick={() => {
+                  setActivePage(key as AdminPage);
+                  setSidebarOpen(false);
+                }}
+              >
+                <i className={`bi bi-${icon}`} />
+                <span>{label}</span>
+              </li>
+            ))}
           </ul>
         </nav>
       </aside>
 
-      {/* Main Content */}
+      {/* Overlay */}
+      {sidebarOpen && (
+        <div
+          className="sidebar-overlay"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* Botão flutuante com seta */}
+      <button
+        className={`sidebar-toggle ${sidebarOpen ? "open" : ""}`}
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+        aria-label="Abrir menu"
+      >
+        <i className={`bi ${sidebarOpen ? "bi-chevron-left" : "bi-chevron-right"}`} />
+      </button>
+
+      {/* Conteúdo */}
       <main className="main-content">
         {activePage === "overview" && <AdminOverview />}
         {activePage === "users" && <AdminUsers />}

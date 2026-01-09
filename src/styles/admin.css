@@ -15,9 +15,7 @@
   --accent: #09cdd7;          /* hover / ativo */
 }
 
-/* =====================================================
-   BASE
-   ===================================================== */
+
 body {
   background-color: var(--bg-main);
   color: var(--text-main);
@@ -25,8 +23,8 @@ body {
 }
 
 /* =====================================================
-   LAYOUT
-   ===================================================== */
+LAYOUT
+===================================================== */
 .dashboard-container {
   display: flex;
   min-height: 100vh;
@@ -37,31 +35,197 @@ body {
    ===================================================== */
 .sidebar {
   width: 260px;
-  background: linear-gradient(90deg, #4a077c, #6a0dad);
-  padding: 24px 16px;
+  background: linear-gradient(180deg, #4a077c, #6a0dad);
+  padding: 24px 18px;
+  display: flex;
+  flex-direction: column;
 }
 
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-}
-
-.sidebar li {
+/* =====================================================
+   SIDEBAR HEADER (LOGO + FECHAR)
+   ===================================================== */
+.sidebar-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 14px;
-  border-radius: 10px;
-  cursor: pointer;
-  color: #f7f3ff;
-  opacity: 0.85;
-  transition: all 0.25s ease;
+  justify-content: space-between;
+  margin-bottom: 32px;
 }
 
-.sidebar li:hover {
-  background-color: rgba(9, 205, 215, 0.25);
+/* LOGO */
+.sidebar-logo {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+}
+
+.sidebar-logo img {
+  width: 90px;
+  height: auto;
+}
+
+/* BOTÃO FECHAR (❌) */
+.sidebar-close {
+  display: none;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* =====================================================
+   NAVEGAÇÃO
+   ===================================================== */
+.sidebar-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sidebar-nav li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  color: #f7f3ff;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  opacity: 0.85;
+  transition: background 0.25s ease, transform 0.25s ease, opacity 0.25s ease;
+}
+
+.sidebar-nav li i {
+  font-size: 18px;
+  min-width: 20px;
+  text-align: center;
+  opacity: 0.9;
+}
+
+.sidebar-nav li:hover {
+  background: rgba(255, 255, 255, 0.12);
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+.sidebar-nav li.active {
+  background: rgba(9, 205, 215, 0.25);
   color: #ffffff;
   opacity: 1;
+  box-shadow: inset 4px 0 0 #09cdd7;
+}
+
+.sidebar-nav li span {
+  white-space: nowrap;
+}
+
+/* =====================================================
+   MENU TOGGLE (☰) — FIXO NA TELA
+   ===================================================== */
+.menu-toggle {
+  display: none;
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 1100;
+
+  background: #ffffff;
+  border: none;
+  padding: 8px 10px;
+  border-radius: 12px;
+
+  font-size: 26px;
+  color: #4a077c;
+  cursor: pointer;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* =====================================================
+   OVERLAY (FUNDO ESCURO)
+   ===================================================== */
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 900;
+}
+
+/* =====================================================
+   BOTÃO FLUTUANTE (SETA)
+   ===================================================== */
+.sidebar-toggle {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  transform: translate(-50%, -50%);
+  z-index: 1100;
+
+  width: 38px;
+  height: 64px;
+
+  background: linear-gradient(180deg, #6a0dad, #4a077c);
+  border: none;
+  border-radius: 0 16px 16px 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #ffffff;
+  font-size: 20px;
+  cursor: pointer;
+
+  box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.25);
+  transition: transform 0.3s ease;
+}
+
+.sidebar-toggle:hover {
+  transform: translate(0, -50%);
+}
+
+.sidebar-toggle.open {
+  left: 260px;
+  transform: translate(-50%, -50%);
+}
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+@media (max-width: 992px) {
+  /* Sidebar vira menu lateral */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  /* Botões mobile */
+  .sidebar-close {
+    display: block;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  /* Ajuste conteúdo */
+  .main-content {
+    padding: 16px;
+  }
 }
 
 /* =====================================================
@@ -72,105 +236,805 @@ body {
   padding: 24px;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* =====================================================
-   FILTROS
+   Admin Overview
    ===================================================== */
+
+/* FILTROS */
 .filters {
-  background-color: var(--bg-card);
-  border: none;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
 }
 
 .filters .form-select {
-  background-color: var(--bg-soft);
-  color: var(--text-main);
-  border: 1px solid transparent;
+  max-width: 220px;
+  font-size: 14px;
 }
 
-.filters .form-select:focus {
-  border-color: var(--accent);
-  box-shadow: none;
-}
 
-/* =====================================================
-   KPI CARDS
-   ===================================================== */
+/*  KPI CARDS */
+
 .kpi-card {
-  background-color: var(--bg-card);
-  padding: 20px;
+  background: #ffffff;
   border-radius: 16px;
-  border-left: 6px solid var(--primary-soft);
+  padding: 20px 22px;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.kpi-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
 }
 
 .kpi-card span {
-  font-size: 0.9rem;
-  color: var(--text-muted);
+  font-size: 13px;
+  color: #6b7280;
 }
 
 .kpi-card h3 {
-  font-size: 2rem;
-  margin: 4px 0;
-  color: var(--primary);
+  margin: 6px 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #3a0647;
 }
 
+/* Variações */
 .kpi-card small {
+  font-size: 13px;
   font-weight: 600;
-  color: var(--accent);
 }
 
-/* =====================================================
-   GRÁFICOS
-   ===================================================== */
+.kpi-card .positive {
+  color: #16a34a;
+}
+
+.kpi-card .negative {
+  color: #dc2626;
+}
+
+.kpi-card .neutral {
+  color: #6b7280;
+}
+
+/* GRÁFICOS */
 .chart-card {
-  background-color: var(--bg-card);
   border-radius: 16px;
-  border: none;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
 }
 
 .chart-card .card-header {
   background: transparent;
-  border-bottom: 1px solid #dec9e7;
+  border-bottom: none;
   font-weight: 600;
-  color: var(--primary);
+  color: #3a0647;
+  padding: 18px 22px;
 }
 
 .chart-placeholder {
   height: 260px;
   border-radius: 12px;
-  background-color: var(--bg-soft);
-  color: var(--primary);
+  background: linear-gradient(
+    135deg,
+    rgba(74, 7, 124, 0.05),
+    rgba(106, 13, 173, 0.08)
+  );
+
   display: flex;
   align-items: center;
   justify-content: center;
+
+  color: #6b7280;
+  font-size: 14px;
 }
 
-/* =====================================================
-   TABELA
-   ===================================================== */
+
+/* TABELA */
 .table {
-  color: var(--text-main);
+  margin-bottom: 0;
 }
 
 .table thead th {
-  color: var(--primary);
-  font-weight: 600;
-  border-bottom: 2px solid #dec9e7;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #6b7280;
+  border-bottom: 1px solid #e5e7eb;
 }
 
-.table tbody tr:hover {
-  background-color: rgba(199, 125, 255, 0.15);
+.table tbody td {
+  vertical-align: middle;
+  font-size: 14px;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(74, 7, 124, 0.04);
+}
+
+
+
+/* =====================================================
+   AdminUsers
+   ===================================================== */
+.admin-users {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* HEADER DA PÁGINA */
+.admin-users h2 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.admin-users p {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* FILTROS DE BUSCA */
+.admin-users .card {
+  border-radius: 18px;
+  border: none;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+}
+
+.admin-users .form-control,
+.admin-users .form-select {
+  border-radius: 10px;
+  font-size: 14px;
+  padding: 10px 14px;
+  border: 1px solid #e5e7eb;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Focus elegante */
+.admin-users .form-control:focus,
+.admin-users .form-select:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+/* TABELA DE USUÁRIAS */
+.admin-users table {
+  margin-bottom: 0;
+}
+
+/* Cabeçalho da tabela */
+.admin-users thead th {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #6b7280;
+  border-bottom: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+}
+
+/* Células */
+.admin-users tbody td {
+  font-size: 14px;
+  color: #1f2937;
+  vertical-align: middle;
+}
+
+/* Hover elegante */
+.admin-users .table-hover tbody tr:hover {
+  background-color: #f3f4f6;
+}
+
+/* BADGES (STATUS / CERTIFICADO) */
+.admin-users .badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 999px;
+}
+
+/* BOTÕES DE AÇÃO */
+.admin-users .btn {
+  font-size: 13px;
+  border-radius: 8px;
+  padding: 6px 12px;
+  transition: all 0.2s ease;
+}
+
+/* Hover suave */
+.admin-users .btn-outline-primary:hover {
+  background-color: #6366f1;
+  color: #fff;
+  border-color: #6366f1;
+}
+
+.admin-users .btn-outline-secondary:hover {
+  background-color: #6b7280;
+  color: #fff;
+  border-color: #6b7280;
+}
+
+
+/* =====================================================
+   AdminTracks
+   ===================================================== */
+
+.admin-tracks {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* HEADER DA PÁGINA */
+.admin-tracks h2 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.admin-tracks p {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* Botão Nova Trilha */
+.admin-tracks .btn-primary {
+  background: linear-gradient(90deg, #6a0dad, #4a077c);
+  border: none;
+  border-radius: 10px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(106, 13, 173, 0.35);
+}
+
+.admin-tracks .btn-primary:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+}
+
+/* CARD PADRÃO (FORM + LISTA) */
+.admin-tracks .card {
+  border: none;
+  border-radius: 18px;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.06);
+}
+
+/* Cabeçalho dos cards */
+.admin-tracks .card-header {
+  background-color: #f9fafb;
+  font-weight: 600;
+  color: #374151;
+  border-bottom: 1px solid #e5e7eb;
+  border-radius: 18px 18px 0 0;
+}
+
+/*FORMULÁRIO DE CADASTRO DE TRILHA */
+.admin-tracks .form-label {
+  font-size: 14px;
+  color: #374151;
+}
+
+.admin-tracks .form-control,
+.admin-tracks .form-select,
+.admin-tracks textarea {
+  border-radius: 10px;
+  font-size: 14px;
+  padding: 10px 14px;
+  border: 1px solid #e5e7eb;
+  transition: all 0.2s ease;
+}
+
+/* Focus profissional */
+.admin-tracks .form-control:focus,
+.admin-tracks .form-select:focus,
+.admin-tracks textarea:focus {
+  border-color: #6a0dad;
+  box-shadow: 0 0 0 3px rgba(106, 13, 173, 0.15);
+}
+
+/* Área de upload do banner */
+.admin-tracks .bg-light {
+  background-color: #f9fafb !important;
+  border: 1px dashed #d1d5db !important;
+  border-radius: 14px;
+}
+
+.admin-tracks small {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* BOTÕES DO FORMULÁRIO */
+.admin-tracks .btn-success {
+  background: linear-gradient(90deg, #10b981, #059669);
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35);
+}
+
+.admin-tracks .btn-success:hover {
+  opacity: 0.95;
+}
+
+.admin-tracks .btn-outline-secondary {
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+/* TABELA DE TRILHAS */
+.admin-tracks table {
+  margin-bottom: 0;
+}
+
+/* Cabeçalho */
+.admin-tracks thead th {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6b7280;
+  background-color: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* Linhas */
+.admin-tracks tbody td {
+  font-size: 14px;
+  color: #1f2937;
+  vertical-align: middle;
+}
+
+/* Hover */
+.admin-tracks .table-hover tbody tr:hover {
+  background-color: #f3f4f6;
+}
+
+/* BADGES DE STATUS */
+.admin-tracks .badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+
+/* BOTÕES DE AÇÃO DA TABELA */
+.admin-tracks .btn-sm {
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.admin-tracks .btn-outline-primary:hover {
+  background-color: #6a0dad;
+  color: #fff;
+  border-color: #6a0dad;
+}
+
+.admin-tracks .btn-outline-secondary:hover {
+  background-color: #6b7280;
+  color: #fff;
+  border-color: #6b7280;
+}
+
+
+@media (max-width: 768px) {
+  .admin-tracks h2 {
+    font-size: 22px;
+  }
+
+  .admin-tracks .btn-primary {
+    padding: 8px 14px;
+  }
+
+  .admin-tracks table {
+    font-size: 13px;
+  }
 }
 
 /* =====================================================
-   RESPONSIVO
+   AdminProgress
    ===================================================== */
-@media (max-width: 992px) {
-  .sidebar {
-    display: none;
+
+.admin-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* HEADER (reaproveita padrão global) */
+.admin-progress h2 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.admin-progress p {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* FILTROS - Usa card, form-control e form-select já existentes */
+.admin-progress .card {
+  border-radius: 18px;
+}
+
+/* TABELA DE PROGRESSO*/
+.admin-progress table {
+  margin-bottom: 0;
+}
+
+/* Texto pequeno abaixo da barra */
+.admin-progress small {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* BARRA DE PROGRESSO (customizada) */
+.admin-progress .progress {
+  background-color: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.admin-progress .progress-bar {
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+/*BADGES (somente refinamento visual) */
+.admin-progress .badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+
+@media (max-width: 768px) {
+  .admin-progress h2 {
+    font-size: 22px;
   }
 
-  .main-content {
-    padding: 16px;
+  .admin-progress table {
+    font-size: 13px;
+  }
+}
+
+/* =====================================================
+   AdminCertificates
+   ===================================================== */
+
+.admin-certificates {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* HEADER */
+.admin-certificates h2 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.admin-certificates p {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/*  FILTROS - Reaproveita card, form-control e form-select globais */
+.admin-certificates .card {
+  border-radius: 18px;
+}
+
+/* TABELA DE CERTIFICADOS */
+.admin-certificates table {
+  margin-bottom: 0;
+}
+
+/*  BADGES (apenas ajuste fino) */
+.admin-certificates .badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+
+/* AÇÕES (botões) */
+.admin-certificates .btn-sm {
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+
+/* Botão desabilitado mais elegante */
+.admin-certificates .btn[disabled] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+
+@media (max-width: 768px) {
+  .admin-certificates h2 {
+    font-size: 22px;
+  }
+
+  .admin-certificates table {
+    font-size: 13px;
   }
 }
 
 
+/* =====================================================
+   AdminEvents
+   ===================================================== */
+
+.admin-events {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* HEADER */
+.admin-events h2 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.admin-events p {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* Botão Novo Evento (reaproveita btn-primary base) */
+.admin-events .btn-primary {
+  border-radius: 10px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* CARDS (FORM + LISTA)*/
+.admin-events .card {
+  border-radius: 18px;
+}
+
+/* Cabeçalho dos cards */
+.admin-events .card-header {
+  font-weight: 600;
+  color: #374151;
+}
+
+/*FORMULÁRIO DE EVENTOS */
+.admin-events .form-label {
+  font-size: 14px;
+  color: #374151;
+}
+
+/* AÇÕES DO FORMULÁRIO */
+.admin-events .btn-success {
+  border-radius: 10px;
+  font-weight: 600;
+  padding: 8px 18px;
+}
+
+/* TABELA DE EVENTOS */
+.admin-events table {
+  margin-bottom: 0;
+}
+
+/* BADGES DE STATUS */
+.admin-events .badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+
+/* BOTÕES DE AÇÃO DA TABELA  */
+.admin-events .btn-sm {
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: 8px;
+}
+
+
+@media (max-width: 768px) {
+  .admin-events h2 {
+    font-size: 22px;
+  }
+
+  .admin-events table {
+    font-size: 13px;
+  }
+}
+
+
+/* =====================================================
+   AdminRanking
+
+   - Estilos exclusivos da tela de Ranking
+   - Aproveita classes globais (card, table, badge)
+   ===================================================== */
+
+.admin-ranking {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* HEADER */
+.admin-ranking h2 {
+  font-weight: 600;
+}
+
+.admin-ranking p {
+  font-size: 0.9rem;
+}
+
+/*FILTROS */
+.admin-ranking .form-select {
+  font-size: 0.9rem;
+}
+
+/* TABELA DE RANKING */
+.admin-ranking table th {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #6c757d;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.admin-ranking table td {
+  font-size: 0.9rem;
+  vertical-align: middle;
+}
+
+/* Hover mais suave na linha */
+.admin-ranking table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+/*  BADGES DE POSIÇÃO */
+
+/* Ouro */
+.admin-ranking .bg-warning {
+  font-weight: 600;
+}
+
+/* Prata */
+.admin-ranking .bg-secondary {
+  font-weight: 600;
+}
+
+/* Bronze (custom) */
+.admin-ranking .bg-bronze {
+  background-color: #cd7f32;
+  color: #fff;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .admin-ranking table {
+    font-size: 0.85rem;
+  }
+
+  .admin-ranking h2 {
+    font-size: 1.25rem;
+  }
+}
+
+/* =====================================================
+   AdminSettings
+
+   - Estilos exclusivos da tela de Administração
+   - Usa Bootstrap para grid, cards e formulários
+   ===================================================== */
+
+.admin-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* HEADER */
+.admin-settings h2 {
+  font-weight: 600;
+}
+
+.admin-settings p {
+  font-size: 0.9rem;
+}
+
+/* CARDS */
+
+/* Título do card */
+.admin-settings .card-header {
+  font-weight: 600;
+  font-size: 0.95rem;
+  background-color: #f8f9fa;
+}
+
+/* FORMULÁRIOS */
+.admin-settings .form-label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #495057;
+}
+
+.admin-settings .form-control,
+.admin-settings .form-select {
+  font-size: 0.9rem;
+}
+
+/* Campos somente leitura mais sutis */
+.admin-settings input[readonly] {
+  background-color: #e9ecef;
+  cursor: not-allowed;
+}
+
+/* TABELA DE ADMINISTRADORES */
+.admin-settings table th {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #6c757d;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.admin-settings table td {
+  font-size: 0.9rem;
+  vertical-align: middle;
+}
+
+/* Hover mais leve */
+.admin-settings table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+/* BADGES */
+.admin-settings .badge {
+  font-weight: 500;
+  font-size: 0.75rem;
+}
+
+
+@media (max-width: 768px) {
+  .admin-settings h2 {
+    font-size: 1.25rem;
+  }
+
+  .admin-settings table {
+    font-size: 0.85rem;
+  }
+}

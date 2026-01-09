@@ -19,15 +19,19 @@ const AdminTracks: React.FC = () => {
       </div>
 
       {/* Cadastro da Trilha */}
-      <div className="card mb-4">
-        <div className="card-header">
+      <div className="card shadow-sm mb-4">
+        <div className="card-header fw-semibold">
           Cadastro de Trilha
         </div>
 
         <div className="card-body">
-          <form className="row g-3">
+          <form className="row g-4">
+
+            {/* Título */}
             <div className="col-md-6">
-              <label className="form-label">Título da Trilha</label>
+              <label className="form-label fw-semibold">
+                Título da Trilha
+              </label>
               <input
                 type="text"
                 className="form-control"
@@ -35,46 +39,23 @@ const AdminTracks: React.FC = () => {
               />
             </div>
 
-            <div className="col-md-6">
-              <label className="form-label">Área / Categoria</label>
+            {/* Nível */}
+            <div className="col-md-3">
+              <label className="form-label fw-semibold">
+                Nível
+              </label>
               <select className="form-select">
-                <option>Selecione</option>
-                <option>Finanças</option>
-                <option>Marketing Digital</option>
-                <option>Gestão</option>
-                <option>Vendas</option>
-              </select>
-            </div>
-
-            <div className="col-12">
-              <label className="form-label">Descrição</label>
-              <textarea
-                className="form-control"
-                rows={3}
-                placeholder="Descreva o objetivo da trilha"
-              />
-            </div>
-
-            <div className="col-md-4">
-              <label className="form-label">Nível</label>
-              <select className="form-select">
-                <option>Básico</option>
+                <option>Iniciante</option>
                 <option>Intermediário</option>
                 <option>Avançado</option>
               </select>
             </div>
 
-            <div className="col-md-4">
-              <label className="form-label">Carga Horária (h)</label>
-              <input
-                type="number"
-                className="form-control"
-                placeholder="Ex: 20"
-              />
-            </div>
-
-            <div className="col-md-4">
-              <label className="form-label">Status</label>
+            {/* Status */}
+            <div className="col-md-3">
+              <label className="form-label fw-semibold">
+                Status
+              </label>
               <select className="form-select">
                 <option>Rascunho</option>
                 <option>Publicada</option>
@@ -82,11 +63,58 @@ const AdminTracks: React.FC = () => {
               </select>
             </div>
 
-            <div className="col-12 text-end">
-              <button type="submit" className="btn btn-success">
+            {/* Descrição */}
+            <div className="col-12">
+              <label className="form-label fw-semibold">
+                Descrição
+              </label>
+              <textarea
+                className="form-control"
+                rows={4}
+                placeholder="Descreva o objetivo da trilha"
+              />
+            </div>
+
+            {/* Carga Horária */}
+            <div className="col-md-4">
+              <label className="form-label fw-semibold">
+                Carga Horária (h)
+              </label>
+              <input
+                type="number"
+                className="form-control"
+                placeholder="Ex: 20"
+              />
+            </div>
+
+            {/* Banner da Trilha */}
+            <div className="col-12">
+              <label className="form-label fw-semibold">
+                Banner da Trilha
+              </label>
+
+              <div className="border rounded p-3 text-center bg-light">
+                <input
+                  type="file"
+                  className="form-control"
+                  accept="image/*"
+                />
+                <small className="text-muted d-block mt-2">
+                  Recomendado: 1200x400px • JPG ou PNG
+                </small>
+              </div>
+            </div>
+
+            {/* Ações */}
+            <div className="col-12 d-flex justify-content-end gap-2">
+              <button type="button" className="btn btn-outline-secondary">
+                Cancelar
+              </button>
+              <button type="submit" className="btn btn-success px-4">
                 Salvar Trilha
               </button>
             </div>
+
           </form>
         </div>
       </div>

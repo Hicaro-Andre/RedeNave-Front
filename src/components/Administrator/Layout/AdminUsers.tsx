@@ -25,12 +25,6 @@ const AdminUsers: React.FC = () => {
           />
 
           <select className="form-select" style={{ maxWidth: "220px" }}>
-            <option>Tipo de usuária</option>
-            <option>Participante</option>
-            <option>Equipe Técnica</option>
-          </select>
-
-          <select className="form-select" style={{ maxWidth: "220px" }}>
             <option>Status</option>
             <option>Ativa</option>
             <option>Concluinte</option>
