@@ -14,7 +14,7 @@ const DashboardOverview = () => {
           { icon: "bi-book-fill text-primary", number: 3, label: "Cursos Ativos" },
           { icon: "bi-check-circle-fill text-success", number: 2, label: "Concluídos" },
           { icon: "bi-award-fill text-warning", number: 2, label: "Certificados" },
-          // { icon: "bi-lightning-fill text-danger", number: 7, label: "Dias de Streak" },
+          { icon: "bi-lightning-fill text-danger", number: 7, label: "Dias de Streak" },
         ].map((stat, idx) => (
           <div key={idx} className="col-md-3">
             <div className="stat-box text-center">
@@ -76,6 +76,54 @@ const DashboardOverview = () => {
           </div>
         ))}
       </div>
+
+      {/* Certificados */}
+      <h4 className="fw-bold mb-3">Certificados</h4>
+      <div className="row g-4">
+        {[
+          {
+            title: "Marketing Digital",
+            issuedAt: "10 Jan 2026",
+            status: "Disponível",
+            color: "success",
+          },
+          {
+            title: "Gestão Financeira",
+            issuedAt: "02 Dez 2025",
+            status: "Disponível",
+            color: "success",
+          },
+        ].map((certificate, idx) => (
+          <div key={idx} className="col-md-4">
+            <div className="certificate-card">
+              <div className="d-flex justify-content-between align-items-start mb-3">
+                <div>
+                  <h6 className="fw-bold mb-1">{certificate.title}</h6>
+                  <small className="text-muted">
+                    Emitido em {certificate.issuedAt}
+                  </small>
+                </div>
+
+                <span className={`badge bg-${certificate.color}`}>
+                  {certificate.status}
+                </span>
+              </div>
+
+              <div className="d-flex justify-content-between align-items-center">
+                <small className="text-muted">
+                  <i className="bi bi-patch-check-fill text-success me-1"></i>
+                  Certificado válido
+                </small>
+
+                <button className="btn btn-sm btn-outline-primary">
+                  <i className="bi bi-download"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
     </div>
   );
 };

@@ -1,9 +1,9 @@
 import { useState } from "react";
-import DashboardOverview from "./DashboardOverview";
-import DashboardCertificados from "./DashboardCertificates";
-import DashboardSidebar, { DashboardSection } from "./DashboardSidebar";
-import DashboardPerfil from "./DashboardProfile";
-import DashboardConfiguracoes from "./DashboardSettings";
+import DashboardOverview from "./Layout/DashboardOverview";
+import DashboardCertificados from "./Layout/DashboardCertificates";
+import DashboardSidebar, { DashboardSection } from "./Layout/DashboardSidebar";
+import DashboardPerfil from "./Layout/DashboardProfile";
+import DashboardConfiguracoes from "./Layout/DashboardSettings";
 
 export default function DashMain() {
   const [section, setSection] = useState<DashboardSection>("overview");

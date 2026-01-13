@@ -1,42 +1,40 @@
 import { useState } from "react";
-import { chatbotFlow } from "./chatbotData";
-import ChatMessage from "./ChatMessage";
-import ChatOptions from "./ChatOptions";
+import ChatWindow from "./ChatWindow";
 import "./Chatbot.css";
 
-export default function Chatbot() {
-  const [step, setStep] = useState("start");
-  const [open, setOpen] = useState(false);
+export type Message = {
+  id: number;
+  text: string;
+  sender: "bot" | "user";
+};
 
-  const current = chatbotFlow[step];
+const initialMessage: Message = {
+  id: 1,
+  text: "Olá 👋 Sou a assistente da Rede Nave. Como posso te ajudar hoje?",
+  sender: "bot",
+};
+
+export default function Chatbot() {
+  const [open, setOpen] = useState(false);
+  const [messages, setMessages] = useState<Message[]>([initialMessage]);
+
+  const restartConversation = () => {
+    setMessages([initialMessage]);
+  };
 
   return (
     <>
-      {/* BOTÃO FLUTUANTE */}
-      {!open && (
-        <button className="chat-fab" onClick={() => setOpen(true)}>
-          💬 Acessar o chat
-        </button>
-      )}
+      <button className="chatbot-fab" onClick={() => setOpen(!open)}>
+        💬
+      </button>
 
-      {/* CHAT */}
       {open && (
-        <div className="chatbot-container">
-          <div className="chatbot-header">
-            <span>Assistente</span>
-            <button className="close-btn" onClick={() => setOpen(false)}>
-              ✕
-            </button>
-          </div>
-
-          <div className="chatbot-body">
-            <ChatMessage message={current.message} />
-          </div>
-
-          <div className="chatbot-footer">
-            <ChatOptions options={current.options} onSelect={setStep} />
-          </div>
-        </div>
+        <ChatWindow
+          messages={messages}
+          setMessages={setMessages}
+          onRestart={restartConversation}
+          onClose={() => setOpen(false)}
+        />
       )}
     </>
   );

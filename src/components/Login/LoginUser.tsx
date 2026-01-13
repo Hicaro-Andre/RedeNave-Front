@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import logo from "/src/assets/logoRedeNave.png"
+import logo from "/src/assets/logoRedeNave.png";
 
 type StoryblokAsset = {
   filename: string;
@@ -10,7 +10,7 @@ type StoryblokAsset = {
 
 type LoginUserProps = {
   blok: {
-    logo?: StoryblokAsset | null
+    logo?: StoryblokAsset | null;
     title: string;
     description: string;
     topics01: string;
@@ -21,29 +21,25 @@ type LoginUserProps = {
     card_login_google: string;
     card_login_face: string;
     or: string;
-    form_email: string,
-    placeholder_email: string,
-    form_senha: string,
-    placeholder_senha: string,
-    remind_me: string,
-    forgot_your_password: string,
-    button_card: string,
-    not_count: string,
-    cad: string,
-    button_section_home: string
-
+    form_email: string;
+    placeholder_email: string;
+    form_senha: string;
+    placeholder_senha: string;
+    remind_me: string;
+    forgot_your_password: string;
+    button_card: string;
+    not_count: string;
+    cad: string;
+    button_section_home: string;
   };
 };
-
 
 export default function LoginUser({ blok }: LoginUserProps) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const image =
-    typeof blok.logo === "object" && blok.logo?.filename
-      ? blok.logo
-      : null;
+    typeof blok.logo === "object" && blok.logo?.filename ? blok.logo : null;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -67,7 +63,6 @@ export default function LoginUser({ blok }: LoginUserProps) {
           <div className="col-lg-10">
             <div className="login-card">
               <div className="row g-0">
-
                 {/* Lado esquerdo */}
                 <div className="col-md-5 login-image text-white d-none d-md-flex flex-column">
                   <div className="text-center">
@@ -79,12 +74,10 @@ export default function LoginUser({ blok }: LoginUserProps) {
                       />
                     )}
                     <h3 className="mt-4 fw-bold">{blok.title}</h3>
-                    <p className="mt-3 px-4 text-white">
-                      {blok.description}
-                    </p>
+                    <p className="mt-3 px-4 text-white">{blok.description}</p>
                     <div className="mt-5">
                       <div className="d-flex align-items-center justify-content-center mb-3">
-                        <i className="bi bi-check-circle-fill me-2" ></i>
+                        <i className="bi bi-check-circle-fill me-2"></i>
                         <span>{blok.topics01}</span>
                       </div>
                       <div className="d-flex align-items-center justify-content-center mb-3">
@@ -110,12 +103,18 @@ export default function LoginUser({ blok }: LoginUserProps) {
                     {/* Botões sociais */}
                     <div className="mb-4">
                       <button className="social-login-btn">
-                        <i className="bi bi-google me-2" style={{ color: "#6a0dad" }}></i>
+                        <i
+                          className="bi bi-google me-2"
+                          style={{ color: "#6a0dad" }}
+                        ></i>
                         {blok.card_login_google}
                       </button>
 
                       <button className="social-login-btn">
-                        <i className="bi bi-facebook me-2" style={{ color: "#6a0dad" }}></i>
+                        <i
+                          className="bi bi-facebook me-2"
+                          style={{ color: "#6a0dad" }}
+                        ></i>
                         {blok.card_login_face}
                       </button>
                     </div>
@@ -125,7 +124,6 @@ export default function LoginUser({ blok }: LoginUserProps) {
                     </div>
 
                     <form onSubmit={handleSubmit}>
-
                       {/* Email */}
                       <div className="mb-3">
                         <label className="form-label">
@@ -161,7 +159,11 @@ export default function LoginUser({ blok }: LoginUserProps) {
                             className="btn btn-outline-secondary"
                             onClick={() => setShowPassword(!showPassword)}
                           >
-                            <i className={showPassword ? "bi bi-eye-slash" : "bi bi-eye"}></i>
+                            <i
+                              className={
+                                showPassword ? "bi bi-eye-slash" : "bi bi-eye"
+                              }
+                            ></i>
                           </button>
                         </div>
                       </div>
@@ -169,27 +171,41 @@ export default function LoginUser({ blok }: LoginUserProps) {
                       {/* Lembrar / Esqueceu senha */}
                       <div className="d-flex justify-content-between align-items-center mb-4">
                         <div className="form-check">
-                          <input className="form-check-input" type="checkbox" id="lembrar" />
-                          <label className="form-check-label" htmlFor="lembrar">{blok.remind_me}</label>
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="lembrar"
+                          />
+                          <label className="form-check-label" htmlFor="lembrar">
+                            {blok.remind_me}
+                          </label>
                         </div>
-                        <a href="#" className="text-decoration-none bg-text">{blok.forgot_your_password}</a>
+                        <Link to="/forgot" className="text-decoration-none bg-text">
+                          {blok.forgot_your_password}
+                        </Link>
                       </div>
 
                       {/* Botão Entrar */}
-                      <button type="submit" className="btn btn-primary w-100 mb-3">
-                        <i className="bi bi-box-arrow-in-right"></i> {blok.button_card}
+                      <button
+                        type="submit"
+                        className="btn btn-primary w-100 mb-3"
+                      >
+                        <i className="bi bi-box-arrow-in-right"></i>{" "}
+                        {blok.button_card}
                       </button>
 
                       <div className="text-center">
                         <span className="text-muted">{blok.not_count} </span>
-                        <Link to="/cadastro" className="text-decoration-none fw-bold bg-text">
+                        <Link
+                          to="/cadastro"
+                          className="text-decoration-none fw-bold bg-text"
+                        >
                           {blok.cad}
                         </Link>
                       </div>
                     </form>
                   </div>
                 </div>
-
               </div>
             </div>
 
@@ -199,7 +215,6 @@ export default function LoginUser({ blok }: LoginUserProps) {
                 <i className="bi bi-arrow-left"></i> {blok.button_section_home}
               </a>
             </div>
-
           </div>
         </div>
       </div>

@@ -52,18 +52,18 @@ src/
 ├── assets/                   # Imagens, ícones, logos, banners
 │
 ├── components/               # Componentes e páginas organizadas por domínio
-│   ├── Administrador/
-│   ├── Cadastro/
+│   ├── About/
+│   ├── Administrator/
 │   ├── Chatbot/
-│   ├── Cursos/
+│   ├── Courses/
 │   ├── Dashboard/
 │   ├── Eventos/
 │   ├── HomePage/
 │   ├── Login/
-│   ├── Privacidade/
-│   ├── Sobre/
-│   ├── Suporte/
-│   ├── Trilhas/
+│   ├── Privacy/
+│   ├── Register/
+│   ├── Support/
+│   ├── Trails/
 │   │
 │   ├── BackToTop.tsx          # Componentes reutilizáveis
 │   ├── Footer.tsx
@@ -72,32 +72,33 @@ src/
 │   └── NotFound.tsx
 │
 ├── pages/                      # Páginas (rotas da aplicação)
+│   ├── About.tsx
 │   ├── Admin.tsx
-│   ├── Cadastro.tsx
 │   ├── Dashboard.tsx
-│   ├── Eventos.tsx
+│   ├── Events.tsx
 │   ├── Home.tsx
 │   ├── Login.tsx
 │   ├── PrivacyPolicy.tsx
-│   ├── Sobre.tsx
-│   ├── Suporte.tsx
-│   └── Trilhas.tsx
+│   ├── Register.tsx
+│   ├── Support.tsx
+│   └── Trails.tsx
 │
 ├── services/                   # Conexão do Storyblok no React
 │   ├── storyblok.ts
 │
 ├── styles/                     # Estilos por página
+│   ├── about.css
 │   ├── admin.css
 │   ├── animations.css
-│   ├── cadastro.css
+│   ├── coursedetail.css
 │   ├── dashboard.css
-│   ├── eventos.css
+│   ├── events.css
 │   ├── home.css
 │   ├── login.css
 │   ├── privacypolicy.css
-│   ├── sobre.css
-│   ├── suporte.css
-│   └── trilhas.css
+│   ├── register.css
+│   └── support.css
+│   └── trails.css
 │
 ├── App.tsx                    # Composição principal da aplicação
 ├── index.css                  # CSS global

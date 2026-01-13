@@ -16,6 +16,8 @@ import AdminMain from "./components/Administrator/AdminMain";
 import DashMain from "./components/Dashboard/DashMain";
 import CourseDetail from "./components/Courses/CourseDetail";
 import NotFound from "./components/NotFound";
+import ForgotPassword from "./components/Login/ForgotPassword";
+import ResetPassword from "./components/Login/ResetPassword";
 
 
 function App() {
@@ -34,6 +36,10 @@ function App() {
         <Route path="/privacypolicy" element={<PrivacyPolicy />} />
         <Route path="/admin" element={<AdminMain />} />
         <Route path="/dashboard" element={<DashMain />} />
+        <Route path="/forgot" element={<ForgotPassword />} />
+
+        {/* Rota para recuperação de senha */}
+        <Route path="/reset" element={<ResetPassword />} />
 
         {/* Routes Cursos */}
         <Route path="/cursos/:id" element={<CourseDetail />} />

@@ -3,6 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import { useEffect, useState } from "react";
 
 import LoadingSpinner from "../LoadingSpinner";
+import "/src/styles/coursedetail.css";
 
 import cursogestao from "/src/assets/trilhas/cursogestao.png";
 import cursomarketing from "/src/assets/trilhas/cursomarketing.jpeg";
@@ -22,19 +23,20 @@ const trilhas = [
       "Controle de fluxo de caixa",
       "Precificação correta",
       "Organização financeira",
-      "Planejamento de crescimento"
+      "Planejamento de crescimento",
     ],
     conteudo: [
       "Fundamentos da gestão financeira",
       "Custos fixos e variáveis",
       "Fluxo de caixa",
-      "Lucro e reinvestimento"
-    ]
+      "Lucro e reinvestimento",
+    ],
   },
   {
     id: 2,
     titulo: "Marketing Digital e Redes Sociais",
-    descricao: "Domine estratégias para vender todos os dias usando as redes sociais.",
+    descricao:
+      "Domine estratégias para vender todos os dias usando as redes sociais.",
     nivel: "Intermediário",
     duracao: "6 semanas",
     modulos: 10,
@@ -44,14 +46,14 @@ const trilhas = [
       "Marketing digital na prática",
       "Instagram para negócios",
       "Conteúdo que vende",
-      "Funil de vendas"
+      "Funil de vendas",
     ],
     conteudo: [
       "Fundamentos do marketing digital",
       "Posicionamento e branding",
       "Conteúdo estratégico",
-      "Métricas e análise"
-    ]
+      "Métricas e análise",
+    ],
   },
   {
     id: 3,
@@ -66,38 +68,30 @@ const trilhas = [
       "Liderança feminina",
       "Autoconhecimento",
       "Comunicação assertiva",
-      "Gestão emocional"
+      "Gestão emocional",
     ],
     conteudo: [
       "Mindset de liderança",
       "Comunicação eficaz",
       "Inteligência emocional",
-      "Tomada de decisão"
-    ]
-  }
+      "Tomada de decisão",
+    ],
+  },
 ];
 
 export default function CourseDetail() {
   const { id } = useParams();
   const [loading, setLoading] = useState(true);
 
-  const trilha = trilhas.find(t => t.id === Number(id));
+  const trilha = trilhas.find((t) => t.id === Number(id));
 
   useEffect(() => {
-    // Simula carregamento de API
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1200);
-
+    const timer = setTimeout(() => setLoading(false), 1000);
     return () => clearTimeout(timer);
   }, []);
 
-  // Spinner primeiro
-  if (loading) {
-    return <LoadingSpinner />;
-  }
+  if (loading) return <LoadingSpinner />;
 
-  // Not Found depois do loading
   if (!trilha) {
     return (
       <Container className="py-5 text-center">
@@ -112,72 +106,45 @@ export default function CourseDetail() {
   return (
     <>
       {/* HERO */}
-      <section
-        className="py-5 text-white"
-        style={{
-          background: "linear-gradient(135deg, #111827, #1f2937)",
-        }}
-      >
+      <section className="course-hero">
         <Container>
           <Row className="align-items-center gy-5">
-            {/* TEXTO */}
             <Col lg={6}>
-              <span className="badge bg-warning text-dark mb-3 px-3 py-2">
-                {trilha.nivel}
-              </span>
+              <span className="badge course-level mb-3">{trilha.nivel}</span>
 
-              <h1 className="fw-bold display-5 mb-3">
-                {trilha.titulo}
-              </h1>
+              <h1 className="course-title mb-3">{trilha.titulo}</h1>
 
-              <p className="lead text-light opacity-75 mb-4">
-                {trilha.descricao}
-              </p>
+              <p className="course-description mb-4">{trilha.descricao}</p>
 
-              <div className="d-flex flex-wrap gap-4 small text-light opacity-75 mb-4">
+              <div className="course-meta mb-4">
                 <span>
-                  <i className="bi bi-clock me-2"></i>
-                  {trilha.duracao}
+                  <i className="bi bi-clock"></i> {trilha.duracao}
                 </span>
                 <span>
-                  <i className="bi bi-book me-2"></i>
-                  {trilha.modulos} módulos
+                  <i className="bi bi-book"></i> {trilha.modulos} módulos
                 </span>
                 <span>
-                  <i className="bi bi-people-fill me-2"></i>
-                  {trilha.alunos} alunas
+                  <i className="bi bi-people-fill"></i> {trilha.alunos} alunas
                 </span>
               </div>
 
               <div className="d-flex gap-3 flex-wrap">
-                <button className="btn btn-warning btn-lg fw-bold px-4">
+                <Link to="/login" className="btn btn-primary btn-lg">
                   Matricular agora
-                </button>
+                </Link>
 
-                <button className="btn btn-outline-light btn-lg px-4">
+                <button className="btn btn-outline-primary btn-lg">
                   Ver conteúdo
                 </button>
               </div>
             </Col>
 
-            {/* IMAGEM DO CURSO */}
             <Col lg={6} className="text-center">
-              <div
-                className="p-4 rounded-4"
-                style={{
-                  background: "rgba(255,255,255,0.05)",
-                  backdropFilter: "blur(6px)",
-                }}
-              >
+              <div className="course-image-wrapper">
                 <img
                   src={trilha.imagem}
                   alt={trilha.titulo}
                   className="img-fluid"
-                  style={{
-                    maxHeight: "360px",
-                    width: "100%",
-                    objectFit: "contain",
-                  }}
                 />
               </div>
             </Col>
@@ -186,45 +153,36 @@ export default function CourseDetail() {
       </section>
 
       {/* CONTEÚDO */}
-      <section className="py-5">
+      <section className="py-5 ">
         <Container>
           <Row className="gy-5">
-            {/* O QUE VAI APRENDER */}
             <Col lg={6}>
-              <h3 className="fw-bold mb-4">
-                O que você vai aprender
-              </h3>
+              <h3 className="section-title">O que você vai aprender</h3>
 
-              <ul className="list-unstyled">
+              <ul className="learning-list">
                 {trilha.oQueVaiAprender.map((item, index) => (
-                  <li key={index} className="d-flex mb-3">
-                    <i className="bi bi-check-circle-fill text-success fs-5 me-3"></i>
-                    <span>{item}</span>
+                  <li key={index}>
+                    <i className="bi bi-check-circle-fill"></i>
+                    {item}
                   </li>
                 ))}
               </ul>
             </Col>
 
-            {/* CONTEÚDO DO CURSO */}
             <Col lg={6}>
-              <h3 className="fw-bold mb-4">
-                Conteúdo do curso
-              </h3>
+              <h3 className="section-title">Conteúdo do curso</h3>
 
               <div className="accordion accordion-flush">
                 {trilha.conteudo.map((item, index) => (
                   <div className="accordion-item" key={index}>
                     <h2 className="accordion-header">
                       <button
-                        className="accordion-button collapsed fw-semibold"
+                        className="accordion-button collapsed"
                         type="button"
                         data-bs-toggle="collapse"
                         data-bs-target={`#modulo${index}`}
                       >
-                        Módulo {index + 1}
-                        <span className="ms-2 text-muted fw-normal">
-                          — {item}
-                        </span>
+                        Módulo {index + 1} — {item}
                       </button>
                     </h2>
 
@@ -232,9 +190,8 @@ export default function CourseDetail() {
                       id={`modulo${index}`}
                       className="accordion-collapse collapse"
                     >
-                      <div className="accordion-body text-muted">
-                        Conteúdo prático, estratégico e aplicado
-                        a situações reais do mercado.
+                      <div className="accordion-body">
+                        Conteúdo prático e aplicado ao mercado.
                       </div>
                     </div>
                   </div>
@@ -245,25 +202,34 @@ export default function CourseDetail() {
         </Container>
       </section>
 
-      {/* CTA FINAL */}
-      <section className="py-5 bg-light text-center">
+      {/* CTA */}
+      <section className="course-cta">
         <Container>
-          <h2 className="fw-bold mb-3">
+          <h2 className="mb-3">
             Pronta para evoluir sua jornada empreendedora?
           </h2>
 
-          <p className="text-muted mb-4">
-            Aprenda com conteúdo prático, focado em aplicação real
-            e crescimento sustentável.
+          <p className="mb-4">
+            Conteúdo prático, direto ao ponto e focado em crescimento real.
           </p>
 
-          <button className="btn btn-primary btn-lg fw-bold px-5">
-            Quero me matricular
-          </button>
+          <div className="d-flex flex-column align-items-center gap-3">
+            <Link
+              to="/login"
+              className="btn btn-primary btn-lg px-5 fw-semibold"
+            >
+              Quero me matricular{" "}
+            </Link>
+
+            <Link
+              to="/trilhas"
+              className="btn btn-link text-decoration-none course-back-link"
+            >
+              ← Voltar para trilhas
+            </Link>
+          </div>
         </Container>
       </section>
     </>
   );
-
-
 }
