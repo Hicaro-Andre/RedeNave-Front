@@ -45,8 +45,9 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
 
   return (
     <aside className="dashboard-sidebar">
+
       {/* FOTO DE PERFIL */}
-      <label className="profile-img-container" htmlFor="upload-foto">
+      <div className="profile-img-container">
         {fotoPerfil ? (
           <img
             src={fotoPerfil}
@@ -62,22 +63,8 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
               .join("")}
           </div>
         )}
+      </div>
 
-        {/* OVERLAY */}
-        <div className="profile-overlay">
-          <i className="bi bi-camera-fill me-2"></i>
-          Alterar foto
-        </div>
-      </label>
-
-      {/* INPUT ESCONDIDO */}
-      <input
-        type="file"
-        id="upload-foto"
-        accept="image/*"
-        onChange={onUploadFoto}
-        style={{ display: "none" }}
-      />
 
       {/* INFO USUÁRIO */}
       <h5 className="text-center fw-bold mt-3">{nome}</h5>

@@ -26,52 +26,63 @@ const DashboardOverview = () => {
         ))}
       </div>
 
+
       {/* Continue Aprendendo */}
-      <h4 className="fw-bold mb-3">Continue Aprendendo</h4>
+      <h4 className="fw-bold mb-3">Continue de onde parou</h4>
       <div className="row g-4 mb-4">
         {[
           {
             title: "Marketing Digital",
             progress: 40,
             module: "Módulo 4 de 10",
-            hours: "3h restantes",
-            color: "primary",
+            remaining: "48% restantes",
+            color: "#3b82f6",
           },
           {
             title: "Gestão Financeira",
             progress: 67,
-            module: "Módulo 8 de 12",
-            hours: "2h restantes",
-            color: "success",
+            module: "Módulo 6 de 10",
+            remaining: "29% restantes",
+            color: "#10b981",
           },
         ].map((course, idx) => (
           <div key={idx} className="col-md-6">
-            <div className="curso-progress-card">
-              <div className="d-flex justify-content-between mb-3">
-                <div>
-                  <h5 className="fw-bold mb-1">{course.title}</h5>
-                  <small className="text-muted">{course.module}</small>
+            <div className="continue-card">
+
+              {/* ESQUERDA */}
+              <div className="continue-left">
+                <h5 className="fw-bold mb-1">{course.title}</h5>
+                <small className="text-muted">{course.module}</small>
+
+                <div className="progress continue-progress">
+                  <div
+                    className="progress-bar"
+                    style={{
+                      width: `${course.progress}%`,
+                      backgroundColor: course.color,
+                    }}
+                  />
                 </div>
-                <span className={`badge bg-${course.color}`}>
-                  {course.progress}%
-                </span>
+
+                <small className="text-muted">{course.remaining}</small>
               </div>
 
-              <div className="progress mb-3" style={{ height: "10px" }}>
+              {/* DIREITA */}
+              <div className="continue-right">
                 <div
-                  className={`progress-bar bg-${course.color}`}
-                  style={{ width: `${course.progress}%` }}
-                ></div>
-              </div>
+                  className="progress-circle"
+                  style={{
+                    background: `conic-gradient(${course.color} ${course.progress * 3.6}deg, #e5e7eb 0deg)`,
+                  }}
+                >
+                  <span>{course.progress}%</span>
+                </div>
 
-              <div className="d-flex justify-content-between">
-                <small className="text-muted">
-                  <i className="bi bi-clock"></i> {course.hours}
-                </small>
-                <button className={`btn btn-sm btn-${course.color}`}>
-                  Continuar <i className="bi bi-play-fill"></i>
+                <button className="continue-btn">
+                  Continuar →
                 </button>
               </div>
+
             </div>
           </div>
         ))}

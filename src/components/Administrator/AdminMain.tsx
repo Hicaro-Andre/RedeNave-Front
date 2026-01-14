@@ -72,6 +72,15 @@ const AdminMain: React.FC = () => {
         </nav>
       </aside>
 
+      {/* SETA FLUTUANTE (MOBILE) */}
+      <button
+        className={`sidebar-toggle ${sidebarOpen ? "open" : ""}`}
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+        aria-label="Toggle sidebar"
+      >
+        <i className={`bi bi-chevron-${sidebarOpen ? "left" : "right"}`} />
+      </button>
+
       {/* Overlay */}
       {sidebarOpen && (
         <div
@@ -79,15 +88,6 @@ const AdminMain: React.FC = () => {
           onClick={() => setSidebarOpen(false)}
         />
       )}
-
-      {/* Botão flutuante com seta */}
-      <button
-        className={`sidebar-toggle ${sidebarOpen ? "open" : ""}`}
-        onClick={() => setSidebarOpen(!sidebarOpen)}
-        aria-label="Abrir menu"
-      >
-        <i className={`bi ${sidebarOpen ? "bi-chevron-left" : "bi-chevron-right"}`} />
-      </button>
 
       {/* Conteúdo */}
       <main className="main-content">

@@ -2,17 +2,17 @@
    VARIÁVEIS DE TEMA — PALETA REDE NAVE
    ===================================================== */
 :root {
-  --bg-main: #f7f3ff;          /* background geral */
-  --bg-card: #ffffff;         /* cards */
-  --bg-sidebar: #4a077c;      /* sidebar */
-  --bg-soft: #dec9e7;         /* fundos leves */
+  --bg-main: #f7f3ff;         
+  --bg-card: #ffffff;         
+  --bg-sidebar: #4a077c;      
+  --bg-soft: #dec9e7;        
 
   --text-main: #2b124c;
   --text-muted: #6b5c7c;
 
-  --primary: #6a0dad;         /* títulos */
-  --primary-soft: #c77dff;    /* botões */
-  --accent: #09cdd7;          /* hover / ativo */
+  --primary: #6a0dad;         
+  --primary-soft: #c77dff;   
+  --accent: #09cdd7;         
 }
 
 
@@ -22,9 +22,8 @@ body {
   font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont;
 }
 
-/* =====================================================
-LAYOUT
-===================================================== */
+
+/* LAYOUT */
 .dashboard-container {
   display: flex;
   min-height: 100vh;
@@ -41,9 +40,6 @@ LAYOUT
   flex-direction: column;
 }
 
-/* =====================================================
-   SIDEBAR HEADER (LOGO + FECHAR)
-   ===================================================== */
 .sidebar-header {
   display: flex;
   align-items: center;
@@ -51,7 +47,6 @@ LAYOUT
   margin-bottom: 32px;
 }
 
-/* LOGO */
 .sidebar-logo {
   display: flex;
   justify-content: center;
@@ -63,7 +58,6 @@ LAYOUT
   height: auto;
 }
 
-/* BOTÃO FECHAR (❌) */
 .sidebar-close {
   display: none;
   background: transparent;
@@ -73,9 +67,6 @@ LAYOUT
   cursor: pointer;
 }
 
-/* =====================================================
-   NAVEGAÇÃO
-   ===================================================== */
 .sidebar-nav ul {
   list-style: none;
   padding: 0;
@@ -99,56 +90,28 @@ LAYOUT
   opacity: 0.85;
   transition: background 0.25s ease, transform 0.25s ease, opacity 0.25s ease;
 }
-
 .sidebar-nav li i {
   font-size: 18px;
   min-width: 20px;
   text-align: center;
   opacity: 0.9;
 }
-
 .sidebar-nav li:hover {
   background: rgba(255, 255, 255, 0.12);
   opacity: 1;
   transform: translateX(4px);
 }
-
 .sidebar-nav li.active {
   background: rgba(9, 205, 215, 0.25);
   color: #ffffff;
   opacity: 1;
   box-shadow: inset 4px 0 0 #09cdd7;
 }
-
 .sidebar-nav li span {
   white-space: nowrap;
 }
 
-/* =====================================================
-   MENU TOGGLE (☰) — FIXO NA TELA
-   ===================================================== */
-.menu-toggle {
-  display: none;
-  position: fixed;
-  top: 16px;
-  left: 16px;
-  z-index: 1100;
-
-  background: #ffffff;
-  border: none;
-  padding: 8px 10px;
-  border-radius: 12px;
-
-  font-size: 26px;
-  color: #4a077c;
-  cursor: pointer;
-
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-}
-
-/* =====================================================
-   OVERLAY (FUNDO ESCURO)
-   ===================================================== */
+/* OVERLAY (FUNDO ESCURO) */
 .sidebar-overlay {
   position: fixed;
   inset: 0;
@@ -156,9 +119,7 @@ LAYOUT
   z-index: 900;
 }
 
-/* =====================================================
-   BOTÃO FLUTUANTE (SETA)
-   ===================================================== */
+/* BOTÃO FLUTUANTE (SETA) */
 .sidebar-toggle {
   position: fixed;
   top: 50%;
@@ -194,18 +155,20 @@ LAYOUT
   transform: translate(-50%, -50%);
 }
 
-/* =====================================================
-   MOBILE
-   ===================================================== */
-@media (max-width: 992px) {
-  /* Sidebar vira menu lateral */
+/* SETA ELEGANTE – MOBILE (≤ 768px) */
+.sidebar-toggle {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  /* Sidebar escondido por padrão */
   .sidebar {
     position: fixed;
     top: 0;
     left: 0;
     height: 100vh;
     transform: translateX(-100%);
-    transition: transform 0.3s ease;
+    transition: transform 0.35s ease;
     z-index: 1000;
   }
 
@@ -213,16 +176,49 @@ LAYOUT
     transform: translateX(0);
   }
 
-  /* Botões mobile */
+  /* Botão fechar (X) */
   .sidebar-close {
     display: block;
   }
 
-  .menu-toggle {
-    display: block;
+  /* SETA FLUTUANTE */
+  .sidebar-toggle {
+    display: flex;
+    position: fixed;
+    top: 50%;
+    left: 0;
+    transform: translate(-50%, -50%);
+    z-index: 1100;
+
+    width: 40px;
+    height: 70px;
+
+    background: linear-gradient(180deg, #6a0dad, #4a077c);
+    border: none;
+    border-radius: 0 18px 18px 0;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #ffffff;
+    font-size: 22px;
+    cursor: pointer;
+
+    box-shadow: 2px 6px 18px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
   }
 
-  /* Ajuste conteúdo */
+  /* Quando sidebar estiver aberto */
+  .sidebar-toggle.open {
+    left: 260px;
+    transform: translate(-50%, -50%);
+  }
+
+  .sidebar-toggle:hover {
+    filter: brightness(1.1);
+  }
+
+  /* Conteúdo principal */
   .main-content {
     padding: 16px;
   }
