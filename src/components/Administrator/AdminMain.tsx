@@ -34,14 +34,6 @@ const AdminMain: React.FC = () => {
               <img src="/src/assets/logoRedeNave.png" alt="Rede Nave" />
             </a>
           </div>
-
-          {/* Fechar (mobile) */}
-          <button
-            className="sidebar-close"
-            onClick={() => setSidebarOpen(false)}
-          >
-            <i className="bi bi-x-lg" />
-          </button>
         </div>
 
         <nav className="sidebar-nav">

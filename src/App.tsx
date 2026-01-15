@@ -14,16 +14,19 @@ import Register from "./pages/Register";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import AdminMain from "./components/Administrator/AdminMain";
 import DashMain from "./components/Dashboard/DashMain";
-import CourseDetail from "./components/Courses/CourseDetail";
 import NotFound from "./components/NotFound";
 import ForgotPassword from "./components/Login/ForgotPassword";
 import ResetPassword from "./components/Login/ResetPassword";
+import Course from "./pages/Course";
+import { ScrollToTop } from "./components/ScrollToTop";
 
 
 function App() {
 
   return (
+
     <div className="App">
+      <ScrollToTop />
       <Routes>
         {/* Routes Páginas */}
         <Route path="/" element={<Home />} />
@@ -42,7 +45,7 @@ function App() {
         <Route path="/reset" element={<ResetPassword />} />
 
         {/* Routes Cursos */}
-        <Route path="/cursos/:id" element={<CourseDetail />} />
+        <Route path="/cursos/:id" element={<Course />} />
 
         {/* Not Found */}
         <Route path="*" element={<NotFound />} />

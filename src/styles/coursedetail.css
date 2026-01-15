@@ -88,3 +88,42 @@
   color: #6c757d;
   margin-bottom: 2rem;
 }
+
+/* =====================================================
+   COURSE HERO – MOBILE IMAGE ABOVE CONTENT
+   ===================================================== */
+
+@media (max-width: 767.98px) {
+  .course-hero .row {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .course-image-wrapper {
+    margin-bottom: 1.5rem;
+  }
+
+  .course-hero {
+    text-align: center;
+  }
+
+  .course-meta {
+    justify-content: center;
+  }
+
+  .course-meta span {
+    justify-content: center;
+  }
+}
+
+
+@media (max-width: 767.98px) {
+  .course-hero .d-flex {
+    justify-content: center;
+  }
+
+  .course-hero .btn {
+    width: 100%;
+    max-width: 320px;
+  }
+}

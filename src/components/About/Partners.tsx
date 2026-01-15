@@ -32,17 +32,18 @@ export default function Partners({ blok }: PartnersProps) {
         <h2 className="fw-bold text-center mb-5">{blok.title}</h2>
 
         <div className="d-flex flex-wrap justify-content-center align-items-center">
-          <div className="partner-logo">
+          {/* <div className="partner-logo">
             {image01 && (
               <img
                 src={`${image01.filename}`}
-                alt={image01.alt}
+                alt={image01.alt || "Logo parceiro"}
                 className="img-fluid"
                 style={{ maxHeight: '100px' }}
+                loading="lazy"
                 title="ENTRELAÇOS"
               />
             )}
-          </div>
+          </div> */}
           <div className="partner-logo">
             {image02 && (
               <img
@@ -51,6 +52,7 @@ export default function Partners({ blok }: PartnersProps) {
                 className="img-fluid"
                 style={{ maxHeight: '100px' }}
                 title="REDE MULHERES"
+                loading="lazy"
               />
             )}
           </div>
@@ -62,6 +64,7 @@ export default function Partners({ blok }: PartnersProps) {
                 className="img-fluid"
                 style={{ maxHeight: '100px' }}
                 title="SITINHO"
+                loading="lazy"
               />
             )}
           </div>
@@ -73,6 +76,7 @@ export default function Partners({ blok }: PartnersProps) {
                 className="img-fluid"
                 style={{ maxHeight: '100px' }}
                 title="TECENDO"
+                loading="lazy"
               />
             )}
           </div>

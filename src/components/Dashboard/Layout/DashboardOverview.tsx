@@ -11,9 +11,9 @@ const DashboardOverview = () => {
       {/* Estatísticas */}
       <div className="row g-4 mb-4">
         {[
-          { icon: "bi-book-fill text-primary", number: 3, label: "Cursos Ativos" },
-          { icon: "bi-check-circle-fill text-success", number: 2, label: "Concluídos" },
-          { icon: "bi-award-fill text-warning", number: 2, label: "Certificados" },
+          { icon: "bi-mortarboard-fill text-primary", number: 3, label: "Cursos Ativos" },
+          { icon: "bi-award-fill text-success", number: 2, label: "Concluídos" },
+          { icon: "bi-patch-check-fill text-warning", number: 2, label: "Certificados" },
           { icon: "bi-lightning-fill text-danger", number: 7, label: "Dias de Streak" },
         ].map((stat, idx) => (
           <div key={idx} className="col-md-3">

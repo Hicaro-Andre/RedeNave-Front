@@ -112,6 +112,8 @@ export default function DashMain() {
                 </button>
               </li>
 
+              <div className="separator"></div>
+
               {/* USER DROPDOWN */}
               <li className="nav-item dropdown">
                 <button

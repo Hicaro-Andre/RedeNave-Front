@@ -70,10 +70,12 @@ src/
 │   ├── LoadingSpinner.tsx
 │   ├── NavBar.tsx
 │   └── NotFound.tsx
+│   └── ScrollToTop.tsx
 │
 ├── pages/                      # Páginas (rotas da aplicação)
 │   ├── About.tsx
 │   ├── Admin.tsx
+│   ├── Course.tsx
 │   ├── Dashboard.tsx
 │   ├── Events.tsx
 │   ├── Home.tsx
