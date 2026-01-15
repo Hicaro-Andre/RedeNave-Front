@@ -20,7 +20,7 @@ body {
   background-color: var(--bg-main);
   color: var(--text-main);
   font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont;
-  overflow: hidden; /* evita scroll duplo */
+ 
 }
 
 /* =====================================================
