@@ -1,25 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import {
-  verifyResetCode,
-  confirmNewPassword
-} from "../../services/authService";
+import { verifyResetCode, confirmNewPassword } from "../../services/authService";
 
 const ResetPassword: React.FC = () => {
-  /**
-   * Parâmetros da URL (?oobCode=...)
-   */
   const [searchParams] = useSearchParams();
   const oobCode = searchParams.get("oobCode");
 
-  /**
-   * Navegação
-   */
   const navigate = useNavigate();
 
-  /**
-   * Estados do formulário
-   */
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -27,23 +15,19 @@ const ResetPassword: React.FC = () => {
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  /**
-   * Valida o link ao entrar na tela
-   */
+  // Valida o link assim que entra na página
   useEffect(() => {
     if (!oobCode) {
       setError("Link inválido ou expirado.");
       return;
     }
 
+    // Verifica se o código é válido
     verifyResetCode(oobCode).catch(() => {
       setError("Link inválido ou expirado.");
     });
   }, [oobCode]);
 
-  /**
-   * Envia nova senha
-   */
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -74,11 +58,14 @@ const ResetPassword: React.FC = () => {
       await confirmNewPassword(oobCode, password);
       setSuccess(true);
 
+      // Redireciona para login após 2 segundos
       setTimeout(() => {
         navigate("/login");
       }, 2000);
-    } catch {
-      setError("Não foi possível redefinir a senha.");
+    } catch (err: any) {
+      console.error(err);
+      // Mostra mensagem específica se existir
+      setError(err?.message || "Não foi possível redefinir a senha.");
     } finally {
       setLoading(false);
     }
@@ -98,7 +85,6 @@ const ResetPassword: React.FC = () => {
               </div>
             ) : (
               <form onSubmit={handleSubmit}>
-
                 <div className="mb-3 text-start">
                   <label className="form-label">Nova senha</label>
                   <input
@@ -111,10 +97,8 @@ const ResetPassword: React.FC = () => {
                   />
                 </div>
 
-
                 <div className="mb-3 text-start">
                   <label className="form-label">Confirmar senha</label>
-
                   <div className="input-group">
                     <input
                       type={showPassword ? "text" : "password"}
@@ -124,7 +108,6 @@ const ResetPassword: React.FC = () => {
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       disabled={loading}
                     />
-
                     <button
                       type="button"
                       className="btn btn-outline-secondary"
@@ -132,14 +115,11 @@ const ResetPassword: React.FC = () => {
                       tabIndex={-1}
                     >
                       <i
-                        className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"
-                          }`}
+                        className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"}`}
                       />
                     </button>
                   </div>
                 </div>
-
-
 
                 {error && (
                   <div className="alert alert-danger py-2">{error}</div>
