@@ -1,9 +1,13 @@
-import { Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import { Routes, Route, useNavigate, BrowserRouter as Router } from "react-router-dom";
 
-import "/src/styles/admin.css"
-import "/src/styles/dashboard.css"
+import "/src/styles/admin.css";
+import "/src/styles/dashboard.css";
 
 import BackToTop from "./components/BackToTop";
+
+import { ScrollToTop } from "./components/ScrollToTop";
+
 import Home from "./pages/Home";
 import Trails from "./pages/Trails";
 import Events from "./pages/Events";
@@ -18,17 +22,34 @@ import NotFound from "./components/NotFound";
 import ForgotPassword from "./components/Login/ForgotPassword";
 import ResetPassword from "./components/Login/ResetPassword";
 import Course from "./pages/Course";
-import { ScrollToTop } from "./components/ScrollToTop";
 
+import { getSocialRedirectResult } from "./services/authService";
 
-function App() {
+// 🔹 Componente wrapper para gerenciar login social global
+function AppWrapper() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkSocialLogin = async () => {
+      try {
+        const result = await getSocialRedirectResult();
+        if (result?.user) {
+          // Redireciona para dashboard após login social
+          navigate("/dashboard");
+        }
+      } catch (err) {
+        console.error("Erro ao finalizar login social:", err);
+      }
+    };
+
+    checkSocialLogin();
+  }, [navigate]);
 
   return (
-
     <div className="App">
       <ScrollToTop />
       <Routes>
-        {/* Routes Páginas */}
+        {/* Rotas principais */}
         <Route path="/" element={<Home />} />
         <Route path="/trilhas" element={<Trails />} />
         <Route path="/eventos" element={<Events />} />
@@ -40,21 +61,24 @@ function App() {
         <Route path="/admin" element={<AdminMain />} />
         <Route path="/dashboard" element={<DashMain />} />
         <Route path="/forgot" element={<ForgotPassword />} />
-
-        {/* Rota para recuperação de senha */}
         <Route path="/reset" element={<ResetPassword />} />
-
-        {/* Routes Cursos */}
         <Route path="/cursos/:id" element={<Course />} />
 
         {/* Not Found */}
         <Route path="*" element={<NotFound />} />
       </Routes>
 
-      {/* Botão Voltar ao Topo Global */}
+      {/* Botão voltar ao topo */}
       <BackToTop />
     </div>
   );
 }
 
-export default App;
+// 🔹 Componente principal do App
+export default function App() {
+  return (
+    <Router>
+      <AppWrapper />
+    </Router>
+  );
+}
