@@ -1,11 +1,10 @@
 import { useEffect } from "react";
-import { Routes, Route, useNavigate, BrowserRouter as Router } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 
 import "/src/styles/admin.css";
 import "/src/styles/dashboard.css";
 
 import BackToTop from "./components/BackToTop";
-
 import { ScrollToTop } from "./components/ScrollToTop";
 
 import Home from "./pages/Home";
@@ -48,8 +47,9 @@ function AppWrapper() {
   return (
     <div className="App">
       <ScrollToTop />
+
+      {/* Rotas principais */}
       <Routes>
-        {/* Rotas principais */}
         <Route path="/" element={<Home />} />
         <Route path="/trilhas" element={<Trails />} />
         <Route path="/eventos" element={<Events />} />
@@ -58,8 +58,8 @@ function AppWrapper() {
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Register />} />
         <Route path="/privacypolicy" element={<PrivacyPolicy />} />
-        <Route path="/admin" element={<AdminMain />} />
-        <Route path="/dashboard" element={<DashMain />} />
+        <Route path="/admin/*" element={<AdminMain />} />
+        <Route path="/dashboard/*" element={<DashMain />} />
         <Route path="/forgot" element={<ForgotPassword />} />
         <Route path="/reset" element={<ResetPassword />} />
         <Route path="/cursos/:id" element={<Course />} />
@@ -68,17 +68,14 @@ function AppWrapper() {
         <Route path="*" element={<NotFound />} />
       </Routes>
 
-      {/* Botão voltar ao topo */}
       <BackToTop />
     </div>
   );
 }
 
 // 🔹 Componente principal do App
-export default function App() {
-  return (
-    <Router>
-      <AppWrapper />
-    </Router>
-  );
+function App() {
+  return <AppWrapper />;
 }
+
+export default App;
