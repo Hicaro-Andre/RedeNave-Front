@@ -41,64 +41,67 @@ const AdminProgress: React.FC = () => {
       {/* Tabela de Progresso */}
       <div className="card">
         <div className="card-body">
-          <table className="table table-hover align-middle">
-            <thead>
-              <tr>
-                <th>Usuária</th>
-                <th>Trilha</th>
-                <th>Progresso</th>
-                <th>Status</th>
-                <th>Conclusão</th>
-                <th>Certificado</th>
-              </tr>
-            </thead>
+          <div className="table-responsive">
+            <table className="table table-hover align-middle mb-0">
+              <thead>
+                <tr>
+                  <th>Usuária</th>
+                  <th>Trilha</th>
+                  <th>Progresso</th>
+                  <th>Status</th>
+                  <th>Conclusão</th>
+                  <th>Certificado</th>
+                </tr>
+              </thead>
 
-            <tbody>
-              <tr>
-                <td>Ana Souza</td>
-                <td>Gestão Financeira</td>
-                <td>
-                  <div className="progress" style={{ height: "8px" }}>
-                    <div
-                      className="progress-bar bg-primary"
-                      style={{ width: "75%" }}
-                    />
-                  </div>
-                  <small>75%</small>
-                </td>
-                <td>
-                  <span className="badge bg-primary">Em andamento</span>
-                </td>
-                <td>-</td>
-                <td>
-                  <span className="badge bg-secondary">Pendente</span>
-                </td>
-              </tr>
+              <tbody>
+                <tr>
+                  <td>Ana Souza</td>
+                  <td>Gestão Financeira</td>
+                  <td style={{ minWidth: "160px" }}>
+                    <div className="progress" style={{ height: "8px" }}>
+                      <div
+                        className="progress-bar bg-primary"
+                        style={{ width: "75%" }}
+                      />
+                    </div>
+                    <small className="text-muted">75%</small>
+                  </td>
+                  <td>
+                    <span className="badge bg-primary">Em andamento</span>
+                  </td>
+                  <td>-</td>
+                  <td>
+                    <span className="badge bg-secondary">Pendente</span>
+                  </td>
+                </tr>
 
-              <tr>
-                <td>Maria Lima</td>
-                <td>Marketing Digital</td>
-                <td>
-                  <div className="progress" style={{ height: "8px" }}>
-                    <div
-                      className="progress-bar bg-success"
-                      style={{ width: "100%" }}
-                    />
-                  </div>
-                  <small>100%</small>
-                </td>
-                <td>
-                  <span className="badge bg-success">Concluída</span>
-                </td>
-                <td>15/01/2026</td>
-                <td>
-                  <span className="badge bg-success">Emitido</span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                <tr>
+                  <td>Maria Lima</td>
+                  <td>Marketing Digital</td>
+                  <td style={{ minWidth: "160px" }}>
+                    <div className="progress" style={{ height: "8px" }}>
+                      <div
+                        className="progress-bar bg-success"
+                        style={{ width: "100%" }}
+                      />
+                    </div>
+                    <small className="text-muted">100%</small>
+                  </td>
+                  <td>
+                    <span className="badge bg-success">Concluída</span>
+                  </td>
+                  <td>15/01/2026</td>
+                  <td>
+                    <span className="badge bg-success">Emitido</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
+
     </section>
   );
 };

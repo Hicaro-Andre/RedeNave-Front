@@ -3,7 +3,6 @@ import "/src/styles/admin.css";
 
 const AdminUsers: React.FC = () => {
   return (
-
     <section className="admin-users">
       {/* Header */}
       <div className="d-flex justify-content-between align-items-center mb-4">
@@ -20,12 +19,15 @@ const AdminUsers: React.FC = () => {
         <div className="card-body d-flex gap-3 flex-wrap">
           <input
             type="text"
-            className="form-control"
+            className="form-control w-100 w-md-auto"
             placeholder="Buscar por nome ou email"
             style={{ maxWidth: "280px" }}
           />
 
-          <select className="form-select" style={{ maxWidth: "220px" }}>
+          <select
+            className="form-select w-100 w-md-auto"
+            style={{ maxWidth: "220px" }}
+          >
             <option>Status</option>
             <option>Ativa</option>
             <option>Concluinte</option>
@@ -37,87 +39,90 @@ const AdminUsers: React.FC = () => {
       {/* Tabela */}
       <div className="card">
         <div className="card-body">
-          <table className="table table-hover align-middle">
-            <thead>
-              <tr>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Tipo</th>
-                <th>Trilhas</th>
-                <th>Progresso</th>
-                <th>Certificado</th>
-                <th>Status</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
+          <div className="table-responsive">
+            <table className="table table-hover align-middle mb-0">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Email</th>
+                  <th>Tipo</th>
+                  <th>Trilhas</th>
+                  <th>Progresso</th>
+                  <th>Certificado</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
 
-            <tbody>
-              <tr>
-                <td>Ana Souza</td>
-                <td>ana@email.com</td>
-                <td>Participante</td>
-                <td>3</td>
-                <td>75%</td>
-                <td>
-                  <span className="badge bg-secondary">Pendente</span>
-                </td>
-                <td>
-                  <span className="badge bg-primary">Ativa</span>
-                </td>
-                <td className="d-flex gap-2">
-                  <button className="btn btn-sm btn-outline-primary">
-                    Ver
-                  </button>
-                  <button className="btn btn-sm btn-outline-secondary">
-                    Editar
-                  </button>
-                </td>
-              </tr>
+              <tbody>
+                <tr>
+                  <td>Ana Souza</td>
+                  <td>ana@email.com</td>
+                  <td>Participante</td>
+                  <td>3</td>
+                  <td>75%</td>
+                  <td>
+                    <span className="badge bg-secondary">Pendente</span>
+                  </td>
+                  <td>
+                    <span className="badge bg-primary">Ativa</span>
+                  </td>
+                  <td className="d-flex gap-2 flex-wrap">
+                    <button className="btn btn-sm btn-outline-primary">
+                      Ver
+                    </button>
+                    <button className="btn btn-sm btn-outline-secondary">
+                      Editar
+                    </button>
+                  </td>
+                </tr>
 
-              <tr>
-                <td>Maria Lima</td>
-                <td>maria@email.com</td>
-                <td>Participante</td>
-                <td>5</td>
-                <td>100%</td>
-                <td>
-                  <span className="badge bg-success">Emitido</span>
-                </td>
-                <td>
-                  <span className="badge bg-success">Concluinte</span>
-                </td>
-                <td className="d-flex gap-2">
-                  <button className="btn btn-sm btn-outline-primary">
-                    Ver
-                  </button>
-                  <button className="btn btn-sm btn-outline-secondary">
-                    Editar
-                  </button>
-                </td>
-              </tr>
+                <tr>
+                  <td>Maria Lima</td>
+                  <td>maria@email.com</td>
+                  <td>Participante</td>
+                  <td>5</td>
+                  <td>100%</td>
+                  <td>
+                    <span className="badge bg-success">Emitido</span>
+                  </td>
+                  <td>
+                    <span className="badge bg-success">Concluinte</span>
+                  </td>
+                  <td className="d-flex gap-2 flex-wrap">
+                    <button className="btn btn-sm btn-outline-primary">
+                      Ver
+                    </button>
+                    <button className="btn btn-sm btn-outline-secondary">
+                      Editar
+                    </button>
+                  </td>
+                </tr>
 
-              <tr>
-                <td>Juliana Rocha</td>
-                <td>juliana@email.com</td>
-                <td>Equipe Técnica</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>
-                  <span className="badge bg-dark">Admin</span>
-                </td>
-                <td className="d-flex gap-2">
-                  <button className="btn btn-sm btn-outline-primary">
-                    Ver
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                <tr>
+                  <td>Juliana Rocha</td>
+                  <td>juliana@email.com</td>
+                  <td>Equipe Técnica</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                  <td>
+                    <span className="badge bg-dark">Admin</span>
+                  </td>
+                  <td>
+                    <button className="btn btn-sm btn-outline-primary">
+                      Ver
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </section>
   );
+
 };
 
 export default AdminUsers;

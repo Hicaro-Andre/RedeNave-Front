@@ -164,63 +164,66 @@ const AdminTracks: React.FC = () => {
           </div>
 
           <div className="card-body">
-            <table className="table table-hover align-middle">
-              <thead>
-                <tr>
-                  <th>Título</th>
-                  <th>Categoria</th>
-                  <th>Nível</th>
-                  <th>Módulos</th>
-                  <th>Status</th>
-                  <th>Ações</th>
-                </tr>
-              </thead>
+            <div className="table-responsive">
+              <table className="table table-hover align-middle mb-0">
+                <thead>
+                  <tr>
+                    <th>Título</th>
+                    <th>Categoria</th>
+                    <th>Nível</th>
+                    <th>Módulos</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
 
-              <tbody>
-                <tr>
-                  <td>Gestão Financeira</td>
-                  <td>Finanças</td>
-                  <td>Básico</td>
-                  <td>5</td>
-                  <td>
-                    <span className="badge bg-success">
-                      Publicada
-                    </span>
-                  </td>
-                  <td className="d-flex gap-2">
-                    <button className="btn btn-sm btn-outline-primary">
-                      Editar
-                    </button>
-                    <button className="btn btn-sm btn-outline-secondary">
-                      Módulos
-                    </button>
-                  </td>
-                </tr>
+                <tbody>
+                  <tr>
+                    <td>Gestão Financeira</td>
+                    <td>Finanças</td>
+                    <td>Básico</td>
+                    <td>5</td>
+                    <td>
+                      <span className="badge bg-success">
+                        Publicada
+                      </span>
+                    </td>
+                    <td className="d-flex gap-2 flex-wrap">
+                      <button className="btn btn-sm btn-outline-primary">
+                        Editar
+                      </button>
+                      <button className="btn btn-sm btn-outline-secondary">
+                        Módulos
+                      </button>
+                    </td>
+                  </tr>
 
-                <tr>
-                  <td>Marketing Digital</td>
-                  <td>Marketing</td>
-                  <td>Intermediário</td>
-                  <td>8</td>
-                  <td>
-                    <span className="badge bg-secondary">
-                      Rascunho
-                    </span>
-                  </td>
-                  <td className="d-flex gap-2">
-                    <button className="btn btn-sm btn-outline-primary">
-                      Editar
-                    </button>
-                    <button className="btn btn-sm btn-outline-secondary">
-                      Módulos
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                  <tr>
+                    <td>Marketing Digital</td>
+                    <td>Marketing</td>
+                    <td>Intermediário</td>
+                    <td>8</td>
+                    <td>
+                      <span className="badge bg-secondary">
+                        Rascunho
+                      </span>
+                    </td>
+                    <td className="d-flex gap-2 flex-wrap">
+                      <button className="btn btn-sm btn-outline-primary">
+                        Editar
+                      </button>
+                      <button className="btn btn-sm btn-outline-secondary">
+                        Módulos
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       )}
+
 
     </section>
   );

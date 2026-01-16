@@ -41,62 +41,65 @@ const AdminCertificates: React.FC = () => {
       {/* Tabela de Certificados */}
       <div className="card">
         <div className="card-body">
-          <table className="table table-hover align-middle">
-            <thead>
-              <tr>
-                <th>Usuária</th>
-                <th>Trilha</th>
-                <th>Conclusão</th>
-                <th>Status</th>
-                <th>Certificado</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
+          <div className="table-responsive">
+            <table className="table table-hover align-middle mb-0">
+              <thead>
+                <tr>
+                  <th>Usuária</th>
+                  <th>Trilha</th>
+                  <th>Conclusão</th>
+                  <th>Status</th>
+                  <th>Certificado</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
 
-            <tbody>
-              <tr>
-                <td>Maria Lima</td>
-                <td>Marketing Digital</td>
-                <td>15/01/2026</td>
-                <td>
-                  <span className="badge bg-success">Concluída</span>
-                </td>
-                <td>
-                  <span className="badge bg-success">Emitido</span>
-                </td>
-                <td className="d-flex gap-2">
-                  <button className="btn btn-sm btn-outline-primary">
-                    Visualizar
-                  </button>
-                  <button className="btn btn-sm btn-outline-secondary">
-                    Reemitir
-                  </button>
-                </td>
-              </tr>
+              <tbody>
+                <tr>
+                  <td>Maria Lima</td>
+                  <td>Marketing Digital</td>
+                  <td>15/01/2026</td>
+                  <td>
+                    <span className="badge bg-success">Concluída</span>
+                  </td>
+                  <td>
+                    <span className="badge bg-success">Emitido</span>
+                  </td>
+                  <td className="d-flex gap-2 flex-wrap">
+                    <button className="btn btn-sm btn-outline-primary">
+                      Visualizar
+                    </button>
+                    <button className="btn btn-sm btn-outline-secondary">
+                      Reemitir
+                    </button>
+                  </td>
+                </tr>
 
-              <tr>
-                <td>Ana Souza</td>
-                <td>Gestão Financeira</td>
-                <td>—</td>
-                <td>
-                  <span className="badge bg-primary">Em andamento</span>
-                </td>
-                <td>
-                  <span className="badge bg-secondary">Pendente</span>
-                </td>
-                <td>
-                  <button
-                    className="btn btn-sm btn-outline-secondary"
-                    disabled
-                  >
-                    Aguardando conclusão
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                <tr>
+                  <td>Ana Souza</td>
+                  <td>Gestão Financeira</td>
+                  <td>—</td>
+                  <td>
+                    <span className="badge bg-primary">Em andamento</span>
+                  </td>
+                  <td>
+                    <span className="badge bg-secondary">Pendente</span>
+                  </td>
+                  <td>
+                    <button
+                      className="btn btn-sm btn-outline-secondary w-100 w-md-auto"
+                      disabled
+                    >
+                      Aguardando conclusão
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
+
     </section>
   );
 };

@@ -20,7 +20,6 @@ body {
   background-color: var(--bg-main);
   color: var(--text-main);
   font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont;
- 
 }
 
 /* =====================================================
@@ -856,8 +855,10 @@ body {
 }
 
 /* HEADER */
-.admin-ranking h2 {
-  font-weight: 600;
+.admin-ranking h2{
+  font-size: 26px;
+  font-weight: 700;
+  color: #111827;
 }
 
 .admin-ranking p {
@@ -931,7 +932,9 @@ body {
 
 /* HEADER */
 .admin-settings h2 {
-  font-weight: 600;
+  font-size: 26px;
+  font-weight: 700;
+  color: #111827;
 }
 
 .admin-settings p {

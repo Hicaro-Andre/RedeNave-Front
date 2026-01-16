@@ -115,58 +115,61 @@ const AdminEvents: React.FC = () => {
         </div>
 
         <div className="card-body">
-          <table className="table table-hover align-middle">
-            <thead>
-              <tr>
-                <th>Título</th>
-                <th>Tipo</th>
-                <th>Data</th>
-                <th>Modalidade</th>
-                <th>Vagas</th>
-                <th>Status</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
+          <div className="table-responsive">
+            <table className="table table-hover align-middle mb-0">
+              <thead>
+                <tr>
+                  <th>Título</th>
+                  <th>Tipo</th>
+                  <th>Data</th>
+                  <th>Modalidade</th>
+                  <th>Vagas</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
 
-            <tbody>
-              <tr>
-                <td>Oficina de Marketing</td>
-                <td>Evento</td>
-                <td>22/02/2026</td>
-                <td>Online</td>
-                <td>50</td>
-                <td>
-                  <span className="badge bg-primary">Agendado</span>
-                </td>
-                <td className="d-flex gap-2">
-                  <button className="btn btn-sm btn-outline-primary">
-                    Editar
-                  </button>
-                  <button className="btn btn-sm btn-outline-secondary">
-                    Participantes
-                  </button>
-                </td>
-              </tr>
+              <tbody>
+                <tr>
+                  <td>Oficina de Marketing</td>
+                  <td>Evento</td>
+                  <td>22/02/2026</td>
+                  <td>Online</td>
+                  <td>50</td>
+                  <td>
+                    <span className="badge bg-primary">Agendado</span>
+                  </td>
+                  <td className="d-flex gap-2 flex-wrap">
+                    <button className="btn btn-sm btn-outline-primary">
+                      Editar
+                    </button>
+                    <button className="btn btn-sm btn-outline-secondary">
+                      Participantes
+                    </button>
+                  </td>
+                </tr>
 
-              <tr>
-                <td>Mentoria Financeira</td>
-                <td>Mentoria</td>
-                <td>10/01/2026</td>
-                <td>Presencial</td>
-                <td>30</td>
-                <td>
-                  <span className="badge bg-secondary">Encerrado</span>
-                </td>
-                <td className="d-flex gap-2">
-                  <button className="btn btn-sm btn-outline-primary">
-                    Editar
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                <tr>
+                  <td>Mentoria Financeira</td>
+                  <td>Mentoria</td>
+                  <td>10/01/2026</td>
+                  <td>Presencial</td>
+                  <td>30</td>
+                  <td>
+                    <span className="badge bg-secondary">Encerrado</span>
+                  </td>
+                  <td className="d-flex gap-2 flex-wrap">
+                    <button className="btn btn-sm btn-outline-primary">
+                      Editar
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
+
     </section>
   );
 };

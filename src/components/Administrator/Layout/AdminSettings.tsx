@@ -87,38 +87,41 @@ const AdminSettings: React.FC = () => {
         </div>
 
         <div className="card-body">
-          <table className="table table-hover align-middle">
-            <thead>
-              <tr>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Perfil</th>
-                <th>Status</th>
-              </tr>
-            </thead>
+          <div className="table-responsive">
+            <table className="table table-hover align-middle mb-0">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Email</th>
+                  <th>Perfil</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
 
-            <tbody>
-              <tr>
-                <td>Juliana Rocha</td>
-                <td>juliana@email.com</td>
-                <td>Admin</td>
-                <td>
-                  <span className="badge bg-success">Ativo</span>
-                </td>
-              </tr>
+              <tbody>
+                <tr>
+                  <td>Juliana Rocha</td>
+                  <td className="text-break">juliana@email.com</td>
+                  <td>Admin</td>
+                  <td>
+                    <span className="badge bg-success">Ativo</span>
+                  </td>
+                </tr>
 
-              <tr>
-                <td>Equipe Técnica</td>
-                <td>tech@redenave.com</td>
-                <td>Equipe</td>
-                <td>
-                  <span className="badge bg-primary">Ativo</span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                <tr>
+                  <td>Equipe Técnica</td>
+                  <td className="text-break">tech@redenave.com</td>
+                  <td>Equipe</td>
+                  <td>
+                    <span className="badge bg-primary">Ativo</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
+
     </section>
   );
 };
