@@ -1,5 +1,6 @@
+import { useNavigate } from "react-router-dom";
 import React, { useState, ChangeEvent, FormEvent } from "react";
-import logo from "/src/assets/logoRedeNave.png";
+import { registerWithEmail } from "../../services/authService";
 
 type StoryblokAsset = {
   filename: string;
@@ -23,7 +24,6 @@ type CadUserProps = {
     placeholder_senha: string;
     card_confirm_senha: string;
     placeholder_confirm_senha: string;
-    form_text: string;
     button_card: string;
     account: string;
     login: string;
@@ -38,7 +38,6 @@ interface FormData {
   dataNascimento: string;
   senha: string;
   confirmarSenha: string;
-  comoChegou: string;
 }
 
 interface FormErrors {
@@ -46,6 +45,11 @@ interface FormErrors {
 }
 
 export default function CadUser({ blok }: CadUserProps) {
+  const navigate = useNavigate();
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const image =
     typeof blok.logo === "object" && blok.logo?.filename
@@ -59,22 +63,23 @@ export default function CadUser({ blok }: CadUserProps) {
     dataNascimento: "",
     senha: "",
     confirmarSenha: "",
-    comoChegou: "",
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
 
-  // Máscara simples para telefone
   const maskTelefone = (value: string): string => {
     const digits = value.replace(/\D/g, "").slice(0, 11);
     if (digits.length <= 2) return digits;
-    if (digits.length <= 6) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
-    if (digits.length <= 10) return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
+    if (digits.length <= 6)
+      return `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+    if (digits.length <= 10)
+      return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`;
     return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
   };
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
+
     if (id === "telefone") {
       setForm((prev) => ({ ...prev, telefone: maskTelefone(value) }));
     } else {
@@ -82,183 +87,203 @@ export default function CadUser({ blok }: CadUserProps) {
     }
   };
 
-  const validate = (): boolean => {
-    const newErrors: FormErrors = {};
-    if (!form.nome.trim()) newErrors.nome = "Por favor, insira seu nome.";
-    if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
-      newErrors.email = "Por favor, insira um e-mail válido.";
-    const telDigits = form.telefone.replace(/\D/g, "");
-    if (!telDigits || telDigits.length < 10) newErrors.telefone = "Telefone inválido.";
-    if (!form.dataNascimento) newErrors.dataNascimento = "Data de nascimento obrigatória.";
-    if (!form.senha || form.senha.length < 6) newErrors.senha = "Senha com mínimo 6 caracteres.";
-    if (form.senha !== form.confirmarSenha) newErrors.confirmarSenha = "As senhas não coincidem.";
-    if (!form.comoChegou) newErrors.comoChegou = "Selecione uma opção.";
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!validate()) return;
+    if (isSubmitting) return;
 
-    console.log("Enviando cadastro:", form);
-    alert("Cadastro realizado com sucesso! 🎉");
-    window.location.href = "/login";
+    const newErrors: FormErrors = {};
+
+    if (!form.nome.trim()) newErrors.nome = "Informe seu nome.";
+    if (!form.email.trim()) newErrors.email = "Informe seu e-mail.";
+    if (!form.telefone.trim()) newErrors.telefone = "Informe o telefone.";
+    if (!form.dataNascimento)
+      newErrors.dataNascimento = "Informe a data de nascimento.";
+    if (form.senha.length < 6)
+      newErrors.senha = "A senha deve ter no mínimo 6 caracteres.";
+    if (form.senha !== form.confirmarSenha)
+      newErrors.confirmarSenha = "As senhas não coincidem.";
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    setErrors({});
+    setIsSubmitting(true);
+
+    try {
+      await registerWithEmail(
+        form.email.trim().toLowerCase(),
+        form.senha
+      );
+
+      setShowSuccessModal(true);
+
+      setTimeout(() => {
+        navigate("/login");
+      }, 2500);
+    } catch (err: any) {
+      if (err.code === "auth/email-already-in-use") {
+        setErrors({ email: "Este e-mail já está cadastrado." });
+      } else if (err.code === "auth/invalid-email") {
+        setErrors({ email: "E-mail inválido." });
+      } else {
+        setErrors({ senha: "Erro ao realizar cadastro." });
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const invalidClass = (field: string) => (errors[field] ? "is-invalid" : "");
+  const invalidClass = (field: string) =>
+    errors[field] ? "is-invalid" : "";
 
   return (
     <div className="cadastro-container">
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-lg-8">
-            {/* Card Cabeçalho */}
+
+            {/* Cabeçalho */}
             <div className="cadastro-card bg-card-cad">
               <div className="text-center mb-4">
                 <a className="navbar-brand fw-bold" href="/">
                   {image && (
-                    <img src={`${image.filename}`} alt={image.alt || "Rede Nave"} style={{ width: "120px", height: "auto" }} />
+                    <img
+                      src={image.filename}
+                      alt={image.alt || "Rede Nave"}
+                      style={{ width: "120px" }}
+                    />
                   )}
                 </a>
-                <h2 className="fw-bold mt-3" style={{ color: "white" }}>
-                  {blok.title}
-                </h2>
-                <p style={{ color: "white" }}>
-                  {blok.description}
-                </p>
+                <h2 className="fw-bold mt-3 text-white">{blok.title}</h2>
+                <p className="text-white">{blok.description}</p>
               </div>
             </div>
 
-            {/* Card Formulário */}
+            {/* Formulário */}
             <div className="cadastro-card-two">
-              <form id="cadastroForm" className="needs-validation" onSubmit={handleSubmit} noValidate>
+              <form onSubmit={handleSubmit} noValidate>
                 <h5 className="mb-4">
                   <i className="bi bi-person-circle"></i> {blok.title_form}
                 </h5>
 
-                {/* Linha 1: Nome | E-mail */}
+                {/* Linha 1 */}
                 <div className="row">
                   <div className="col-md-6 mb-3">
-                    <label htmlFor="nome" className="form-label">{blok.card_name}</label>
+                    <label className="form-label">{blok.card_name}</label>
                     <input
-                      type="text"
-                      className={`form-control ${invalidClass("nome")}`}
                       id="nome"
+                      className={`form-control ${invalidClass("nome")}`}
                       placeholder={blok.placeholder_name}
                       value={form.nome}
                       onChange={handleChange}
-                      required
                     />
                     <div className="invalid-feedback">{errors.nome}</div>
                   </div>
 
                   <div className="col-md-6 mb-3">
-                    <label htmlFor="email" className="form-label">{blok.card_email}</label>
+                    <label className="form-label">{blok.card_email}</label>
                     <input
+                      id="email"
                       type="email"
                       className={`form-control ${invalidClass("email")}`}
-                      id="email"
                       placeholder={blok.placeholder_email}
                       value={form.email}
                       onChange={handleChange}
-                      required
                     />
                     <div className="invalid-feedback">{errors.email}</div>
                   </div>
                 </div>
 
-                {/* Linha 2: Telefone | Data Nascimento */}
+                {/* Linha 2 */}
                 <div className="row">
                   <div className="col-md-6 mb-3">
-                    <label htmlFor="telefone" className="form-label">{blok.card_phone}</label>
+                    <label className="form-label">{blok.card_phone}</label>
                     <input
-                      type="tel"
-                      className={`form-control ${invalidClass("telefone")}`}
                       id="telefone"
+                      className={`form-control ${invalidClass("telefone")}`}
                       placeholder={blok.placeholder_phone}
                       value={form.telefone}
                       onChange={handleChange}
-                      required
                     />
                     <div className="invalid-feedback">{errors.telefone}</div>
                   </div>
 
                   <div className="col-md-6 mb-3">
-                    <label htmlFor="dataNascimento" className="form-label">{blok.card_data}</label>
+                    <label className="form-label">{blok.card_data}</label>
                     <input
+                      id="dataNascimento"
                       type="date"
                       className={`form-control ${invalidClass("dataNascimento")}`}
-                      id="dataNascimento"
                       value={form.dataNascimento}
                       onChange={handleChange}
-                      required
                     />
-                    <div className="invalid-feedback">{errors.dataNascimento}</div>
+                    <div className="invalid-feedback">
+                      {errors.dataNascimento}
+                    </div>
                   </div>
                 </div>
 
-                {/* Linha 3: Senha | Confirmação */}
+                {/* Linha 3 */}
                 <div className="row">
                   <div className="col-md-6 mb-3">
-                    <label htmlFor="senha" className="form-label">{blok.card_senha}</label>
+                    <label className="form-label">{blok.card_senha}</label>
                     <input
-                      type="password"
-                      className={`form-control ${invalidClass("senha")}`}
+                      type={showPassword ? "text" : "password"}
                       id="senha"
+                      className={`form-control ${invalidClass("senha")}`}
                       placeholder={blok.placeholder_senha}
                       value={form.senha}
                       onChange={handleChange}
-                      minLength={6}
-                      required
                     />
                     <div className="invalid-feedback">{errors.senha}</div>
                   </div>
 
                   <div className="col-md-6 mb-3">
-                    <label htmlFor="confirmarSenha" className="form-label">{blok.card_confirm_senha}</label>
-                    <input
-                      type="password"
-                      className={`form-control ${invalidClass("confirmarSenha")}`}
-                      id="confirmarSenha"
-                      placeholder={blok.placeholder_confirm_senha}
-                      value={form.confirmarSenha}
-                      onChange={handleChange}
-                      required
-                    />
-                    <div className="invalid-feedback">{errors.confirmarSenha}</div>
+                    <label className="form-label">
+                      {blok.card_confirm_senha}
+                    </label>
+
+                    <div className="input-group">
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        id="confirmarSenha"
+                        className={`form-control ${invalidClass("confirmarSenha")}`}
+                        placeholder={blok.placeholder_confirm_senha}
+                        value={form.confirmarSenha}
+                        onChange={handleChange}
+                      />
+                      <button
+                        type="button"
+                        className="btn btn-outline-secondary"
+                        onClick={() => setShowPassword(!showPassword)}
+                        tabIndex={-1}
+                      >
+                        <i className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"}`}></i>
+                      </button>
+                    </div>
+
+                    <div className="invalid-feedback">
+                      {errors.confirmarSenha}
+                    </div>
                   </div>
                 </div>
 
-                {/* Linha 4: Como conheceu */}
-                <div className="mb-4">
-                  <label htmlFor="comoChegou" className="form-label">{blok.form_text}</label>
-                  <select
-                    className={`form-select ${invalidClass("comoChegou")}`}
-                    id="comoChegou"
-                    value={form.comoChegou}
-                    onChange={handleChange}
-                    required
-                  >
-                    <option value="">Selecione...</option>
-                    <option value="redes-sociais">Redes Sociais</option>
-                    <option value="indicacao">Indicação de amiga</option>
-                    <option value="google">Pesquisa no Google</option>
-                    <option value="evento">Evento presencial</option>
-                    <option value="whatsapp">WhatsApp</option>
-                    <option value="outro">Outro</option>
-                  </select>
-                  <div className="invalid-feedback">{errors.comoChegou}</div>
-                </div>
-
-                <button type="submit" className="btn btn-success w-100">
+                <button
+                  type="submit"
+                  className="btn btn-success w-100"
+                  disabled={isSubmitting}
+                >
                   <i className="bi bi-check-lg"></i> {blok.button_card}
                 </button>
               </form>
 
               <div className="text-center mt-4">
                 <span className="text-muted">{blok.account} </span>
-                <a href="/login" className="text-decoration-none fw-bold bg-text">{blok.login}</a>
+                <a href="/login" className="fw-bold bg-text">
+                  {blok.login}
+                </a>
               </div>
             </div>
 
@@ -270,6 +295,47 @@ export default function CadUser({ blok }: CadUserProps) {
           </div>
         </div>
       </div>
+
+      {/* MODAL DE SUCESSO */}
+      {showSuccessModal && (
+        <>
+          <div className="modal fade show d-block">
+            <div className="modal-dialog modal-dialog-centered">
+              <div
+                className="modal-content border-0 shadow-lg"
+                style={{ background: "#0f172a" }}
+              >
+                <div className="modal-body text-center p-5">
+                  <div
+                    className="mb-4 d-flex align-items-center justify-content-center rounded-circle"
+                    style={{
+                      width: "70px",
+                      height: "70px",
+                      background: "linear-gradient(135deg, #22c55e, #16a34a)",
+                      margin: "0 auto",
+                    }}
+                  >
+                    <i className="bi bi-check-lg text-white fs-2"></i>
+                  </div>
+
+                  <h4 className="fw-bold text-white mb-2">
+                    Cadastro realizado!
+                  </h4>
+
+                  <p className="text-muted mb-4">
+                    Sua conta foi criada com sucesso.
+                    Você será redirecionado para o login.
+                  </p>
+
+                  <div className="spinner-border text-success"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="modal-backdrop fade show"></div>
+        </>
+      )}
     </div>
   );
 }

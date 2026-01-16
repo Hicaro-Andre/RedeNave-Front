@@ -72,6 +72,9 @@ src/
 │   └── NotFound.tsx
 │   └── ScrollToTop.tsx
 │
+├── config/                     # Configurações 
+│   └── firebase.ts
+│   └── storyblok.ts
 ├── pages/                      # Páginas (rotas da aplicação)
 │   ├── About.tsx
 │   ├── Admin.tsx
@@ -85,8 +88,8 @@ src/
 │   ├── Support.tsx
 │   └── Trails.tsx
 │
-├── services/                   # Conexão do Storyblok no React
-│   ├── storyblok.ts
+├── services/                   # Autenticação de Login
+│   ├── authService.ts
 │
 ├── styles/                     # Estilos por página
 │   ├── about.css

@@ -1,13 +1,50 @@
-import React, { useState } from "react";
-
+import React, { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import {
+  verifyResetCode,
+  confirmNewPassword
+} from "../../services/authService";
 
 const ResetPassword: React.FC = () => {
-  const [password, setPassword] = useState<string>("");
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
-  const [error, setError] = useState<string>("");
-  const [success, setSuccess] = useState<boolean>(false);
+  /**
+   * Parâmetros da URL (?oobCode=...)
+   */
+  const [searchParams] = useSearchParams();
+  const oobCode = searchParams.get("oobCode");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  /**
+   * Navegação
+   */
+  const navigate = useNavigate();
+
+  /**
+   * Estados do formulário
+   */
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  /**
+   * Valida o link ao entrar na tela
+   */
+  useEffect(() => {
+    if (!oobCode) {
+      setError("Link inválido ou expirado.");
+      return;
+    }
+
+    verifyResetCode(oobCode).catch(() => {
+      setError("Link inválido ou expirado.");
+    });
+  }, [oobCode]);
+
+  /**
+   * Envia nova senha
+   */
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!password || !confirmPassword) {
@@ -25,11 +62,26 @@ const ResetPassword: React.FC = () => {
       return;
     }
 
-    setError("");
-    setSuccess(true);
+    if (!oobCode) {
+      setError("Código de redefinição inválido.");
+      return;
+    }
 
-    // 🔐 Integração futura com API
-    // onSubmit({ password })
+    setLoading(true);
+    setError("");
+
+    try {
+      await confirmNewPassword(oobCode, password);
+      setSuccess(true);
+
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
+    } catch {
+      setError("Não foi possível redefinir a senha.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -38,53 +90,67 @@ const ResetPassword: React.FC = () => {
         <div className="col-12 col-sm-10 col-md-8 col-lg-5">
           <div className="new-password-card">
             <h2 className="mb-2">Nova senha</h2>
-            <p className="mb-4">
-              Crie uma nova senha para sua conta.
-            </p>
+            <p className="mb-4">Crie uma nova senha para sua conta.</p>
 
             {success ? (
               <div className="alert alert-success text-center">
-                Senha definida com sucesso!
+                Senha alterada com sucesso! Redirecionando...
               </div>
             ) : (
               <form onSubmit={handleSubmit}>
+
                 <div className="mb-3 text-start">
-                  <label className="form-label">
-                    Nova senha
-                  </label>
+                  <label className="form-label">Nova senha</label>
                   <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     className="form-control new-password-input"
                     placeholder="Digite sua nova senha"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    disabled={loading}
                   />
                 </div>
+
 
                 <div className="mb-3 text-start">
-                  <label className="form-label">
-                    Confirmar senha
-                  </label>
-                  <input
-                    type="password"
-                    className="form-control new-password-input"
-                    placeholder="Confirme sua nova senha"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                  />
+                  <label className="form-label">Confirmar senha</label>
+
+                  <div className="input-group">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      className="form-control new-password-input"
+                      placeholder="Confirme sua nova senha"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      disabled={loading}
+                    />
+
+                    <button
+                      type="button"
+                      className="btn btn-outline-secondary"
+                      onClick={() => setShowPassword(!showPassword)}
+                      tabIndex={-1}
+                    >
+                      <i
+                        className={`bi ${showPassword ? "bi-eye-slash" : "bi-eye"
+                          }`}
+                      />
+                    </button>
+                  </div>
                 </div>
 
+
+
                 {error && (
-                  <div className="alert alert-danger py-2">
-                    {error}
-                  </div>
+                  <div className="alert alert-danger py-2">{error}</div>
                 )}
 
                 <button
                   type="submit"
                   className="btn new-password-btn w-100"
+                  disabled={loading}
                 >
-                  Salvar senha
+                  {loading ? "Salvando..." : "Salvar senha"}
                 </button>
               </form>
             )}
