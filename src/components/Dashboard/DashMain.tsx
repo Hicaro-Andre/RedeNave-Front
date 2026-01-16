@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import logo from "/src/assets/logoRedeNave.png"
+
 import DashboardOverview from "./Layout/DashboardOverview";
 import DashboardCourses from "./Layout/DashboardCourses";
 import DashboardCertificados from "./Layout/DashboardCertificates";
@@ -52,7 +54,7 @@ export default function DashMain() {
         <div className="container-fluid">
           <a className="navbar-brand fw-bold" href="/">
             <img
-              src="/src/assets/logoRedeNave.png"
+              src={logo}
               alt="Rede Nave"
               style={{ width: 70 }}
             />
