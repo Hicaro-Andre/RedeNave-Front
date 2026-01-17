@@ -15,18 +15,20 @@ import DashboardSidebar, {
 } from "./Layout/DashboardSidebar";
 
 export default function DashMain() {
-  const nome = "Maria Silva";
-  const email = "maria.silva@email.com";
-
+  const [nome, setNome] = useState<string>(""); // agora carregamos do localStorage
   const [section, setSection] = useState<DashboardSection>("overview");
   const [fotoPerfil, setFotoPerfil] = useState<string | null>(null);
+  const email = ""; // Se você quiser, pode salvar email do Firebase aqui
 
   const navigate = useNavigate();
 
-  // Carrega foto do localStorage ao iniciar
+  // Carrega nome e foto do localStorage ao iniciar
   useEffect(() => {
     const fotoSalva = localStorage.getItem("fotoPerfil");
+    const nomeSalvo = localStorage.getItem("nome");
+
     if (fotoSalva) setFotoPerfil(fotoSalva);
+    if (nomeSalvo) setNome(nomeSalvo);
   }, []);
 
   const closeMobileMenu = () => {
@@ -45,6 +47,8 @@ export default function DashMain() {
 
   const handleLogout = async () => {
     await signOut(auth);
+    localStorage.removeItem("nome");
+    localStorage.removeItem("fotoPerfil");
     navigate("/login");
   };
 
@@ -116,10 +120,12 @@ export default function DashMain() {
                     <img src={fotoPerfil} alt="Perfil" className="nav-profile-img" />
                   ) : (
                     <div className="nav-profile-img initials">
-                      {nome.split(" ").map((n) => n[0]).slice(0, 2).join("")}
+                      {nome
+                        ? nome.split(" ").map((n) => n[0]).slice(0, 2).join("")
+                        : "US"}
                     </div>
                   )}
-                  <span className="nav-user-name">{nome}</span>
+                  <span className="nav-user-name">{nome || "Usuário"}</span>
                 </button>
 
                 <ul className="dropdown-menu dropdown-menu-end">

@@ -175,14 +175,15 @@ export default function LoginUser({ blok }: LoginUserProps) {
 
                     {error && <div className="alert alert-danger">{error}</div>}
 
-                    {/* LOGIN SOCIAL */}
+                    {/* login com google */}
                     <div className="mb-4">
-                      <button type="button" className="social-login-btn" onClick={handleGoogleLogin} disabled={loading}>
+                      <button type="button" className="social-login-btn bg-text" onClick={handleGoogleLogin} disabled={loading}>
                         <i className="bi bi-google me-2"></i> {blok.card_login_google}
                       </button>
 
-                      <button type="button" className="social-login-btn" onClick={handleFacebookLogin} disabled={loading}>
-                        <i className="bi bi-facebook me-2"></i> {blok.card_login_face}
+                      {/* login com facebook */}
+                      <button type="button" className="social-login-btn bg-text" onClick={handleFacebookLogin} disabled={loading}>
+                        <i className="bi bi-facebook me-2 "></i> {blok.card_login_face}
                       </button>
                     </div>
 
@@ -234,7 +235,7 @@ export default function LoginUser({ blok }: LoginUserProps) {
                           <label className="form-check-label" htmlFor="lembrar">{blok.remind_me}</label>
                         </div>
 
-                        <Link to="/forgot" className="text-decoration-none">{blok.forgot_your_password}</Link>
+                        <Link to="/forgot" className="text-decoration-none bg-text">{blok.forgot_your_password}</Link>
                       </div>
 
                       <button type="submit" className="btn btn-primary w-100 mb-3" disabled={loading}>
@@ -243,7 +244,7 @@ export default function LoginUser({ blok }: LoginUserProps) {
 
                       <div className="text-center">
                         <span className="text-muted">{blok.not_count} </span>
-                        <Link to="/cadastro" className="fw-bold">{blok.cad}</Link>
+                        <Link to="/cadastro" className="fw-bold text-decoration-none bg-text">{blok.cad}</Link>
                       </div>
                     </form>
                   </div>

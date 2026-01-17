@@ -1,4 +1,3 @@
-// src/services/authService.ts
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -15,25 +14,19 @@ import {
 
 import { auth } from "../config/firebase";
 
-/** ========================
- * Cadastro com email/senha
- * ======================== */
+/* Cadastro com email/senha */
 export const registerWithEmail = async (email: string, password: string): Promise<User> => {
   const result = await createUserWithEmailAndPassword(auth, email, password);
   return result.user;
 };
 
-/** ========================
- * Login com email/senha
- * ======================== */
+/* Login com email/senha */
 export const loginWithEmail = async (email: string, password: string): Promise<User> => {
   const result = await signInWithEmailAndPassword(auth, email, password);
   return result.user;
 };
 
-/** ========================
- * Login com Google (Popup)
- * ======================== */
+/* Login com Google (Popup) */
 export const loginWithGoogle = async (): Promise<User | null> => {
   try {
     const provider = new GoogleAuthProvider();
@@ -47,9 +40,7 @@ export const loginWithGoogle = async (): Promise<User | null> => {
   }
 };
 
-/** ========================
- * Login com Facebook (Popup)
- * ======================== */
+/* Login com Facebook (Popup) */
 export const loginWithFacebook = async (): Promise<User | null> => {
   try {
     const provider = new FacebookAuthProvider();
@@ -61,9 +52,7 @@ export const loginWithFacebook = async (): Promise<User | null> => {
   }
 };
 
-/** ========================
- * Pegar resultado de login via redirect (se usar redirect)
- * ======================== */
+/* Pegar resultado de login via redirect (se usar redirect)*/
 export const getSocialRedirectResult = async (): Promise<User | null> => {
   try {
     const result = await getRedirectResult(auth);
@@ -74,23 +63,17 @@ export const getSocialRedirectResult = async (): Promise<User | null> => {
   }
 };
 
-/** ========================
- * Reset de senha
- * ======================== */
+/* Reset de senha */
 export const resetPassword = async (email: string) => {
   return sendPasswordResetEmail(auth, email);
 };
 
-/** ========================
- * Verifica código de reset de senha
- * ======================== */
+/* Verifica código de reset de senha */
 export const verifyResetCode = async (code: string) => {
   return verifyPasswordResetCode(auth, code);
 };
 
-/** ========================
- * Confirma nova senha
- * ======================== */
+/* Confirma nova senha */
 export const confirmNewPassword = async (code: string, newPassword: string) => {
   return confirmPasswordReset(auth, code, newPassword);
 };

@@ -272,7 +272,7 @@ export default function CadUser({ blok }: CadUserProps) {
 
                 <button
                   type="submit"
-                  className="btn btn-success w-100"
+                  className="btn btn-success w-100 mt-3"
                   disabled={isSubmitting}
                 >
                   <i className="bi bi-check-lg"></i> {blok.button_card}
@@ -280,8 +280,8 @@ export default function CadUser({ blok }: CadUserProps) {
               </form>
 
               <div className="text-center mt-4">
-                <span className="text-muted">{blok.account} </span>
-                <a href="/login" className="fw-bold bg-text">
+                <span className="text-muted ">{blok.account} </span>
+                <a href="/login" className="fw-bold bg-text text-decoration-none">
                   {blok.login}
                 </a>
               </div>
@@ -303,7 +303,12 @@ export default function CadUser({ blok }: CadUserProps) {
             <div className="modal-dialog modal-dialog-centered">
               <div
                 className="modal-content border-0 shadow-lg"
-                style={{ background: "#0f172a" }}
+                style={{
+                  background: `linear-gradient(to bottom, #f7f3ff 0%, #e8d9ff 100%),
+                 linear-gradient(90deg, rgba(255, 255, 255, 0.15) 1px, transparent 1px),
+                 linear-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px)`,
+                  backgroundSize: "100% 100%, 40px 40px, 40px 40px",
+                }}
               >
                 <div className="modal-body text-center p-5">
                   <div
@@ -318,11 +323,11 @@ export default function CadUser({ blok }: CadUserProps) {
                     <i className="bi bi-check-lg text-white fs-2"></i>
                   </div>
 
-                  <h4 className="fw-bold text-white mb-2">
+                  <h4 className="fw-bold bg-text mb-2">
                     Cadastro realizado!
                   </h4>
 
-                  <p className="text-muted mb-4">
+                  <p className="text-muted bg-text mb-4">
                     Sua conta foi criada com sucesso.
                     Você será redirecionado para o login.
                   </p>
