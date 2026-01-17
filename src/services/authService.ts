@@ -36,7 +36,11 @@ export const loginWithGoogle = async () => {
   provider.setCustomParameters({ prompt: "select_account" });
 
   const result = await signInWithPopup(auth, provider);
-  return result.user; // Retorna o usuário logado
+  return {
+    nome: result.user.displayName,
+    email: result.user.email,
+    fotoURL: result.user.photoURL, // <--- Foto do Google
+  };
 };
 
 /** ========================

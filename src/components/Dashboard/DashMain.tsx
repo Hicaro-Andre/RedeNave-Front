@@ -1,51 +1,57 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { auth } from "../../config/firebase";
 
-import logo from "/src/assets/logoRedeNave.png"
+import logo from "/src/assets/logoRedeNave.png";
 
 import DashboardOverview from "./Layout/DashboardOverview";
 import DashboardCourses from "./Layout/DashboardCourses";
 import DashboardCertificados from "./Layout/DashboardCertificates";
-import DashboardPerfil from "./Layout/DashboardProfile";
+import DashboardProfile from "./Layout/DashboardProfile";
 import DashboardConfiguracoes from "./Layout/DashboardSettings";
-import DashboardSidebar, {
-  DashboardSection,
-} from "./Layout/DashboardSidebar";
+import DashboardSidebar, { DashboardSection } from "./Layout/DashboardSidebar";
 
 export default function DashMain() {
-  // ======================
-  // DADOS DO USUÁRIO
-  // ======================
   const nome = "Maria Silva";
   const email = "maria.silva@email.com";
 
-  // ======================
-  // STATES
-  // ======================
   const [section, setSection] = useState<DashboardSection>("overview");
   const [fotoPerfil, setFotoPerfil] = useState<string | null>(null);
 
-  // ======================
-  // HANDLERS
-  // ======================
-  const handleUploadFoto = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  const navigate = useNavigate();
 
-    const reader = new FileReader();
-    reader.onload = () => setFotoPerfil(reader.result as string);
-    reader.readAsDataURL(file);
+  // Carrega foto do localStorage ao iniciar (upload manual ou Google)
+  useEffect(() => {
+    const fotoSalva = localStorage.getItem("fotoPerfil");
+    if (fotoSalva) setFotoPerfil(fotoSalva);
+  }, []);
+
+  // Fecha menu mobile
+  const closeMobileMenu = () => {
+    const navbar = document.getElementById("navbarNav");
+    if (navbar?.classList.contains("show")) navbar.classList.remove("show");
+  };
+
+  const handleSectionChange = (name: DashboardSection) => {
+    setSection(name);
+    closeMobileMenu();
   };
 
   const handleMobileNav = (name: DashboardSection) => {
-    setSection(name);
-
-    // fecha menu mobile
-    const navbar = document.getElementById("navbarNav");
-    if (navbar?.classList.contains("show")) {
-      navbar.classList.remove("show");
-    }
+    handleSectionChange(name);
   };
 
+  const handleLogout = async () => {
+    await signOut(auth);
+    navigate("/login");
+  };
+
+  // Atualiza foto (Sidebar + menu + localStorage)
+  const handleUpdateFoto = (novaFoto: string) => {
+    setFotoPerfil(novaFoto);
+    localStorage.setItem("fotoPerfil", novaFoto);
+  };
 
   return (
     <>
@@ -53,11 +59,7 @@ export default function DashMain() {
       <nav className="navbar navbar-expand-lg navbar-dark sticky-top">
         <div className="container-fluid">
           <a className="navbar-brand fw-bold" href="/">
-            <img
-              src={logo}
-              alt="Rede Nave"
-              style={{ width: 70 }}
-            />
+            <img src={logo} alt="Rede Nave" style={{ width: 70 }} />
           </a>
 
           <button
@@ -71,14 +73,12 @@ export default function DashMain() {
 
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ms-auto align-items-lg-center gap-lg-2">
-              {/* INÍCIO */}
               <li className="nav-item">
                 <a className="nav-link" href="/">
                   Início
                 </a>
               </li>
 
-              {/* MEU PAINEL (DESKTOP) */}
               <li className="nav-item d-none d-lg-block">
                 <span className="nav-link active">Meu Painel</span>
               </li>
@@ -86,28 +86,23 @@ export default function DashMain() {
               {/* MOBILE LINKS */}
               <li className="nav-item d-lg-none">
                 <button
-                  className={`nav-link ${section === "overview" ? "active" : ""
-                    }`}
+                  className={`nav-link ${section === "overview" ? "active" : ""}`}
                   onClick={() => handleMobileNav("overview")}
                 >
                   Visão Geral
                 </button>
               </li>
-
               <li className="nav-item d-lg-none">
                 <button
-                  className={`nav-link ${section === "cursos" ? "active" : ""
-                    }`}
+                  className={`nav-link ${section === "cursos" ? "active" : ""}`}
                   onClick={() => handleMobileNav("cursos")}
                 >
                   Meus Cursos
                 </button>
               </li>
-
               <li className="nav-item d-lg-none">
                 <button
-                  className={`nav-link ${section === "certificados" ? "active" : ""
-                    }`}
+                  className={`nav-link ${section === "certificados" ? "active" : ""}`}
                   onClick={() => handleMobileNav("certificados")}
                 >
                   Certificados
@@ -123,18 +118,10 @@ export default function DashMain() {
                   data-bs-toggle="dropdown"
                 >
                   {fotoPerfil ? (
-                    <img
-                      src={fotoPerfil}
-                      alt="Perfil"
-                      className="nav-profile-img"
-                    />
+                    <img src={fotoPerfil} alt="Perfil" className="nav-profile-img" />
                   ) : (
                     <div className="nav-profile-img initials">
-                      {nome
-                        .split(" ")
-                        .map((n) => n[0])
-                        .slice(0, 2)
-                        .join("")}
+                      {nome.split(" ").map((n) => n[0]).slice(0, 2).join("")}
                     </div>
                   )}
                   <span className="nav-user-name">{nome}</span>
@@ -144,7 +131,7 @@ export default function DashMain() {
                   <li>
                     <button
                       className="dropdown-item"
-                      onClick={() => setSection("perfil")}
+                      onClick={() => handleSectionChange("perfil")}
                     >
                       <i className="bi bi-person me-2" />
                       Meu Perfil
@@ -154,7 +141,7 @@ export default function DashMain() {
                   <li>
                     <button
                       className="dropdown-item"
-                      onClick={() => setSection("configuracoes")}
+                      onClick={() => handleSectionChange("configuracoes")}
                     >
                       <i className="bi bi-gear me-2" />
                       Configurações
@@ -166,10 +153,10 @@ export default function DashMain() {
                   </li>
 
                   <li>
-                    <a className="dropdown-item" href="/">
+                    <button className="dropdown-item" onClick={handleLogout}>
                       <i className="bi bi-box-arrow-right me-2" />
                       Sair
-                    </a>
+                    </button>
                   </li>
                 </ul>
               </li>
@@ -187,7 +174,7 @@ export default function DashMain() {
               section={section}
               onChangeSection={setSection}
               fotoPerfil={fotoPerfil}
-              onUploadFoto={handleUploadFoto}
+              onUploadFoto={handleUpdateFoto} // aqui atualiza sidebar + menu
               nome={nome}
               email={email}
               nivel={3}
@@ -200,7 +187,9 @@ export default function DashMain() {
             {section === "overview" && <DashboardOverview />}
             {section === "cursos" && <DashboardCourses />}
             {section === "certificados" && <DashboardCertificados />}
-            {section === "perfil" && <DashboardPerfil />}
+            {section === "perfil" && (
+              <DashboardProfile onChangeFoto={handleUpdateFoto} fotoPerfil={fotoPerfil} />
+            )}
             {section === "configuracoes" && <DashboardConfiguracoes />}
           </div>
         </div>
