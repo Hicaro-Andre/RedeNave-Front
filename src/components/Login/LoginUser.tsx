@@ -1,3 +1,4 @@
+// src/components/Login/LoginUser.tsx
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -51,19 +52,15 @@ export default function LoginUser({ blok }: LoginUserProps) {
     typeof blok.logo === "object" && blok.logo?.filename ? blok.logo : null;
 
   // =========================
-  // CAPTURA LOGIN SOCIAL (REDIRECT)
+  // LOGIN SOCIAL REDIRECT (caso use redirect)
   // =========================
   useEffect(() => {
     setLoading(true);
 
     getSocialRedirectResult()
-      .then((result) => {
-        if (result?.user) {
-          // Salva a foto do Google/Facebook no localStorage
-          const userPhoto = result.user.photoURL || null;
-          if (userPhoto) {
-            localStorage.setItem("fotoPerfil", userPhoto);
-          }
+      .then((user) => {
+        if (user) {
+          if (user.photoURL) localStorage.setItem("fotoPerfil", user.photoURL);
           navigate("/dashboard");
         }
       })
@@ -71,9 +68,7 @@ export default function LoginUser({ blok }: LoginUserProps) {
         console.error(err);
         setError("Erro ao finalizar login social.");
       })
-      .finally(() => {
-        setLoading(false);
-      });
+      .finally(() => setLoading(false));
   }, []);
 
   // =========================
@@ -90,7 +85,8 @@ export default function LoginUser({ blok }: LoginUserProps) {
 
     try {
       setLoading(true);
-      await loginWithEmail(email, senha);
+      const user = await loginWithEmail(email, senha);
+      if (user.photoURL) localStorage.setItem("fotoPerfil", user.photoURL);
       navigate("/dashboard");
     } catch (err: any) {
       console.error(err);
@@ -110,10 +106,16 @@ export default function LoginUser({ blok }: LoginUserProps) {
     try {
       setLoading(true);
       setError(null);
-      await loginWithGoogle(); // navegação será feita no useEffect
+
+      const user = await loginWithGoogle();
+      if (user) {
+        if (user.photoURL) localStorage.setItem("fotoPerfil", user.photoURL);
+        navigate("/dashboard");
+      }
     } catch (err) {
       console.error(err);
       setError("Erro ao iniciar login com Google.");
+    } finally {
       setLoading(false);
     }
   };
@@ -125,10 +127,16 @@ export default function LoginUser({ blok }: LoginUserProps) {
     try {
       setLoading(true);
       setError(null);
-      await loginWithFacebook(); // navegação será feita no useEffect
+
+      const user = await loginWithFacebook();
+      if (user) {
+        if (user.photoURL) localStorage.setItem("fotoPerfil", user.photoURL);
+        navigate("/dashboard");
+      }
     } catch (err) {
       console.error(err);
       setError("Erro ao iniciar login com Facebook.");
+    } finally {
       setLoading(false);
     }
   };
@@ -143,27 +151,16 @@ export default function LoginUser({ blok }: LoginUserProps) {
                 {/* LADO ESQUERDO */}
                 <div className="col-md-5 login-image text-white d-none d-md-flex flex-column">
                   <div className="text-center">
-                    {image && (
-                      <img
-                        src={image.filename}
-                        alt={image.alt || "Logo"}
-                        style={{ width: "100px" }}
-                      />
-                    )}
+                    {image && <img src={image.filename} alt={image.alt || "Logo"} style={{ width: "100px" }} />}
                     <h3 className="mt-4 fw-bold">{blok.title}</h3>
                     <p className="mt-3 px-4 text-white">{blok.description}</p>
                     <div className="mt-5">
-                      {[blok.topics01, blok.topics02, blok.topics03].map(
-                        (topic, index) => (
-                          <div
-                            key={index}
-                            className="d-flex align-items-center justify-content-center mb-3"
-                          >
-                            <i className="bi bi-check-circle-fill me-2"></i>
-                            <span>{topic}</span>
-                          </div>
-                        )
-                      )}
+                      {[blok.topics01, blok.topics02, blok.topics03].map((topic, index) => (
+                        <div key={index} className="d-flex align-items-center justify-content-center mb-3">
+                          <i className="bi bi-check-circle-fill me-2"></i>
+                          <span>{topic}</span>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -180,21 +177,11 @@ export default function LoginUser({ blok }: LoginUserProps) {
 
                     {/* LOGIN SOCIAL */}
                     <div className="mb-4">
-                      <button
-                        type="button"
-                        className="social-login-btn"
-                        onClick={handleGoogleLogin}
-                        disabled={loading}
-                      >
+                      <button type="button" className="social-login-btn" onClick={handleGoogleLogin} disabled={loading}>
                         <i className="bi bi-google me-2"></i> {blok.card_login_google}
                       </button>
 
-                      <button
-                        type="button"
-                        className="social-login-btn"
-                        onClick={handleFacebookLogin}
-                        disabled={loading}
-                      >
+                      <button type="button" className="social-login-btn" onClick={handleFacebookLogin} disabled={loading}>
                         <i className="bi bi-facebook me-2"></i> {blok.card_login_face}
                       </button>
                     </div>
@@ -235,50 +222,28 @@ export default function LoginUser({ blok }: LoginUserProps) {
                             disabled={loading}
                             required
                           />
-                          <button
-                            type="button"
-                            className="btn btn-outline-secondary"
-                            onClick={() => setShowPassword(!showPassword)}
-                          >
-                            <i
-                              className={
-                                showPassword ? "bi bi-eye-slash" : "bi bi-eye"
-                              }
-                            ></i>
+                          <button type="button" className="btn btn-outline-secondary" onClick={() => setShowPassword(!showPassword)}>
+                            <i className={showPassword ? "bi bi-eye-slash" : "bi bi-eye"}></i>
                           </button>
                         </div>
                       </div>
 
                       <div className="d-flex justify-content-between align-items-center mb-4">
                         <div className="form-check">
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="lembrar"
-                          />
-                          <label className="form-check-label" htmlFor="lembrar">
-                            {blok.remind_me}
-                          </label>
+                          <input className="form-check-input" type="checkbox" id="lembrar" />
+                          <label className="form-check-label" htmlFor="lembrar">{blok.remind_me}</label>
                         </div>
 
-                        <Link to="/forgot" className="text-decoration-none">
-                          {blok.forgot_your_password}
-                        </Link>
+                        <Link to="/forgot" className="text-decoration-none">{blok.forgot_your_password}</Link>
                       </div>
 
-                      <button
-                        type="submit"
-                        className="btn btn-primary w-100 mb-3"
-                        disabled={loading}
-                      >
+                      <button type="submit" className="btn btn-primary w-100 mb-3" disabled={loading}>
                         {loading ? "Entrando..." : blok.button_card}
                       </button>
 
                       <div className="text-center">
                         <span className="text-muted">{blok.not_count} </span>
-                        <Link to="/cadastro" className="fw-bold">
-                          {blok.cad}
-                        </Link>
+                        <Link to="/cadastro" className="fw-bold">{blok.cad}</Link>
                       </div>
                     </form>
                   </div>
