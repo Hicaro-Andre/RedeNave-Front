@@ -1,3 +1,4 @@
+// src/services/authService.ts
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -5,6 +6,7 @@ import {
   getRedirectResult,
   GoogleAuthProvider,
   FacebookAuthProvider,
+  signInWithPopup,
   sendPasswordResetEmail,
   verifyPasswordResetCode,
   confirmPasswordReset,
@@ -12,58 +14,63 @@ import {
 
 import { auth } from "../config/firebase";
 
-/** Cadastro com email/senha **/
-export const registerWithEmail = async (
-  email: string,
-  password: string
-) => {
+/** ========================
+ * Cadastro com email/senha
+ * ======================== */
+export const registerWithEmail = async (email: string, password: string) => {
   return createUserWithEmailAndPassword(auth, email, password);
 };
 
-/** Login com email/senha **/
-export const loginWithEmail = async (
-  email: string,
-  password: string
-) => {
+/** ========================
+ * Login com email/senha
+ * ======================== */
+export const loginWithEmail = async (email: string, password: string) => {
   return signInWithEmailAndPassword(auth, email, password);
 };
 
-/** Login com Google  **/
+/** ========================
+ * Login com Google (Popup)
+ * ======================== */
 export const loginWithGoogle = async () => {
   const provider = new GoogleAuthProvider();
+  provider.setCustomParameters({ prompt: "select_account" });
 
-  provider.setCustomParameters({
-    prompt: "select_account",
-  });
-
-  await signInWithRedirect(auth, provider);
+  const result = await signInWithPopup(auth, provider);
+  return result.user; // Retorna o usuário logado
 };
 
-/** Login com Facebook **/
+/** ========================
+ * Login com Facebook (Redirect)
+ * ======================== */
 export const loginWithFacebook = async () => {
   const provider = new FacebookAuthProvider();
-
   await signInWithRedirect(auth, provider);
 };
 
+/** ========================
+ * Pegar resultado de login via redirect
+ * ======================== */
 export const getSocialRedirectResult = async () => {
   return getRedirectResult(auth);
 };
 
-/** Reset de senha **/
+/** ========================
+ * Reset de senha
+ * ======================== */
 export const resetPassword = (email: string) => {
   return sendPasswordResetEmail(auth, email);
 };
 
-/** Reset senha - valida código **/
+/** ========================
+ * Verifica código de reset de senha
+ * ======================== */
 export const verifyResetCode = (code: string) => {
   return verifyPasswordResetCode(auth, code);
 };
 
-/** Reset senha - confirma nova senha **/
-export const confirmNewPassword = (
-  code: string,
-  newPassword: string
-) => {
+/** ========================
+ * Confirma nova senha
+ * ======================== */
+export const confirmNewPassword = (code: string, newPassword: string) => {
   return confirmPasswordReset(auth, code, newPassword);
 };

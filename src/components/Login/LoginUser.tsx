@@ -53,8 +53,7 @@ export default function LoginUser({ blok }: LoginUserProps) {
       : null;
 
   /**
-   * 🔁 CAPTURA LOGIN SOCIAL APÓS REDIRECT
-   * Esse efeito roda quando o usuário volta do Google/Facebook
+   * 🔁 CAPTURA LOGIN SOCIAL APÓS REDIRECT (Facebook)
    */
   useEffect(() => {
     setLoading(true);
@@ -77,9 +76,7 @@ export default function LoginUser({ blok }: LoginUserProps) {
   /** =========================
    * LOGIN COM EMAIL E SENHA
    ========================= */
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
 
@@ -90,13 +87,10 @@ export default function LoginUser({ blok }: LoginUserProps) {
 
     try {
       setLoading(true);
-
       await loginWithEmail(email, senha);
-
       navigate("/dashboard");
     } catch (err: any) {
       console.error(err);
-
       if (err.code === "auth/user-not-found") {
         setError("Usuário não encontrado.");
       } else if (err.code === "auth/wrong-password") {
@@ -112,18 +106,19 @@ export default function LoginUser({ blok }: LoginUserProps) {
   };
 
   /** =========================
-   * LOGIN COM GOOGLE (REDIRECT)
+   * LOGIN COM GOOGLE (POPUP)
    ========================= */
   const handleGoogleLogin = async () => {
     try {
       setLoading(true);
       setError(null);
 
-      await loginWithGoogle();
-      // ⚠️ NÃO navega aqui
+      const user = await loginWithGoogle();
+      if (user) navigate("/dashboard"); // navega direto após login
     } catch (err) {
       console.error(err);
       setError("Erro ao iniciar login com Google.");
+    } finally {
       setLoading(false);
     }
   };
@@ -136,8 +131,7 @@ export default function LoginUser({ blok }: LoginUserProps) {
       setLoading(true);
       setError(null);
 
-      await loginWithFacebook();
-      // ⚠️ NÃO navega aqui
+      await loginWithFacebook(); // redireciona automaticamente
     } catch (err) {
       console.error(err);
       setError("Erro ao iniciar login com Facebook.");
@@ -162,12 +156,8 @@ export default function LoginUser({ blok }: LoginUserProps) {
                         style={{ width: "100px" }}
                       />
                     )}
-
                     <h3 className="mt-4 fw-bold">{blok.title}</h3>
-                    <p className="mt-3 px-4 text-white">
-                      {blok.description}
-                    </p>
-
+                    <p className="mt-3 px-4 text-white">{blok.description}</p>
                     <div className="mt-5">
                       {[blok.topics01, blok.topics02, blok.topics03].map(
                         (topic, index) => (
@@ -189,17 +179,11 @@ export default function LoginUser({ blok }: LoginUserProps) {
                   <div className="login-form">
                     <div className="text-center mb-4">
                       <h2 className="fw-bold">{blok.card_title}</h2>
-                      <p className="text-muted">
-                        {blok.card_description}
-                      </p>
+                      <p className="text-muted">{blok.card_description}</p>
                     </div>
 
                     {/* ERRO */}
-                    {error && (
-                      <div className="alert alert-danger">
-                        {error}
-                      </div>
-                    )}
+                    {error && <div className="alert alert-danger">{error}</div>}
 
                     {/* LOGIN SOCIAL */}
                     <div className="mb-4">
@@ -232,8 +216,7 @@ export default function LoginUser({ blok }: LoginUserProps) {
                     <form onSubmit={handleSubmit}>
                       <div className="mb-3">
                         <label className="form-label">
-                          <i className="bi bi-envelope"></i>{" "}
-                          {blok.form_email}
+                          <i className="bi bi-envelope"></i> {blok.form_email}
                         </label>
                         <input
                           type="email"
@@ -248,10 +231,8 @@ export default function LoginUser({ blok }: LoginUserProps) {
 
                       <div className="mb-3">
                         <label className="form-label">
-                          <i className="bi bi-lock"></i>{" "}
-                          {blok.form_senha}
+                          <i className="bi bi-lock"></i> {blok.form_senha}
                         </label>
-
                         <div className="input-group">
                           <input
                             type={showPassword ? "text" : "password"}
@@ -265,15 +246,11 @@ export default function LoginUser({ blok }: LoginUserProps) {
                           <button
                             type="button"
                             className="btn btn-outline-secondary"
-                            onClick={() =>
-                              setShowPassword(!showPassword)
-                            }
+                            onClick={() => setShowPassword(!showPassword)}
                           >
                             <i
                               className={
-                                showPassword
-                                  ? "bi bi-eye-slash"
-                                  : "bi bi-eye"
+                                showPassword ? "bi bi-eye-slash" : "bi bi-eye"
                               }
                             ></i>
                           </button>
@@ -287,18 +264,12 @@ export default function LoginUser({ blok }: LoginUserProps) {
                             type="checkbox"
                             id="lembrar"
                           />
-                          <label
-                            className="form-check-label"
-                            htmlFor="lembrar"
-                          >
+                          <label className="form-check-label" htmlFor="lembrar">
                             {blok.remind_me}
                           </label>
                         </div>
 
-                        <Link
-                          to="/forgot"
-                          className="text-decoration-none"
-                        >
+                        <Link to="/forgot" className="text-decoration-none">
                           {blok.forgot_your_password}
                         </Link>
                       </div>
@@ -312,13 +283,8 @@ export default function LoginUser({ blok }: LoginUserProps) {
                       </button>
 
                       <div className="text-center">
-                        <span className="text-muted">
-                          {blok.not_count}{" "}
-                        </span>
-                        <Link
-                          to="/cadastro"
-                          className="fw-bold"
-                        >
+                        <span className="text-muted">{blok.not_count} </span>
+                        <Link to="/cadastro" className="fw-bold">
                           {blok.cad}
                         </Link>
                       </div>
@@ -330,8 +296,7 @@ export default function LoginUser({ blok }: LoginUserProps) {
 
             <div className="text-center mt-4">
               <Link to="/" className="btn">
-                <i className="bi bi-arrow-left"></i>{" "}
-                {blok.button_section_home}
+                <i className="bi bi-arrow-left"></i> {blok.button_section_home}
               </Link>
             </div>
           </div>
