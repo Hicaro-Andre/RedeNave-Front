@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CropModal from "../Settings/CropModal";
 
 interface DashboardProfileProps {
@@ -6,22 +6,32 @@ interface DashboardProfileProps {
   onChangeFoto: (novaFoto: string) => void;
 }
 
-const DEFAULT_AVATAR =
-  "https://ui-avatars.com/api/?name=Maria+Silva&background=6f42c1&color=fff";
-
 const DashboardProfile: React.FC<DashboardProfileProps> = ({
   fotoPerfil,
   onChangeFoto,
 }) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [tempImage, setTempImage] = useState<string | null>(null);
+  const [nome, setNome] = useState<string>("");
+
+  useEffect(() => {
+    const nomeSalvo = localStorage.getItem("nome");
+    if (nomeSalvo) setNome(nomeSalvo);
+  }, []);
 
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
     const imageUrl = URL.createObjectURL(file);
     setTempImage(imageUrl);
+    onChangeFoto(imageUrl); // atualiza no estado do DashMain também
   };
+
+  // Avatar final: foto temporária > foto do usuário > avatar padrão com iniciais
+  const avatarSrc =
+    tempImage ||
+    fotoPerfil ||
+    `https://ui-avatars.com/api/?name=${encodeURIComponent(nome || "Usuário")}&background=6f42c1&color=fff`;
 
   return (
     <div className="dashboard-section">
@@ -34,7 +44,7 @@ const DashboardProfile: React.FC<DashboardProfileProps> = ({
             className="profile-avatar"
             onClick={() => fileInputRef.current?.click()}
           >
-            <img src={fotoPerfil || DEFAULT_AVATAR} alt="Avatar do usuário" />
+            <img src={avatarSrc} alt="Avatar do usuário" />
             <div className="avatar-overlay">
               <i className="bi bi-camera-fill"></i>
               <span>Alterar foto</span>
@@ -49,7 +59,7 @@ const DashboardProfile: React.FC<DashboardProfileProps> = ({
             onChange={handleAvatarChange}
           />
 
-          <h5 className="fw-bold mt-3 mb-1">Maria Silva</h5>
+          <h5 className="fw-bold mt-3 mb-1">{nome || "Usuário"}</h5>
           <span className="text-muted">Nível 3 • Plano Premium</span>
         </div>
 
@@ -61,7 +71,7 @@ const DashboardProfile: React.FC<DashboardProfileProps> = ({
             <label className="form-label fw-semibold">Nome</label>
             <input
               className="form-control profile-input"
-              value="Maria Silva"
+              value={nome || "Usuário"}
               disabled
             />
           </div>
@@ -70,7 +80,7 @@ const DashboardProfile: React.FC<DashboardProfileProps> = ({
             <label className="form-label fw-semibold">Email</label>
             <input
               className="form-control profile-input"
-              value="maria.silva@email.com"
+              value={localStorage.getItem("email") || ""}
               disabled
             />
           </div>
