@@ -10,25 +10,25 @@ import DashboardCourses from "./Layout/DashboardCourses";
 import DashboardCertificados from "./Layout/DashboardCertificates";
 import DashboardProfile from "./Layout/DashboardProfile";
 import DashboardConfiguracoes from "./Layout/DashboardSettings";
-import DashboardSidebar, {
-  DashboardSection,
-} from "./Layout/DashboardSidebar";
+import DashboardSidebar, { DashboardSection } from "./Layout/DashboardSidebar";
 
 export default function DashMain() {
   const [nome, setNome] = useState<string>("");
   const [fotoPerfil, setFotoPerfil] = useState<string | null>(null);
+  const [email, setEmail] = useState<string>(""); // ✅ Estado para email
   const [section, setSection] = useState<DashboardSection>("overview");
-  const email = ""; // se quiser, pode salvar o email do Google
 
   const navigate = useNavigate();
 
-  // Carrega nome e foto do localStorage ao iniciar
+  // Carrega nome, foto e email do localStorage ao iniciar
   useEffect(() => {
     const nomeSalvo = localStorage.getItem("nome");
     const fotoSalva = localStorage.getItem("fotoPerfil");
+    const emailSalvo = localStorage.getItem("email");
 
     if (nomeSalvo) setNome(nomeSalvo);
     if (fotoSalva) setFotoPerfil(fotoSalva);
+    if (emailSalvo) setEmail(emailSalvo);
   }, []);
 
   const closeMobileMenu = () => {
@@ -49,6 +49,7 @@ export default function DashMain() {
     await signOut(auth);
     localStorage.removeItem("nome");
     localStorage.removeItem("fotoPerfil");
+    localStorage.removeItem("email"); // remove email ao sair
     navigate("/login");
   };
 

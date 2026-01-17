@@ -1,9 +1,19 @@
+import { useEffect, useState } from "react";
 
 
 const DashboardOverview = () => {
+
+  const [nome, setNome] = useState<string>("");
+
+  useEffect(() => {
+    const nomeSalvo = localStorage.getItem("nome");
+    if (nomeSalvo) setNome(nomeSalvo);
+  }, []);
+
+
   return (
     <div className="dashboard-section">
-      <h2 className="fw-bold mb-4">Olá, Maria! 👋</h2>
+      <h2 className="fw-bold mb-4">Olá, {nome || "Usuário"}! 👋</h2>
       <p className="text-muted mb-4">
         Bem-vinda de volta! Aqui está um resumo do seu progresso.
       </p>
@@ -137,6 +147,8 @@ const DashboardOverview = () => {
 
     </div>
   );
+
 };
+
 
 export default DashboardOverview;

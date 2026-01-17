@@ -86,9 +86,18 @@ export default function LoginUser({ blok }: LoginUserProps) {
 
     try {
       setLoading(true);
+
       const user = await loginWithEmail(email, senha);
+
+      // Salva dados no localStorage
       if (user.displayName) localStorage.setItem("nome", user.displayName);
+      else localStorage.setItem("nome", "Usuário"); // fallback caso não tenha displayName
+
       if (user.photoURL) localStorage.setItem("fotoPerfil", user.photoURL);
+      else localStorage.removeItem("fotoPerfil"); // remove caso não exista
+
+      if (user.email) localStorage.setItem("email", user.email);
+
       navigate("/dashboard");
     } catch (err: any) {
       console.error(err);
@@ -100,6 +109,7 @@ export default function LoginUser({ blok }: LoginUserProps) {
       setLoading(false);
     }
   };
+
 
   // =========================
   // LOGIN COM GOOGLE
@@ -214,7 +224,7 @@ export default function LoginUser({ blok }: LoginUserProps) {
                       <span className="text-muted">{blok.or}</span>
                     </div>
 
-                    {/* FORM EMAIL/SENHA */}
+                    {/* login email/senha */}
                     <form onSubmit={handleSubmit}>
                       <div className="mb-3">
                         <label className="form-label">
