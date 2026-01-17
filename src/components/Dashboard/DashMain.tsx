@@ -29,7 +29,6 @@ export default function DashMain() {
     if (fotoSalva) setFotoPerfil(fotoSalva);
   }, []);
 
-  // Fecha menu mobile
   const closeMobileMenu = () => {
     const navbar = document.getElementById("navbarNav");
     if (navbar?.classList.contains("show")) navbar.classList.remove("show");
@@ -38,6 +37,10 @@ export default function DashMain() {
   const handleSectionChange = (name: DashboardSection) => {
     setSection(name);
     closeMobileMenu();
+  };
+
+  const handleMobileNav = (name: DashboardSection) => {
+    handleSectionChange(name);
   };
 
   const handleLogout = async () => {
@@ -79,7 +82,7 @@ export default function DashMain() {
               <li className="nav-item d-lg-none">
                 <button
                   className={`nav-link ${section === "overview" ? "active" : ""}`}
-                  onClick={() => handleSectionChange("overview")}
+                  onClick={() => handleMobileNav("overview")}
                 >
                   Visão Geral
                 </button>
@@ -87,7 +90,7 @@ export default function DashMain() {
               <li className="nav-item d-lg-none">
                 <button
                   className={`nav-link ${section === "cursos" ? "active" : ""}`}
-                  onClick={() => handleSectionChange("cursos")}
+                  onClick={() => handleMobileNav("cursos")}
                 >
                   Meus Cursos
                 </button>
@@ -95,7 +98,7 @@ export default function DashMain() {
               <li className="nav-item d-lg-none">
                 <button
                   className={`nav-link ${section === "certificados" ? "active" : ""}`}
-                  onClick={() => handleSectionChange("certificados")}
+                  onClick={() => handleMobileNav("certificados")}
                 >
                   Certificados
                 </button>
@@ -183,7 +186,7 @@ export default function DashMain() {
             {section === "perfil" && (
               <DashboardProfile
                 fotoPerfil={fotoPerfil}
-                onChangeFoto={(novaFoto) => {
+                onChangeFoto={(novaFoto: string) => {
                   setFotoPerfil(novaFoto);
                   localStorage.setItem("fotoPerfil", novaFoto);
                 }}
