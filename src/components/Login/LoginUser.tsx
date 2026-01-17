@@ -48,19 +48,23 @@ export default function LoginUser({ blok }: LoginUserProps) {
   const navigate = useNavigate();
 
   const image =
-    typeof blok.logo === "object" && blok.logo?.filename
-      ? blok.logo
-      : null;
+    typeof blok.logo === "object" && blok.logo?.filename ? blok.logo : null;
 
-  /**
-   * 🔁 CAPTURA LOGIN SOCIAL APÓS REDIRECT (Facebook)
-   */
+  // =========================
+  // CAPTURA LOGIN SOCIAL (REDIRECT)
+  // =========================
   useEffect(() => {
     setLoading(true);
 
     getSocialRedirectResult()
       .then((result) => {
         if (result?.user) {
+          // Salva a foto do Google no localStorage
+          const googlePhoto = result.user.photoURL || null;
+          if (googlePhoto) {
+            localStorage.setItem("fotoPerfil", googlePhoto);
+          }
+
           navigate("/dashboard");
         }
       })
@@ -73,9 +77,9 @@ export default function LoginUser({ blok }: LoginUserProps) {
       });
   }, []);
 
-  /** =========================
-   * LOGIN COM EMAIL E SENHA
-   ========================= */
+  // =========================
+  // LOGIN COM EMAIL/SENHA
+  // =========================
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
@@ -91,47 +95,38 @@ export default function LoginUser({ blok }: LoginUserProps) {
       navigate("/dashboard");
     } catch (err: any) {
       console.error(err);
-      if (err.code === "auth/user-not-found") {
-        setError("Usuário não encontrado.");
-      } else if (err.code === "auth/wrong-password") {
-        setError("Senha incorreta.");
-      } else if (err.code === "auth/invalid-email") {
-        setError("E-mail inválido.");
-      } else {
-        setError("Erro ao fazer login. Tente novamente.");
-      }
+      if (err.code === "auth/user-not-found") setError("Usuário não encontrado.");
+      else if (err.code === "auth/wrong-password") setError("Senha incorreta.");
+      else if (err.code === "auth/invalid-email") setError("E-mail inválido.");
+      else setError("Erro ao fazer login. Tente novamente.");
     } finally {
       setLoading(false);
     }
   };
 
-  /** =========================
-   * LOGIN COM GOOGLE (POPUP)
-   ========================= */
+  // =========================
+  // LOGIN COM GOOGLE
+  // =========================
   const handleGoogleLogin = async () => {
     try {
       setLoading(true);
       setError(null);
-
-      const user = await loginWithGoogle();
-      if (user) navigate("/dashboard"); // navega direto após login
+      await loginWithGoogle(); // navegação será feita no useEffect
     } catch (err) {
       console.error(err);
       setError("Erro ao iniciar login com Google.");
-    } finally {
       setLoading(false);
     }
   };
 
-  /** =========================
-   * LOGIN COM FACEBOOK (REDIRECT)
-   ========================= */
+  // =========================
+  // LOGIN COM FACEBOOK
+  // =========================
   const handleFacebookLogin = async () => {
     try {
       setLoading(true);
       setError(null);
-
-      await loginWithFacebook(); // redireciona automaticamente
+      await loginWithFacebook();
     } catch (err) {
       console.error(err);
       setError("Erro ao iniciar login com Facebook.");
@@ -149,27 +144,16 @@ export default function LoginUser({ blok }: LoginUserProps) {
                 {/* LADO ESQUERDO */}
                 <div className="col-md-5 login-image text-white d-none d-md-flex flex-column">
                   <div className="text-center">
-                    {image && (
-                      <img
-                        src={image.filename}
-                        alt={image.alt || "Logo"}
-                        style={{ width: "100px" }}
-                      />
-                    )}
+                    {image && <img src={image.filename} alt={image.alt || "Logo"} style={{ width: "100px" }} />}
                     <h3 className="mt-4 fw-bold">{blok.title}</h3>
                     <p className="mt-3 px-4 text-white">{blok.description}</p>
                     <div className="mt-5">
-                      {[blok.topics01, blok.topics02, blok.topics03].map(
-                        (topic, index) => (
-                          <div
-                            key={index}
-                            className="d-flex align-items-center justify-content-center mb-3"
-                          >
-                            <i className="bi bi-check-circle-fill me-2"></i>
-                            <span>{topic}</span>
-                          </div>
-                        )
-                      )}
+                      {[blok.topics01, blok.topics02, blok.topics03].map((topic, index) => (
+                        <div key={index} className="d-flex align-items-center justify-content-center mb-3">
+                          <i className="bi bi-check-circle-fill me-2"></i>
+                          <span>{topic}</span>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -182,29 +166,16 @@ export default function LoginUser({ blok }: LoginUserProps) {
                       <p className="text-muted">{blok.card_description}</p>
                     </div>
 
-                    {/* ERRO */}
                     {error && <div className="alert alert-danger">{error}</div>}
 
                     {/* LOGIN SOCIAL */}
                     <div className="mb-4">
-                      <button
-                        type="button"
-                        className="social-login-btn"
-                        onClick={handleGoogleLogin}
-                        disabled={loading}
-                      >
-                        <i className="bi bi-google me-2"></i>
-                        {blok.card_login_google}
+                      <button type="button" className="social-login-btn" onClick={handleGoogleLogin} disabled={loading}>
+                        <i className="bi bi-google me-2"></i> {blok.card_login_google}
                       </button>
 
-                      <button
-                        type="button"
-                        className="social-login-btn"
-                        onClick={handleFacebookLogin}
-                        disabled={loading}
-                      >
-                        <i className="bi bi-facebook me-2"></i>
-                        {blok.card_login_face}
+                      <button type="button" className="social-login-btn" onClick={handleFacebookLogin} disabled={loading}>
+                        <i className="bi bi-facebook me-2"></i> {blok.card_login_face}
                       </button>
                     </div>
 
@@ -233,6 +204,7 @@ export default function LoginUser({ blok }: LoginUserProps) {
                         <label className="form-label">
                           <i className="bi bi-lock"></i> {blok.form_senha}
                         </label>
+
                         <div className="input-group">
                           <input
                             type={showPassword ? "text" : "password"}
@@ -243,50 +215,28 @@ export default function LoginUser({ blok }: LoginUserProps) {
                             disabled={loading}
                             required
                           />
-                          <button
-                            type="button"
-                            className="btn btn-outline-secondary"
-                            onClick={() => setShowPassword(!showPassword)}
-                          >
-                            <i
-                              className={
-                                showPassword ? "bi bi-eye-slash" : "bi bi-eye"
-                              }
-                            ></i>
+                          <button type="button" className="btn btn-outline-secondary" onClick={() => setShowPassword(!showPassword)}>
+                            <i className={showPassword ? "bi bi-eye-slash" : "bi bi-eye"}></i>
                           </button>
                         </div>
                       </div>
 
                       <div className="d-flex justify-content-between align-items-center mb-4">
                         <div className="form-check">
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="lembrar"
-                          />
-                          <label className="form-check-label" htmlFor="lembrar">
-                            {blok.remind_me}
-                          </label>
+                          <input className="form-check-input" type="checkbox" id="lembrar" />
+                          <label className="form-check-label" htmlFor="lembrar">{blok.remind_me}</label>
                         </div>
 
-                        <Link to="/forgot" className="text-decoration-none">
-                          {blok.forgot_your_password}
-                        </Link>
+                        <Link to="/forgot" className="text-decoration-none">{blok.forgot_your_password}</Link>
                       </div>
 
-                      <button
-                        type="submit"
-                        className="btn btn-primary w-100 mb-3"
-                        disabled={loading}
-                      >
+                      <button type="submit" className="btn btn-primary w-100 mb-3" disabled={loading}>
                         {loading ? "Entrando..." : blok.button_card}
                       </button>
 
                       <div className="text-center">
                         <span className="text-muted">{blok.not_count} </span>
-                        <Link to="/cadastro" className="fw-bold">
-                          {blok.cad}
-                        </Link>
+                        <Link to="/cadastro" className="fw-bold">{blok.cad}</Link>
                       </div>
                     </form>
                   </div>

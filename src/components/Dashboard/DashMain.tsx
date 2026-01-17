@@ -10,7 +10,9 @@ import DashboardCourses from "./Layout/DashboardCourses";
 import DashboardCertificados from "./Layout/DashboardCertificates";
 import DashboardProfile from "./Layout/DashboardProfile";
 import DashboardConfiguracoes from "./Layout/DashboardSettings";
-import DashboardSidebar, { DashboardSection } from "./Layout/DashboardSidebar";
+import DashboardSidebar, {
+  DashboardSection,
+} from "./Layout/DashboardSidebar";
 
 export default function DashMain() {
   const nome = "Maria Silva";
@@ -21,7 +23,7 @@ export default function DashMain() {
 
   const navigate = useNavigate();
 
-  // Carrega foto do localStorage ao iniciar (upload manual ou Google)
+  // Carrega foto do localStorage ao iniciar
   useEffect(() => {
     const fotoSalva = localStorage.getItem("fotoPerfil");
     if (fotoSalva) setFotoPerfil(fotoSalva);
@@ -38,19 +40,9 @@ export default function DashMain() {
     closeMobileMenu();
   };
 
-  const handleMobileNav = (name: DashboardSection) => {
-    handleSectionChange(name);
-  };
-
   const handleLogout = async () => {
     await signOut(auth);
     navigate("/login");
-  };
-
-  // Atualiza foto (Sidebar + menu + localStorage)
-  const handleUpdateFoto = (novaFoto: string) => {
-    setFotoPerfil(novaFoto);
-    localStorage.setItem("fotoPerfil", novaFoto);
   };
 
   return (
@@ -87,7 +79,7 @@ export default function DashMain() {
               <li className="nav-item d-lg-none">
                 <button
                   className={`nav-link ${section === "overview" ? "active" : ""}`}
-                  onClick={() => handleMobileNav("overview")}
+                  onClick={() => handleSectionChange("overview")}
                 >
                   Visão Geral
                 </button>
@@ -95,7 +87,7 @@ export default function DashMain() {
               <li className="nav-item d-lg-none">
                 <button
                   className={`nav-link ${section === "cursos" ? "active" : ""}`}
-                  onClick={() => handleMobileNav("cursos")}
+                  onClick={() => handleSectionChange("cursos")}
                 >
                   Meus Cursos
                 </button>
@@ -103,7 +95,7 @@ export default function DashMain() {
               <li className="nav-item d-lg-none">
                 <button
                   className={`nav-link ${section === "certificados" ? "active" : ""}`}
-                  onClick={() => handleMobileNav("certificados")}
+                  onClick={() => handleSectionChange("certificados")}
                 >
                   Certificados
                 </button>
@@ -168,13 +160,15 @@ export default function DashMain() {
       {/* DASHBOARD */}
       <div className="container-fluid py-4">
         <div className="row">
-          {/* SIDEBAR (DESKTOP) */}
           <div className="col-lg-3 d-none d-lg-block">
             <DashboardSidebar
               section={section}
               onChangeSection={setSection}
               fotoPerfil={fotoPerfil}
-              onUploadFoto={handleUpdateFoto} // aqui atualiza sidebar + menu
+              onUploadFoto={(novaFoto: string) => {
+                setFotoPerfil(novaFoto);
+                localStorage.setItem("fotoPerfil", novaFoto);
+              }}
               nome={nome}
               email={email}
               nivel={3}
@@ -182,13 +176,18 @@ export default function DashMain() {
             />
           </div>
 
-          {/* MAIN */}
           <div className="col-lg-9">
             {section === "overview" && <DashboardOverview />}
             {section === "cursos" && <DashboardCourses />}
             {section === "certificados" && <DashboardCertificados />}
             {section === "perfil" && (
-              <DashboardProfile onChangeFoto={handleUpdateFoto} fotoPerfil={fotoPerfil} />
+              <DashboardProfile
+                fotoPerfil={fotoPerfil}
+                onChangeFoto={(novaFoto) => {
+                  setFotoPerfil(novaFoto);
+                  localStorage.setItem("fotoPerfil", novaFoto);
+                }}
+              />
             )}
             {section === "configuracoes" && <DashboardConfiguracoes />}
           </div>
