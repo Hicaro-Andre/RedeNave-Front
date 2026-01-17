@@ -1,12 +1,9 @@
-import { useEffect } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
-import "/src/styles/admin.css";
-import "/src/styles/dashboard.css";
+import "/src/styles/admin.css"
+import "/src/styles/dashboard.css"
 
 import BackToTop from "./components/BackToTop";
-import { ScrollToTop } from "./components/ScrollToTop";
-
 import Home from "./pages/Home";
 import Trails from "./pages/Trails";
 import Events from "./pages/Events";
@@ -21,35 +18,17 @@ import NotFound from "./components/NotFound";
 import ForgotPassword from "./components/Login/ForgotPassword";
 import ResetPassword from "./components/Login/ResetPassword";
 import Course from "./pages/Course";
+import { ScrollToTop } from "./components/ScrollToTop";
 
-import { getSocialRedirectResult } from "./services/authService";
 
-// 🔹 Componente wrapper para gerenciar login social global
-function AppWrapper() {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const checkSocialLogin = async () => {
-      try {
-        const result = await getSocialRedirectResult();
-        if (result?.user) {
-          // Redireciona para dashboard após login social
-          navigate("/dashboard");
-        }
-      } catch (err) {
-        console.error("Erro ao finalizar login social:", err);
-      }
-    };
-
-    checkSocialLogin();
-  }, [navigate]);
+function App() {
 
   return (
+
     <div className="App">
       <ScrollToTop />
-
-      {/* Rotas principais */}
       <Routes>
+        {/* Routes Páginas */}
         <Route path="/" element={<Home />} />
         <Route path="/trilhas" element={<Trails />} />
         <Route path="/eventos" element={<Events />} />
@@ -58,24 +37,24 @@ function AppWrapper() {
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Register />} />
         <Route path="/privacypolicy" element={<PrivacyPolicy />} />
-        <Route path="/admin/*" element={<AdminMain />} />
-        <Route path="/dashboard/*" element={<DashMain />} />
+        <Route path="/admin" element={<AdminMain />} />
+        <Route path="/dashboard" element={<DashMain />} />
         <Route path="/forgot" element={<ForgotPassword />} />
+
+        {/* Rota para recuperação de senha */}
         <Route path="/reset" element={<ResetPassword />} />
+
+        {/* Routes Cursos */}
         <Route path="/cursos/:id" element={<Course />} />
 
         {/* Not Found */}
         <Route path="*" element={<NotFound />} />
       </Routes>
 
+      {/* Botão Voltar ao Topo Global */}
       <BackToTop />
     </div>
   );
-}
-
-// 🔹 Componente principal do App
-function App() {
-  return <AppWrapper />;
 }
 
 export default App;

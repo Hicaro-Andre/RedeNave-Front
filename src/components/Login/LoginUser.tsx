@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   loginWithEmail,
   loginWithGoogle,
   loginWithFacebook,
+  getSocialRedirectResult,
 } from "../../services/authService";
 
 type StoryblokAsset = {
@@ -51,8 +52,34 @@ export default function LoginUser({ blok }: LoginUserProps) {
       ? blok.logo
       : null;
 
-  /** LOGIN EMAIL/SENHA */
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  /**
+   * 🔁 CAPTURA LOGIN SOCIAL APÓS REDIRECT
+   * Esse efeito roda quando o usuário volta do Google/Facebook
+   */
+  useEffect(() => {
+    setLoading(true);
+
+    getSocialRedirectResult()
+      .then((result) => {
+        if (result?.user) {
+          navigate("/dashboard");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        setError("Erro ao finalizar login social.");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+
+  /** =========================
+   * LOGIN COM EMAIL E SENHA
+   ========================= */
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
     setError(null);
 
@@ -63,10 +90,13 @@ export default function LoginUser({ blok }: LoginUserProps) {
 
     try {
       setLoading(true);
+
       await loginWithEmail(email, senha);
+
       navigate("/dashboard");
     } catch (err: any) {
       console.error(err);
+
       if (err.code === "auth/user-not-found") {
         setError("Usuário não encontrado.");
       } else if (err.code === "auth/wrong-password") {
@@ -81,13 +111,16 @@ export default function LoginUser({ blok }: LoginUserProps) {
     }
   };
 
-  /** LOGIN GOOGLE */
+  /** =========================
+   * LOGIN COM GOOGLE (REDIRECT)
+   ========================= */
   const handleGoogleLogin = async () => {
     try {
       setLoading(true);
       setError(null);
+
       await loginWithGoogle();
-      // redirecionamento será feito pelo hook do App
+      // ⚠️ NÃO navega aqui
     } catch (err) {
       console.error(err);
       setError("Erro ao iniciar login com Google.");
@@ -95,13 +128,16 @@ export default function LoginUser({ blok }: LoginUserProps) {
     }
   };
 
-  /** LOGIN FACEBOOK */
+  /** =========================
+   * LOGIN COM FACEBOOK (REDIRECT)
+   ========================= */
   const handleFacebookLogin = async () => {
     try {
       setLoading(true);
       setError(null);
+
       await loginWithFacebook();
-      // redirecionamento será feito pelo hook do App
+      // ⚠️ NÃO navega aqui
     } catch (err) {
       console.error(err);
       setError("Erro ao iniciar login com Facebook.");
@@ -126,19 +162,46 @@ export default function LoginUser({ blok }: LoginUserProps) {
                         style={{ width: "100px" }}
                       />
                     )}
+
                     <h3 className="mt-4 fw-bold">{blok.title}</h3>
-                    <p className="mt-3 px-4 text-white">{blok.description}</p>
+                    <p className="mt-3 px-4 text-white">
+                      {blok.description}
+                    </p>
+
+                    <div className="mt-5">
+                      {[blok.topics01, blok.topics02, blok.topics03].map(
+                        (topic, index) => (
+                          <div
+                            key={index}
+                            className="d-flex align-items-center justify-content-center mb-3"
+                          >
+                            <i className="bi bi-check-circle-fill me-2"></i>
+                            <span>{topic}</span>
+                          </div>
+                        )
+                      )}
+                    </div>
                   </div>
                 </div>
 
                 {/* FORMULÁRIO */}
                 <div className="col-md-7">
                   <div className="login-form">
-                    <h2 className="fw-bold">{blok.card_title}</h2>
-                    <p className="text-muted">{blok.card_description}</p>
+                    <div className="text-center mb-4">
+                      <h2 className="fw-bold">{blok.card_title}</h2>
+                      <p className="text-muted">
+                        {blok.card_description}
+                      </p>
+                    </div>
 
-                    {error && <div className="alert alert-danger">{error}</div>}
+                    {/* ERRO */}
+                    {error && (
+                      <div className="alert alert-danger">
+                        {error}
+                      </div>
+                    )}
 
+                    {/* LOGIN SOCIAL */}
                     <div className="mb-4">
                       <button
                         type="button"
@@ -161,9 +224,17 @@ export default function LoginUser({ blok }: LoginUserProps) {
                       </button>
                     </div>
 
+                    <div className="text-center mb-4">
+                      <span className="text-muted">{blok.or}</span>
+                    </div>
+
+                    {/* FORM EMAIL/SENHA */}
                     <form onSubmit={handleSubmit}>
                       <div className="mb-3">
-                        <label className="form-label">{blok.form_email}</label>
+                        <label className="form-label">
+                          <i className="bi bi-envelope"></i>{" "}
+                          {blok.form_email}
+                        </label>
                         <input
                           type="email"
                           className="form-control"
@@ -176,7 +247,11 @@ export default function LoginUser({ blok }: LoginUserProps) {
                       </div>
 
                       <div className="mb-3">
-                        <label className="form-label">{blok.form_senha}</label>
+                        <label className="form-label">
+                          <i className="bi bi-lock"></i>{" "}
+                          {blok.form_senha}
+                        </label>
+
                         <div className="input-group">
                           <input
                             type={showPassword ? "text" : "password"}
@@ -190,15 +265,42 @@ export default function LoginUser({ blok }: LoginUserProps) {
                           <button
                             type="button"
                             className="btn btn-outline-secondary"
-                            onClick={() => setShowPassword(!showPassword)}
+                            onClick={() =>
+                              setShowPassword(!showPassword)
+                            }
                           >
                             <i
                               className={
-                                showPassword ? "bi bi-eye-slash" : "bi bi-eye"
+                                showPassword
+                                  ? "bi bi-eye-slash"
+                                  : "bi bi-eye"
                               }
                             ></i>
                           </button>
                         </div>
+                      </div>
+
+                      <div className="d-flex justify-content-between align-items-center mb-4">
+                        <div className="form-check">
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="lembrar"
+                          />
+                          <label
+                            className="form-check-label"
+                            htmlFor="lembrar"
+                          >
+                            {blok.remind_me}
+                          </label>
+                        </div>
+
+                        <Link
+                          to="/forgot"
+                          className="text-decoration-none"
+                        >
+                          {blok.forgot_your_password}
+                        </Link>
                       </div>
 
                       <button
@@ -208,6 +310,18 @@ export default function LoginUser({ blok }: LoginUserProps) {
                       >
                         {loading ? "Entrando..." : blok.button_card}
                       </button>
+
+                      <div className="text-center">
+                        <span className="text-muted">
+                          {blok.not_count}{" "}
+                        </span>
+                        <Link
+                          to="/cadastro"
+                          className="fw-bold"
+                        >
+                          {blok.cad}
+                        </Link>
+                      </div>
                     </form>
                   </div>
                 </div>
@@ -216,6 +330,7 @@ export default function LoginUser({ blok }: LoginUserProps) {
 
             <div className="text-center mt-4">
               <Link to="/" className="btn">
+                <i className="bi bi-arrow-left"></i>{" "}
                 {blok.button_section_home}
               </Link>
             </div>
