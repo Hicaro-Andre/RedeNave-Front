@@ -33,7 +33,7 @@ export const loginWithGoogle = async (): Promise<User | null> => {
     provider.setCustomParameters({ prompt: "select_account" });
 
     const result = await signInWithPopup(auth, provider);
-    return result.user; // Retorna o usuário logado
+    return result.user; // retorna displayName, photoURL, email etc
   } catch (err) {
     console.error("Erro no login com Google:", err);
     return null;

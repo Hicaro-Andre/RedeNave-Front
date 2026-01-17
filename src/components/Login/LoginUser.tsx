@@ -60,6 +60,7 @@ export default function LoginUser({ blok }: LoginUserProps) {
     getSocialRedirectResult()
       .then((user) => {
         if (user) {
+          if (user.displayName) localStorage.setItem("nome", user.displayName);
           if (user.photoURL) localStorage.setItem("fotoPerfil", user.photoURL);
           navigate("/dashboard");
         }
@@ -86,6 +87,7 @@ export default function LoginUser({ blok }: LoginUserProps) {
     try {
       setLoading(true);
       const user = await loginWithEmail(email, senha);
+      if (user.displayName) localStorage.setItem("nome", user.displayName);
       if (user.photoURL) localStorage.setItem("fotoPerfil", user.photoURL);
       navigate("/dashboard");
     } catch (err: any) {
@@ -109,6 +111,7 @@ export default function LoginUser({ blok }: LoginUserProps) {
 
       const user = await loginWithGoogle();
       if (user) {
+        if (user.displayName) localStorage.setItem("nome", user.displayName);
         if (user.photoURL) localStorage.setItem("fotoPerfil", user.photoURL);
         navigate("/dashboard");
       }
@@ -130,6 +133,7 @@ export default function LoginUser({ blok }: LoginUserProps) {
 
       const user = await loginWithFacebook();
       if (user) {
+        if (user.displayName) localStorage.setItem("nome", user.displayName);
         if (user.photoURL) localStorage.setItem("fotoPerfil", user.photoURL);
         navigate("/dashboard");
       }
@@ -151,12 +155,21 @@ export default function LoginUser({ blok }: LoginUserProps) {
                 {/* LADO ESQUERDO */}
                 <div className="col-md-5 login-image text-white d-none d-md-flex flex-column">
                   <div className="text-center">
-                    {image && <img src={image.filename} alt={image.alt || "Logo"} style={{ width: "100px" }} />}
+                    {image && (
+                      <img
+                        src={image.filename}
+                        alt={image.alt || "Logo"}
+                        style={{ width: "100px" }}
+                      />
+                    )}
                     <h3 className="mt-4 fw-bold">{blok.title}</h3>
                     <p className="mt-3 px-4 text-white">{blok.description}</p>
                     <div className="mt-5">
                       {[blok.topics01, blok.topics02, blok.topics03].map((topic, index) => (
-                        <div key={index} className="d-flex align-items-center justify-content-center mb-3">
+                        <div
+                          key={index}
+                          className="d-flex align-items-center justify-content-center mb-3"
+                        >
                           <i className="bi bi-check-circle-fill me-2"></i>
                           <span>{topic}</span>
                         </div>
@@ -177,12 +190,22 @@ export default function LoginUser({ blok }: LoginUserProps) {
 
                     {/* login com google */}
                     <div className="mb-4">
-                      <button type="button" className="social-login-btn bg-text" onClick={handleGoogleLogin} disabled={loading}>
+                      <button
+                        type="button"
+                        className="social-login-btn bg-text"
+                        onClick={handleGoogleLogin}
+                        disabled={loading}
+                      >
                         <i className="bi bi-google me-2"></i> {blok.card_login_google}
                       </button>
 
                       {/* login com facebook */}
-                      <button type="button" className="social-login-btn bg-text" onClick={handleFacebookLogin} disabled={loading}>
+                      <button
+                        type="button"
+                        className="social-login-btn bg-text"
+                        onClick={handleFacebookLogin}
+                        disabled={loading}
+                      >
                         <i className="bi bi-facebook me-2 "></i> {blok.card_login_face}
                       </button>
                     </div>
@@ -223,7 +246,11 @@ export default function LoginUser({ blok }: LoginUserProps) {
                             disabled={loading}
                             required
                           />
-                          <button type="button" className="btn btn-outline-secondary" onClick={() => setShowPassword(!showPassword)}>
+                          <button
+                            type="button"
+                            className="btn btn-outline-secondary"
+                            onClick={() => setShowPassword(!showPassword)}
+                          >
                             <i className={showPassword ? "bi bi-eye-slash" : "bi bi-eye"}></i>
                           </button>
                         </div>
@@ -231,20 +258,37 @@ export default function LoginUser({ blok }: LoginUserProps) {
 
                       <div className="d-flex justify-content-between align-items-center mb-4">
                         <div className="form-check">
-                          <input className="form-check-input" type="checkbox" id="lembrar" />
-                          <label className="form-check-label" htmlFor="lembrar">{blok.remind_me}</label>
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            id="lembrar"
+                          />
+                          <label className="form-check-label" htmlFor="lembrar">
+                            {blok.remind_me}
+                          </label>
                         </div>
 
-                        <Link to="/forgot" className="text-decoration-none bg-text">{blok.forgot_your_password}</Link>
+                        <Link to="/forgot" className="text-decoration-none bg-text">
+                          {blok.forgot_your_password}
+                        </Link>
                       </div>
 
-                      <button type="submit" className="btn btn-primary w-100 mb-3" disabled={loading}>
+                      <button
+                        type="submit"
+                        className="btn btn-primary w-100 mb-3"
+                        disabled={loading}
+                      >
                         {loading ? "Entrando..." : blok.button_card}
                       </button>
 
                       <div className="text-center">
                         <span className="text-muted">{blok.not_count} </span>
-                        <Link to="/cadastro" className="fw-bold text-decoration-none bg-text">{blok.cad}</Link>
+                        <Link
+                          to="/cadastro"
+                          className="fw-bold text-decoration-none bg-text"
+                        >
+                          {blok.cad}
+                        </Link>
                       </div>
                     </form>
                   </div>

@@ -15,20 +15,20 @@ import DashboardSidebar, {
 } from "./Layout/DashboardSidebar";
 
 export default function DashMain() {
-  const [nome, setNome] = useState<string>(""); // agora carregamos do localStorage
-  const [section, setSection] = useState<DashboardSection>("overview");
+  const [nome, setNome] = useState<string>("");
   const [fotoPerfil, setFotoPerfil] = useState<string | null>(null);
-  const email = ""; // Se você quiser, pode salvar email do Firebase aqui
+  const [section, setSection] = useState<DashboardSection>("overview");
+  const email = ""; // se quiser, pode salvar o email do Google
 
   const navigate = useNavigate();
 
   // Carrega nome e foto do localStorage ao iniciar
   useEffect(() => {
-    const fotoSalva = localStorage.getItem("fotoPerfil");
     const nomeSalvo = localStorage.getItem("nome");
+    const fotoSalva = localStorage.getItem("fotoPerfil");
 
-    if (fotoSalva) setFotoPerfil(fotoSalva);
     if (nomeSalvo) setNome(nomeSalvo);
+    if (fotoSalva) setFotoPerfil(fotoSalva);
   }, []);
 
   const closeMobileMenu = () => {
