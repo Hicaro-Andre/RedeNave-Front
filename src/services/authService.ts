@@ -43,9 +43,12 @@ export const loginWithGoogle = async (): Promise<User | null> => {
 /* Login com Facebook (Popup) */
 export const loginWithFacebook = async (): Promise<User | null> => {
   try {
+    // Cria o provider do Facebook
     const provider = new FacebookAuthProvider();
-    const result = await signInWithPopup(auth, provider); // Mudamos para Popup
-    return result.user; // Retorna o usuário logado
+    // NÃO adicionamos provider.addScope("email") para evitar Invalid Scopes
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user as User; // Força o tipo correto
+    return user; // Retorna o usuário logado
   } catch (err) {
     console.error("Erro no login com Facebook:", err);
     return null;
