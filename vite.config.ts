@@ -1,15 +1,15 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
   build: {
-    outDir: "dist", // certifique-se de que é 'dist'
+    outDir: "dist",
   },
   preview: {
-    port: 4173, // ou a porta que você está usando
+    port: 4173,
     allowedHosts: [
-      'metaphrastical-finn-monetarily.ngrok-free.dev'
-    ]
-  }
-})
+      "convertible-ribbon-tell-councils.trycloudflare.com",
+    ],
+  },
+});
