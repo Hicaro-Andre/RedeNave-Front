@@ -47,7 +47,7 @@ body {
   display: flex;
   flex-direction: column;
 
-  overflow-y: auto; /*  scroll interno */
+  overflow-y: auto; /* scroll interno */
   z-index: 1000;
   transition: transform 0.35s ease;
 }
@@ -116,6 +116,48 @@ body {
 .sidebar-nav li span {
   white-space: nowrap;
 }
+
+/* =====================================================
+   FOOTER DO SIDEBAR (BOTÃO SAIR)
+   ===================================================== */
+.sidebar-footer {
+  margin-top: auto; /* empurra pro final */
+  padding: 16px 12px 24px;
+}
+
+.logout-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: none;
+
+  background: rgba(255, 255, 255, 0.08);
+  color: #f7f3ff;
+
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+
+  opacity: 0.85;
+  transition: background 0.25s ease, transform 0.25s ease, opacity 0.25s ease;
+}
+
+.logout-btn i {
+  font-size: 18px;
+  min-width: 20px;
+  text-align: center;
+}
+
+.logout-btn:hover {
+  background: rgba(255, 80, 80, 0.25);
+  opacity: 1;
+  transform: translateX(4px);
+}
+
 
 /* =====================================================
    MAIN CONTENT

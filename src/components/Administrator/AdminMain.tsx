@@ -1,6 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { auth } from "../../config/firebase";
 
 import "/src/styles/admin.css";
+
 import AdminOverview from "./Layout/AdminOverview";
 import AdminUsers from "./Layout/AdminUsers";
 import AdminTracks from "./Layout/AdminTracks";
@@ -23,6 +27,17 @@ type AdminPage =
 const AdminMain: React.FC = () => {
   const [activePage, setActivePage] = useState<AdminPage>("overview");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      navigate("/login");
+    } catch (error) {
+      console.error("Erro ao sair:", error);
+    }
+  };
 
   return (
     <div className="dashboard-container">
@@ -62,6 +77,14 @@ const AdminMain: React.FC = () => {
             ))}
           </ul>
         </nav>
+
+        {/* FOOTER DO SIDEBAR */}
+        <footer className="sidebar-footer">
+          <button className="logout-btn" onClick={handleLogout}>
+            <i className="bi bi-box-arrow-right" />
+            <span>Sair</span>
+          </button>
+        </footer>
       </aside>
 
       {/* SETA FLUTUANTE (MOBILE) */}
