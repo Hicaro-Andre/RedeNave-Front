@@ -12,7 +12,11 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,
-    "baseUrl": ".",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "allowJs":true,
+    "noEmit": false,
+    "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"]
     },

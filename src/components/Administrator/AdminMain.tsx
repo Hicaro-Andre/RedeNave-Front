@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../../config/firebase";
 
+import logo from "/src/assets/logoRedeNave.png"
+
 import "/src/styles/admin.css";
 
 import AdminOverview from "./Layout/AdminOverview";
@@ -46,7 +48,7 @@ const AdminMain: React.FC = () => {
         <div className="sidebar-header">
           <div className="sidebar-logo">
             <a href="/">
-              <img src="/src/assets/logoRedeNave.png" alt="Rede Nave" />
+              <img src={logo} alt="Rede Nave" />
             </a>
           </div>
         </div>
