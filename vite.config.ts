@@ -1,16 +1,22 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
   build: {
-    outDir: "dist", // pasta de build
+    outDir: "dist",
   },
   preview: {
     port: 4173,
-    allowedHosts: [
-      'convertible-ribbon-tell-councils.trycloudflare.com'
-    ],
+    // adiciona seu host do Cloudflare Tunnel
+    allowedHosts: ["convertible-ribbon-tell-councils.trycloudflare.com"],
+    // fallback SPA
+    // faz todas as requisições caírem no index.html
+    proxy: {},
   },
-  base: '/', // garante que todas as rotas apontem para /
+  server: {
+    fs: {
+      allow: ["."], // permite acesso ao filesystem do projeto
+    },
+  },
 });
