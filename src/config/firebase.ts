@@ -1,6 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
+// Configuração do Firebase (envs ok ✅)
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -10,8 +12,11 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
-// Inicializa o Firebase
+// Inicializa o app
 const app = initializeApp(firebaseConfig);
 
-//Instância do Auth
+// 🔐 Auth
 export const auth = getAuth(app);
+
+// 🗄️ Firestore (DB)
+export const db = getFirestore(app);
