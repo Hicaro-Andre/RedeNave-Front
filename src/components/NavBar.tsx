@@ -1,11 +1,17 @@
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import logo from "/src/assets/logoRedeNave.png";
+import { useAuth } from "../context/AuthContext";
 
 export default function Navbar() {
   const location = useLocation();
   const currentPath = location.pathname;
   const [scrollProgress, setScrollProgress] = useState<number>(0);
+
+  const { user, loading } = useAuth();
+
+  // Evita flicker enquanto carrega auth
+  if (loading) return null;
 
   // Verifica se um link está ativo
   const isActive = (path: string): boolean => {
@@ -232,7 +238,6 @@ export default function Navbar() {
                   { path: "/eventos", label: "Eventos" },
                   { path: "/sobre", label: "Sobre" },
                   { path: "/suporte", label: "Suporte" },
-                  { path: "/login", label: "Entrar", icon: "bi bi-box-arrow-in-right" },
                 ].map(item => (
                   <li key={item.path} className="nav-item">
                     <Link
@@ -240,20 +245,56 @@ export default function Navbar() {
                       to={item.path}
                       onClick={closeOffcanvas}
                     >
-                      {item.icon && <i className={item.icon}></i>} {item.label}
+                      {item.label}
                     </Link>
                   </li>
                 ))}
+
+                {!user && (
+                  <li className="nav-item">
+                    <Link
+                      className={`nav-link ${isActive("/login") ? "active" : ""}`}
+                      to="/login"
+                      onClick={closeOffcanvas}
+                    >
+                      <i className="bi bi-box-arrow-in-right"></i> Entrar
+                    </Link>
+                  </li>
+                )}
+
+                {user && (
+                  <li className="nav-item">
+                    <Link
+                      className={`nav-link ${isActive("/dashboard") ? "active" : ""}`}
+                      to="/dashboard"
+                      onClick={closeOffcanvas}
+                    >
+                      Meu Painel
+                    </Link>
+                  </li>
+                )}
               </ul>
 
-              <div className="d-flex mt-3 mt-lg-0">
-                <Link
-                  className={`btn  btn-sm  ms-2 ${isActive("/cadastro") ? "active" : ""}`}
-                  to="/cadastro"
-                  onClick={closeOffcanvas}
-                >
-                  Cadastre-se
-                </Link>
+              <div className="d-flex align-items-center mt-3 mt-lg-0">
+                {!user && (
+                  <Link
+                    className={`btn btn-sm ms-2 ${isActive("/cadastro") ? "active" : ""}`}
+                    to="/cadastro"
+                    onClick={closeOffcanvas}
+                  >
+                    Cadastre-se
+                  </Link>
+                )}
+
+                {user && (
+                  <div
+                    className="ms-3 rounded-circle bg-secondary text-white d-flex justify-content-center align-items-center"
+                    style={{ width: 36, height: 36 }}
+                    title={user.email ?? ""}
+                  >
+                    {user.email?.charAt(0).toUpperCase()}
+                  </div>
+                )}
               </div>
             </div>
           </div>

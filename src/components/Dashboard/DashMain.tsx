@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../../config/firebase";
 
@@ -58,13 +58,9 @@ export default function DashMain() {
       {/* NAVBAR */}
       <nav className="navbar navbar-expand-lg navbar-dark sticky-top">
         <div className="container-fluid">
-          <button
-            className="navbar-brand fw-bold bg-transparent border-0"
-            onClick={() => handleSectionChange("overview")}
-          >
-            {" "}
-            <img src={logo} alt="Rede Nave" style={{ width: 70 }} />{" "}
-          </button>
+          <Link to="/" className="navbar-brand fw-bold bg-transparent border-0 text-decoration-none">
+            <img src={logo} alt="Rede Nave" style={{ width: 70 }} />
+          </Link>
 
           <button
             className="navbar-toggler"
