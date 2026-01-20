@@ -212,7 +212,7 @@ export default function Navbar() {
                         </button>
 
                         <ul className="dropdown-menu dropdown-menu-end mt-2">
-                          <li>
+                          {/* <li>
                             <Link className="dropdown-item" to="/perfil">
                               Meu Perfil
                             </Link>
@@ -221,10 +221,10 @@ export default function Navbar() {
                             <Link className="dropdown-item" to="/configuracoes">
                               Configurações
                             </Link>
-                          </li>
-                          <li>
+                          </li> */}
+                          {/* <li>
                             <hr className="dropdown-divider" />
-                          </li>
+                          </li> */}
                           <li>
                             <button className="dropdown-item" onClick={handleLogout}>
                               Sair
@@ -257,7 +257,7 @@ export default function Navbar() {
                         </div>
 
                         <ul className="navbar-nav">
-                          <li className="nav-item">
+                          {/* <li className="nav-item">
                             <Link className="nav-link" to="/perfil" onClick={closeOffcanvas}>
                               Meu Perfil
                             </Link>
@@ -270,7 +270,7 @@ export default function Navbar() {
                             >
                               Configurações
                             </Link>
-                          </li>
+                          </li> */}
                           <li className="nav-item">
                             <button
                               className="nav-link btn btn-link text-start"
