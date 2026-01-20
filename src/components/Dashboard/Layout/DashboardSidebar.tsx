@@ -11,8 +11,8 @@ interface DashboardSidebarProps {
   section: DashboardSection;
   onChangeSection: (section: DashboardSection) => void;
   fotoPerfil: string | null;
-  onUploadFoto: (novaFoto: string) => void; // ajustado para receber string
-  nome: string;
+  onUploadFoto: (novaFoto: string) => void;
+  nomeCompleto: string; // ✅ vem do cadastro (Firestore)
   email: string;
   nivel: number;
   membroDesde: string;
@@ -23,59 +23,44 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
   onChangeSection,
   fotoPerfil,
   onUploadFoto,
-  nome,
+  nomeCompleto,
   email,
   nivel,
   membroDesde,
 }) => {
-  const menuItems: { key: DashboardSection; label: string; icon: string }[] =
-    [
-      { key: "overview", label: "Visão Geral", icon: "bi-house-door" },
-      { key: "cursos", label: "Meus Cursos", icon: "bi-book" },
-      { key: "certificados", label: "Certificados", icon: "bi-award" },
-    ];
+  const menuItems: { key: DashboardSection; label: string; icon: string }[] = [
+    { key: "overview", label: "Visão Geral", icon: "bi-house-door" },
+    { key: "cursos", label: "Meus Cursos", icon: "bi-book" },
+    { key: "certificados", label: "Certificados", icon: "bi-award" },
+  ];
 
-  const handleAvatarClick = () => {
-    // cria input invisível para upload
-    const input = document.createElement("input");
-    input.type = "file";
-    input.accept = "image/*";
-
-    input.onchange = (e: Event) => {
-      const target = e.target as HTMLInputElement;
-      const file = target.files?.[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = () => {
-        const result = reader.result as string;
-        onUploadFoto(result); // envia a string para atualizar Sidebar e menu
-      };
-      reader.readAsDataURL(file);
-    };
-
-    input.click();
-  };
+  const iniciais =
+    nomeCompleto?.trim()
+      ? nomeCompleto
+        .split(" ")
+        .map((n) => n[0])
+        .slice(0, 2)
+        .join("")
+        .toUpperCase()
+      : "US";
 
   return (
     <aside className="dashboard-sidebar">
       {/* FOTO DE PERFIL */}
-      <div className="profile-img-container" onClick={handleAvatarClick}>
+      <div className="profile-img-container">
         {fotoPerfil ? (
           <img src={fotoPerfil} alt="Foto de perfil" className="profile-img" />
         ) : (
           <div className="profile-img initials">
-            {nome
-              .split(" ")
-              .map((n) => n[0])
-              .slice(0, 2)
-              .join("")}
+            {iniciais}
           </div>
         )}
       </div>
 
       {/* INFO USUÁRIO */}
-      <h5 className="text-center fw-bold mt-3">{nome}</h5>
+      <h5 className="text-center fw-bold mt-3">
+        {nomeCompleto || "Usuário"}
+      </h5>
       <p className="text-center text-muted small">{email}</p>
 
       <div className="text-center mb-4">

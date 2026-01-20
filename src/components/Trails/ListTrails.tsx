@@ -1,292 +1,221 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { getTracks, TrackWithId } from "../../services/trackService";
+import TrailsFilter from "./TrailsFilter";
+import { Link } from "react-router-dom";
 
-import cursogestao from "/src/assets/trilhas/cursogestao.png";
-import cursomarketing from "/src/assets/trilhas/cursomarketing.jpeg";
-import cursolideranca from "/src/assets/trilhas/cursolideranca.jpeg";
+const ITEMS_PER_PAGE = 6;
 
-// Tipos
-interface Trilha {
-  id: number;
-  titulo: string;
-  descricao: string;
-  icone: string;
-  cor: string;
-  duracao: string;
-  modulos: number;
-  nivel: string;
-  alunos: number;
-  area: string;
-  imagem: string;
-  conteudo: string[];
-}
+const levelColorMap: Record<string, string> = {
+  Iniciante: "success",
+  Intermediário: "primary",
+  Avançado: "warning",
+};
 
-// Dados completos das trilhas (do script)
-const todasTrilhas: Trilha[] = [
-  {
-    id: 1,
-    titulo: "Gestão Financeira para Empreendedoras",
-    descricao: "Aprenda a gerenciar as finanças do seu negócio de forma eficiente.",
-    icone: "bi-cash-coin",
-    cor: "success",
-    duracao: "8 semanas",
-    modulos: 12,
-    nivel: "Iniciante",
-    alunos: 156,
-    area: "Gestão",
-    imagem: cursogestao,
-    conteudo: [
-      "Fundamentos de gestão financeira",
-      "Fluxo de caixa",
-      "Precificação",
-      "Controle de despesas",
-      "Investimentos",
-    ],
-  },
-  {
-    id: 2,
-    titulo: "Marketing Digital e Redes Sociais",
-    descricao: "Domine as estratégias de marketing digital para impulsionar suas vendas.",
-    icone: "bi-megaphone",
-    cor: "primary",
-    duracao: "6 semanas",
-    modulos: 10,
-    nivel: "Intermediário",
-    alunos: 203,
-    area: "Marketing",
-    imagem: cursomarketing,
-    conteudo: [
-      "Introdução ao marketing digital",
-      "Instagram para negócios",
-      "Facebook e WhatsApp Business",
-      "Criação de conteúdo",
-      "Anúncios online",
-    ],
-  },
-  {
-    id: 3,
-    titulo: "Liderança e Desenvolvimento Pessoal",
-    descricao: "Desenvolva habilidades de liderança e fortaleça sua mentalidade empreendedora.",
-    icone: "bi-trophy",
-    cor: "warning",
-    duracao: "5 semanas",
-    modulos: 8,
-    nivel: "Avançado",
-    alunos: 98,
-    area: "Liderança",
-    imagem: cursolideranca,
-    conteudo: [
-      "Autoconhecimento",
-      "Liderança feminina",
-      "Gestão de equipe",
-      "Comunicação eficaz",
-      "Tomada de decisão",
-    ],
-  },
-  {
-    id: 4,
-    titulo: "Técnicas de Vendas e Atendimento",
-    descricao: "Aprimore suas habilidades de vendas e ofereça um atendimento excepcional.",
-    icone: "bi-cart-check",
-    cor: "info",
-    duracao: "4 semanas",
-    modulos: 8,
-    nivel: "Iniciante",
-    alunos: 142,
-    area: "Vendas",
-    imagem: cursomarketing,
-    conteudo: [
-      "Fundamentos de vendas",
-      "Perfil do cliente",
-      "Técnicas de fechamento",
-      "Pós-venda",
-      "Fidelização",
-    ],
-  },
-  {
-    id: 5,
-    titulo: "Planejamento Estratégico de Negócios",
-    descricao: "Crie um plano de negócios sólido e estabeleça metas alcançáveis.",
-    icone: "bi-clipboard-check",
-    cor: "danger",
-    duracao: "6 semanas",
-    modulos: 10,
-    nivel: "Intermediário",
-    alunos: 87,
-    area: "Gestão",
-    imagem: cursogestao,
-    conteudo: [
-      "Análise de mercado",
-      "Definição de objetivos",
-      "Estratégias de crescimento",
-      "Plano de ação",
-      "Monitoramento de resultados",
-    ],
-  },
-  {
-    id: 6,
-    titulo: "E-commerce: Vendendo Online",
-    descricao: "Aprenda a vender seus produtos pela internet de forma profissional.",
-    icone: "bi-shop",
-    cor: "secondary",
-    duracao: "7 semanas",
-    modulos: 12,
-    nivel: "Intermediário",
-    alunos: 165,
-    area: "Marketing",
-    imagem: cursogestao,
-    conteudo: [
-      "Plataformas de venda",
-      "Fotografia de produtos",
-      "Descrições persuasivas",
-      "Logística e entrega",
-      "Atendimento online",
-    ],
-  },
-];
+const ListTrails: React.FC = () => {
+  const [trilhas, setTrilhas] = useState<TrackWithId[]>([]);
+  const [trilhasFiltradas, setTrilhasFiltradas] = useState<TrackWithId[]>([]);
+  const [loading, setLoading] = useState(true);
 
-const ListTrails = () => {
-  const [trilhasFiltradas, setTrilhasFiltradas] = useState<Trilha[]>(todasTrilhas);
   const [busca, setBusca] = useState("");
   const [nivel, setNivel] = useState("");
   const [area, setArea] = useState("");
 
-  // Aplicar filtros (do script)
-  const aplicarFiltros = () => {
-    let resultado = todasTrilhas;
+  const [currentPage, setCurrentPage] = useState(1);
 
-    // Filtro de busca
+  // ================= LOAD =================
+  useEffect(() => {
+    loadTracks();
+  }, []);
+
+  const loadTracks = async () => {
+    try {
+      setLoading(true);
+      const data = await getTracks();
+      setTrilhas(data);
+      setTrilhasFiltradas(data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ================= FILTER =================
+  useEffect(() => {
+    let resultado = trilhas;
+
     if (busca) {
       resultado = resultado.filter(
         (t) =>
-          t.titulo.toLowerCase().includes(busca.toLowerCase()) ||
-          t.descricao.toLowerCase().includes(busca.toLowerCase())
+          t.title.toLowerCase().includes(busca.toLowerCase()) ||
+          t.description.toLowerCase().includes(busca.toLowerCase())
       );
     }
 
-    // Filtro de nível
     if (nivel) {
-      resultado = resultado.filter((t) => t.nivel === nivel);
+      resultado = resultado.filter((t) => t.level === nivel);
     }
 
-    // Filtro de área
     if (area) {
-      resultado = resultado.filter((t) => t.area === area);
+      resultado = resultado.filter((t) => t.category === area);
     }
 
     setTrilhasFiltradas(resultado);
-  };
+    setCurrentPage(1);
+  }, [busca, nivel, area, trilhas]);
 
-  // Aplica filtros quando busca, nivel ou area mudam
-  useEffect(() => {
-    aplicarFiltros();
-  }, [busca, nivel, area]);
+  // ================= PAGINATION =================
+  const totalPages = Math.ceil(trilhasFiltradas.length / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const paginatedTracks = trilhasFiltradas.slice(
+    startIndex,
+    startIndex + ITEMS_PER_PAGE
+  );
 
-  // Inscrever em trilha (do script)
-  const inscreverTrilha = (id: number) => {
-    const trilha = todasTrilhas.find((t) => t.id === id);
-    if (!trilha) return;
-
-    if (window.NAVE_ADVANCED && window.NAVE_ADVANCED.toast) {
-      window.NAVE_ADVANCED.toast.show(
-        `Inscrição solicitada para: ${trilha.titulo}`,
-        "success"
-      );
-    } else {
-      alert(
-        `Inscrição na trilha: ${trilha.titulo}\n\nPara se inscrever, você precisa fazer login ou criar uma conta.`
-      );
-    }
-  };
-
-  // Resetar filtros
   const resetarFiltros = () => {
     setBusca("");
     setNivel("");
     setArea("");
-  };
-
-  // Handler para erro de imagem
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    const target = e.target as HTMLImageElement;
-    target.src = "https://via.placeholder.com/400x200/667eea/ffffff?text=Rede+NAVE";
+    setTrilhasFiltradas(trilhas);
   };
 
   return (
     <section className="py-5">
       <div className="container">
 
+        {/* FILTRO CONECTADO */}
+        <TrailsFilter
+          blok={{ button_section_filter: "Limpar filtros" }}
+          onFilter={({ busca, nivel, area }) => {
+            setBusca(busca);
+            setNivel(nivel);
+            setArea(area);
+          }}
+        />
 
-        {/* Lista de Trilhas */}
-        <div className="row g-4" id="listaTrilhas">
-          {trilhasFiltradas.length === 0 ? (
+        {/* LISTA */}
+        <div className="row g-4">
+          {loading && (
+            <div className="col-12 text-center py-5 text-muted">
+              Carregando trilhas...
+            </div>
+          )}
+
+          {!loading && paginatedTracks.length === 0 && (
             <div className="col-12 text-center py-5">
-              <i className="bi bi-search text-muted" style={{ fontSize: "5rem" }}></i>
-              <h4 className="mt-3 text-muted">Nenhuma trilha encontrada</h4>
-              <p className="text-muted">Tente ajustar os filtros de busca</p>
+              <h4 className="text-muted">Nenhuma trilha encontrada</h4>
               <button className="btn btn-primary mt-3" onClick={resetarFiltros}>
-                <i className="bi bi-arrow-counterclockwise"></i> Limpar filtros
+                Limpar filtros
               </button>
             </div>
-          ) : (
-            trilhasFiltradas.map((trilha) => (
+          )}
+
+          {!loading &&
+            paginatedTracks.map((trilha) => (
               <div key={trilha.id} className="col-md-6 col-lg-4">
-                <div className="card trilha-card h-100">
+                <div className="card trilha-card h-100 position-relative">
+
                   <span
-                    className={`badge bg-${trilha.cor} position-absolute`}
-                    style={{ top: "15px", right: "15px", zIndex: "1" }}
+                    className={`badge bg-${levelColorMap[trilha.level]} position-absolute`}
+                    style={{ top: "15px", right: "15px", zIndex: 1 }}
                   >
-                    {trilha.nivel}
+                    {trilha.level}
                   </span>
-                  <img
-                    src={trilha.imagem}
-                    className="card-img-top"
-                    alt={trilha.titulo}
-                    onError={handleImageError}
-                  />
+
+                  <div
+                    style={{
+                      height: "180px",
+                      background: "linear-gradient(135deg, #667eea, #764ba2)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: "#fff",
+                      fontWeight: 600,
+                    }}
+                  >
+                    Banner da Trilha
+                  </div>
+
                   <div className="card-body">
                     <div className="d-flex align-items-center mb-3">
-                      <i className={`bi ${trilha.icone} text-${trilha.cor} fs-3 me-2`}></i>
-                      <h5 className="card-title mb-0">{trilha.titulo}</h5>
+                      <i className="bi bi-book text-primary fs-3 me-2"></i>
+                      <h5 className="card-title mb-0">{trilha.title}</h5>
                     </div>
-                    <p className="card-text text-muted">{trilha.descricao}</p>
 
-                    <div className="mb-3">
-                      <small className="text-muted d-block mb-1">
-                        <strong>Conteúdo:</strong>
-                      </small>
-                      <ul className="small text-muted mb-0">
-                        {trilha.conteudo.slice(0, 3).map((item, index) => (
-                          <li key={index}>{item}</li>
-                        ))}
-                      </ul>
-                    </div>
+                    <p className="card-text text-muted">
+                      {trilha.description}
+                    </p>
 
                     <div className="d-flex justify-content-between text-muted small mb-3">
                       <span>
-                        <i className="bi bi-clock"></i> {trilha.duracao}
+                        <i className="bi bi-clock"></i> {trilha.workload}h
                       </span>
                       <span>
-                        <i className="bi bi-book"></i> {trilha.modulos} módulos
+                        <i className="bi bi-folder"></i> {trilha.category}
                       </span>
                     </div>
 
-                    <div className="d-flex justify-content-between align-items-center">
-                      <span className="text-muted small">
-                        <i className="bi bi-people-fill"></i> {trilha.alunos} alunas
-                      </span>
-                      <button
-                        className="btn btn-sm btn-primary"
-                        onClick={() => inscreverTrilha(trilha.id)}
-                      >
-                        Inscrever-se <i className="bi bi-arrow-right"></i>
-                      </button>
+                    <div className="d-flex justify-content-end">
+                      <Link to={`/cursos/${trilha.id}`} className="btn btn-sm btn-primary">
+                        Ver Detalhes <i className="bi bi-arrow-right"></i>
+                      </Link>
                     </div>
                   </div>
                 </div>
               </div>
-            ))
-          )}
+            ))}
         </div>
+
+        {/* PAGINAÇÃO */}
+        {!loading && totalPages > 1 && (
+          <div className="pagination-container">
+            <div className="d-flex justify-content-center">
+              <nav>
+                <ul className="pagination">
+                  <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+                    <button
+                      className="page-link"
+                      onClick={() => setCurrentPage((p) => p - 1)}
+                      disabled={currentPage === 1}
+                    >
+                      Anterior
+                    </button>
+                  </li>
+
+                  {Array.from({ length: totalPages }).map((_, index) => (
+                    <li
+                      key={index}
+                      className={`page-item ${currentPage === index + 1 ? "active" : ""}`}
+                    >
+                      <button
+                        className="page-link"
+                        onClick={() => setCurrentPage(index + 1)}
+                      >
+                        {index + 1}
+                      </button>
+                    </li>
+                  ))}
+
+                  <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
+                    <button
+                      className="page-link"
+                      onClick={() => setCurrentPage((p) => p + 1)}
+                      disabled={currentPage === totalPages}
+                    >
+                      Próxima
+                    </button>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+
+            {/* Estatísticas opcionais */}
+            <div className="pagination-stats">
+              Página <span className="current">{currentPage}</span> de {totalPages}
+            </div>
+          </div>
+        )}
+
       </div>
     </section>
   );

@@ -114,7 +114,12 @@ export default function CadUser({ blok }: CadUserProps) {
     try {
       await registerWithEmail(
         form.email.trim().toLowerCase(),
-        form.senha
+        form.senha,
+        {
+          nomeCompleto: form.nome,
+          telefone: form.telefone,
+          dataNascimento: form.dataNascimento,
+        }
       );
 
       setShowSuccessModal(true);

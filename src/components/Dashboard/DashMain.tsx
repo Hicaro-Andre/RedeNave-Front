@@ -58,9 +58,13 @@ export default function DashMain() {
       {/* NAVBAR */}
       <nav className="navbar navbar-expand-lg navbar-dark sticky-top">
         <div className="container-fluid">
-          <a className="navbar-brand fw-bold" href="/">
-            <img src={logo} alt="Rede Nave" style={{ width: 70 }} />
-          </a>
+          <button
+            className="navbar-brand fw-bold bg-transparent border-0"
+            onClick={() => handleSectionChange("overview")}
+          >
+            {" "}
+            <img src={logo} alt="Rede Nave" style={{ width: 70 }} />{" "}
+          </button>
 
           <button
             className="navbar-toggler"
@@ -74,9 +78,13 @@ export default function DashMain() {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ms-auto align-items-lg-center gap-lg-2">
               <li className="nav-item">
-                <a className="nav-link" href="/">
+                <button
+                  className="nav-link border-0 bg-transparent p-0"
+                  onClick={() => handleSectionChange("overview")}
+                  style={{ cursor: "pointer" }}
+                >
                   Início
-                </a>
+                </button>
               </li>
 
               <li className="nav-item d-none d-lg-block">
@@ -118,11 +126,19 @@ export default function DashMain() {
                   data-bs-toggle="dropdown"
                 >
                   {fotoPerfil ? (
-                    <img src={fotoPerfil} alt="Perfil" className="nav-profile-img" />
+                    <img
+                      src={fotoPerfil}
+                      alt="Perfil"
+                      className="nav-profile-img"
+                    />
                   ) : (
                     <div className="nav-profile-img initials">
                       {nome
-                        ? nome.split(" ").map((n) => n[0]).slice(0, 2).join("")
+                        ? nome
+                          .split(" ")
+                          .map((n) => n[0])
+                          .slice(0, 2)
+                          .join("")
                         : "US"}
                     </div>
                   )}

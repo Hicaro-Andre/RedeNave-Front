@@ -16,7 +16,9 @@ export default function CropModal({ image, onCancel, onSave }: Props) {
     setCroppedAreaPixels(croppedPixels);
   };
 
-  const generateCroppedImage = async () => {
+  async function generateCroppedImage() {
+    if (!croppedAreaPixels) return;
+
     const canvas = document.createElement("canvas");
     const img = new Image();
     img.src = image;
@@ -42,12 +44,12 @@ export default function CropModal({ image, onCancel, onSave }: Props) {
     );
 
     onSave(canvas.toDataURL("image/jpeg"));
-  };
+  }
 
   return (
     <div className="crop-overlay">
       <div className="crop-modal">
-        <h5 className="crop-title">Ajustar foto de perfil</h5>
+        <h5>Ajustar foto</h5>
 
         <div className="crop-container">
           <Cropper
@@ -61,24 +63,22 @@ export default function CropModal({ image, onCancel, onSave }: Props) {
           />
         </div>
 
-        <div className="crop-controls">
-          <input
-            type="range"
-            min={1}
-            max={3}
-            step={0.1}
-            value={zoom}
-            onChange={(e) => setZoom(+e.target.value)}
-          />
+        <input
+          type="range"
+          min={1}
+          max={3}
+          step={0.1}
+          value={zoom}
+          onChange={(e) => setZoom(+e.target.value)}
+        />
 
-          <div className="crop-actions">
-            <button className="btn btn-light" onClick={onCancel}>
-              Cancelar
-            </button>
-            <button className="btn btn-primary" onClick={generateCroppedImage}>
-              Salvar
-            </button>
-          </div>
+        <div className="d-flex justify-content-end gap-2 mt-3">
+          <button className="btn btn-light" onClick={onCancel}>
+            Cancelar
+          </button>
+          <button className="btn btn-primary" onClick={generateCroppedImage}>
+            Salvar
+          </button>
         </div>
       </div>
     </div>

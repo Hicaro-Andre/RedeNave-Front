@@ -1,7 +1,52 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "/src/styles/admin.css";
 
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../../config/firebase";
+
+type User = {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  status: string;
+  tracksCount?: number;
+  progress?: number;
+  certificate?: boolean;
+};
+
 const AdminUsers: React.FC = () => {
+  const [users, setUsers] = useState<User[]>([]);
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
+
+  useEffect(() => {
+    loadUsers();
+  }, []);
+
+  const loadUsers = async () => {
+    const snapshot = await getDocs(collection(db, "users"));
+
+    const data: User[] = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...(doc.data() as Omit<User, "id">),
+    }));
+
+    setUsers(data);
+  };
+
+  const filteredUsers = users.filter((user) => {
+    const matchSearch =
+      user.name?.toLowerCase().includes(search.toLowerCase()) ||
+      user.email?.toLowerCase().includes(search.toLowerCase());
+
+    const matchStatus = statusFilter
+      ? user.status === statusFilter
+      : true;
+
+    return matchSearch && matchStatus;
+  });
+
   return (
     <section className="admin-users">
       {/* Header */}
@@ -22,16 +67,20 @@ const AdminUsers: React.FC = () => {
             className="form-control w-100 w-md-auto"
             placeholder="Buscar por nome ou email"
             style={{ maxWidth: "280px" }}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
           />
 
           <select
             className="form-select w-100 w-md-auto"
             style={{ maxWidth: "220px" }}
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
           >
-            <option>Status</option>
-            <option>Ativa</option>
-            <option>Concluinte</option>
-            <option>Inativa</option>
+            <option value="">Status</option>
+            <option value="Ativa">Ativa</option>
+            <option value="Concluinte">Concluinte</option>
+            <option value="Inativa">Inativa</option>
           </select>
         </div>
       </div>
@@ -55,66 +104,54 @@ const AdminUsers: React.FC = () => {
               </thead>
 
               <tbody>
-                <tr>
-                  <td>Ana Souza</td>
-                  <td>ana@email.com</td>
-                  <td>Participante</td>
-                  <td>3</td>
-                  <td>75%</td>
-                  <td>
-                    <span className="badge bg-secondary">Pendente</span>
-                  </td>
-                  <td>
-                    <span className="badge bg-primary">Ativa</span>
-                  </td>
-                  <td className="d-flex gap-2 flex-wrap">
-                    <button className="btn btn-sm btn-outline-primary">
-                      Ver
-                    </button>
-                    <button className="btn btn-sm btn-outline-secondary">
-                      Editar
-                    </button>
-                  </td>
-                </tr>
+                {filteredUsers.map((user) => (
+                  <tr key={user.id}>
+                    <td>{user.name || "-"}</td>
+                    <td>{user.email}</td>
+                    <td>{user.role}</td>
+                    <td>{user.tracksCount ?? "-"}</td>
+                    <td>
+                      {user.progress !== undefined
+                        ? `${user.progress}%`
+                        : "-"}
+                    </td>
+                    <td>
+                      {user.certificate ? (
+                        <span className="badge bg-success">Emitido</span>
+                      ) : (
+                        <span className="badge bg-secondary">Pendente</span>
+                      )}
+                    </td>
+                    <td>
+                      <span
+                        className={`badge ${user.status === "Ativa"
+                          ? "bg-primary"
+                          : user.status === "Concluinte"
+                            ? "bg-success"
+                            : "bg-secondary"
+                          }`}
+                      >
+                        {user.status}
+                      </span>
+                    </td>
+                    <td className="d-flex gap-2 flex-wrap">
+                      <button className="btn btn-sm btn-outline-primary">
+                        Ver
+                      </button>
+                      <button className="btn btn-sm btn-outline-secondary">
+                        Editar
+                      </button>
+                    </td>
+                  </tr>
+                ))}
 
-                <tr>
-                  <td>Maria Lima</td>
-                  <td>maria@email.com</td>
-                  <td>Participante</td>
-                  <td>5</td>
-                  <td>100%</td>
-                  <td>
-                    <span className="badge bg-success">Emitido</span>
-                  </td>
-                  <td>
-                    <span className="badge bg-success">Concluinte</span>
-                  </td>
-                  <td className="d-flex gap-2 flex-wrap">
-                    <button className="btn btn-sm btn-outline-primary">
-                      Ver
-                    </button>
-                    <button className="btn btn-sm btn-outline-secondary">
-                      Editar
-                    </button>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td>Juliana Rocha</td>
-                  <td>juliana@email.com</td>
-                  <td>Equipe Técnica</td>
-                  <td>-</td>
-                  <td>-</td>
-                  <td>-</td>
-                  <td>
-                    <span className="badge bg-dark">Admin</span>
-                  </td>
-                  <td>
-                    <button className="btn btn-sm btn-outline-primary">
-                      Ver
-                    </button>
-                  </td>
-                </tr>
+                {filteredUsers.length === 0 && (
+                  <tr>
+                    <td colSpan={8} className="text-center text-muted py-4">
+                      Nenhuma usuária encontrada
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>
@@ -122,7 +159,6 @@ const AdminUsers: React.FC = () => {
       </div>
     </section>
   );
-
 };
 
 export default AdminUsers;

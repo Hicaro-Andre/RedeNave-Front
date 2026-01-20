@@ -1,10 +1,134 @@
-import React from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "/src/styles/admin.css";
+import {
+  createTrack,
+  getTracks,
+  updateTrack,
+  deleteTrack,
+  TrackLevel,
+  TrackWithId
+} from "../../../services/trackService";
 
 const AdminTracks: React.FC = () => {
 
-  const [activeTab, setActiveTab] = useState("list");
+  const [activeTab, setActiveTab] = useState<"list" | "form">("list");
+
+  // ================= FORM STATES =================
+  const [title, setTitle] = useState("");
+  const [level, setLevel] = useState<TrackLevel>("Iniciante");
+  const [category, setCategory] = useState("Todas as Áreas");
+  const [description, setDescription] = useState("");
+  const [workload, setWorkload] = useState("");
+  const [banner, setBanner] = useState<File | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  // ================= EDIT =================
+  const [editingId, setEditingId] = useState<string | null>(null);
+
+  // ================= LIST =================
+  const [tracks, setTracks] = useState<TrackWithId[]>([]);
+  const [loadingList, setLoadingList] = useState(true);
+
+  // ================= LOAD TRACKS =================
+  useEffect(() => {
+    if (activeTab === "list") {
+      fetchTracks();
+    }
+  }, [activeTab]);
+
+  const fetchTracks = async () => {
+    try {
+      setLoadingList(true);
+      const data = await getTracks();
+      setTracks(data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoadingList(false);
+    }
+  };
+
+  // ================= SUBMIT =================
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!title || !description || !workload) {
+      alert("Preencha todos os campos obrigatórios");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      if (editingId) {
+        await updateTrack(editingId, {
+          title,
+          level,
+          category,
+          description,
+          workload: Number(workload),
+          bannerUrl: banner ? banner.name : ""
+        });
+
+        alert("Trilha atualizada com sucesso!");
+      } else {
+        await createTrack({
+          title,
+          level,
+          category,
+          description,
+          workload: Number(workload),
+          bannerUrl: banner ? banner.name : ""
+        });
+
+        alert("Trilha cadastrada com sucesso!");
+      }
+
+      resetForm();
+      setActiveTab("list");
+
+    } catch (error) {
+      console.error(error);
+      alert("Erro ao salvar trilha");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ================= EDIT HANDLER =================
+  const handleEdit = (track: TrackWithId) => {
+    setEditingId(track.id);
+    setTitle(track.title);
+    setLevel(track.level);
+    setCategory(track.category);
+    setDescription(track.description);
+    setWorkload(String(track.workload));
+    setBanner(null);
+    setActiveTab("form");
+  };
+
+  // ================= DELETE =================
+  const handleDelete = async (id: string) => {
+    if (!confirm("Tem certeza que deseja excluir esta trilha?")) return;
+
+    try {
+      await deleteTrack(id);
+      fetchTracks();
+    } catch (error) {
+      console.error(error);
+      alert("Erro ao excluir trilha");
+    }
+  };
+
+  const resetForm = () => {
+    setTitle("");
+    setLevel("Iniciante");
+    setCategory("Todas as Áreas");
+    setDescription("");
+    setWorkload("");
+    setBanner(null);
+    setEditingId(null);
+  };
 
   return (
 
@@ -21,7 +145,10 @@ const AdminTracks: React.FC = () => {
 
         <button
           className="btn btn-primary"
-          onClick={() => setActiveTab("form")}
+          onClick={() => {
+            resetForm();
+            setActiveTab("form");
+          }}
         >
           + Nova Trilha
         </button>
@@ -43,66 +170,70 @@ const AdminTracks: React.FC = () => {
             className={`nav-link ${activeTab === "form" ? "active" : ""}`}
             onClick={() => setActiveTab("form")}
           >
-            Nova Trilha
+            {editingId ? "Editar Trilha" : "Nova Trilha"}
           </button>
         </li>
       </ul>
 
-      {/* ================= ABA: FORMULÁRIO ================= */}
+      {/* ================= FORM ================= */}
       {activeTab === "form" && (
         <div className="card shadow-sm mb-4">
           <div className="card-header fw-semibold">
-            Cadastro de Trilha
+            {editingId ? "Editar Trilha" : "Cadastro de Trilha"}
           </div>
 
           <div className="card-body">
-            <form className="row g-4">
+            <form className="row g-4" onSubmit={handleSubmit}>
 
               {/* Título */}
               <div className="col-md-6">
-                <label className="form-label fw-semibold">
-                  Título da Trilha
-                </label>
+                <label className="form-label fw-semibold">Título da Trilha</label>
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Ex: Gestão Financeira para Empreendedoras"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
                 />
               </div>
 
               {/* Nível */}
               <div className="col-md-3">
-                <label className="form-label fw-semibold">
-                  Nível
-                </label>
-                <select className="form-select">
+                <label className="form-label fw-semibold">Nível</label>
+                <select
+                  className="form-select"
+                  value={level}
+                  onChange={(e) => setLevel(e.target.value as TrackLevel)}
+                >
                   <option>Iniciante</option>
                   <option>Intermediário</option>
                   <option>Avançado</option>
                 </select>
               </div>
 
-              {/* Status */}
+              {/* Categoria */}
               <div className="col-md-3">
-                <label className="form-label fw-semibold">
-                  Status
-                </label>
-                <select className="form-select">
-                  <option>Rascunho</option>
-                  <option>Publicada</option>
-                  <option>Arquivada</option>
+                <label className="form-label fw-semibold">Categoria</label>
+                <select
+                  className="form-select"
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                >
+                  <option>Todas as Áreas</option>
+                  <option>Gestão</option>
+                  <option>Marketing</option>
+                  <option>Vendas</option>
+                  <option>Liderança</option>
                 </select>
               </div>
 
               {/* Descrição */}
               <div className="col-12">
-                <label className="form-label fw-semibold">
-                  Descrição
-                </label>
+                <label className="form-label fw-semibold">Descrição</label>
                 <textarea
                   className="form-control"
                   rows={4}
-                  placeholder="Descreva o objetivo da trilha"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
                 />
               </div>
 
@@ -114,11 +245,12 @@ const AdminTracks: React.FC = () => {
                 <input
                   type="number"
                   className="form-control"
-                  placeholder="Ex: 20"
+                  value={workload}
+                  onChange={(e) => setWorkload(e.target.value)}
                 />
               </div>
 
-              {/* Banner */}
+              {/* Banner (O MESMO QUE VOCÊ JÁ TINHA) */}
               <div className="col-12">
                 <label className="form-label fw-semibold">
                   Banner da Trilha
@@ -129,9 +261,14 @@ const AdminTracks: React.FC = () => {
                     type="file"
                     className="form-control"
                     accept="image/*"
+                    onChange={(e) =>
+                      setBanner(e.target.files?.[0] || null)
+                    }
                   />
                   <small className="text-muted d-block mt-2">
-                    Recomendado: 1200x400px • JPG ou PNG
+                    {editingId
+                      ? "Selecionar um novo banner substituirá o atual"
+                      : "Recomendado: 1200x400px • JPG ou PNG"}
                   </small>
                 </div>
               </div>
@@ -146,8 +283,12 @@ const AdminTracks: React.FC = () => {
                   Cancelar
                 </button>
 
-                <button type="submit" className="btn btn-success px-4">
-                  Salvar Trilha
+                <button
+                  type="submit"
+                  className="btn btn-success px-4"
+                  disabled={loading}
+                >
+                  {loading ? "Salvando..." : "Salvar Trilha"}
                 </button>
               </div>
 
@@ -156,12 +297,10 @@ const AdminTracks: React.FC = () => {
         </div>
       )}
 
-      {/* ================= ABA: LISTA ================= */}
+      {/* ================= LIST ================= */}
       {activeTab === "list" && (
         <div className="card">
-          <div className="card-header">
-            Trilhas Cadastradas
-          </div>
+          <div className="card-header">Trilhas Cadastradas</div>
 
           <div className="card-body">
             <div className="table-responsive">
@@ -172,62 +311,44 @@ const AdminTracks: React.FC = () => {
                     <th>Categoria</th>
                     <th>Nível</th>
                     <th>Módulos</th>
-                    <th>Status</th>
                     <th>Ações</th>
                   </tr>
                 </thead>
 
                 <tbody>
-                  <tr>
-                    <td>Gestão Financeira</td>
-                    <td>Finanças</td>
-                    <td>Básico</td>
-                    <td>5</td>
-                    <td>
-                      <span className="badge bg-success">
-                        Publicada
-                      </span>
-                    </td>
-                    <td className="d-flex gap-2 flex-wrap">
-                      <button className="btn btn-sm btn-outline-primary">
-                        Editar
-                      </button>
-                      <button className="btn btn-sm btn-outline-secondary">
-                        Módulos
-                      </button>
-                    </td>
-                  </tr>
+                  {tracks.map((track) => (
+                    <tr key={track.id}>
+                      <td>{track.title}</td>
+                      <td>{track.category}</td>
+                      <td>{track.level}</td>
+                      <td>—</td>
+                      <td className="d-flex gap-2 flex-wrap">
+                        <button
+                          className="btn btn-sm btn-outline-primary"
+                          onClick={() => handleEdit(track)}
+                        >
+                          Editar
+                        </button>
 
-                  <tr>
-                    <td>Marketing Digital</td>
-                    <td>Marketing</td>
-                    <td>Intermediário</td>
-                    <td>8</td>
-                    <td>
-                      <span className="badge bg-secondary">
-                        Rascunho
-                      </span>
-                    </td>
-                    <td className="d-flex gap-2 flex-wrap">
-                      <button className="btn btn-sm btn-outline-primary">
-                        Editar
-                      </button>
-                      <button className="btn btn-sm btn-outline-secondary">
-                        Módulos
-                      </button>
-                    </td>
-                  </tr>
+                        <button
+                          className="btn btn-sm btn-outline-danger"
+                          onClick={() => handleDelete(track.id)}
+                        >
+                          Excluir
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
+
               </table>
             </div>
           </div>
         </div>
       )}
 
-
     </section>
   );
-
 };
 
 export default AdminTracks;
