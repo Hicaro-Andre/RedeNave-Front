@@ -1,193 +1,85 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import logo from "/src/assets/logoRedeNave.png";
 import { useAuth } from "../context/AuthContext";
+import { signOut } from "firebase/auth";
+import { auth } from "../config/firebase";
 
 export default function Navbar() {
+  const isMobile = window.innerWidth < 992;
   const location = useLocation();
+  const navigate = useNavigate();
   const currentPath = location.pathname;
-  const [scrollProgress, setScrollProgress] = useState<number>(0);
+
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   const { user, loading } = useAuth();
 
-  // Evita flicker enquanto carrega auth
+  // Evita flicker
   if (loading) return null;
 
-  // Verifica se um link está ativo
-  const isActive = (path: string): boolean => {
-    if (path === "/") {
-      return currentPath === "/";
-    }
+  const isActive = (path: string) => {
+    if (path === "/") return currentPath === "/";
     return currentPath.startsWith(path);
   };
 
-  // Fecha o offcanvas quando um link é clicado
   const closeOffcanvas = () => {
-    const offcanvas = document.getElementById("offcanvasNavbar") as HTMLElement | null;
-    if (offcanvas) {
-      const bsOffcanvas = (window as any).bootstrap?.Offcanvas?.getInstance(offcanvas);
-      if (bsOffcanvas) {
-        bsOffcanvas.hide();
-      }
+    if (typeof window === "undefined") return;
+
+    const offcanvas = document.getElementById("offcanvasNavbar");
+    const bs = (window as any).bootstrap;
+
+    if (offcanvas && bs?.Offcanvas) {
+      const instance = bs.Offcanvas.getInstance(offcanvas);
+      instance?.hide();
     }
   };
 
+  const handleLogout = async () => {
+    await signOut(auth);
+    closeOffcanvas();
+    navigate("/");
+  };
+
   useEffect(() => {
-    // =========================================
-    // 1. BARRA DE PROGRESSO DO SCROLL
-    // =========================================
-    const initScrollProgress = () => {
-      let progressBar = document.querySelector(".scroll-progress-bar") as HTMLElement | null;
+    if (typeof window === "undefined") return;
 
-      if (!progressBar) {
-        progressBar = document.createElement("div");
-        progressBar.className = "scroll-progress-bar";
-        progressBar.setAttribute("aria-hidden", "true");
-        progressBar.style.cssText = `
-          position: fixed;
-          top: 0;
-          left: 0;
-          height: 3px;
-          background: linear-gradient(180deg, #5b119a, #7c19d1);
-          width: 0%;
-          z-index: 9999;
-          transition: width 0.1s ease-out;
-        `;
-        document.body.appendChild(progressBar);
-      }
+    const navbar = document.querySelector(".navbar") as HTMLElement | null;
+    const scrollOffset = 50;
 
-      let ticking = false;
+    const onScroll = () => {
+      // ===== Barra de progresso =====
+      const height =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
 
-      const updateScrollProgress = () => {
-        if (!ticking) {
-          window.requestAnimationFrame(() => {
-            const windowHeight =
-              document.documentElement.scrollHeight -
-              document.documentElement.clientHeight;
+      const progress =
+        height > 0 ? Math.min((window.scrollY / height) * 100, 100) : 0;
 
-            const scrolled = (window.scrollY / windowHeight) * 100;
-            const progress = Math.min(scrolled, 100);
+      setScrollProgress(progress);
 
-            setScrollProgress(progress);
-            progressBar!.style.width = progress + "%";
-            ticking = false;
-          });
-          ticking = true;
-        }
-      };
-
-      window.addEventListener("scroll", updateScrollProgress);
-
-      return () => {
-        window.removeEventListener("scroll", updateScrollProgress);
-      };
-    };
-
-    // =========================================
-    // 2. EFEITO DE SCROLL NA NAVBAR
-    // =========================================
-    const navbarScrollEffect = () => {
-      const navbar = document.querySelector(".navbar") as HTMLElement | null;
+      // ===== Efeito navbar =====
       if (!navbar) return;
 
-      const scrollOffset = 50;
-      let ticking = false;
+      const scrolled = window.scrollY > scrollOffset;
 
-      const updateNavbar = () => {
-        const scrolled = window.scrollY > scrollOffset;
-        navbar.style.padding = scrolled ? "0.5rem 0" : "1rem 0";
-        navbar.style.boxShadow = scrolled
-          ? "0 4px 15px rgba(0, 0, 0, 0.15)"
-          : "0 2px 10px rgba(0, 0, 0, 0.1)";
-      };
-
-      const handleScroll = () => {
-        if (!ticking) {
-          window.requestAnimationFrame(() => {
-            updateNavbar();
-            ticking = false;
-          });
-          ticking = true;
-        }
-      };
-
-      window.addEventListener("scroll", handleScroll);
-      updateNavbar();
-
-      return () => {
-        window.removeEventListener("scroll", handleScroll);
-      };
+      navbar.style.padding = scrolled ? "0.5rem 0" : "1rem 0";
+      navbar.style.boxShadow = scrolled
+        ? "0 4px 15px rgba(0,0,0,0.15)"
+        : "0 2px 10px rgba(0,0,0,0.1)";
     };
 
-    // =========================================
-    // 3. SMOOTH SCROLL PARA LINKS ÂNCORA
-    // =========================================
-    const setupSmoothScroll = () => {
-      const anchorLinks = document.querySelectorAll('a[href^="#"]');
-
-      anchorLinks.forEach(anchor => {
-        anchor.addEventListener("click", function (e) {
-          const href = (this as HTMLAnchorElement).getAttribute("href");
-
-          if (href === "#" || (this as HTMLElement).hasAttribute("data-bs-toggle")) {
-            return;
-          }
-
-          e.preventDefault();
-          const target = document.querySelector(href!);
-
-          if (target) {
-            target.scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-            });
-          }
-        });
-      });
-
-      return () => {
-        anchorLinks.forEach(anchor => {
-          anchor.removeEventListener("click", null as any);
-        });
-      };
-    };
-
-    // =========================================
-    // 4. Inicializa Componentes Bootstrap
-    // =========================================
-    const initBootstrapComponents = () => {
-      const bs = (window as any).bootstrap;
-      if (!bs) return;
-
-      document
-        .querySelectorAll("[data-bs-toggle='tooltip']")
-        .forEach(el => new bs.Tooltip(el));
-
-      document
-        .querySelectorAll("[data-bs-toggle='popover']")
-        .forEach(el => new bs.Popover(el));
-    };
-
-    const cleanupScrollProgress = initScrollProgress();
-    const cleanupNavbarEffect = navbarScrollEffect();
-    const cleanupSmoothScroll = setupSmoothScroll();
-
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", initBootstrapComponents);
-    } else {
-      initBootstrapComponents();
-    }
+    window.addEventListener("scroll", onScroll);
+    onScroll();
 
     return () => {
-      cleanupScrollProgress?.();
-      cleanupNavbarEffect?.();
-      cleanupSmoothScroll?.();
+      window.removeEventListener("scroll", onScroll);
     };
   }, []);
 
   return (
     <>
-      {/* Barra do progresso */}
+      {/* Barra de progresso */}
       <div
         className="scroll-progress-bar"
         style={{
@@ -195,19 +87,18 @@ export default function Navbar() {
           top: 0,
           left: 0,
           height: "3px",
-          background: "linear-gradient(180deg, #5b119a, #7c19d1)",
           width: `${scrollProgress}%`,
+          background: "linear-gradient(180deg, #5b119a, #7c19d1)",
           zIndex: 9999,
           transition: "width 0.1s ease-out",
         }}
-        aria-hidden="true"
+        aria-hidden
       />
 
-      {/* Navbar */}
       <nav className="navbar navbar-expand-lg navbar-dark sticky-top">
         <div className="container">
           <Link className="navbar-brand fw-bold" to="/">
-            <img src={logo} alt="Rede Nave" style={{ width: "70px", height: "auto" }} />
+            <img src={logo} alt="Rede Nave" style={{ width: "70px" }} />
           </Link>
 
           <button
@@ -216,18 +107,15 @@ export default function Navbar() {
             data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasNavbar"
           >
-            <span className="navbar-toggler-icon"></span>
+            <span className="navbar-toggler-icon" />
           </button>
 
           <div className="offcanvas offcanvas-end menu-mobile" id="offcanvasNavbar">
             <div className="offcanvas-header">
-              <h5 className="offcanvas-title">
-                <Link className="navbar-brand fw-bold" to="/" onClick={closeOffcanvas}>
-                  <img src={logo} alt="Rede Nave" style={{ width: "70px", height: "auto" }} />
-                </Link>
-              </h5>
-
-              <button className="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+              <Link className="navbar-brand fw-bold" to="/" onClick={closeOffcanvas}>
+                <img src={logo} alt="Rede Nave" style={{ width: "70px" }} />
+              </Link>
+              <button className="btn-close btn-close-white" data-bs-dismiss="offcanvas" />
             </div>
 
             <div className="offcanvas-body">
@@ -287,14 +175,117 @@ export default function Navbar() {
                 )}
 
                 {user && (
-                  <div
-                    className="ms-3 rounded-circle bg-secondary text-white d-flex justify-content-center align-items-center"
-                    style={{ width: 36, height: 36 }}
-                    title={user.email ?? ""}
-                  >
-                    {user.email?.charAt(0).toUpperCase()}
-                  </div>
+                  <>
+                    {/* ================= DESKTOP ================= */}
+                    {!isMobile && (
+                      <div className="dropdown ms-3 d-flex align-items-center">
+                        <button
+                          className="btn p-0 border-0 d-flex align-items-center justify-content-center"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                          style={{
+                            background: "transparent",
+                            lineHeight: 0,
+                          }}
+                        >
+                          <div
+                            className="d-flex align-items-center justify-content-center rounded-circle"
+                            style={{
+                              width: 38,
+                              height: 38,
+                              border: "2px solid rgba(255,255,255,0.25)",
+                            }}
+                          >
+                            {user.photoURL ? (
+                              <img
+                                src={user.photoURL}
+                                alt="Avatar"
+                                className="rounded-circle"
+                                style={{ width: 32, height: 32, objectFit: "cover" }}
+                              />
+                            ) : (
+                              <span style={{ fontSize: 14, fontWeight: 600, color: "#fff" }}>
+                                {user.email?.charAt(0).toUpperCase()}
+                              </span>
+                            )}
+                          </div>
+                        </button>
+
+                        <ul className="dropdown-menu dropdown-menu-end mt-2">
+                          <li>
+                            <Link className="dropdown-item" to="/perfil">
+                              Meu Perfil
+                            </Link>
+                          </li>
+                          <li>
+                            <Link className="dropdown-item" to="/configuracoes">
+                              Configurações
+                            </Link>
+                          </li>
+                          <li>
+                            <hr className="dropdown-divider" />
+                          </li>
+                          <li>
+                            <button className="dropdown-item" onClick={handleLogout}>
+                              Sair
+                            </button>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
+
+                    {/* ================= MOBILE ================= */}
+                    {isMobile && (
+                      <div className=" border-top pt-3">
+                        <div className="d-flex align-items-center mb-3">
+                          {user.photoURL ? (
+                            <img
+                              src={user.photoURL}
+                              alt="Avatar"
+                              className="rounded-circle me-2"
+                              style={{ width: 36, height: 36, objectFit: "cover" }}
+                            />
+                          ) : (
+                            <div
+                              className="rounded-circle bg-secondary text-white d-flex justify-content-center align-items-center me-2"
+                              style={{ width: 36, height: 36 }}
+                            >
+                              {user.email?.charAt(0).toUpperCase()}
+                            </div>
+                          )}
+                          <strong className="text-white">{user.email}</strong>
+                        </div>
+
+                        <ul className="navbar-nav">
+                          <li className="nav-item">
+                            <Link className="nav-link" to="/perfil" onClick={closeOffcanvas}>
+                              Meu Perfil
+                            </Link>
+                          </li>
+                          <li className="nav-item">
+                            <Link
+                              className="nav-link"
+                              to="/configuracoes"
+                              onClick={closeOffcanvas}
+                            >
+                              Configurações
+                            </Link>
+                          </li>
+                          <li className="nav-item">
+                            <button
+                              className="nav-link btn btn-link text-start"
+                              onClick={handleLogout}
+                            >
+                              Sair
+                            </button>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
+                  </>
                 )}
+
+
               </div>
             </div>
           </div>

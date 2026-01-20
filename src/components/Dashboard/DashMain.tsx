@@ -74,13 +74,14 @@ export default function DashMain() {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ms-auto align-items-lg-center gap-lg-2">
               <li className="nav-item">
-                <button
+                <Link
+                  to="/"
                   className="nav-link border-0 bg-transparent p-0"
-                  onClick={() => handleSectionChange("overview")}
                   style={{ cursor: "pointer" }}
+                  onClick={() => handleSectionChange("overview")}
                 >
                   Início
-                </button>
+                </Link>
               </li>
 
               <li className="nav-item d-none d-lg-block">

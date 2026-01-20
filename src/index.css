@@ -145,6 +145,14 @@ p  { color: var(--bg-color-text); }
   background: var(--bg-color-button-hover-secondary) !important;
 }
 
+/* Apenas para dropdown dentro da navbar no mobile */
+@media (max-width: 991px) {
+  .navbar .dropdown-menu[data-bs-popper] {
+    right: auto !important;
+    left: 0 !important;
+  }
+}
+
 /* =================== FOOTER =============================== */
 footer {
   background: var(--bg-color-footer);
