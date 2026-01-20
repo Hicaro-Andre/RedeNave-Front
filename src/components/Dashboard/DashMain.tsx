@@ -195,7 +195,7 @@ export default function DashMain() {
                 setFotoPerfil(novaFoto);
                 localStorage.setItem("fotoPerfil", novaFoto);
               }}
-              nome={nome}
+              nomeCompleto={nome}
               email={email}
               nivel={3}
               membroDesde="Janeiro 2025"
