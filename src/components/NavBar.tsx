@@ -212,19 +212,6 @@ export default function Navbar() {
                         </button>
 
                         <ul className="dropdown-menu dropdown-menu-end mt-2">
-                          {/* <li>
-                            <Link className="dropdown-item" to="/perfil">
-                              Meu Perfil
-                            </Link>
-                          </li>
-                          <li>
-                            <Link className="dropdown-item" to="/configuracoes">
-                              Configurações
-                            </Link>
-                          </li> */}
-                          {/* <li>
-                            <hr className="dropdown-divider" />
-                          </li> */}
                           <li>
                             <button className="dropdown-item" onClick={handleLogout}>
                               Sair

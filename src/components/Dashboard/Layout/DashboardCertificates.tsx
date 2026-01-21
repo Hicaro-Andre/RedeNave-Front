@@ -32,28 +32,42 @@ const DashboardCertificates: React.FC = () => {
           <div key={idx} className="col-md-6">
             <div className="card h-100">
               <div
-                className="card-body text-center p-4"
+                className="card-body d-flex flex-column justify-content-between p-4 text-white"
                 style={{
                   background: cert.bg,
-                  color: "white",
                   borderRadius: "15px",
+                  minHeight: "100%",
                 }}
               >
-                <i className="bi bi-award" style={{ fontSize: "4rem" }} />
+                {/* Conteúdo */}
+                <div className="text-center">
+                  <i className="bi bi-award mb-3" style={{ fontSize: "3.5rem" }} />
 
-                <h4 className="fw-bold mt-3">{cert.title}</h4>
-                <p className="mb-2">Concluído em {cert.date}</p>
-                <p className="small mb-4">
-                  Carga horária: {cert.hours} horas
-                </p>
+                  <h5 className="fw-bold mb-2">{cert.title}</h5>
 
-                <button className="btn btn-light">
-                  <i className="bi bi-download" /> Baixar Certificado
-                </button>
-                <button className="btn btn-outline-light ms-2">
-                  <i className="bi bi-share" /> Compartilhar
-                </button>
+                  <p className="mb-1">
+                    <small>Concluído em {cert.date}</small>
+                  </p>
+
+                  <p className="small mb-4">
+                    Carga horária: {cert.hours} horas
+                  </p>
+                </div>
+
+                {/* Ações */}
+                <div className="d-grid gap-2 d-sm-flex justify-content-sm-center mt-3">
+                  <button className="btn btn-light px-4">
+                    <i className="bi bi-download me-1" />
+                    Baixar
+                  </button>
+
+                  <button className="btn btn-outline-light px-4">
+                    <i className="bi bi-share me-1" />
+                    Compartilhar
+                  </button>
+                </div>
               </div>
+
             </div>
           </div>
         ))}

@@ -76,6 +76,10 @@ src/
 │   └── admin.ts
 │   └── firebase.ts
 │   └── storyblok.ts
+│
+├── context/ 
+│   └── AuthContext.tsx
+│
 ├── pages/                      # Páginas (rotas da aplicação)
 │   ├── About.tsx
 │   ├── Admin.tsx
@@ -91,6 +95,8 @@ src/
 │
 ├── services/                   # Autenticação de Login
 │   ├── authService.ts
+│   ├── eventService.ts
+│   ├── trackService.ts
 │
 ├── styles/                     # Estilos por página
 │   ├── about.css

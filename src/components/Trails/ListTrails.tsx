@@ -168,54 +168,65 @@ const ListTrails: React.FC = () => {
 
         {/* PAGINAÇÃO */}
         {!loading && totalPages > 1 && (
-          <div className="pagination-container">
-            <div className="d-flex justify-content-center">
-              <nav>
-                <ul className="pagination">
+          <div className="pagination-container mt-4">
+            <div className="d-flex flex-column align-items-center gap-3">
+
+              <nav aria-label="Paginação">
+                <ul className="pagination justify-content-center mb-0">
+
+                  {/* ANTERIOR */}
                   <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
                     <button
-                      className="page-link"
+                      className="page-link px-4 py-2"
                       onClick={() => setCurrentPage((p) => p - 1)}
                       disabled={currentPage === 1}
                     >
-                      Anterior
+                      ‹ Anterior
                     </button>
                   </li>
 
-                  {Array.from({ length: totalPages }).map((_, index) => (
-                    <li
-                      key={index}
-                      className={`page-item ${currentPage === index + 1 ? "active" : ""}`}
-                    >
-                      <button
-                        className="page-link"
-                        onClick={() => setCurrentPage(index + 1)}
+                  {/* PÁGINAS — SOMENTE DESKTOP */}
+                  <div className="d-none d-md-flex">
+                    {Array.from({ length: totalPages }).map((_, index) => (
+                      <li
+                        key={index}
+                        className={`page-item ${currentPage === index + 1 ? "active" : ""
+                          }`}
                       >
-                        {index + 1}
-                      </button>
-                    </li>
-                  ))}
+                        <button
+                          className="page-link px-3 py-2"
+                          onClick={() => setCurrentPage(index + 1)}
+                        >
+                          {index + 1}
+                        </button>
+                      </li>
+                    ))}
+                  </div>
 
-                  <li className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}>
+                  {/* PRÓXIMA */}
+                  <li
+                    className={`page-item ${currentPage === totalPages ? "disabled" : ""
+                      }`}
+                  >
                     <button
-                      className="page-link"
+                      className="page-link px-4 py-2"
                       onClick={() => setCurrentPage((p) => p + 1)}
                       disabled={currentPage === totalPages}
                     >
-                      Próxima
+                      Próxima ›
                     </button>
                   </li>
                 </ul>
               </nav>
-            </div>
 
-            {/* Estatísticas opcionais */}
-            <div className="pagination-stats">
-              Página <span className="current">{currentPage}</span> de {totalPages}
+              {/* STATUS */}
+              <small className="text-muted">
+                Página <strong>{currentPage}</strong> de{" "}
+                <strong>{totalPages}</strong>
+              </small>
             </div>
           </div>
         )}
-
       </div>
     </section>
   );

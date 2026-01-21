@@ -47,9 +47,9 @@ const AdminMain: React.FC = () => {
       <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <div className="sidebar-header">
           <div className="sidebar-logo">
-            <a href="/">
-              <img src={logo} alt="Rede Nave" />
-            </a>
+
+            <img src={logo} alt="Rede Nave" />
+
           </div>
         </div>
 

@@ -4,6 +4,10 @@ import { useEffect, useState } from "react";
 import { getTracks, TrackWithId } from "../../services/trackService";
 import LoadingSpinner from "../LoadingSpinner";
 
+import { onAuthStateChanged } from "firebase/auth";
+import { auth, db } from "../../config/firebase";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+
 import "/src/styles/coursedetail.css";
 
 const levelColorMap: Record<string, string> = {
@@ -12,18 +16,39 @@ const levelColorMap: Record<string, string> = {
   Avançado: "warning",
 };
 
-
-
 export default function CourseDetail() {
   const { id } = useParams<{ id: string }>();
-
-
-  const [isLogged, setIsLogged] = useState(false);
-  const [isEnrolled, setIsEnrolled] = useState(false);
 
   const [loading, setLoading] = useState(true);
   const [trilha, setTrilha] = useState<TrackWithId | null>(null);
 
+  const [isLogged, setIsLogged] = useState(false);
+  const [isEnrolled, setIsEnrolled] = useState(false);
+  const [userUid, setUserUid] = useState<string | null>(null);
+
+  /* ================= AUTH ================= */
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        setIsLogged(true);
+        setUserUid(user.uid);
+
+        if (id) {
+          const ref = doc(db, "users", user.uid, "inscricoes", id);
+          const snap = await getDoc(ref);
+          setIsEnrolled(snap.exists());
+        }
+      } else {
+        setIsLogged(false);
+        setUserUid(null);
+        setIsEnrolled(false);
+      }
+    });
+
+    return () => unsubscribe();
+  }, [id]);
+
+  /* ================= LOAD TRILHA ================= */
   useEffect(() => {
     carregarTrilha();
   }, [id]);
@@ -32,15 +57,31 @@ export default function CourseDetail() {
     try {
       setLoading(true);
       const data = await getTracks();
-
       const encontrada = data.find((t) => t.id === id);
-
       setTrilha(encontrada ?? null);
     } catch (error) {
       console.error("Erro ao carregar trilha:", error);
       setTrilha(null);
     } finally {
       setLoading(false);
+    }
+  };
+
+  /* ================= INSCRIÇÃO ================= */
+  const handleEnroll = async () => {
+    if (!userUid || !trilha) return;
+
+    try {
+      await setDoc(doc(db, "users", userUid, "inscricoes", trilha.id), {
+        trilhaId: trilha.id,
+        title: trilha.title,
+        enrolledAt: new Date(),
+      });
+
+      setIsEnrolled(true);
+    } catch (error) {
+      console.error("Erro ao inscrever:", error);
+      alert("Erro ao realizar inscrição");
     }
   };
 
@@ -69,7 +110,6 @@ export default function CourseDetail() {
               </Badge>
 
               <h1 className="fw-bold mb-3">{trilha.title}</h1>
-
               <p className="text-muted mb-4">{trilha.description}</p>
 
               <div className="d-flex flex-wrap gap-4 mb-4 text-muted">
@@ -81,7 +121,7 @@ export default function CourseDetail() {
                 </span>
               </div>
 
-              {/* BOTÕES COM ESTADO */}
+              {/* BOTÕES */}
               <div className="d-flex gap-3 flex-wrap">
                 {!isLogged && (
                   <Link to="/login" className="btn btn-primary btn-lg">
@@ -93,7 +133,7 @@ export default function CourseDetail() {
                   <Button
                     variant="primary"
                     size="lg"
-                    onClick={() => setIsEnrolled(true)}
+                    onClick={handleEnroll}
                   >
                     Inscrever-se
                   </Button>
@@ -187,7 +227,6 @@ export default function CourseDetail() {
           </Row>
         </Container>
       </section>
-
     </>
   );
 }

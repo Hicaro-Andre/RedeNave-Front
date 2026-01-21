@@ -44,7 +44,7 @@ export default function HomeHero({ blok }: HomeHeroProps) {
               {blok.description}
             </p>
 
-            <div className="d-grid d-sm-flex gap-2">
+            <div className="d-grid d-sm-flex gap-2 justify-content-lg-start justify-content-center">
               <Link to={"/cadastro"} className="btn btn-lg px-4">
                 <i className="bi bi-person-plus"></i>{" "}
                 {blok.primary_button_text}
@@ -55,6 +55,7 @@ export default function HomeHero({ blok }: HomeHeroProps) {
                 {blok.secondary_button_text}
               </a>
             </div>
+
           </div>
 
           {/* Imagem */}

@@ -18,11 +18,19 @@ interface Evento {
   local?: string;
 }
 
+/**
+ * 🔒 FUNÇÃO SEGURA CONTRA FUSO HORÁRIO
+ * Converte YYYY-MM-DD para Date LOCAL
+ */
+function parseDateLocal(dateStr: string) {
+  const [year, month, day] = dateStr.split("-").map(Number);
+  return new Date(year, month - 1, day);
+}
+
 export default function CalendarEvents({ blok }: CalendarEventsProps) {
   const [eventos, setEventos] = useState<Evento[]>([]);
 
   const hoje = new Date();
-
   const [mesAtual, setMesAtual] = useState(hoje.getMonth());
   const [anoAtual, setAnoAtual] = useState(hoje.getFullYear());
 
@@ -60,9 +68,9 @@ export default function CalendarEvents({ blok }: CalendarEventsProps) {
     const primeiroDia = new Date(anoAtual, mesAtual, 1).getDay();
     const ultimoDia = new Date(anoAtual, mesAtual + 1, 0).getDate();
 
-    // pega apenas eventos do mês e ano atual
+    // 🔧 CORREÇÃO AQUI
     const diasEventos = eventos
-      .map(ev => new Date(ev.data))
+      .map(ev => parseDateLocal(ev.data))
       .filter(
         data =>
           data.getMonth() === mesAtual &&
@@ -86,12 +94,18 @@ export default function CalendarEvents({ blok }: CalendarEventsProps) {
     setDiasDoMes(dias);
   }
 
-
   function changeMonth(direction: number) {
     let novoMes = mesAtual + direction;
     let novoAno = anoAtual;
-    if (novoMes < 0) { novoMes = 11; novoAno--; }
-    else if (novoMes > 11) { novoMes = 0; novoAno++; }
+
+    if (novoMes < 0) {
+      novoMes = 11;
+      novoAno--;
+    } else if (novoMes > 11) {
+      novoMes = 0;
+      novoAno++;
+    }
+
     setMesAtual(novoMes);
     setAnoAtual(novoAno);
   }
@@ -103,9 +117,11 @@ export default function CalendarEvents({ blok }: CalendarEventsProps) {
         ? [...eventos]
         : eventos.filter(ev => ev.tipo === filtro);
 
+    // 🔧 CORREÇÃO AQUI
     return lista.sort(
       (a, b) =>
-        new Date(a.data).getTime() - new Date(b.data).getTime()
+        parseDateLocal(a.data).getTime() -
+        parseDateLocal(b.data).getTime()
     );
   }, [eventos, filtro]);
 
@@ -124,24 +140,45 @@ export default function CalendarEvents({ blok }: CalendarEventsProps) {
           <div className="col-lg-5">
             <div className="calendar-container">
               <div className="calendar-header d-flex align-items-center justify-content-between mb-2">
-                <button className="btn btn-sm btn-outline-primary" onClick={() => changeMonth(-1)}>
+                <button
+                  className="btn btn-sm btn-outline-primary"
+                  onClick={() => changeMonth(-1)}
+                >
                   <i className="bi bi-chevron-left"></i>
                 </button>
-                <h5 className="fw-bold mb-0">{nomeMes[mesAtual]} {anoAtual}</h5>
-                <button className="btn btn-sm btn-outline-primary" onClick={() => changeMonth(1)}>
+
+                <h5 className="fw-bold mb-0">
+                  {nomeMes[mesAtual]} {anoAtual}
+                </h5>
+
+                <button
+                  className="btn btn-sm btn-outline-primary"
+                  onClick={() => changeMonth(1)}
+                >
                   <i className="bi bi-chevron-right"></i>
                 </button>
               </div>
 
-              <div className="calendar-grid mb-3 d-grid" style={{ gridTemplateColumns: "repeat(7, 1fr)" }}>
+              <div
+                className="calendar-grid mb-3 d-grid"
+                style={{ gridTemplateColumns: "repeat(7, 1fr)" }}
+              >
                 {["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"].map(d => (
-                  <div key={d} className="text-center fw-bold small">{d}</div>
+                  <div key={d} className="text-center fw-bold small">
+                    {d}
+                  </div>
                 ))}
               </div>
 
-              <div className="calendar-grid" style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)" }}>
+              <div
+                className="calendar-grid"
+                style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)" }}
+              >
                 {diasDoMes.map((item, index) => (
-                  <div key={index} className={`calendar-day ${item.evento ? "has-event" : ""}`}>
+                  <div
+                    key={index}
+                    className={`calendar-day ${item.evento ? "has-event" : ""}`}
+                  >
                     {item.dia}
                   </div>
                 ))}
@@ -160,13 +197,17 @@ export default function CalendarEvents({ blok }: CalendarEventsProps) {
             {eventosOrdenados.length === 0 ? (
               <div className="text-center py-5">
                 <i className="bi bi-calendar-x display-1 text-muted"></i>
-                <p className="text-muted mt-3">Nenhum evento encontrado nesta categoria.</p>
+                <p className="text-muted mt-3">
+                  Nenhum evento encontrado nesta categoria.
+                </p>
               </div>
             ) : (
               eventosOrdenados.map(evento => {
                 const inscricoes = evento.inscricoes || 0;
                 const vagasRestantes = evento.vagas - inscricoes;
                 const percentual = (inscricoes / evento.vagas) * 100;
+
+                const dataEvento = parseDateLocal(evento.data);
 
                 return (
                   <div key={evento.id} className="card mb-3">
@@ -175,10 +216,10 @@ export default function CalendarEvents({ blok }: CalendarEventsProps) {
                         <div className="col-md-2 text-center">
                           <div className="bg-calendar text-white p-3 rounded text-center">
                             <div style={{ fontSize: "2rem", fontWeight: "bold" }}>
-                              {new Date(evento.data).getDate()}
+                              {dataEvento.getDate()}
                             </div>
                             <div style={{ fontSize: "0.9rem", fontWeight: 600 }}>
-                              {new Date(evento.data)
+                              {dataEvento
                                 .toLocaleString("pt-BR", { month: "short" })
                                 .replace(".", "")
                                 .toUpperCase()}
@@ -187,17 +228,26 @@ export default function CalendarEvents({ blok }: CalendarEventsProps) {
                         </div>
 
                         <div className="col-md-7">
-                          <span className="badge bg-calendar mb-2">{evento.tipo}</span>
+                          <span className="badge bg-calendar mb-2">
+                            {evento.tipo}
+                          </span>
                           <h5 className="fw-bold mb-2">{evento.titulo}</h5>
                           <p className="text-muted mb-2 small">
-                            <i className="bi bi-clock"></i> {evento.horario || "-"} {evento.duracao || "-"} |{" "}
-                            <i className="bi bi-laptop"></i> {evento.modalidade || "-"}
+                            <i className="bi bi-clock"></i> {evento.horario || "-"}{" "}
+                            {evento.duracao || "-"} |{" "}
+                            <i className="bi bi-laptop"></i>{" "}
+                            {evento.modalidade || "-"}
                           </p>
 
                           <div className="progress" style={{ height: 5 }}>
-                            <div className="progress-bar bg-success" style={{ width: `${percentual}%` }}></div>
+                            <div
+                              className="progress-bar bg-success"
+                              style={{ width: `${percentual}%` }}
+                            ></div>
                           </div>
-                          <small className="text-muted">{inscricoes}/{evento.vagas} inscritos</small>
+                          <small className="text-muted">
+                            {inscricoes}/{evento.vagas} inscritos
+                          </small>
                         </div>
 
                         <div className="col-md-3 text-end">
@@ -208,7 +258,9 @@ export default function CalendarEvents({ blok }: CalendarEventsProps) {
                             <i className="bi bi-calendar-plus"></i> Inscrever
                           </button>
                           {vagasRestantes <= 5 && (
-                            <small className="text-danger d-block mt-2">Últimas vagas!</small>
+                            <small className="text-danger d-block mt-2">
+                              Últimas vagas!
+                            </small>
                           )}
                         </div>
                       </div>

@@ -14,7 +14,6 @@ type NextEventsHomeProps = {
 interface Evento {
   id: string;
   titulo: string;
-  descricao: string;
   data: string; // YYYY-MM-DD
   horario: string;
   tipo: "Online" | "Presencial" | "Live";
@@ -118,10 +117,6 @@ export default function NextEventsHome({ blok }: NextEventsHomeProps) {
                         <h6 className="card-title fw-bold title-color">
                           {evento.titulo}
                         </h6>
-
-                        <p className="card-text text-muted small mb-2">
-                          {evento.descricao}
-                        </p>
 
                         <div className="d-flex justify-content-between align-items-center">
                           <span className="text-muted small">

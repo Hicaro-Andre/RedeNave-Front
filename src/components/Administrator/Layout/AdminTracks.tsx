@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import "/src/styles/admin.css";
+
 import {
   createTrack,
   getTracks,
   updateTrack,
   deleteTrack,
   TrackLevel,
-  TrackWithId
+  TrackWithId,
 } from "../../../services/trackService";
 
 const AdminTracks: React.FC = () => {
-
   const [activeTab, setActiveTab] = useState<"list" | "form">("list");
 
   // ================= FORM STATES =================
@@ -28,6 +28,7 @@ const AdminTracks: React.FC = () => {
   // ================= LIST =================
   const [tracks, setTracks] = useState<TrackWithId[]>([]);
   const [loadingList, setLoadingList] = useState(true);
+  const [search, setSearch] = useState("");
 
   // ================= LOAD TRACKS =================
   useEffect(() => {
@@ -60,33 +61,25 @@ const AdminTracks: React.FC = () => {
     try {
       setLoading(true);
 
-      if (editingId) {
-        await updateTrack(editingId, {
-          title,
-          level,
-          category,
-          description,
-          workload: Number(workload),
-          bannerUrl: banner ? banner.name : ""
-        });
+      const payload = {
+        title,
+        level,
+        category,
+        description,
+        workload: Number(workload),
+        bannerUrl: banner ? banner.name : "",
+      };
 
+      if (editingId) {
+        await updateTrack(editingId, payload);
         alert("Trilha atualizada com sucesso!");
       } else {
-        await createTrack({
-          title,
-          level,
-          category,
-          description,
-          workload: Number(workload),
-          bannerUrl: banner ? banner.name : ""
-        });
-
+        await createTrack(payload);
         alert("Trilha cadastrada com sucesso!");
       }
 
       resetForm();
       setActiveTab("list");
-
     } catch (error) {
       console.error(error);
       alert("Erro ao salvar trilha");
@@ -95,7 +88,7 @@ const AdminTracks: React.FC = () => {
     }
   };
 
-  // ================= EDIT HANDLER =================
+  // ================= EDIT =================
   const handleEdit = (track: TrackWithId) => {
     setEditingId(track.id);
     setTitle(track.title);
@@ -130,10 +123,15 @@ const AdminTracks: React.FC = () => {
     setEditingId(null);
   };
 
+  // ================= FILTER (SOMENTE POR TÍTULO) =================
+  const filteredTracks = tracks.filter((track) =>
+    track.title
+      .toLowerCase()
+      .includes(search.toLowerCase())
+  );
+
   return (
-
     <section className="admin-tracks">
-
       {/* ================= HEADER ================= */}
       <div className="d-flex justify-content-between align-items-center mb-4">
         <div>
@@ -184,25 +182,25 @@ const AdminTracks: React.FC = () => {
 
           <div className="card-body">
             <form className="row g-4" onSubmit={handleSubmit}>
-
-              {/* Título */}
               <div className="col-md-6">
-                <label className="form-label fw-semibold">Título da Trilha</label>
+                <label className="form-label fw-semibold">
+                  Título da Trilha
+                </label>
                 <input
-                  type="text"
                   className="form-control"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                 />
               </div>
 
-              {/* Nível */}
               <div className="col-md-3">
                 <label className="form-label fw-semibold">Nível</label>
                 <select
                   className="form-select"
                   value={level}
-                  onChange={(e) => setLevel(e.target.value as TrackLevel)}
+                  onChange={(e) =>
+                    setLevel(e.target.value as TrackLevel)
+                  }
                 >
                   <option>Iniciante</option>
                   <option>Intermediário</option>
@@ -210,7 +208,6 @@ const AdminTracks: React.FC = () => {
                 </select>
               </div>
 
-              {/* Categoria */}
               <div className="col-md-3">
                 <label className="form-label fw-semibold">Categoria</label>
                 <select
@@ -226,7 +223,6 @@ const AdminTracks: React.FC = () => {
                 </select>
               </div>
 
-              {/* Descrição */}
               <div className="col-12">
                 <label className="form-label fw-semibold">Descrição</label>
                 <textarea
@@ -237,7 +233,6 @@ const AdminTracks: React.FC = () => {
                 />
               </div>
 
-              {/* Carga Horária */}
               <div className="col-md-4">
                 <label className="form-label fw-semibold">
                   Carga Horária (h)
@@ -250,30 +245,6 @@ const AdminTracks: React.FC = () => {
                 />
               </div>
 
-              {/* Banner (O MESMO QUE VOCÊ JÁ TINHA) */}
-              <div className="col-12">
-                <label className="form-label fw-semibold">
-                  Banner da Trilha
-                </label>
-
-                <div className="border rounded p-3 text-center bg-light">
-                  <input
-                    type="file"
-                    className="form-control"
-                    accept="image/*"
-                    onChange={(e) =>
-                      setBanner(e.target.files?.[0] || null)
-                    }
-                  />
-                  <small className="text-muted d-block mt-2">
-                    {editingId
-                      ? "Selecionar um novo banner substituirá o atual"
-                      : "Recomendado: 1200x400px • JPG ou PNG"}
-                  </small>
-                </div>
-              </div>
-
-              {/* Ações */}
               <div className="col-12 d-flex justify-content-end gap-2">
                 <button
                   type="button"
@@ -285,13 +256,12 @@ const AdminTracks: React.FC = () => {
 
                 <button
                   type="submit"
-                  className="btn btn-success px-4"
+                  className="btn btn-success"
                   disabled={loading}
                 >
                   {loading ? "Salvando..." : "Salvar Trilha"}
                 </button>
               </div>
-
             </form>
           </div>
         </div>
@@ -300,7 +270,17 @@ const AdminTracks: React.FC = () => {
       {/* ================= LIST ================= */}
       {activeTab === "list" && (
         <div className="card">
-          <div className="card-header">Trilhas Cadastradas</div>
+          <div className="card-header d-flex justify-content-between align-items-center">
+            <span>Trilhas Cadastradas</span>
+
+            <input
+              type="text"
+              className="form-control w-25"
+              placeholder="Buscar por título..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
 
           <div className="card-body">
             <div className="table-responsive">
@@ -316,13 +296,13 @@ const AdminTracks: React.FC = () => {
                 </thead>
 
                 <tbody>
-                  {tracks.map((track) => (
+                  {filteredTracks.map((track) => (
                     <tr key={track.id}>
                       <td>{track.title}</td>
                       <td>{track.category}</td>
                       <td>{track.level}</td>
                       <td>—</td>
-                      <td className="d-flex gap-2 flex-wrap">
+                      <td className="d-flex gap-2">
                         <button
                           className="btn btn-sm btn-outline-primary"
                           onClick={() => handleEdit(track)}
@@ -339,14 +319,20 @@ const AdminTracks: React.FC = () => {
                       </td>
                     </tr>
                   ))}
-                </tbody>
 
+                  {filteredTracks.length === 0 && (
+                    <tr>
+                      <td colSpan={5} className="text-center text-muted py-4">
+                        Nenhuma trilha encontrada
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
               </table>
             </div>
           </div>
         </div>
       )}
-
     </section>
   );
 };

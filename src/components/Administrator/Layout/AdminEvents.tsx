@@ -125,6 +125,7 @@ const AdminEvents: React.FC = () => {
   const handleEdit = (evento: Evento) => {
     setEditingId(evento.id || null);
     setTitulo(evento.titulo);
+    setDescricao(evento.descricao);
     setTipo(evento.tipo);
     setModalidade(evento.modalidade);
     setData(evento.data);
@@ -348,7 +349,7 @@ const AdminEvents: React.FC = () => {
               <div className="col-12 d-flex justify-content-end gap-2">
                 <button
                   type="button"
-                  className="btn btn-outline-secondary"
+                  className="btn btn-success px-4"
                   onClick={() => setActiveTab("list")}
                 >
                   Cancelar
@@ -408,10 +409,10 @@ const AdminEvents: React.FC = () => {
                         <td>
                           <span
                             className={`badge ${evento.status === "Agendado"
-                                ? "bg-primary"
-                                : evento.status === "Encerrado"
-                                  ? "bg-secondary"
-                                  : "bg-danger"
+                              ? "bg-primary"
+                              : evento.status === "Encerrado"
+                                ? "bg-secondary"
+                                : "bg-danger"
                               }`}
                           >
                             {evento.status}

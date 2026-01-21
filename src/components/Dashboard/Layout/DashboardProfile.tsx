@@ -3,7 +3,7 @@ import CropModal from "../Settings/CropModal";
 
 interface DashboardProfileProps {
   fotoPerfil: string | null;
-  onChangeFoto: (novaFoto: string) => void;
+  onChangeFoto: (novaFoto: string | null) => void;
 }
 
 const DashboardProfile: React.FC<DashboardProfileProps> = ({
@@ -15,23 +15,37 @@ const DashboardProfile: React.FC<DashboardProfileProps> = ({
   const [nome, setNome] = useState<string>("");
 
   useEffect(() => {
-    const nomeSalvo = localStorage.getItem("nome");
-    if (nomeSalvo) setNome(nomeSalvo);
+    const nomeSalvo = localStorage.getItem("nomeCompleto");
+    if (nomeSalvo) {
+      const nomeCurto = nomeSalvo
+        .trim()
+        .split(/\s+/)
+        .slice(0, 2)
+        .join(" ");
+      setNome(nomeCurto);
+    }
   }, []);
 
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+
     const imageUrl = URL.createObjectURL(file);
     setTempImage(imageUrl);
-    onChangeFoto(imageUrl); // atualiza no estado do DashMain também
   };
 
-  // Avatar final: foto temporária > foto do usuário > avatar padrão com iniciais
+  const handleRemovePhoto = () => {
+    setTempImage(null);
+    onChangeFoto(null);
+    localStorage.removeItem("fotoPerfil");
+  };
+
   const avatarSrc =
     tempImage ||
     fotoPerfil ||
-    `https://ui-avatars.com/api/?name=${encodeURIComponent(nome || "Usuário")}&background=6f42c1&color=fff`;
+    `https://ui-avatars.com/api/?name=${encodeURIComponent(
+      nome || "Usuário"
+    )}&background=6f42c1&color=fff`;
 
   return (
     <div className="dashboard-section">
@@ -59,6 +73,17 @@ const DashboardProfile: React.FC<DashboardProfileProps> = ({
             onChange={handleAvatarChange}
           />
 
+          {/* BOTÕES */}
+          {(fotoPerfil || tempImage) && (
+            <button
+              className="btn btn-sm btn-outline-danger mt-3"
+              onClick={handleRemovePhoto}
+            >
+              <i className="bi bi-trash me-1"></i>
+              Remover foto
+            </button>
+          )}
+
           <h5 className="fw-bold mt-3 mb-1">{nome || "Usuário"}</h5>
           <span className="text-muted">Nível 3 • Plano Premium</span>
         </div>
@@ -69,17 +94,13 @@ const DashboardProfile: React.FC<DashboardProfileProps> = ({
         <div className="row g-4">
           <div className="col-md-6">
             <label className="form-label fw-semibold">Nome</label>
-            <input
-              className="form-control profile-input"
-              value={nome || "Usuário"}
-              disabled
-            />
+            <input className="form-control" value={nome} disabled />
           </div>
 
           <div className="col-md-6">
             <label className="form-label fw-semibold">Email</label>
             <input
-              className="form-control profile-input"
+              className="form-control"
               value={localStorage.getItem("email") || ""}
               disabled
             />
@@ -87,20 +108,12 @@ const DashboardProfile: React.FC<DashboardProfileProps> = ({
 
           <div className="col-md-6">
             <label className="form-label fw-semibold">Membro desde</label>
-            <input
-              className="form-control profile-input"
-              value="Janeiro 2025"
-              disabled
-            />
+            <input className="form-control" value="Janeiro 2025" disabled />
           </div>
 
           <div className="col-md-6">
             <label className="form-label fw-semibold">Plano</label>
-            <input
-              className="form-control profile-input"
-              value="Premium"
-              disabled
-            />
+            <input className="form-control" value="Premium" disabled />
           </div>
         </div>
       </div>
@@ -111,7 +124,8 @@ const DashboardProfile: React.FC<DashboardProfileProps> = ({
           image={tempImage}
           onCancel={() => setTempImage(null)}
           onSave={(croppedImage) => {
-            onChangeFoto(croppedImage); // atualiza Sidebar + menu
+            onChangeFoto(croppedImage);
+            localStorage.setItem("fotoPerfil", croppedImage);
             setTempImage(null);
           }}
         />
