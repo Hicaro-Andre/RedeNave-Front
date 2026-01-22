@@ -16,7 +16,6 @@ import TrailsFilter from "../components/Trails/TrailsFilter";
 
 // Blocos Eventos
 import AgendaHero from "../components/Eventos/AgendaHero";
-import EventsTabs from "../components/Eventos/EventsTabs";
 import NextEvent from "../components/Eventos/NextEvent";
 import CalendarEvents from "../components/Eventos/CalendarEvents";
 
@@ -31,7 +30,6 @@ import CtaSection from "../components/About/CtaSection";
 
 // Blocos Support
 import SupportHeader from "../components/Support/SupportHeader";
-import SupportSearch from "../components/Support/SupportSearch";
 import ServiceChannels from "../components/Support/ServiceChannels";
 import FAQ from "../components/Support/FAQ";
 import ContatoSection from "../components/Support/ContatoSection";
@@ -67,7 +65,6 @@ storyblokInit({
 
     //Eventos
     AgendaHero,
-    EventsTabs,
     NextEvent,
     CalendarEvents,
 
@@ -82,7 +79,6 @@ storyblokInit({
 
     //Support
     SupportHeader,
-    SupportSearch,
     ServiceChannels,
     FAQ,
     ContatoSection,

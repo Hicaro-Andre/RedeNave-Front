@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@storyblok/js": "^4.4.3",
     "@storyblok/react": "^5.4.20",
     "bootstrap": "^5.3.8",

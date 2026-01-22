@@ -125,9 +125,7 @@ const AdminTracks: React.FC = () => {
 
   // ================= FILTER (SOMENTE POR TÍTULO) =================
   const filteredTracks = tracks.filter((track) =>
-    track.title
-      .toLowerCase()
-      .includes(search.toLowerCase())
+    track.title.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -244,6 +242,35 @@ const AdminTracks: React.FC = () => {
                   onChange={(e) => setWorkload(e.target.value)}
                 />
               </div>
+
+              {/* ================= BANNER / FOTO ================= */}
+              <div className="col-md-6">
+                <label className="form-label fw-semibold">
+                  Foto ou Banner da Trilha
+                </label>
+                <input
+                  type="file"
+                  className="form-control"
+                  accept="image/*"
+                  onChange={(e) =>
+                    setBanner(e.target.files ? e.target.files[0] : null)
+                  }
+                />
+                <small className="text-muted">
+                  Formatos aceitos: JPG, PNG ou WEBP
+                </small>
+              </div>
+
+              {banner && (
+                <div className="col-md-6 d-flex align-items-end">
+                  <img
+                    src={URL.createObjectURL(banner)}
+                    alt="Preview do banner"
+                    className="img-fluid rounded shadow-sm"
+                    style={{ maxHeight: 150, objectFit: "cover" }}
+                  />
+                </div>
+              )}
 
               <div className="col-12 d-flex justify-content-end gap-2">
                 <button

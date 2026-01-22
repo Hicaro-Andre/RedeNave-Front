@@ -3,6 +3,7 @@ import React from "react";
 export type DashboardSection =
   | "overview"
   | "cursos"
+  | "eventos"
   | "certificados"
   | "perfil"
   | "configuracoes";
@@ -31,6 +32,7 @@ const DashboardSidebar: React.FC<DashboardSidebarProps> = ({
   const menuItems: { key: DashboardSection; label: string; icon: string }[] = [
     { key: "overview", label: "Visão Geral", icon: "bi-house-door" },
     { key: "cursos", label: "Meus Cursos", icon: "bi-book" },
+    { key: "eventos", label: "Meus Eventos", icon: "bi-calendar-event" },
     { key: "certificados", label: "Certificados", icon: "bi-award" },
   ];
 

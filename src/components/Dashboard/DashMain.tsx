@@ -11,13 +11,17 @@ import DashboardCourses from "./Layout/DashboardCourses";
 import DashboardCertificados from "./Layout/DashboardCertificates";
 import DashboardProfile from "./Layout/DashboardProfile";
 import DashboardConfiguracoes from "./Layout/DashboardSettings";
-import DashboardSidebar, { DashboardSection } from "./Layout/DashboardSidebar";
+import DashboardSidebar, {
+  DashboardSection,
+} from "./Layout/DashboardSidebar";
+import DashboardEvents from "./Layout/DashboardEvents";
 
 export default function DashMain() {
   const [nome, setNome] = useState<string>("");
   const [fotoPerfil, setFotoPerfil] = useState<string | null>(null);
   const [email, setEmail] = useState<string>("");
-  const [section, setSection] = useState<DashboardSection>("overview");
+  const [section, setSection] =
+    useState<DashboardSection>("overview");
 
   const navigate = useNavigate();
 
@@ -41,18 +45,25 @@ export default function DashMain() {
             .slice(0, 2)
             .join(" ");
 
-          setNome(nomeFormatado);
-
+          setNome(nomeFormatado || "");
           setFotoPerfil(data.fotoPerfil || null);
 
-          // cache opcional
-          localStorage.setItem("nomeCompleto", data.nomeCompleto || "");
+          localStorage.setItem(
+            "nomeCompleto",
+            data.nomeCompleto || ""
+          );
           if (data.fotoPerfil) {
-            localStorage.setItem("fotoPerfil", data.fotoPerfil);
+            localStorage.setItem(
+              "fotoPerfil",
+              data.fotoPerfil
+            );
           }
         }
       } catch (error) {
-        console.error("Erro ao carregar dados do usuário:", error);
+        console.error(
+          "Erro ao carregar dados do usuário:",
+          error
+        );
       }
     });
 
@@ -68,7 +79,9 @@ export default function DashMain() {
 
   const closeMobileMenu = () => {
     const navbar = document.getElementById("navbarNav");
-    if (navbar?.classList.contains("show")) navbar.classList.remove("show");
+    if (navbar?.classList.contains("show")) {
+      navbar.classList.remove("show");
+    }
   };
 
   const handleSectionChange = (name: DashboardSection) => {
@@ -78,12 +91,20 @@ export default function DashMain() {
 
   return (
     <>
-      {/* NAVBAR */}
+      {/* ================= NAVBAR ================= */}
       <nav className="navbar navbar-expand-lg navbar-dark sticky-top">
         <div className="container-fluid">
-          <Link to="/" className="navbar-brand">
-            <img src={logo} alt="Rede Nave" style={{ width: 70 }} />
-          </Link>
+          <button
+            className="navbar-brand bg-transparent border-0 p-0"
+            onClick={() => handleSectionChange("overview")}
+          >
+            <img
+              src={logo}
+              alt="Rede Nave"
+              style={{ width: 70 }}
+            />
+          </button>
+
 
           <button
             className="navbar-toggler"
@@ -94,10 +115,27 @@ export default function DashMain() {
             <span className="navbar-toggler-icon" />
           </button>
 
-          <div className="collapse navbar-collapse" id="navbarNav">
+          <div
+            className="collapse navbar-collapse"
+            id="navbarNav"
+          >
             <ul className="navbar-nav ms-auto align-items-lg-center gap-lg-2">
-              <li className="nav-item d-none d-lg-block">
-                <span className="nav-link active">Meu Painel</span>
+              {/* INÍCIO */}
+              <li className="nav-item">
+                <Link
+                  to="/"
+                  className="nav-link"
+                  onClick={closeMobileMenu}
+                >
+                  Início
+                </Link>
+              </li>
+
+              {/* MEU PAINEL */}
+              <li className="nav-item">
+                <span className="nav-link active">
+                  Meu Painel
+                </span>
               </li>
 
               {/* USER */}
@@ -107,7 +145,10 @@ export default function DashMain() {
                   data-bs-toggle="dropdown"
                 >
                   {fotoPerfil ? (
-                    <img src={fotoPerfil} className="nav-profile-img" />
+                    <img
+                      src={fotoPerfil}
+                      className="nav-profile-img"
+                    />
                   ) : (
                     <div className="nav-profile-img initials">
                       {nome
@@ -128,14 +169,19 @@ export default function DashMain() {
                   <li>
                     <button
                       className="dropdown-item"
-                      onClick={() => handleSectionChange("perfil")}
+                      onClick={() =>
+                        handleSectionChange("perfil")
+                      }
                     >
                       Meu Perfil
                     </button>
                   </li>
 
                   <li>
-                    <button className="dropdown-item" onClick={handleLogout}>
+                    <button
+                      className="dropdown-item"
+                      onClick={handleLogout}
+                    >
                       Sair
                     </button>
                   </li>
@@ -146,9 +192,10 @@ export default function DashMain() {
         </div>
       </nav>
 
-      {/* DASHBOARD */}
+      {/* ================= DASHBOARD ================= */}
       <div className="container-fluid py-4">
         <div className="row">
+          {/* SIDEBAR */}
           <div className="col-lg-3 d-none d-lg-block">
             <DashboardSidebar
               section={section}
@@ -162,17 +209,29 @@ export default function DashMain() {
             />
           </div>
 
+          {/* CONTEÚDO */}
           <div className="col-lg-9">
-            {section === "overview" && <DashboardOverview />}
-            {section === "cursos" && <DashboardCourses />}
-            {section === "certificados" && <DashboardCertificados />}
+            {section === "overview" && (
+              <DashboardOverview />
+            )}
+            {section === "cursos" && (
+              <DashboardCourses />
+            )}
+            {section === "eventos" && (
+              <DashboardEvents />
+            )}
+            {section === "certificados" && (
+              <DashboardCertificados />
+            )}
             {section === "perfil" && (
               <DashboardProfile
                 fotoPerfil={fotoPerfil}
                 onChangeFoto={setFotoPerfil}
               />
             )}
-            {section === "configuracoes" && <DashboardConfiguracoes />}
+            {section === "configuracoes" && (
+              <DashboardConfiguracoes />
+            )}
           </div>
         </div>
       </div>

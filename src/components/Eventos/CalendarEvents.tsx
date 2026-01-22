@@ -1,5 +1,15 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  doc,
+  updateDoc,
+  increment,
+  arrayUnion,
+  arrayRemove
+} from "firebase/firestore";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 import { db } from "../../config/firebase";
 
 type CalendarEventsProps = { blok: { title: string } };
@@ -13,15 +23,13 @@ interface Evento {
   duracao?: string;
   vagas: number;
   inscricoes?: number;
+  inscritos?: string[];
   modalidade: string;
   instrutor?: string;
   local?: string;
 }
 
-/**
- * 🔒 FUNÇÃO SEGURA CONTRA FUSO HORÁRIO
- * Converte YYYY-MM-DD para Date LOCAL
- */
+/** 🔒 FUNÇÃO SEGURA CONTRA FUSO HORÁRIO */
 function parseDateLocal(dateStr: string) {
   const [year, month, day] = dateStr.split("-").map(Number);
   return new Date(year, month - 1, day);
@@ -29,11 +37,14 @@ function parseDateLocal(dateStr: string) {
 
 export default function CalendarEvents({ blok }: CalendarEventsProps) {
   const [eventos, setEventos] = useState<Evento[]>([]);
+  const [user, setUser] = useState<any>(null);
+
+  const navigate = useNavigate();
+  const auth = getAuth();
 
   const hoje = new Date();
   const [mesAtual, setMesAtual] = useState(hoje.getMonth());
   const [anoAtual, setAnoAtual] = useState(hoje.getFullYear());
-
   const [filtro, setFiltro] = useState("todos");
   const [diasDoMes, setDiasDoMes] = useState<any[]>([]);
 
@@ -42,12 +53,20 @@ export default function CalendarEvents({ blok }: CalendarEventsProps) {
     "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
   ];
 
+  // ================= AUTH =================
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, usuario => {
+      setUser(usuario);
+    });
+    return () => unsub();
+  }, []);
+
   // ================= LOAD EVENTS =================
   useEffect(() => {
     const fetchEventos = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, "eventos"));
-        const data: Evento[] = querySnapshot.docs.map(doc => ({
+        const snapshot = await getDocs(collection(db, "eventos"));
+        const data: Evento[] = snapshot.docs.map(doc => ({
           id: doc.id,
           ...(doc.data() as Evento)
         }));
@@ -68,29 +87,16 @@ export default function CalendarEvents({ blok }: CalendarEventsProps) {
     const primeiroDia = new Date(anoAtual, mesAtual, 1).getDay();
     const ultimoDia = new Date(anoAtual, mesAtual + 1, 0).getDate();
 
-    // 🔧 CORREÇÃO AQUI
     const diasEventos = eventos
       .map(ev => parseDateLocal(ev.data))
-      .filter(
-        data =>
-          data.getMonth() === mesAtual &&
-          data.getFullYear() === anoAtual
-      )
-      .map(data => data.getDate());
+      .filter(d => d.getMonth() === mesAtual && d.getFullYear() === anoAtual)
+      .map(d => d.getDate());
 
     const dias = [];
-
-    for (let i = 0; i < primeiroDia; i++) {
-      dias.push({ dia: null });
-    }
-
+    for (let i = 0; i < primeiroDia; i++) dias.push({ dia: null });
     for (let d = 1; d <= ultimoDia; d++) {
-      dias.push({
-        dia: d,
-        evento: diasEventos.includes(d)
-      });
+      dias.push({ dia: d, evento: diasEventos.includes(d) });
     }
-
     setDiasDoMes(dias);
   }
 
@@ -110,14 +116,13 @@ export default function CalendarEvents({ blok }: CalendarEventsProps) {
     setAnoAtual(novoAno);
   }
 
-  // ================= FILTRO + ORDENAÇÃO =================
+  // ================= ORDENAÇÃO =================
   const eventosOrdenados = useMemo(() => {
     const lista =
       filtro === "todos"
         ? [...eventos]
         : eventos.filter(ev => ev.tipo === filtro);
 
-    // 🔧 CORREÇÃO AQUI
     return lista.sort(
       (a, b) =>
         parseDateLocal(a.data).getTime() -
@@ -125,8 +130,55 @@ export default function CalendarEvents({ blok }: CalendarEventsProps) {
     );
   }, [eventos, filtro]);
 
-  function inscreverEvento(titulo: string) {
-    alert(`Inscrito no evento: ${titulo}`);
+  // ================= INSCRIÇÃO / DESINSCRIÇÃO =================
+  async function toggleInscricao(evento: Evento) {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+
+    const ref = doc(db, "eventos", evento.id!);
+    const jaInscrito = evento.inscritos?.includes(user.uid);
+
+    try {
+      if (jaInscrito) {
+        await updateDoc(ref, {
+          inscritos: arrayRemove(user.uid),
+          inscricoes: increment(-1)
+        });
+
+        setEventos(prev =>
+          prev.map(ev =>
+            ev.id === evento.id
+              ? {
+                ...ev,
+                inscritos: ev.inscritos?.filter(id => id !== user.uid),
+                inscricoes: (ev.inscricoes || 1) - 1
+              }
+              : ev
+          )
+        );
+      } else {
+        await updateDoc(ref, {
+          inscritos: arrayUnion(user.uid),
+          inscricoes: increment(1)
+        });
+
+        setEventos(prev =>
+          prev.map(ev =>
+            ev.id === evento.id
+              ? {
+                ...ev,
+                inscritos: [...(ev.inscritos || []), user.uid],
+                inscricoes: (ev.inscricoes || 0) + 1
+              }
+              : ev
+          )
+        );
+      }
+    } catch (error) {
+      console.error("Erro ao atualizar inscrição:", error);
+    }
   }
 
   // ================= JSX =================
@@ -139,136 +191,99 @@ export default function CalendarEvents({ blok }: CalendarEventsProps) {
           {/* Calendário */}
           <div className="col-lg-5">
             <div className="calendar-container">
-              <div className="calendar-header d-flex align-items-center justify-content-between mb-2">
-                <button
-                  className="btn btn-sm btn-outline-primary"
-                  onClick={() => changeMonth(-1)}
-                >
+              <div className="calendar-header d-flex justify-content-between mb-2">
+                <button className="btn btn-sm btn-outline-primary" onClick={() => changeMonth(-1)}>
                   <i className="bi bi-chevron-left"></i>
                 </button>
-
                 <h5 className="fw-bold mb-0">
                   {nomeMes[mesAtual]} {anoAtual}
                 </h5>
-
-                <button
-                  className="btn btn-sm btn-outline-primary"
-                  onClick={() => changeMonth(1)}
-                >
+                <button className="btn btn-sm btn-outline-primary" onClick={() => changeMonth(1)}>
                   <i className="bi bi-chevron-right"></i>
                 </button>
               </div>
 
-              <div
-                className="calendar-grid mb-3 d-grid"
-                style={{ gridTemplateColumns: "repeat(7, 1fr)" }}
-              >
+              <div className="calendar-grid d-grid mb-3" style={{ gridTemplateColumns: "repeat(7,1fr)" }}>
                 {["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"].map(d => (
-                  <div key={d} className="text-center fw-bold small">
-                    {d}
-                  </div>
+                  <div key={d} className="text-center fw-bold small">{d}</div>
                 ))}
               </div>
 
-              <div
-                className="calendar-grid"
-                style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)" }}
-              >
-                {diasDoMes.map((item, index) => (
-                  <div
-                    key={index}
-                    className={`calendar-day ${item.evento ? "has-event" : ""}`}
-                  >
+              <div className="calendar-grid" style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)" }}>
+                {diasDoMes.map((item, i) => (
+                  <div key={i} className={`calendar-day ${item.evento ? "has-event" : ""}`}>
                     {item.dia}
                   </div>
                 ))}
               </div>
-
-              <div className="mt-3">
-                <small className="text-muted">
-                  <span className="badge day-event">●</span> Dia com evento
-                </small>
-              </div>
             </div>
           </div>
 
-          {/* Lista de Eventos */}
+          {/* Lista de eventos */}
           <div className="col-lg-7">
-            {eventosOrdenados.length === 0 ? (
-              <div className="text-center py-5">
-                <i className="bi bi-calendar-x display-1 text-muted"></i>
-                <p className="text-muted mt-3">
-                  Nenhum evento encontrado nesta categoria.
-                </p>
-              </div>
-            ) : (
-              eventosOrdenados.map(evento => {
-                const inscricoes = evento.inscricoes || 0;
-                const vagasRestantes = evento.vagas - inscricoes;
-                const percentual = (inscricoes / evento.vagas) * 100;
+            {eventosOrdenados.map(evento => {
+              const inscricoes = evento.inscricoes || 0;
+              const percentual = (inscricoes / evento.vagas) * 100;
+              const jaInscrito = evento.inscritos?.includes(user?.uid);
+              const dataEvento = parseDateLocal(evento.data);
 
-                const dataEvento = parseDateLocal(evento.data);
-
-                return (
-                  <div key={evento.id} className="card mb-3">
-                    <div className="card-body">
-                      <div className="row align-items-center">
-                        <div className="col-md-2 text-center">
-                          <div className="bg-calendar text-white p-3 rounded text-center">
-                            <div style={{ fontSize: "2rem", fontWeight: "bold" }}>
-                              {dataEvento.getDate()}
-                            </div>
-                            <div style={{ fontSize: "0.9rem", fontWeight: 600 }}>
-                              {dataEvento
-                                .toLocaleString("pt-BR", { month: "short" })
-                                .replace(".", "")
-                                .toUpperCase()}
-                            </div>
-                          </div>
+              return (
+                <div key={evento.id} className="card mb-3">
+                  <div className="card-body row align-items-center">
+                    <div className="col-md-2 text-center">
+                      <div className="bg-calendar text-white p-3 rounded">
+                        <div style={{ fontSize: 28, fontWeight: "bold" }}>
+                          {dataEvento.getDate()}
                         </div>
-
-                        <div className="col-md-7">
-                          <span className="badge bg-calendar mb-2">
-                            {evento.tipo}
-                          </span>
-                          <h5 className="fw-bold mb-2">{evento.titulo}</h5>
-                          <p className="text-muted mb-2 small">
-                            <i className="bi bi-clock"></i> {evento.horario || "-"}{" "}
-                            {evento.duracao || "-"} |{" "}
-                            <i className="bi bi-laptop"></i>{" "}
-                            {evento.modalidade || "-"}
-                          </p>
-
-                          <div className="progress" style={{ height: 5 }}>
-                            <div
-                              className="progress-bar bg-success"
-                              style={{ width: `${percentual}%` }}
-                            ></div>
-                          </div>
-                          <small className="text-muted">
-                            {inscricoes}/{evento.vagas} inscritos
-                          </small>
-                        </div>
-
-                        <div className="col-md-3 text-end">
-                          <button
-                            className="btn btn-primary btn-sm w-100"
-                            onClick={() => inscreverEvento(evento.titulo)}
-                          >
-                            <i className="bi bi-calendar-plus"></i> Inscrever
-                          </button>
-                          {vagasRestantes <= 5 && (
-                            <small className="text-danger d-block mt-2">
-                              Últimas vagas!
-                            </small>
-                          )}
+                        <div>
+                          {dataEvento
+                            .toLocaleString("pt-BR", { month: "short" })
+                            .replace(".", "")
+                            .toUpperCase()}
                         </div>
                       </div>
                     </div>
+
+                    <div className="col-md-7">
+                      <span className="badge bg-calendar mb-2">{evento.tipo}</span>
+                      <h5 className="fw-bold">{evento.titulo}</h5>
+
+                      <p className="text-muted mb-2 small">
+                        <i className="bi bi-clock"></i> {evento.horario || "-"}{" "}
+                        {evento.duracao || "-"} |{" "}
+                        <i className="bi bi-laptop"></i>{" "}
+                        {evento.modalidade || "-"}
+                      </p>
+
+                      <div className="progress" style={{ height: 5 }}>
+                        <div
+                          className="progress-bar bg-success"
+                          style={{ width: `${percentual}%` }}
+                        />
+                      </div>
+
+                      <small className="text-muted">
+                        {inscricoes}/{evento.vagas} inscritos
+                      </small>
+                    </div>
+
+                    <div className="col-md-3 text-end">
+                      <button
+                        className={`btn btn-sm w-100 ${jaInscrito ? "btn-danger" : "btn-primary"
+                          }`}
+                        onClick={() => toggleInscricao(evento)}
+                      >
+                        {!user
+                          ? "Faça login"
+                          : jaInscrito
+                            ? "Desinscrever"
+                            : "Inscrever"}
+                      </button>
+                    </div>
                   </div>
-                );
-              })
-            )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
