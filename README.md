@@ -300,7 +300,7 @@ Abaixo uma captura de tela da interface para uma prévia visual:
 ![Preview da aplicação](./src/assets/readme/trilhas.png)
 
 Link disponível para melhor visualização
-🔗 **[rede-nave-front.vercel.app](https://rede-nave-front.vercel.app)** 
+🔗 **[rede-nave-front.vercel.app](https://rede-nave-front.vercel.app/trilhas)** 
 
 
 -descrisão
