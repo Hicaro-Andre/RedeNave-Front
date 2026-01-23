@@ -269,16 +269,16 @@ export default function CalendarEvents({ blok }: CalendarEventsProps) {
 
                     <div className="col-md-3 text-end">
                       <button
-                        className={`btn btn-sm w-100 ${jaInscrito ? "btn-danger" : "btn-primary"
-                          }`}
+                        className={`btn btn-sm w-100 event-action-btn ${jaInscrito ? "is-cancel" : "is-subscribe"}`}
                         onClick={() => toggleInscricao(evento)}
                       >
                         {!user
                           ? "Faça login"
                           : jaInscrito
-                            ? "Desinscrever"
+                            ? "Cancelar"
                             : "Inscrever"}
                       </button>
+
                     </div>
                   </div>
                 </div>

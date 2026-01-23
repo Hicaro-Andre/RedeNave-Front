@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../config/firebase";
-
+import ReactMarkdown from "react-markdown";
 
 type NextEventProps = {
   blok: {
     title: string;
-    badge: string,
-    button_card_event: string
+    badge: string;
+    button_card_event: string;
   };
 };
 
@@ -18,6 +18,7 @@ type Evento = {
   horario: string;
   modalidade: string;
   palestrante: string;
+  cargo: string;
   status: string;
   tipo: string;
   vagas: number;
@@ -37,7 +38,7 @@ const NextEvent = ({ blok }: NextEventProps) => {
     const buscarProximoEvento = async () => {
       const q = query(
         collection(db, "eventos"),
-        where("status", "==", "Agendado")
+        where("status", "==", "Agendado"),
       );
 
       const snap = await getDocs(q);
@@ -47,13 +48,11 @@ const NextEvent = ({ blok }: NextEventProps) => {
 
       const eventosOrdenados = snap.docs
         .map((doc) => doc.data() as Evento)
-        .filter(
-          (e) => new Date(`${e.data}T${e.horario}`) >= hoje
-        )
+        .filter((e) => new Date(`${e.data}T${e.horario}`) >= hoje)
         .sort(
           (a, b) =>
             new Date(`${a.data}T${a.horario}`).getTime() -
-            new Date(`${b.data}T${b.horario}`).getTime()
+            new Date(`${b.data}T${b.horario}`).getTime(),
         );
 
       if (eventosOrdenados.length > 0) {
@@ -70,9 +69,7 @@ const NextEvent = ({ blok }: NextEventProps) => {
 
     const calcularCountdown = () => {
       const agora = new Date().getTime();
-      const dataEvento = new Date(
-        `${evento.data}T${evento.horario}`
-      ).getTime();
+      const dataEvento = new Date(`${evento.data}T${evento.horario}`).getTime();
 
       const diferenca = dataEvento - agora;
 
@@ -83,11 +80,9 @@ const NextEvent = ({ blok }: NextEventProps) => {
 
       const dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
       const horas = Math.floor(
-        (diferenca % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        (diferenca % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
       );
-      const minutos = Math.floor(
-        (diferenca % (1000 * 60 * 60)) / (1000 * 60)
-      );
+      const minutos = Math.floor((diferenca % (1000 * 60 * 60)) / (1000 * 60));
 
       setCountdown({ dias, horas, minutos });
     };
@@ -131,17 +126,15 @@ const NextEvent = ({ blok }: NextEventProps) => {
                       year: "numeric",
                     })}
                     <br />
-                    <i className="bi bi-clock"></i>{" "}
-                    {evento.horario} (Horário de Brasília)
+                    <i className="bi bi-clock"></i> {evento.horario} (Horário de
+                    Brasília)
                     <br />
-                    <i className="bi bi-laptop"></i>{" "}
-                    {evento.modalidade}
+                    <i className="bi bi-laptop"></i> {evento.modalidade}
                   </p>
                 </div>
 
                 {/* 🔹 COUNTDOWN */}
                 {countdown && (
-
                   <div className="countdown-timer col-md-4 text-center mt-4 mt-md-0">
                     <h6 className="mb-3">Começa em:</h6>
 
@@ -161,14 +154,10 @@ const NextEvent = ({ blok }: NextEventProps) => {
                         <small>Min</small>
                       </div>
                     </div>
-
                   </div>
-
                 )}
               </div>
-              <button
-                className="btn btn-outline-light btn-lg mt-3"
-              >
+              <button className="btn btn-outline-light btn-lg mt-3">
                 <i className="bi bi-calendar-plus"></i> {blok.button_card_event}
               </button>
             </div>
@@ -179,7 +168,9 @@ const NextEvent = ({ blok }: NextEventProps) => {
               style={{ borderRadius: "0 0 15px 15px" }}
             >
               <h5 className="fw-bold mb-3">Sobre o Evento</h5>
-              <p className="text-muted">{evento.descricao}</p>
+              <div className="text-muted">
+                <ReactMarkdown>{evento.descricao}</ReactMarkdown>
+              </div>
 
               <div className="d-flex align-items-center mt-4">
                 <div className="me-3">
@@ -204,7 +195,7 @@ const NextEvent = ({ blok }: NextEventProps) => {
 
                 <div>
                   <h6 className="fw-bold mb-0">{evento.palestrante}</h6>
-                  <small className="text-muted">Palestrante</small>
+                  <small className="text-muted">{evento.cargo}</small>
                 </div>
               </div>
             </div>
@@ -216,6 +207,3 @@ const NextEvent = ({ blok }: NextEventProps) => {
 };
 
 export default NextEvent;
-
-
-

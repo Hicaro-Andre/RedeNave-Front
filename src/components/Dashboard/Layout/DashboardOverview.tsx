@@ -169,7 +169,7 @@ const DashboardOverview = () => {
                   <span>{course.progress}%</span>
                 </div>
 
-                <button className="continue-btn">
+                <button className="btn">
                   Continuar →
                 </button>
               </div>

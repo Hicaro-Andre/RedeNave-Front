@@ -180,6 +180,24 @@ background: radial-gradient(
 .title-color{
     color: #6a0dad;
 }
+/* ----- cores dos botões inscrever e cancelar ----- */
+.event-action-btn.is-cancel {
+  background-color: #dc3545 !important;
+  border-color: #dc3545 !important;
+  color: #fff !important;
+}
+
+.event-action-btn.is-subscribe {
+  background-color: transparent !important;
+  border-color: #0d6efd !important;
+  color: #0d6efd !important;
+}
+
+.event-action-btn.is-subscribe:hover {
+  background-color: #0d6efd !important;
+  color: #fff !important;
+}
+
 /* ----- Depoimentos ----- */
 .testimonial-card {
   background: white;

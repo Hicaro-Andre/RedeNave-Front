@@ -7,6 +7,7 @@
   box-sizing: border-box;
 }
 
+
 /* ============================================================
    VARIÁVEIS CSS (CORES E TEMA) - Centraliza o design do projeto
    ============================================================ */
@@ -44,33 +45,44 @@
   --text-color-copy: #adb5bd;
 }
 
-
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
   color: #333;
   overflow-x: hidden;
 
- /* Background com gradiente + grid */
+  /* Background com gradiente + grid */
   background:
     linear-gradient(to bottom, #f7f3ff 0%, #e8d9ff 100%),
     linear-gradient(90deg, rgba(255, 255, 255, 0.15) 1px, transparent 1px),
     linear-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px);
-  background-size: 100% 100%, 40px 40px, 40px 40px;
+  background-size:
+    100% 100%,
+    40px 40px,
+    40px 40px;
 
-background-size: 100% 100%, 48px 48px, 48px 48px;
-
-
-
-
+  background-size:
+    100% 100%,
+    48px 48px,
+    48px 48px;
 }
 
 /* ================= TIPOGRAFIA ================================ */
-h1 { color: var(--bg-color-title); }
-h2 { color: var(--bg-color-title-section); }
-h4 { color: var(--color-title-secondary); }
-h5 { color: var(--bg-color-title-cards); }
-p  { color: var(--bg-color-text); }
+h1 {
+  color: var(--bg-color-title);
+}
+h2 {
+  color: var(--bg-color-title-section);
+}
+h4 {
+  color: var(--color-title-secondary);
+}
+h5 {
+  color: var(--bg-color-title-cards);
+}
+p {
+  color: var(--bg-color-text);
+}
 
 /* ======================== NAVBAR ============================== */
 .navbar {
@@ -114,7 +126,7 @@ p  { color: var(--bg-color-text); }
   padding: 0.5rem 1.5rem;
   font-weight: 500;
   background-color: var(--bg-color-button);
-  color: var(--text-color);
+  color: var(--text-color-secondary);
   transition: all 0.3s ease;
 }
 
@@ -138,11 +150,13 @@ p  { color: var(--bg-color-text); }
 /* Hover botão primário */
 .btn:not(.btn-outline-light):hover {
   background-color: var(--bg-color-button-hover) !important;
+
 }
 
 /* Hover botão secundário */
 .btn-outline-light:hover {
   background: var(--bg-color-button-hover-secondary) !important;
+  color: var(--text-color-secondary);
 }
 
 /* Apenas para dropdown dentro da navbar no mobile */
@@ -179,7 +193,9 @@ footer a:hover {
 .fade-in-section {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
 }
 
 .fade-in-section.is-visible {
@@ -202,7 +218,9 @@ footer a:hover {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* ===========================CARDS DE TRILHAS ======================================== */
@@ -211,13 +229,13 @@ footer a:hover {
   border-radius: 15px;
   overflow: hidden;
   border: none;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
 }
 
 .trilha-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
 }
 
 .trilha-card .card-img-top {
@@ -272,4 +290,34 @@ footer a:hover {
   .step-card {
     margin-bottom: 2rem;
   }
+}
+
+
+
+
+/* ================= BOTÃO DE EVENTO ================= */
+
+.event-action-btn {
+  border-radius: 25px;
+  font-weight: 500;
+}
+
+/* 🟢 Inscrever-se */
+.btn.event-action-btn.is-subscribe {
+  background-color: var(--bg-color-button) !important;
+  color: var(--text-color) !important;
+}
+
+.btn.event-action-btn.is-subscribe:hover {
+  background-color: var(--bg-color-button-hover) !important;
+}
+
+/* 🔴 Cancelar */
+.btn.event-action-btn.is-cancel {
+  background-color: #dc3545 !important;
+  color: #fff !important;
+}
+
+.btn.event-action-btn.is-cancel:hover {
+  background-color: #bb2d3b !important;
 }

@@ -15,8 +15,9 @@ export default function Navbar() {
 
   const { user, loading } = useAuth();
 
-  // Evita flicker
-  if (loading) return null;
+  // ⚠️ DEFINA QUEM É ADMIN AQUI
+  const ADMIN_EMAILS = ["admin@redenave.com"]; // ajuste se quiser
+  const isAdmin = user && ADMIN_EMAILS.includes(user.email || "");
 
   const isActive = (path: string) => {
     if (path === "/") return currentPath === "/";
@@ -41,6 +42,11 @@ export default function Navbar() {
     navigate("/");
   };
 
+  const handleMeuPainel = () => {
+    closeOffcanvas();
+    navigate(isAdmin ? "/admin" : "/dashboard");
+  };
+
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -48,7 +54,6 @@ export default function Navbar() {
     const scrollOffset = 50;
 
     const onScroll = () => {
-      // ===== Barra de progresso =====
       const height =
         document.documentElement.scrollHeight -
         document.documentElement.clientHeight;
@@ -58,7 +63,6 @@ export default function Navbar() {
 
       setScrollProgress(progress);
 
-      // ===== Efeito navbar =====
       if (!navbar) return;
 
       const scrolled = window.scrollY > scrollOffset;
@@ -72,10 +76,10 @@ export default function Navbar() {
     window.addEventListener("scroll", onScroll);
     onScroll();
 
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-    };
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  if (loading) return null;
 
   return (
     <>
@@ -90,9 +94,7 @@ export default function Navbar() {
           width: `${scrollProgress}%`,
           background: "linear-gradient(180deg, #5b119a, #7c19d1)",
           zIndex: 9999,
-          transition: "width 0.1s ease-out",
         }}
-        aria-hidden
       />
 
       <nav className="navbar navbar-expand-lg navbar-dark sticky-top">
@@ -138,6 +140,18 @@ export default function Navbar() {
                   </li>
                 ))}
 
+                {user && (
+                  <li className="nav-item">
+                    <button
+                      className={`nav-link ${isActive("/dashboard") ? "active" : ""}`}
+
+                      onClick={handleMeuPainel}
+                    >
+                      Meu Painel
+                    </button>
+                  </li>
+                )}
+
                 {!user && (
                   <li className="nav-item">
                     <Link
@@ -149,130 +163,45 @@ export default function Navbar() {
                     </Link>
                   </li>
                 )}
-
-                {user && (
-                  <li className="nav-item">
-                    <Link
-                      className={`nav-link ${isActive("/dashboard") ? "active" : ""}`}
-                      to="/dashboard"
-                      onClick={closeOffcanvas}
-                    >
-                      Meu Painel
-                    </Link>
-                  </li>
-                )}
               </ul>
 
               <div className="d-flex align-items-center mt-3 mt-lg-0">
                 {!user && (
-                  <Link
-                    className={`btn btn-sm ms-2 ${isActive("/cadastro") ? "active" : ""}`}
-                    to="/cadastro"
-                    onClick={closeOffcanvas}
-                  >
+                  <Link className="btn btn-sm ms-2" to="/cadastro">
                     Cadastre-se
                   </Link>
                 )}
 
                 {user && (
-                  <>
-                    {/* ================= DESKTOP ================= */}
-                    {!isMobile && (
-                      <div className="dropdown ms-3 d-flex align-items-center">
-                        <button
-                          className="btn p-0 border-0 d-flex align-items-center justify-content-center"
-                          data-bs-toggle="dropdown"
-                          aria-expanded="false"
-                          style={{
-                            background: "transparent",
-                            lineHeight: 0,
-                          }}
-                        >
-                          <div
-                            className="d-flex align-items-center justify-content-center rounded-circle"
-                            style={{
-                              width: 38,
-                              height: 38,
-                              border: "2px solid rgba(255,255,255,0.25)",
-                            }}
-                          >
-                            {user.photoURL ? (
-                              <img
-                                src={user.photoURL}
-                                alt="Avatar"
-                                className="rounded-circle"
-                                style={{ width: 32, height: 32, objectFit: "cover" }}
-                              />
-                            ) : (
-                              <span style={{ fontSize: 14, fontWeight: 600, color: "#fff" }}>
-                                {user.email?.charAt(0).toUpperCase()}
-                              </span>
-                            )}
-                          </div>
+                  <div className="dropdown ms-3">
+                    <button
+                      className="btn p-0 border-0"
+                      data-bs-toggle="dropdown"
+                      style={{ background: "transparent" }}
+                    >
+                      <div
+                        className="rounded-circle d-flex justify-content-center align-items-center"
+                        style={{
+                          width: 38,
+                          height: 38,
+                          border: "2px solid rgba(255,255,255,0.25)",
+                        }}
+                      >
+                        <span className="text-white fw-semibold">
+                          {user.email?.charAt(0).toUpperCase()}
+                        </span>
+                      </div>
+                    </button>
+
+                    <ul className="dropdown-menu dropdown-menu-end mt-2">
+                      <li>
+                        <button className="dropdown-item" onClick={handleLogout}>
+                          Sair
                         </button>
-
-                        <ul className="dropdown-menu dropdown-menu-end mt-2">
-                          <li>
-                            <button className="dropdown-item" onClick={handleLogout}>
-                              Sair
-                            </button>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
-
-                    {/* ================= MOBILE ================= */}
-                    {isMobile && (
-                      <div className=" border-top pt-3">
-                        <div className="d-flex align-items-center mb-3">
-                          {user.photoURL ? (
-                            <img
-                              src={user.photoURL}
-                              alt="Avatar"
-                              className="rounded-circle me-2"
-                              style={{ width: 36, height: 36, objectFit: "cover" }}
-                            />
-                          ) : (
-                            <div
-                              className="rounded-circle bg-secondary text-white d-flex justify-content-center align-items-center me-2"
-                              style={{ width: 36, height: 36 }}
-                            >
-                              {user.email?.charAt(0).toUpperCase()}
-                            </div>
-                          )}
-                          <strong className="text-white">{user.email}</strong>
-                        </div>
-
-                        <ul className="navbar-nav">
-                          {/* <li className="nav-item">
-                            <Link className="nav-link" to="/perfil" onClick={closeOffcanvas}>
-                              Meu Perfil
-                            </Link>
-                          </li>
-                          <li className="nav-item">
-                            <Link
-                              className="nav-link"
-                              to="/configuracoes"
-                              onClick={closeOffcanvas}
-                            >
-                              Configurações
-                            </Link>
-                          </li> */}
-                          <li className="nav-item">
-                            <button
-                              className="nav-link btn btn-link text-start"
-                              onClick={handleLogout}
-                            >
-                              Sair
-                            </button>
-                          </li>
-                        </ul>
-                      </div>
-                    )}
-                  </>
+                      </li>
+                    </ul>
+                  </div>
                 )}
-
-
               </div>
             </div>
           </div>

@@ -1,23 +1,14 @@
 # REDE NAVE – FRONT END
 
-Interface web da plataforma Rede Nave, focada em educação, trilhas de aprendizagem
-e eventos, com design moderno, responsivo e acessível.
+## 1 - 🎯  VISÃO GERAL
 
-## 🚀 Aplicação Online
+A Rede NAVE é uma plataforma digital voltada à educação, capacitação e fortalecimento do protagonismo feminino, oferecendo trilhas de aprendizagem, eventos formativos e conteúdos voltados ao desenvolvimento pessoal, profissional e empreendedor. O sistema foi desenvolvido com foco em acessibilidade, usabilidade e responsividade, promovendo uma experiência intuitiva e inclusiva para diferentes perfis de usuárias.
 
-A aplicação está disponível e pode ser acessada através do seguinte link:
-
-🔗 **[rede-nave-front.vercel.app](https://rede-nave-front.vercel.app)** 
+O sistema é destinado principalmente a mulheres empreendedoras, artesãs, estudantes e participantes de projetos sociais, bem como pessoas interessadas em formação, qualificação profissional e inclusão social. Também atende organizações, parceiros e educadores que buscam acompanhar eventos, trilhas educativas e iniciativas de impacto social promovidas pela Rede NAVE.
 
 
-## 📸 Preview
 
-Abaixo uma captura de tela da interface para uma prévia visual:
-
-![Preview da aplicação](./src/assets/preview.png)
-
-
-## 🧰 Tecnologias
+## 2 - 🧰 TECNOLOGIAS USADAS
 
 - React + TypeScript
 - React Router DOM
@@ -26,24 +17,22 @@ Abaixo uma captura de tela da interface para uma prévia visual:
 - Vite
 - Storyblok (CMS Headless)
 
-## 🚀 Como rodar localmente
 
-### Clone o repositório
-```bash
-git clone https://github.com/Hicaro-Andre/RedeNave-Front.git
-```
-<!-- ### Entre na pasta
-```bash
-cd rede-nave-front
-``` -->
-### Instale as dependências
-```bash
-npm install
-```
-### Rode o projeto
-```bash
-npm run dev
-```
+## 3 -🚀 APLICAÇÃO ONLINE
+
+A aplicação está disponível e pode ser acessada através do seguinte link:
+
+🔗 **[rede-nave-front.vercel.app](https://rede-nave-front.vercel.app)** 
+
+
+## 4 - 📸 PREVIEW
+
+Abaixo uma captura de tela da interface para uma prévia visual:
+
+![Preview da aplicação](./src/assets/preview.png)
+
+
+## 5 - 🏗️ ESTRUTURA GERAL DA APLICAÇÃO
 
 ## 📁 Estrutura do projeto
 
@@ -119,8 +108,27 @@ src/
 
 ```
 
+## 🚀 Como rodar localmente
+
+### Clone o repositório
+```bash
+git clone https://github.com/Hicaro-Andre/RedeNave-Front.git
+```
+<!-- ### Entre na pasta
+```bash
+cd rede-nave-front
+``` -->
+### Instale as dependências
+```bash
+npm install
+```
+### Rode o projeto
+```bash
+npm run dev
+```
+
 ## 🧠 Decisões técnicas
-<!-- - Navbar com efeitos de scroll otimizados usando `requestAnimationFrame` -->
+
 - CSS organizado com variáveis globais (`:root`) para facilitar manutenção
 - Navbar com efeitos visuais baseados em scroll
 - Componentes documentados diretamente no código
@@ -128,6 +136,7 @@ src/
 conteúdo de código.
 
 ```md
+
 # Storyblok
 
 ## Por que foi usado?
@@ -280,17 +289,36 @@ As cores e estilos globais são centralizados em variáveis CSS para garantir co
 }
 ```
 
-## 👤 Autores
+## 6 - 🔧📄 DOCUMENTAÇÃO DAS FUNCIONALIDADES
+
+
+
+
+## 👤 AUTORES 
 
 ```md
-## Hicaro André -  
+## HICARO ANDRÉ -  
 Desenvolvedor  Full Stack  
 
-## Luana Reis - 
+#### contato  
+📧 hicaroandre@hotmail.com
+📞 (98) 98424-5018
+
+
+## LUANA REIS - 
 Desenvolvedora Front-end 
 
-## Rosélia Cristina - 
+#### contato  
+📧 Luananreis21@gmail.com
+📞 (98) 98237-3309
+
+
+## ROSÉLIA CRISTINA - 
 Desenvolvedora Front-end 
+
+#### contato 
+📧 roseliacristina446@gmail.com
+📞 (98) 97017-3309
 ```
 
 ## 📄 Licença
@@ -298,7 +326,7 @@ Este projeto está sob a licença MIT.
 
 ---
 
-## 🔗 Back-end / API
+## 🔗 BACK-END / API
 
 Este projeto utiliza **Firebase** para gerenciar todas as funcionalidades de back-end, incluindo:
 
@@ -312,7 +340,7 @@ Não é necessário um repositório de API separado, pois toda a lógica do back
 
 ---
 
-## 🎓 Contexto Educacional (Softex)
+## 🎓 CONTEXTO EDUCACIONAL (Softex)
 
 Este projeto foi desenvolvido como parte do programa da Softex,
 com foco em boas práticas de front-end, organização de código,

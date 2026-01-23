@@ -206,18 +206,17 @@ export default function NextEventsHome({ blok }: NextEventsHomeProps) {
                         </div>
 
                         <button
-                          className={`btn btn-sm mt-3 w-100 ${jaInscrito
-                              ? "btn-danger"
-                              : "btn-outline-primary"
+                          className={`btn btn-sm mt-3 w-100 event-action-btn ${jaInscrito ? "is-cancel" : "is-subscribe"
                             }`}
                           onClick={() => toggleInscricao(evento)}
                         >
                           {user
                             ? jaInscrito
-                              ? "Desinscrever"
+                              ? "Cancelar Inscrição"
                               : "Inscrever-se"
                             : "Faça login para se inscrever"}
                         </button>
+
                       </div>
                     </div>
                   </div>

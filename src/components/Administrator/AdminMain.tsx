@@ -46,10 +46,12 @@ const AdminMain: React.FC = () => {
       {/* Sidebar */}
       <aside className={`sidebar ${sidebarOpen ? "open" : ""}`}>
         <div className="sidebar-header">
-          <div className="sidebar-logo">
-
+          <div
+            className="sidebar-logo"
+            style={{ cursor: 'pointer' }}
+            onClick={() => window.location.href = '/'}
+          >
             <img src={logo} alt="Rede Nave" />
-
           </div>
         </div>
 

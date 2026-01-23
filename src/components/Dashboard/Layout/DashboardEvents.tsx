@@ -11,19 +11,29 @@ import { getAuth } from "firebase/auth";
 import { db } from "../../../config/firebase";
 
 interface Evento {
-  id: string;
+  id?: string;
   titulo: string;
+  tipo: string;
   data: string;
   horario: string;
-  localOuLink: string;
-  tipo: string;
-  inscritos?: string[];
+  duracao?: string;
+  vagas: number;
   inscricoes?: number;
+  inscritos?: string[];
+  modalidade: string;
+  instrutor?: string;
+  local?: string;
+}
+
+// 🔒 mesma função usada no CalendarEvents
+function parseDateLocal(dateStr: string) {
+  const [year, month, day] = dateStr.split("-").map(Number);
+  return new Date(year, month - 1, day);
 }
 
 const DashboardEvents: React.FC = () => {
   const [eventos, setEventos] = useState<Evento[]>([]);
-  const [busca, setBusca] = useState("");
+  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
 
   const auth = getAuth();
@@ -45,7 +55,6 @@ const DashboardEvents: React.FC = () => {
             id: doc.id,
             ...(doc.data() as Evento),
           }))
-          // 🔥 apenas eventos inscritos
           .filter((evento) =>
             evento.inscritos?.includes(user.uid)
           );
@@ -61,51 +70,47 @@ const DashboardEvents: React.FC = () => {
     carregarEventos();
   }, [user]);
 
-  // ================= DESINSCRIÇÃO =================
-  async function desinscreverEvento(eventoId: string) {
+  // ================= TOGGLE INSCRIÇÃO =================
+  async function toggleInscricao(evento: Evento) {
     if (!user) return;
 
     try {
-      const ref = doc(db, "eventos", eventoId);
+      const ref = doc(db, "eventos", evento.id!);
 
       await updateDoc(ref, {
         inscritos: arrayRemove(user.uid),
         inscricoes: increment(-1),
       });
 
-      // remove da tela imediatamente
       setEventos((prev) =>
-        prev.filter((evento) => evento.id !== eventoId)
+        prev.filter((ev) => ev.id !== evento.id)
       );
     } catch (error) {
-      console.error("Erro ao desinscrever:", error);
+      console.error("Erro ao cancelar inscrição:", error);
     }
   }
 
   // ================= FILTRO =================
   const eventosFiltrados = eventos.filter((evento) =>
-    evento.titulo.toLowerCase().includes(busca.toLowerCase())
+    evento.titulo.toLowerCase().includes(search.toLowerCase())
   );
 
-  // ================= JSX =================
   return (
-    <div className="container-fluid">
+    <div className="dashboard-courses container-fluid">
       {/* HEADER */}
-      <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+      <div className="d-flex justify-content-between align-items-center mb-4">
         <h2 className="fw-bold mb-0">Meus Eventos</h2>
+      </div>
 
-        <div className="input-group w-100" style={{ maxWidth: 350 }}>
-          <span className="input-group-text bg-white">
-            <i className="bi bi-search"></i>
-          </span>
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Buscar evento pelo nome"
-            value={busca}
-            onChange={(e) => setBusca(e.target.value)}
-          />
-        </div>
+      {/* BUSCA */}
+      <div className="mb-4">
+        <input
+          type="text"
+          className="form-control search-input"
+          placeholder="Buscar eventos..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
       </div>
 
       {/* CONTEÚDO */}
@@ -119,59 +124,66 @@ const DashboardEvents: React.FC = () => {
           Você ainda não está inscrito em nenhum evento
         </div>
       ) : (
-        <div className="row g-3">
+        <div className="row g-4">
           {eventosFiltrados.map((evento) => {
-            const data = new Date(evento.data);
-            const dia = data.getDate();
-            const mes = data
-              .toLocaleString("pt-BR", { month: "short" })
-              .replace(".", "")
-              .toUpperCase();
+            const jaInscrito = true;
+
+            // ✅ VARIÁVEIS QUE ESTAVAM FALTANDO
+            const dataEvento = parseDateLocal(evento.data);
+            const inscricoes = evento.inscricoes || 0;
+            const percentual = (inscricoes / evento.vagas) * 100;
 
             return (
-              <div key={evento.id} className="col-12">
-                <div
-                  className="d-flex flex-column flex-md-row align-items-start align-items-md-center p-3 shadow-sm rounded-4 bg-white gap-3"
-                >
+              <div
+                key={evento.id}
+                className="col-12 col-md-6 col-lg-4"
+              >
+                <div className="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+
                   {/* DATA */}
-                  <div
-                    className="text-white text-center rounded-3 d-flex flex-column justify-content-center flex-shrink-0"
-                    style={{
-                      width: 80,
-                      height: 80,
-                      backgroundColor: "#09cdd7"
-                    }}
-                  >
-                    <span style={{ fontSize: 26, fontWeight: 700 }}>
-                      {dia}
-                    </span>
-                    <span style={{ fontSize: 14 }}>{mes}</span>
-                  </div>
-
-                  {/* CONTEÚDO */}
-                  <div className="flex-grow-1">
-                    <span className="badge bg-info mb-1">Evento</span>
-
-                    <h5 className="fw-bold mb-1 ">
-                      {evento.titulo}
-                    </h5>
-
-                    <div className="text-muted small d-flex align-items-center gap-3 flex-wrap">
-                      <span>
-                        <i className="bi bi-clock me-1"></i>
-                        {evento.horario}
-                      </span>
+                  <div className="bg-calendar text-white p-3 text-center">
+                    <div style={{ fontSize: 28, fontWeight: "bold" }}>
+                      {dataEvento.getDate()}
+                    </div>
+                    <div>
+                      {dataEvento
+                        .toLocaleString("pt-BR", { month: "short" })
+                        .replace(".", "")
+                        .toUpperCase()}
                     </div>
                   </div>
 
-                  {/* BOTÃO */}
-                  <div className="w-100 text-md-end">
-                    <button
-                      className="btn text-white px-4 py-2 rounded-pill d-block d-md-inline-block"
-                      onClick={() => desinscreverEvento(evento.id)}
-                    >
-                      Desinscrever
-                    </button>
+                  {/* CONTEÚDO */}
+                  <div className="card-body d-flex flex-column">
+                    <h5 className="fw-bold mb-1">{evento.titulo}</h5>
+
+                    <p className="text-muted mb-2 small">
+                      <i className="bi bi-clock"></i> {evento.horario || "-"}{" "}
+                      {evento.duracao || "-"} |{" "}
+                      <i className="bi bi-laptop"></i>{" "}
+                      {evento.modalidade || "-"}
+                    </p>
+
+                    <div className="progress mb-2" style={{ height: 5 }}>
+                      <div
+                        className="progress-bar bg-success"
+                        style={{ width: `${percentual}%` }}
+                      />
+                    </div>
+
+                    <small className="text-muted">
+                      {inscricoes}/{evento.vagas} inscritos
+                    </small>
+
+                    <div className="mt-auto">
+                      <button
+                        className={`btn btn-sm w-100 event-action-btn ${jaInscrito ? "is-cancel" : "is-subscribe"
+                          }`}
+                        onClick={() => toggleInscricao(evento)}
+                      >
+                        Cancelar
+                      </button>
+                    </div>
                   </div>
 
                 </div>
@@ -179,7 +191,6 @@ const DashboardEvents: React.FC = () => {
             );
           })}
         </div>
-
       )}
     </div>
   );

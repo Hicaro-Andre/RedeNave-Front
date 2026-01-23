@@ -223,7 +223,7 @@ const AdminEvents: React.FC = () => {
                 </label>
                 <input
                   type="text"
-                  className="form-control flex-grow-1"
+                  className="form-control"
                   value={titulo}
                   onChange={(e) => setTitulo(e.target.value)}
                 />
@@ -235,6 +235,7 @@ const AdminEvents: React.FC = () => {
                 </label>
                 <textarea
                   className="form-control flex-grow-1"
+                  rows={8}
                   value={descricao}
                   onChange={(e) => setDescricao(e.target.value)}
                   placeholder="Descreva brevemente o evento"
