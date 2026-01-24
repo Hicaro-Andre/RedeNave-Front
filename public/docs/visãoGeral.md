@@ -29,6 +29,13 @@ Abaixo uma captura de tela da interface para uma prévia visual:
 
 ![Preview da aplicação](../../src/assets//readme/preview.png)
 
+```md
+# Descrisão
+
+- Esta interface foi projetada para a Rede NAVE, uma plataforma dedicada ao empoderamento feminino através de um design que equilibra sofisticação e funcionalidade. Utilizando uma paleta de cores moderna e uma hierarquia visual baseada em cards, a home entrega uma experiência intuitiva que prioriza a conversão e o engajamento. A estrutura apresenta de forma estratégica a missão da rede, seguida por três trilhas de conhecimento em destaque e os três principais eventos da comunidade, garantindo que o usuário encontre valor imediato. O layout ainda integra prova social através de feedbacks reais e uma seção educativa sobre o funcionamento da plataforma, unindo uma estética impecável a uma arquitetura de informação focada em reduzir a fricção e fortalecer o senso de comunidade.
+  
+```
+
 
 ---
 
