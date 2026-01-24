@@ -1,4 +1,4 @@
-## 1 - 🎯  VISÃO GERAL
+## 🎯  VISÃO GERAL
 
 A Rede NAVE é uma plataforma digital voltada à educação, capacitação e fortalecimento do protagonismo feminino, oferecendo trilhas de aprendizagem, eventos formativos e conteúdos voltados ao desenvolvimento pessoal, profissional e empreendedor. O sistema foi desenvolvido com foco em acessibilidade, usabilidade e responsividade, promovendo uma experiência intuitiva e inclusiva para diferentes perfis de usuárias.
 
@@ -6,7 +6,7 @@ O sistema é destinado principalmente a mulheres empreendedoras, artesãs, estud
 
 
 
-## 2 - 🧰 TECNOLOGIAS USADAS
+##  🧰 TECNOLOGIAS USADAS
 
 - React + TypeScript
 - React Router DOM
@@ -16,14 +16,14 @@ O sistema é destinado principalmente a mulheres empreendedoras, artesãs, estud
 - Storyblok (CMS Headless)
 
 
-## 3 -🚀 APLICAÇÃO ONLINE
+## 🚀 APLICAÇÃO ONLINE
 
 A aplicação está disponível e pode ser acessada através do seguinte link:
 
 🔗 **[rede-nave-front.vercel.app](https://rede-nave-front.vercel.app)** 
 
 
-## 4 - 📸 PREVIEW
+## 📸 PREVIEW
 
 Abaixo uma captura de tela da interface para uma prévia visual:
 

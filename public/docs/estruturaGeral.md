@@ -1,4 +1,4 @@
-## 5 - 🏗️ ESTRUTURA GERAL DA APLICAÇÃO
+## 🏗️ ESTRUTURA GERAL DA APLICAÇÃO
 
 ## 📁 Estrutura do projeto
 

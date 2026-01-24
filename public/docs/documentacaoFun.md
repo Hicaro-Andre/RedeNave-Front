@@ -1,4 +1,4 @@
-## 6 - 🔧📄 DOCUMENTAÇÃO DAS FUNCIONALIDADES
+## 🔧📄 DOCUMENTAÇÃO DAS FUNCIONALIDADES
 
 Esta documentação descreve as funcionalidades da plataforma, cobrindo interface, estrutura e detalhes técnicos. Seu propósito é auxiliar tanto na avaliação quanto na manutenção e evolução futura do projeto.
 
