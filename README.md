@@ -33,9 +33,6 @@ Desenvolvedora Front-end
 📞 (98) 97017-3309
 ```
 
-## 📄 Licença
-Este projeto está sob a licença MIT.
-
 ---
 
 ## 🎓 CONTEXTO EDUCACIONAL (Softex)
