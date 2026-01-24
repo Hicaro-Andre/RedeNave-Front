@@ -1,4 +1,4 @@
-## 📚 Documentação Técnica
+## 📚 DOCUMENTAÇÃO TÉCNICA
 
 A documentação completa do projeto está disponível na pasta `docs`:
 

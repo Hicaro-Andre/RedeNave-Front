@@ -28,3 +28,8 @@ A aplicação está disponível e pode ser acessada através do seguinte link:
 Abaixo uma captura de tela da interface para uma prévia visual:
 
 ![Preview da aplicação](../../src/assets//readme/preview.png)
+
+
+---
+
+⬅️ [Voltar](../docs/README.md)

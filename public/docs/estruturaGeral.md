@@ -255,3 +255,6 @@ As cores e estilos globais são centralizados em variáveis CSS para garantir co
 }
 ```
 
+---
+
+⬅️ [Voltar](../docs/README.md)
